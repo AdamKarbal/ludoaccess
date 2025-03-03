@@ -1,0 +1,3 @@
+[submodule "maquette/Matrio"]
+	path = maquette/Matrio
+	url = https://github.com/HouriRuben/Matrio.git
