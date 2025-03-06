@@ -11,10 +11,13 @@ body{
     right: 0;
     height: 10vw;
     width: 100vw;
-    border: 3px solid #000;
+    border: 1px #000;
     background-color: #6f380a;
 }
 .fond{
+    display : grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 25% 25% 25% 25%;
     background-color: #107ab7;
     height: 90vh;
     width: 100vw;
@@ -23,4 +26,59 @@ body{
     left: 0;
     right: 0;
     bottom: 0;
+}
+.coeurs{
+    margin-top: 25px;
+    height : 75px;
+    width: 275px;
+    grid-row : 1;
+    grid-column : 5;
+    background-color: rgb(255, 224, 47);
+    border-radius: 20px;
+    border : solid rgb(7, 5, 1) 4px;
+}
+.word2Guess{
+    font-size: 60px;
+    font-family : fantasy;
+    padding-top : 20px;
+    padding-left: 55px;
+    margin-top : 60px;
+    grid-column : 3;
+    grid-row : 1;
+    height : 100px;
+    background-color : white;
+    border-radius: 30px;
+    border : solid black 3px;
+    box-shadow : 50px;
+}
+
+#pause{
+    margin-left: 120px;
+    grid-column : 3;
+    grid-row : 1;
+    width : 20%; 
+}
+
+.level{
+    padding-top: 20px;
+    padding-left: 15px;
+    font-family: fantasy;
+    font-size: 45px;
+    grid-column: 1;
+    grid-row : 1;
+    background-color: rgb(47, 255, 82);
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border : solid black 4px;
+    margin-left : 25px;
+    margin-top: 25px;
+    height : 75px;
+}
+
+#hearts{
+    padding-top : 8px;
+    padding-left : 35px; 
+    width : 75%;
 }
