@@ -9,17 +9,29 @@ body{
     bottom: 0;
     left: 0;
     right: 0;
-    height: 10vw;
+    height: 20vh;
     width: 100vw;
     border: 1px #000;
     background-color: #6f380a;
+
+}
+.hole{
+    color: #000;
+    font-size: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 60vw;
+    right: 30vw;
+    height: 20vh;
+    width: 20vw;
+    background-color: #107ab7;
 }
 .fond{
     display : grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 25% 25% 25% 25%;
     background-color: #107ab7;
-    height: 90vh;
+    height: 80vh;
     width: 100vw;
     position: fixed;
     top: 0;
