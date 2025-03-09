@@ -10,16 +10,16 @@ body{
 }
 .sol{
     background-image: url('imgs/texture_roche.jpg');
+    filter: hue-rotate(180deg); 
     font-size: 20px;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: var(--sol-height);
+    height: 75px;
     width: 100vw;
     border: 1px #000;
     background-color: var(--sol-bg-color);
-    border-radius: 10px;
     transition: height 0.3s ease;
     z-index: 0;
 
@@ -27,7 +27,7 @@ body{
 
 .sol::before {
     content: "";
-    background: green;
+    background: rgb(133, 78, 1);
     position: absolute;
     top: -15px;
     left: 0;
@@ -42,16 +42,18 @@ body{
     bottom: 0;
     left: 60vw;
     right: 30vw;
-    height: calc(var(--sol-height) + 15px);
+    height: 90px;
     width: 6vw;
-    background-color: var(--fond-bg-color);    
+    background-color: ;    
     z-index: 1;
 }
+
 .fond{
+    background-image: url('imgs/back3.jpg');
+    background-size: cover;
     display : grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 25% 25% 25% 25%;
-    background-color: var(--fond-bg-color);
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -66,23 +68,25 @@ body{
     grid-column: 1/6;
     height : 70px;
     background-color: #000;
-    opacity : 0.25;
+    opacity : 0.4;
 }
 
-.nuage {
+/*.nuage {
     width: 80px;
     height: 50px;
     background: white;
     border-radius: 50%;
     position: relative;
     left: 25vw;
-    top: 20vh;
+    top: 30vh;
     box-shadow:
       30px 10px 0 10px white,
       -30px 10px 0 10px white,
       0px 20px 0 10px white;
     z-index: 1;
   }
+*/
+
 .coeurs{
     margin-top: 80px;
     height : 75px;
@@ -116,7 +120,6 @@ body{
 }
 
 .level{
-    padding-top: 20px;
     padding-left: 15px;
     font-family: fantasy;
     font-size: 45px;
@@ -130,7 +133,7 @@ body{
     border : solid black 4px;
     margin-left : 25px;
     margin-top: 80px;
-    height : 75px;
+    height : 50px;
 }
 
 #hearts{
