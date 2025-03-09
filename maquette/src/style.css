@@ -3,13 +3,14 @@
     --sol-height: 20vh;
     --sol-bg-color: #6f380a;
     --fond-bg-color: #107ab7;
+    --sol-texture: url('imgs/texture_roche.jpg');
 }
 body{
     margin: 0;
     padding: 0;
 }
 .sol{
-    background-image: url('imgs/texture_roche.jpg');
+    background-image: var(--sol-texture);
     filter: hue-rotate(180deg); 
     font-size: 20px;
     position: fixed;
@@ -28,11 +29,11 @@ body{
 .sol::before {
     content: "";
     background: rgb(133, 78, 1);
-    position: absolute;
+    position: fixed;
     top: -15px;
-    left: 0;
-    width: 100%;
+    width:100vw;
     height: 15px;
+    border : solid rgb(7, 5, 1) 4px;
 }
 
 .hole{
@@ -49,14 +50,14 @@ body{
 }
 
 .fond{
+    position: fixed;
     background-image: url('imgs/back3.jpg');
     background-size: cover;
     display : grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     height: 100vh;
     width: 100vw;
-    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -148,4 +149,57 @@ body{
     grid-column : 5;
     grid-row : 1;
     width : 19%; 
+}
+.plateformes{
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: calc(100vh - var(--sol-height));
+    width: 100vw;
+    gap: 10px;
+}
+#plateforme1{
+    position: absolute;
+    grid-column : 5;
+    grid-row : 4;
+    height : 5vh;
+    width: 10vw;
+    background-image : var(--sol-texture);
+    filter: hue-rotate(180deg);
+    border-radius: 10px;
+    border : solid rgb(7, 5, 1) 4px;
+}
+#plateforme2{
+    position: absolute;
+    left:10px;
+    grid-column : 2;
+    grid-row : 4;
+    height : 5vh;
+    width: 20vw;
+    background-image : var(--sol-texture);
+    filter: hue-rotate(180deg);
+    border-radius: 10px;
+    border : solid rgb(7, 5, 1) 4px;
+}
+#plateforme3{
+    position: absolute;
+    grid-column : 4;
+    grid-row : 3;
+    height : 10vh;
+    width: 5vw;
+    background-image : var(--sol-texture);
+    filter: hue-rotate(180deg);
+    border-radius: 10px;
+    border : solid rgb(7, 5, 1) 4px;
+}
+#personnage{
+    position: fixed;
+    bottom: 80px;
+    left: 100px;
+    filter: hue-rotate(-70deg);
+    width: 70px;
+    height: 120px;
+    background-image: url('imgs/Design_sans_titre-removebg-preview.png');
+    background-size: cover;
 }
