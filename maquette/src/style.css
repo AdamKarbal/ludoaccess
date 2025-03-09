@@ -39,7 +39,7 @@
     bottom: 0;
     left: 60vw;
     right: 30vw;
-    height: 25vh;
+    height: calc(var(--sol-height) + 15px);
     width: 6vw;
     background-color: var(--fond-bg-color);    
     z-index: 1;
