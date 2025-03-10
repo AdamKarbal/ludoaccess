@@ -1,31 +1,40 @@
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Réglages des Enfants</title>
-        <link rel="stylesheet" href="reglage.css">
-        <script src="reglage.js" defer></script>
-    </head>
-    <body>
-        <div class="header">
-            <div class="user">
-                <img src="ressources/ergo.jpg" alt="Avatar Ergothérapeute">
-                <div> Adamo Stark </div> 
-            </div>
-            <div class="logout">
-                <button>Déconnexion</button>
-            </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réglages des Enfants</title>
+    <link rel="stylesheet" href="reglage.css">
+    <script src="reglage.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <div class="user">
+            <img src="ressources/ergo.jpg" alt="Avatar Ergothérapeute">
+            <div> Adamo Stark </div> 
         </div>
-        <div class="espace"> 
-            <h2>Enfants</h2>
+        <div class="logout">
+            <button>Déconnexion</button>
         </div>
-        <div class="child-list">
-                <div class="child" onclick="toggleSettings('child1')">
-                    <img src="ressources/e1.jpg" alt="Avatar Enfant 1">
-                    <span>Olivier Boulet</span>
-                </div>
-                <div id="child1" class="settings">
+    </div>
+    <div class="espace"> 
+        <h2>Enfants</h2>
+    </div>
+    <div class="child-list">
+            <div class="child" onclick="toggleSettings('child1')">
+                <img src="ressources/e1.jpg" alt="Avatar Enfant 1">
+                <span>Olivier Boulet</span>
+            </div>
+            <div id="child1" class="settings">
+                <h3>Informations</h3>
+                    <div class="information">Nom: Olivier Boulet</div>
+                    <div class="information">Age: 8 ans</div>
+                    <div class="information">Adresse: 220 Rue Simone Veil, 29820</div>
+                    <div class="information">Numéro de téléphone: 0783718287</div>
+                    <div class="information">Trouble: Motricité</div>
+                    <div class="information">Loisirs: Foot</div>
+                    <div class="separator"></div>
+                    <h3>Paramètres</h3>
                     <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
                     <div class="setting"><input type="checkbox"> Afficher le classement</div>
                     <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
@@ -35,52 +44,79 @@
                         <option>Moyen</option>
                         <option>Difficile</option>
                     </select></div>
-                </div>
-            <div class="child" onclick="toggleSettings('child2')">
-                <img src="ressources/e2.jpg" alt="Avatar Enfant 2">
-                <span>Ali Madandar Arani</span>
-            </div>
-            <div id="child2" class="settings">
-                <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
-                <div class="setting"><input type="checkbox"> Afficher le classement</div>
-                <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
-                <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
-                <div class="setting">Difficulté des mots: <select>
-                    <option>Facile</option>
-                    <option>Moyen</option>
-                    <option>Difficile</option>
-                </select></div>
-            </div>
-            <div class="child" onclick="toggleSettings('child3')">
-                <img src="ressources/e3.jpg" alt="Avatar Enfant 3">
-                <span>Raphael Laborie</span>
-            </div>
-            <div id="child3" class="settings">
-                <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
-                <div class="setting"><input type="checkbox"> Afficher le classement</div>
-                <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
-                <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
-                <div class="setting">Difficulté des mots: <select>
-                    <option>Facile</option>
-                    <option>Moyen</option>
-                    <option>Difficile</option>
-                </select></div>
-            </div>
-            <div class="child" onclick="toggleSettings('child4')">
-                <img src="ressources/e4.jpg" alt="Avatar Enfant 4">
-                <span>Clement Menou</span>
-            </div>
-            <div id="child4" class="settings">
-                <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
-                <div class="setting"><input type="checkbox"> Afficher le classement</div>
-                <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
-                <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
-                <div class="setting">Difficulté des mots: <select>
-                    <option>Facile</option>
-                    <option>Moyen</option>
-                    <option>Difficile</option>
-                </select></div>
-            </div>
+            </div>                
+        <div class="child" onclick="toggleSettings('child2')">
+            <img src="ressources/e2.jpg" alt="Avatar Enfant 2">
+            <span>Ali Madandar Arani</span>
         </div>
-    </body>
-    </html>
+        <div id="child2" class="settings">
+            <h3>Informations</h3>
+                <div class="information">Nom: Ali Madandar Arani</div>
+                <div class="information">Age: 2.5 ans</div>
+                <div class="information">Adresse: qq part marseille</div>
+                <div class="information">Numéro de téléphone: 0666666</div>
+                <div class="information">Trouble: Motricité</div>
+                <div class="information">Loisirs: Foot</div>
+                <div class="separator"></div>
+                <h3>Paramètres</h3>
+                <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+                <div class="setting"><input type="checkbox"> Afficher le classement</div>
+                <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+                <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+                <div class="setting">Difficulté des mots: <select>
+                    <option>Facile</option>
+                    <option>Moyen</option>
+                    <option>Difficile</option>
+                </select></div>
+        </div>  
+        <div class="child" onclick="toggleSettings('child3')">
+            <img src="ressources/e3.jpg" alt="Avatar Enfant 3">
+            <span>Raphael Laborie</span>
+        </div>
+        <div id="child3" class="settings">
+            <h3>Informations</h3>
+                <div class="information">Nom: Raphael Laborie </div>
+                <div class="information">Age: 10 ans</div>
+                <div class="information">Adresse: paname 1-0</div>
+                <div class="information">Numéro de téléphone: 0101010101</div>
+                <div class="information">Trouble: Motricité</div>
+                <div class="information">Loisirs: Foot</div>
+                <div class="separator"></div>
+                <h3>Paramètres</h3>
+                <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+                <div class="setting"><input type="checkbox"> Afficher le classement</div>
+                <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+                <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+                <div class="setting">Difficulté des mots: <select>
+                    <option>Facile</option>
+                    <option>Moyen</option>
+                    <option>Difficile</option>
+                </select></div>
+        </div>  
+        <div class="child" onclick="toggleSettings('child4')">
+            <img src="ressources/e4.jpg" alt="Avatar Enfant 4">
+            <span>Clement Menou</span>
+        </div>
+        <div id="child4" class="settings">
+            <h3>Informations</h3>
+                <div class="information">Nom: Clement Menou</div>
+                <div class="information">Age: 7 ans</div>
+                <div class="information">Adresse: dans le train</div>
+                <div class="information">Numéro de téléphone: 078383874</div>
+                <div class="information">Trouble: Motricité</div>
+                <div class="information">Loisirs: Foot</div>
+                <div class="separator"></div>
+                <h3>Paramètres</h3>
+                <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+                <div class="setting"><input type="checkbox"> Afficher le classement</div>
+                <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+                <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+                <div class="setting">Difficulté des mots: <select>
+                    <option>Facile</option>
+                    <option>Moyen</option>
+                    <option>Difficile</option>
+                </select></div>
+        </div>  
+    </div>
+</body>
+</html>

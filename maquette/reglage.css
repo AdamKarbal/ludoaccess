@@ -79,7 +79,8 @@ body {
 }
 
 .settings {
-    display: none;
+    display: flex;
+    flex-direction: column; /* Affiche les éléments de haut en bas */
     background-color: white;
     padding: 10px;
     margin-left: 20px;
@@ -89,6 +90,16 @@ body {
     width: 90%;
 }
 
-.setting {
-    margin: 5px 0;
+.settings .information {
+    margin-bottom: 10px;
 }
+
+.separator {
+    border-top: 2px solid #000; /* Un trait séparateur horizontal */
+    margin: 10px 0; /* Un peu de marge pour espacer */
+}
+
+.settings .setting {
+    margin-bottom: 10px; /* Espacement entre les réglages */
+}
+
