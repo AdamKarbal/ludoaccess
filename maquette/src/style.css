@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Indie+Flower&family=Pacifico&display=swap');
 
 :root {
     --sol-height: 10vh;
@@ -93,6 +94,8 @@ body{
     grid-column : 1;
     grid-row : 1;
     width : 5%; 
+    filter: invert(100%);
+    opacity: 0.8;
 }
 
 .level{
@@ -126,6 +129,8 @@ body{
     grid-column : 1;
     grid-row : 1;
     width : 4%; 
+    filter: invert(100%);
+    opacity: 0.8;
 }
 
 .plateformes{
@@ -212,5 +217,24 @@ body{
 .infos{
     grid-column: 1;
     grid-row: 1;
-    font-family : ;
+    font-size : 1.2em;
+    font-family : 'Caveat', 'Indie Flower', 'Pacifico', cursive;
+    color : white;
+    position: absolute; /* Permet le positionnement absolu */
+    top: 26vh; /* Ajustez cette valeur pour déplacer verticalement */
+    left: 78vw; /* Ajustez cette valeur pour déplacer horizontalement */
+    padding-top: 1px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: rgba(0, 0, 0, 0.5); /* Ajoute un fond semi-transparent pour la lisibilité */
+    border-radius: 10px; /* Ajoute des coins arrondis */
+}
+
+#infoB{
+    margin-top: 1vh;
+    margin-left: 1vw;
+    grid-column : 1;
+    grid-row : 1;
+    width : 4%; 
+    filter: invert(100%) brightness(130%);
 }
