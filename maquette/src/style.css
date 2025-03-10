@@ -3,6 +3,7 @@
     --sol-height: 20vh;
     --sol-bg-color: #6f380a;
     --fond-bg-color: #107ab7;
+    --W2G-height: 100px;
 }
 
 body{
@@ -71,12 +72,12 @@ body{
 .word2Guess{
     font-size: 60px;
     font-family : fantasy;
-    padding-top : 20px;
-    padding-left: 55px;
+    text-align: center;
+    line-height: var(--W2G-height);
     margin-top : 80px;
     grid-column : 3;
     grid-row : 1;
-    height : 100px;
+    height : var(--W2G-height);
     background-color : rgba(255, 255, 255, 0.344);
     border-radius: 30px;
     border : solid black 3px;
