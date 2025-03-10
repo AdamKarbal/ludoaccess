@@ -224,19 +224,21 @@ body{
 }
 
 .infos{
+    margin-right: 2vw;
+    margin-bottom: 4vh;
     grid-column: 1;
     grid-row: 1;
     font-size : 1.2em;
     font-family : 'Caveat', 'Indie Flower', 'Pacifico', cursive;
     color : white;
-    position: absolute; /* Permet le positionnement absolu */
-    top: 26vh; /* Ajustez cette valeur pour déplacer verticalement */
-    left: 78vw; /* Ajustez cette valeur pour déplacer horizontalement */
+    position: absolute; 
+    top: 26vh; 
+    left: 78vw; 
     padding-top: 1px;
     padding-left: 25px;
     padding-right: 25px;
-    background-color: rgba(0, 0, 0, 0.5); /* Ajoute un fond semi-transparent pour la lisibilité */
-    border-radius: 10px; /* Ajoute des coins arrondis */
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 10px; 
 }
 
 #infoB{
