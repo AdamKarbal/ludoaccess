@@ -208,3 +208,12 @@ body{
     z-index: 20;
     margin-top: 5.7vh;
 }
+#mob{
+    width : 20%;
+    grid-row : 4;
+    grid-column: 1;
+    margin-top: 7.7vh;
+    margin-left: 15vw;
+    z-index: 20;
+    filter: hue-rotate(-30deg);
+}
