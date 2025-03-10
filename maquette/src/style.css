@@ -208,3 +208,9 @@ body{
     z-index: 20;
     margin-top: 5.5vh;
 }
+
+.infos{
+    grid-column: 1;
+    grid-row: 1;
+    font-family : ;
+}
