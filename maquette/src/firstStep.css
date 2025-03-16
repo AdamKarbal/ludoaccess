@@ -1,0 +1,85 @@
+:root {
+    --sol-height: 10vh;
+    --sol-bg-color: #6f380a;
+    --fond-bg-color: #107ab7;
+    --W2G-height: 15vh;
+    --PLAT-height : 5vh;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;   
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.sol{
+    background-image: url('/src/assets/ressources/texture_roche.jpg');    
+    filter: hue-rotate(180deg); 
+    height: var(--sol-height);
+    width: 100vw;
+    border-top: solid 0.8vh rgb(103, 61, 1);
+    background-color: var(--sol-bg-color);
+    bottom: 0;
+}
+
+.fond{
+    background-image: url('/src/assets/ressources/back3.jpg');
+    background-size: cover;
+    height: calc(100vh - (var(--sol-height)));
+    width: 100vw;
+    z-index: -1;
+}
+
+.toolbar{
+    position: fixed;
+    display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    justify-content: space-between;
+    height : 10.5vh;
+    width : 100%;
+    background-color: #000;
+    opacity : 0.4;
+    top: 0;
+    z-index: 1;
+}
+
+#pause{
+    width : 5%; 
+    filter: invert(100%);
+    opacity: 0.8;
+}
+
+#cross{
+    justify-content: flex-end;
+    width : 4%; 
+    filter: invert(100%);
+    opacity: 0.8;
+    margin-right: 2vw;
+}
+
+#infoB{
+    justify-content: flex-start;
+    width : 4%; 
+    filter: invert(100%) brightness(130%);
+    margin-left: 1.5vw;
+    
+}
+
+.word2Write{
+    position:fixed;
+    top: 16%;
+    left: 41%;
+    font-size: calc(var(--W2G-height) / 2);
+    font-family : fantasy;
+    text-align: center;
+    line-height: var(--W2G-height);
+    height : var(--W2G-height);
+    background-color : rgba(255, 255, 255, 0.344);
+    border-radius: 30px;
+    border : solid black 3px;
+    box-shadow : 50px;
+    width : 18vw;
+    z-index: 1;
+}

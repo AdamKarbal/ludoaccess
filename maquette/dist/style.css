@@ -1,7 +1,3 @@
-/* Content from src/components/card/card.css */
-.card {
-    color: white;
-}
 /* Content from src/components/navbar/navbar.css */
 .navbar {
     display: flex;
@@ -350,10 +346,6 @@ body {
 .card.gray {
   background-color: #D0C9B7;
 }
-/* Content from src/components/title/title.css */
-.title {
-    color: rgb(255, 255, 255);
-}
 /* Content from src/components/template/template.css */
 .template {
     height: 100%;
@@ -389,4 +381,12 @@ body {
 /* Content from src/pages\page1\page1.css */
 .page1 {
     color: red;
+}
+/* Content from src/components/title/title.css */
+.title {
+    color: rgb(255, 255, 255);
+}
+/* Content from src/components/card/card.css */
+.card {
+    color: white;
 }
