@@ -83,3 +83,35 @@ body{
     width : 18vw;
     z-index: 1;
 }
+.personnage{
+  height: 100vh; /* Prend toute la hauteur de l'écran */
+  z-index: 1;
+}
+#megaman{
+    position: relative;
+    bottom:25vh;
+    left: 60vw;
+    width :11vw;
+    height: 15vh;
+    z-index: 20;
+}
+
+#bulle{
+    position: relative;
+    bottom:36vh;
+    left: 27.3vw;
+    width :25vw;
+    height: 15vh;
+    z-index: 10;
+}
+
+.texte{
+    position: relative;
+    bottom:47vh;
+    left: 1vw;
+    font-size: 1em;
+    font-family: fantasy;
+    text-align: center;
+    line-height: 1.3em;
+    z-index: 12;
+}
