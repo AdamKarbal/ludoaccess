@@ -29,18 +29,7 @@ body{
     border-top: solid 0.8vh rgb(103, 61, 1);
     background-color: var(--sol-bg-color);
     position: relative;
-}
-
-.hole {
-    position: absolute;
-    bottom: 0; /* Place le trou au bas du sol */
-    width: 4.5vw;
-    height: 10.5vh;
-    background-color: black;
-    box-shadow:-5px 0 10px rgba(0, 0, 0, 0.8),
-                5px 0 10px rgba(0, 0, 0, 0.8), 
-                0 0px 10px rgba(0, 0, 0, 0.8);
-}            
+}       
 
 .sol::before {
     content: "";
@@ -70,6 +59,7 @@ body{
     width : 100vw;
     background-color: #000;
     opacity : 0.4;
+    top: 0;
 }
 
 .coeurs{
