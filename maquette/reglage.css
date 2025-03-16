@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #e0f7ff; /* Fond bleu clair */
+    background-color: #e0f7ff;
     margin: 0;
     padding: 0;
     color: #333;
@@ -11,9 +11,9 @@ body {
     font-family: 'Luckiest Guy', cursive;
     justify-content: space-between;
     align-items: center;
-    background-color: #0077b6; /* Bleu plus foncé */
+    background-color: #0077b6; 
     padding: 10px 20px;
-    border-bottom: 4px solid #023e8a; /* Bordure bleu marine */
+    border-bottom: 4px solid #023e8a;
     color: #fff;
 }
 
@@ -39,18 +39,19 @@ body {
     cursor: pointer;
     border: 3px solid #023e8a; /* Bordure bleu marine */
     background-color: #fff;
-    color: #0077b6; /* Texte bleu */
+    color: #0077b6; 
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .logout:hover {
-    background-color: #023e8a; /* Fond bleu marine au survol */
+    background-color: #023e8a; 
     color: #fff;
 }
 
 .logout button {
     background-color: transparent;
     border: none;
+    font-family: 'Luckiest Guy', cursive;
     outline: none;
     cursor: pointer;
     color: inherit;
@@ -61,7 +62,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     font-family: 'Luckiest Guy', cursive;
-    color: #0077b6; /* Texte bleu */
+    color: #0077b6;
     margin: 5px 0;
     display: flex;
     justify-content: center;
@@ -86,7 +87,7 @@ body {
     margin: 10px 0;
     border-radius: 20px;
     cursor: pointer;
-    border: 2px solid #90e0ef; /* Bordure bleu clair */
+    border: 2px solid #90e0ef; 
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -112,7 +113,7 @@ body {
     padding: 15px;
     margin: 10px 0;
     border-radius: 8px;
-    border: 2px solid #90e0ef; /* Bordure bleu clair */
+    border: 2px solid #90e0ef; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
 }
@@ -123,7 +124,7 @@ body {
 
 .settings h3 {
     margin-bottom: 15px;
-    color: #0077b6; /* Texte bleu */
+    color: #0077b6; 
 }
 
 .settings .setting {
@@ -137,12 +138,12 @@ body {
 .settings .setting input[type="number"] {
     width: 60px;
     padding: 5px;
-    border: 1px solid #90e0ef; /* Bordure bleu clair */
+    border: 1px solid #90e0ef;
     border-radius: 4px;
 }
 
 .settings .setting select {
     padding: 5px;
-    border: 1px solid #90e0ef; /* Bordure bleu clair */
+    border: 1px solid #90e0ef; 
     border-radius: 4px;
 }

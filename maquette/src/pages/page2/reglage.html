@@ -1,29 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <title>Matrio</title>
-        <link rel="stylesheet" href="./style.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-        <script src="../../scripts/enfant.js" defer></script>
-    </head>
-    <body>
-        <div class="header">
-            <div class="user">
-                <img src="../../assets/ressources/ergo.jpg" alt="Avatar Ergothérapeute">
-                <div> Adamo Stark </div> 
-            </div>
-            <div class="logout">
-                <button>Déconnexion</button>
-            </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réglages des Enfants</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <div class="user">
+            <img src="../../assets/ressources/ergo.jpg" alt="Avatar Ergothérapeute">
+            <div>Adamo Stark</div>
         </div>
-        <div class="espace"> 
-            <h2>Enfants</h2>
+        <div class="logout">
+            <button>Déconnexion</button>
         </div>
-        <div class="child-list">
-            <matrio path="components/enfant/enfant" class="red"></matrio>
-            <matrio path="components/enfant/enfant" class="red"></matrio>
-            <matrio path="components/enfant/enfant" class="red"></matrio>
-            <matrio path="components/enfant/enfant" class="red"></matrio>
+    </div>
+
+    <div class="espace">
+        <h2>Enfants</h2>
+    </div>
+
+    <div class="child-list">
+
+        <div class="child" onclick="toggleSettings('settings1')">
+            <img src="../../assets/ressources/e1.jpg" alt="Avatar Enfant 1">
+            <span>Olivier Boulet</span>
         </div>
-    </body>
+        <div id="settings1">
+            <matrio path="components/setting/setting"></matrio>
+        </div>
+
+        <div class="child" onclick="toggleSettings('settings2')">
+            <img src="../../assets/ressources/e2.jpg" alt="Avatar Enfant 2">
+            <span>Ali Madandar Arani</span>
+        </div>
+        <div id="settings2">
+            <matrio path="components/setting/setting"></matrio>
+        </div>
+
+        <div class="child" onclick="toggleSettings('settings3')">
+            <img src="../../assets/ressources/e3.jpg" alt="Avatar Enfant 3">
+            <span>Raphael Laborie</span>
+        </div>
+        <div id="settings3">
+            <matrio path="components/setting/setting"></matrio>
+        </div>
+
+        <div class="child" onclick="toggleSettings('settings4')">
+            <img src="../../assets/ressources/e4.jpg" alt="Avatar Enfant 4">
+            <span>Clement Menou</span>
+        </div>
+        <div id="settings4">
+            <matrio path="components/setting/setting"></matrio>
+        </div>
+
+    </div>
+
+    <script src="../../scripts/reglage.js" defer></script>
+</body>
+
 </html>
