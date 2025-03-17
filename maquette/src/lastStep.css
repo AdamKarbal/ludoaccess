@@ -105,12 +105,23 @@ body{
 }
 
 #pause{
+    left : 47.5%;
+    position: fixed;
     width : 5%; 
     filter: invert(100%);
     opacity: 0.8;
 }
 
+#pause:hover{
+    color : white;
+    width : 5%; 
+    transform: scale(1.1);
+    opacity: 1;
+}
+
 #cross{
+    left: 95%;
+    position: fixed;
     justify-content: flex-end;
     width : 4%; 
     filter: invert(100%);
@@ -118,12 +129,28 @@ body{
     margin-right: 2vw;
 }
 
+#cross:hover{
+    color : white;
+    width : 4%; 
+    transform: scale(1.1);
+    opacity: 1;
+}
+
 #infoB{
+    position: fixed;
     justify-content: flex-start;
     width : 4%; 
     filter: invert(100%) brightness(130%);
     margin-left: 1.5vw;
-}   
+    left: 0;
+}
+
+#infoB:hover{
+    color : white;
+    width : 4%; 
+    transform: scale(1.1); 
+    opacity: 1;
+}
 
 .level {
     padding-left: 2vw;
