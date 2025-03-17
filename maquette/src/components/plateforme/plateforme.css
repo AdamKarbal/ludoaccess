@@ -1,0 +1,12 @@
+.plateforme {
+    margin-top: 1.5vh;
+    grid-row : 4;
+    grid-column: 3;
+    background-image: url('/src/imgs/texture_roche.jpg');
+    filter: hue-rotate(180deg); 
+    background-color: var(--fond-bg-color);
+    width: 8vw;
+    height: var(--PLAT-height);
+    border-top: solid 5px rgb(85, 50, 1); 
+    border-radius: 7px;
+}
