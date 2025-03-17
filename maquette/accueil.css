@@ -2,11 +2,15 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url("maquette/src/assets/ressources/thumbnail_back2.jpg");
+    background-image: url("src/assets/ressources/thumbnail_back2.jpg");
     background-size: cover; /* Ajuste l’image pour couvrir tout l’écran */
     background-position: center; /* Centre l’image */
     background-repeat: no-repeat; /* Empêche la répétition */
     height: 100vh; /* Assure que l’image couvre toute la hauteur */
+}
+
+.start{
+    top:100px;
 }
 
 
@@ -80,7 +84,7 @@ body {
     font-family: 'Luckiest Guy', cursive;
     justify-content: space-between;
     align-items: center;
-    background-color: #0077b6;
+    background-color: #b62400;
     padding: 10px 20px;
     border-bottom: 4px solid #023e8a;
     color: #fff;

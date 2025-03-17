@@ -9,22 +9,23 @@
 <div class="header">
     <div class="user">
         <button class="burger-btn" onclick="toggleMenu()">☰</button>
-        <div>Adamo Stark</div>
+    </div>
+    <div class="profil">
+        <p id="username">Nom Prénom</p>
     </div>
     <div class="logout">
         <button>Déconnexion</button>
     </div>
 </div>
-    <div>
+    <div class="Start">
       <button id="Jouer">Jouer</button>
       <button id="Stats">Vos stats</button>
     </div>
     <div class="menu" id="menu">
       <span class="close-btn" onclick="toggleMenu()">&times;</span>
-      <a href="#">Accueil</a>
-      <a href="#">À propos</a>
-      <a href="#">Services</a>
-      <a href="#">Contact</a>
+        <a href="#">Accueil</a>
+      <a href="./reglage.html">Réglages</a>
+      <a href="./stats.html">Statistiques</a>
     </div>
     <script>
       function toggleMenu() {
