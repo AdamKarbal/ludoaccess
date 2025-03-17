@@ -15,7 +15,7 @@ body{
 }
 
 .sol{
-    background-image: url('/src/assets/ressources/texture_roche.jpg');    
+    background-image: url('/maquette/src/assets/ressources/texture_roche.jpg');    
     filter: hue-rotate(180deg); 
     height: var(--sol-height);
     width: 100vw;
@@ -25,7 +25,7 @@ body{
 }
 
 .fond{
-    background-image: url('/src/assets/ressources/back3.jpg');
+    background-image: url('/maquette/src/assets/ressources/back3.jpg');
     background-size: cover;
     height: calc(100vh - (var(--sol-height)));
     width: 100vw;
