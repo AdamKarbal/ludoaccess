@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réglages des Enfants</title>
+    <link rel="stylesheet" href="reglage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <script src="reglage.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <div class="user">
+            <img src="src/assets/ressources/ergo.jpg" alt="Avatar Ergothérapeute">
+            <div>Adamo Stark</div>
+        </div>
+        <div class="logout">
+            <button>Déconnexion</button>
+        </div>
+    </div>
+    <div class="espace">
+        <h2>Enfants</h2>
+    </div>
+    <div class="child-list">
+        <div class="child" onclick="toggleSettings('child1')">
+            <img src="src/assets/ressources/e1.jpg" alt="Avatar Enfant 1">
+            <span>Olivier Boulet</span>
+        </div>
+        <div id="child1" class="settings">
+            <h3>Paramètres</h3>
+            <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+            <div class="setting"><input type="checkbox"> Afficher le classement</div>
+            <div class="setting"><input type="checkbox"> Activer la perte de vie</div>
+            <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+            <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+            <div class="setting">Difficulté des mots: <select>
+                <option>Facile</option>
+                <option>Moyen</option>
+                <option>Difficile</option>
+            </select></div>
+        </div>
+
+        <div class="child" onclick="toggleSettings('child2')">
+            <img src="src/assets/ressources/e2.jpg" alt="Avatar Enfant 2">
+            <span>Ali Madandar Arani</span>
+        </div>
+        <div id="child2" class="settings">
+            <h3>Paramètres</h3>
+            <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+            <div class="setting"><input type="checkbox"> Afficher le classement</div>
+            <div class="setting"><input type="checkbox"> Activer la perte de vie</div>
+            <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+            <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+            <div class="setting">Difficulté des mots: <select>
+                <option>Facile</option>
+                <option>Moyen</option>
+                <option>Difficile</option>
+            </select></div>
+        </div>
+
+        <div class="child" onclick="toggleSettings('child3')">
+            <img src="src/assets/ressources/e3.jpg" alt="Avatar Enfant 3">
+            <span>Raphael Laborie</span>
+        </div>
+        <div id="child3" class="settings">
+            <h3>Paramètres</h3>
+            <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+            <div class="setting"><input type="checkbox"> Afficher le classement</div>
+            <div class="setting"><input type="checkbox"> Activer la perte de vie</div>
+            <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+            <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+            <div class="setting">Difficulté des mots: <select>
+                <option>Facile</option>
+                <option>Moyen</option>
+                <option>Difficile</option>
+            </select></div>
+        </div>
+
+        <div class="child" onclick="toggleSettings('child4')">
+            <img src="src/assets/ressources/e4.jpg" alt="Avatar Enfant 4">
+            <span>Clement Menou</span>
+        </div>
+        <div id="child4" class="settings">
+            <h3>Paramètres</h3>
+            <div class="setting"><input type="checkbox"> Afficher le chronomètre</div>
+            <div class="setting"><input type="checkbox"> Afficher le classement</div>
+            <div class="setting"><input type="checkbox"> Activer la perte de vie</div>
+            <div class="setting"><input type="checkbox"> Effacer le mot après récupération des lettres</div>
+            <div class="setting">Temps pour écrire le mot: <input type="number" min="1" max="60"> secondes</div>
+            <div class="setting">Difficulté des mots: <select>
+                <option>Facile</option>
+                <option>Moyen</option>
+                <option>Difficile</option>
+            </select></div>
+        </div>
+    </div>
+</body>
+</html>

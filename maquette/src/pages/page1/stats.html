@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques du Joueur</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Statistiques du Joueur</h1>
+    </header>
+
+    <matrio path="components/menu/menu" class="player-stats">
+        <div class="player-stats">
+            <h2>Informations du Joueur</h2>
+            <div class="info">
+                <p><strong>Nom :</strong> Karbal Adam</p>
+                <p><strong>Âge :</strong> 8 ans</p>
+                <p><strong>Durée Totale de Jeu :</strong> 1h 15min</p>
+                <p><strong>Fréquence de Jeu :</strong> 5 sessions cette semaine</p>
+            </div>
+        </div>
+    </matrio>
+
+    <matrio path="components/menu/menu" class="interaction-stats">
+        <div class="interaction-stats">
+            <h2>Statistiques d'Interaction</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Interaction</th>
+                    <th>Succès</th>
+                    <th>Échecs</th>
+                    <th>Temps entre deux lettres</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Clic souris</td>
+                    <td>120</td>
+                    <td>10</td>
+                    <td>3s</td>
+                </tr>
+                <tr>
+                    <td>Saisie clavier</td>
+                    <td>45</td>
+                    <td>5</td>
+                    <td>5s</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </matrio>
+
+    <matrio path="components/menu/menu" class="progress-stats">
+        <div class="progress-stats">
+            <h2>Progression dans le Jeu</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Niveau</th>
+                    <th>Objectif Atteint</th>
+                    <th>Erreurs</th>
+                    <th>Temps Pris</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Complété</td>
+                    <td>3</td>
+                    <td>4min</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Complété</td>
+                    <td>2</td>
+                    <td>6min</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </matrio>
+
+    <matrio path="components/menu/menu" class="emotional-feedback">
+        <div class="emotional-feedback">
+            <h2>Retour Émotionnel</h2>
+            <p><strong>Indicateur de Frustration :</strong> Modéré (3 incidents)</p>
+            <p><strong>Pourcentage d'interactions réussies :</strong> Haut (70%)</p>
+        </div>
+    </matrio>
+
+</div>
+</body>
+</html>
