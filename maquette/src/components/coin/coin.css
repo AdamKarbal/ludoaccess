@@ -1,0 +1,17 @@
+#pennyA{
+    width : 18%;
+    grid-row : 4;
+    grid-column: 1;
+    z-index: 20;
+    margin-bottom: 7vh;
+    margin-left: 26vw;
+}
+#pennyA-text{
+    font-family: fantasy;
+    font-size: 1.4em;
+    grid-row : 4;
+    grid-column: 1;
+    z-index: 20;
+    margin-top: -12.5vh;
+    margin-left: 27.2vw;
+}
