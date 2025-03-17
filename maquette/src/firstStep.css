@@ -67,13 +67,13 @@ body{
     
 }
 
-.word2Write{
+.word2Guess{
     position: fixed;
     display: flex;
     justify-content:center; /* Centre les éléments horizontalement */;
     align-items: center; /* Centre les éléments verticalement */
     flex-direction: column;
-    top: 16%;
+    top: 13%;
     left: 41%;
     font-size: calc(var(--W2G-height) / 2);
     font-family : fantasy;
@@ -100,13 +100,14 @@ body{
     font-size: calc(var(--W2G-height) / 2);
     font-family : fantasy;
     text-align: center;
-    margin-top: -14vh;
-
+    margin-top: -14.95vh;
 }
+
 .personnage{
   height: 100vh; /* Prend toute la hauteur de l'écran */
   z-index: 1;
 }
+    
 #megaman{
     position: relative;
     bottom:25vh;

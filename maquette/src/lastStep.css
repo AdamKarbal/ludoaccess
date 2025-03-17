@@ -53,13 +53,16 @@ body{
 }
 
 .toolbar{
-    grid-row : 1;
-    grid-column : 1;
+    position: fixed;
+    display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    justify-content: space-between;
     height : 10.5vh;
-    width : 100vw;
+    width : 100%;
     background-color: #000;
     opacity : 0.4;
     top: 0;
+    z-index: 1;
 }
 
 .coeurs{
@@ -75,33 +78,52 @@ body{
 }
 
 .word2Guess{
-    position : absolute;
-    grid-row : 1;
-    grid-column : 1;
+    position: fixed;
+    display: flex;
+    justify-content:center;
+    align-items: center; 
+    flex-direction: column;
+    top: 13%;
+    left: 41%;
     font-size: calc(var(--W2G-height) / 2);
     font-family : fantasy;
     text-align: center;
     line-height: var(--W2G-height);
-    margin-top : 12vh;
     height : var(--W2G-height);
-    background-color : rgba(255, 255, 255, 0.344);
+    background-color : rgba(255, 255, 255, 0.547);
     border-radius: 30px;
     border : solid black 3px;
     box-shadow : 50px;
-    margin-left: 40.5vw;
     width : 18vw;
-    z-index: 25;
+    z-index: 5;
+}
+
+#mot{
+    width: 100%;
+    height: auto;
+    margin-top: 1.5vh;
 }
 
 #pause{
-    margin-top: 0.5vh;
-    margin-left: 47vw;
-    grid-column : 1;
-    grid-row : 1;
     width : 5%; 
     filter: invert(100%);
     opacity: 0.8;
 }
+
+#cross{
+    justify-content: flex-end;
+    width : 4%; 
+    filter: invert(100%);
+    opacity: 0.8;
+    margin-right: 2vw;
+}
+
+#infoB{
+    justify-content: flex-start;
+    width : 4%; 
+    filter: invert(100%) brightness(130%);
+    margin-left: 1.5vw;
+}   
 
 .level {
     padding-left: 2vw;
@@ -150,16 +172,6 @@ body{
     padding-top : 1vh;
     padding-left : 2.6vw; 
     width : 75%;
-}
-
-#cross{
-    margin-top: 1vh;
-    margin-left: 95vw;
-    grid-column : 1;
-    grid-row : 1;
-    width : 4%; 
-    filter: invert(100%);
-    opacity: 0.8;
 }
 
 .plateformes{
@@ -313,15 +325,6 @@ body{
     padding-right: 1.75vw;
     background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 10px; 
-}
-
-#infoB{
-    margin-top: 1vh;
-    margin-left: 1vw;
-    grid-column : 1;
-    grid-row : 1;
-    width : 4%; 
-    filter: invert(100%) brightness(130%);
 }
 
 .finish-screen{
