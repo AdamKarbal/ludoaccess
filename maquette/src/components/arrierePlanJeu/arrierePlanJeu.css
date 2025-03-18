@@ -1,0 +1,12 @@
+.fond{
+    background-image: url('/src/assets/ressources/back3.jpg');
+    background-size: cover;
+    display : grid;
+    grid-row : 1;
+    grid-column: 1;
+    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: 1;
+    height: calc(100vh - (var(--sol-height)));
+    width: 100vw;
+    z-index: -1;
+}
