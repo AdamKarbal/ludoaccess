@@ -1,0 +1,35 @@
+.toolbar{
+    height : 10.5vh;
+    width : 100vw;
+    background-color: #000;
+    opacity : 0.4;
+}
+
+#cross{
+    margin-top: 1vh;
+    margin-left: 95vw;
+    grid-column : 1;
+    grid-row : 1;
+    width : 4%; 
+    filter: invert(100%);
+    opacity: 0.8;
+}
+
+#pause{
+    margin-top: 0.5vh;
+    margin-left: 47vw;
+    grid-column : 1;
+    grid-row : 1;
+    width : 5%; 
+    filter: invert(100%);
+    opacity: 0.8;
+}
+
+#infoB{
+    margin-top: 1vh;
+    margin-left: 1vw;
+    grid-column : 1;
+    grid-row : 1;
+    width : 4%; 
+    filter: invert(100%) brightness(130%);
+}

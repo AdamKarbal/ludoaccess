@@ -1,0 +1,20 @@
+.word2Guess{
+    position: fixed;
+    display: flex;
+    justify-content:center; /* Centre les éléments horizontalement */;
+    align-items: center; /* Centre les éléments verticalement */
+    flex-direction: column;
+    top: 13%;
+    left: 41%;
+    font-size: calc(var(--W2G-height) / 2);
+    font-family : fantasy;
+    text-align: center;
+    line-height: var(--W2G-height);
+    height : var(--W2G-height);
+    background-color : rgba(255, 255, 255, 0.344);
+    border-radius: 30px;
+    border : solid black 3px;
+    box-shadow : 50px;
+    width : 18vw;
+    z-index: 1;
+}

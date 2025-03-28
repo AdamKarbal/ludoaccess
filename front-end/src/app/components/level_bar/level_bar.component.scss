@@ -1,0 +1,42 @@
+.level {
+    padding-left: 2vw;
+    margin-left: 10vw;
+    font-family: fantasy;
+    font-size: 2.7em;
+    grid-column: 1;
+    grid-row: 1;
+    background-color: white; 
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: solid black 4px;
+    margin-left: 2.5vw;
+    margin-top: 7vw;
+    height: 7.2vh;
+    width: 20vw;
+    position: relative;
+    overflow: hidden; 
+}
+
+.level-progress {
+    background-color: rgb(47, 255, 82); 
+    height: 100%;
+    width: 35%;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.level-title{
+    font-family: fantasy;
+    font-size: 1.1em;
+    background-color: transparent;
+    position: relative; 
+    z-index: 2; 
+    width: 100%;
+}
