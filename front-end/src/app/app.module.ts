@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { ToolbarGameComponent } from './components/toolbar_game/toolbar_game.component';
 import { LevelBarComponent } from './components/level_bar/level_bar.component';
 import { Word2GuessComponent } from './components/word2guess/word2guess.component';
+import { JeuEtape1Component } from './pages/jeu_etape1/jeu_etape1.component';
 
 @NgModule({
   declarations: [
-    AppComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent
+    AppComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component
   ],
   imports: [
     BrowserModule,
