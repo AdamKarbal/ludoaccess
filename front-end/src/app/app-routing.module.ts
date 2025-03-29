@@ -7,9 +7,8 @@ import { StatsComponent} from "./pages/stats/stats";
 
 const routes: Routes = [
   {path: 'StatsMenu', component: StatsMenuModule},
-  {path: 'StatsComponent', component: StatsComponent}
-  {path : 'reglage', component : ReglagePageComponent},
-  ,
+  {path: 'StatsComponent', component: StatsComponent},
+  {path : 'reglage', component : ReglagePageComponent}
 ];
 
 @NgModule({
