@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component,OnInit } from "@angular/core";
 
 @Component({
   selector: "app-jeu_etape1",
@@ -7,4 +7,5 @@ import { Component } from "@angular/core";
 })
 export class JeuEtape1Component {
   constructor() {}
+  ngOnInit(): void {}
 }

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component,OnInit } from "@angular/core";
 
 @Component({
   selector: "app-toolbar-game",
@@ -7,4 +7,5 @@ import { Component } from "@angular/core";
 })
 export class ToolbarGameComponent {
   constructor() {}
+  ngOnInit(): void {}
 }

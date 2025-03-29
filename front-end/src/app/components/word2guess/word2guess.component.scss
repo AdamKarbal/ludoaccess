@@ -7,7 +7,7 @@
     top: 13%;
     left: 41%;
     font-size: calc(var(--W2G-height) / 2);
-    font-family : fantasy;
+    font-family :  'Bangers', sans-serif;
     text-align: center;
     line-height: var(--W2G-height);
     height : var(--W2G-height);
@@ -17,4 +17,19 @@
     box-shadow : 50px;
     width : 18vw;
     z-index: 1;
+}
+#mot{
+    width: 100%;
+    height: auto;
+    margin-top: -13vh;
+}
+
+#tirets{
+    justify-content: center;
+    width:100%;
+    height: 5%;
+    font-size: calc(var(--W2G-height) / 2);
+    font-family :  'Bangers', sans-serif;
+    text-align: center;
+    margin-top: -14.5vh;
 }
