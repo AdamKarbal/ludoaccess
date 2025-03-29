@@ -1,21 +1,18 @@
 .level {
+    position: fixed;
     padding-left: 2vw;
-    margin-left: 10vw;
+    left: 2.7vw;
+    top:14vh;
     font-family: fantasy;
     font-size: 2.7em;
-    grid-column: 1;
-    grid-row: 1;
     background-color: white; 
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border: solid black 4px;
-    margin-left: 2.5vw;
-    margin-top: 7vw;
     height: 7.2vh;
     width: 20vw;
-    position: relative;
     overflow: hidden; 
 }
 
@@ -35,6 +32,7 @@
 .level-title{
     font-family: fantasy;
     font-size: 1.1em;
+    font-weight: bold;
     background-color: transparent;
     position: relative; 
     z-index: 2; 
