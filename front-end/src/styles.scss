@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset complet */
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+  }
+  
+
+  
+app-setting {
+  display: block;
+  contain: content;
+}
+
+.settings-wrapper {
+  display: block !important;
+}

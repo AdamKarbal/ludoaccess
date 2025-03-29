@@ -1,0 +1,92 @@
+<form *ngIf="currentSettings" class="settings-form" (ngSubmit)="onSettingChange()">
+    <h3 class="settings-title">Paramètres</h3>
+    
+    <div class="settings-group">
+      <h4 class="group-title">Affichage</h4>
+      
+      <label class="setting">
+        <input type="checkbox" 
+               [(ngModel)]="currentSettings.showTimer"
+               name="showTimer">
+        <span>Afficher le chronomètre</span>
+      </label>
+  
+      <label class="setting">
+        <input type="checkbox" 
+               [(ngModel)]="currentSettings.showRanking"
+               name="showRanking">
+        <span>Afficher le classement</span>
+      </label>
+    </div>
+  
+    <div class="settings-group">
+      <h4 class="group-title">Difficulté</h4>
+      
+      <label class="setting">
+        <input type="checkbox" 
+               [(ngModel)]="currentSettings.enableLifeLoss"
+               name="enableLifeLoss">
+        <span>Activer la perte de vie</span>
+      </label>
+  
+      <label class="setting">
+        <input type="checkbox" 
+               [(ngModel)]="currentSettings.jumpDifficulty"
+               name="jumpDifficulty">
+        <span>Sauts plus compliqués</span>
+      </label>
+  
+      <label class="setting">
+        <input type="checkbox" 
+               [(ngModel)]="currentSettings.clearWordAfterRecovery"
+               name="clearWordAfterRecovery">
+        <span>Effacer le mot après récupération</span>
+      </label>
+    </div>
+  
+    <div class="settings-group">
+      <h4 class="group-title">Temps et mots</h4>
+      
+      <label class="setting">
+        <span>Temps pour écrire le mot (secondes):</span>
+        <input type="number" 
+               [(ngModel)]="currentSettings.wordWritingTime"
+               name="wordWritingTime"
+               min="1" max="60">
+      </label>
+  
+      <label class="setting">
+        <span>Longueur des mots:</span>
+        <div class="range-inputs">
+          <input type="number" 
+                 [(ngModel)]="currentSettings.minWordLength"
+                 name="minWordLength"
+                 placeholder="Min"
+                 min="1" max="20">
+          <span>-</span>
+          <input type="number" 
+                 [(ngModel)]="currentSettings.maxWordLength"
+                 name="maxWordLength"
+                 placeholder="Max"
+                 min="1" max="20">
+        </div>
+      </label>
+  
+      <label class="setting">
+        <span>Difficulté des mots:</span>
+        <select [(ngModel)]="currentSettings.wordDifficulty"
+                name="wordDifficulty">
+          <option value="Facile">Facile</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Difficile">Difficile</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="form-actions">
+        <button type="button" (click)="onResetSettings()" class="reset-btn">
+          Réinitialiser
+        </button>
+    </div>
+
+  </form>
