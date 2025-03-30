@@ -1,0 +1,16 @@
+<div class="child-list">
+    <div class="children-container">
+      <ng-container *ngFor="let child of childList">
+        <div *ngIf="selectedChildId !== child.id; else childWithSettings">
+          <app-child [child]="child" (deleteChild)="deleteChild($event)" (childClicked)="onChildClicked($event)"></app-child>
+        </div>
+        
+        <ng-template #childWithSettings>
+          <div class="child-with-settings">
+            <app-child [child]="child" (deleteChild)="deleteChild($event)" (childClicked)="onChildClicked($event)"></app-child>
+            <app-setting [childId]="child.id" class="settings-container"></app-setting>
+          </div>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>

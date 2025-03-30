@@ -1,0 +1,105 @@
+:host {
+    display: block ;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #90e0ef;
+    font-family: 'Luckiest Guy', cursive;
+  }
+  
+  .settings-form {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+  }
+  
+  .settings-title {
+    color: #0077b6;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #90e0ef;
+    padding-bottom: 8px;
+  }
+  
+  .settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .group-title {
+    color: #0096c7;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: "•";
+      color: #90e0ef;
+      margin-right: 8px;
+      font-size: 1.5em;
+    }
+  }
+  
+  .setting {
+    display: flex;
+    align-items: center;
+    
+    > span {
+      margin-left: 10px;
+      flex: 1;
+    }
+  }
+  
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0096c7;
+  }
+  
+  input[type="number"], select {
+    padding: 6px;
+    border: 1px solid #90e0ef;
+    border-radius: 4px;
+    margin-left: 10px;
+    text-align: center;
+  }
+  
+  select {
+    background: white;
+  }
+  
+  .range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    
+    > span {
+      color: #0096c7;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .reset-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: #ff4d4d;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block; 
+  }
+  
+  .reset-btn:hover {
+    background-color: #ff1a1a;
+    color: white;
+  }
+  
