@@ -5,7 +5,7 @@ import { StatsComponent} from "./pages/stats/stats";
 import { JeuEtape1Component } from './pages/jeu_etape1/jeu_etape1.component';
 import { JeuEtape2Component } from './pages/jeu_etape2/jeu_etape2.component';
 import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
-import { GameComponent } from './component/game/game.component';
+import { GameComponent } from './components/game/game.component';
 
 
 const routes: Routes = [

@@ -20,7 +20,7 @@ import {ChildListComponent} from './components/child-list/child-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { StatsComponent} from "./pages/stats/stats";
-import { GameComponent } from './component/game/game.component';
+import { GameComponent } from './components/game/game.component';
 
 
 @NgModule({
