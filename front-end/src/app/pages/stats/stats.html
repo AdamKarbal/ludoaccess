@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques du Joueur</title>
+    <link rel="stylesheet" href="./stats.scss" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Statistiques du Joueur</h1>
+    </header>
+
+    <stats-menu [titre]="'Informations du Joueur'">
+        <div class="player-stats">
+            <div class="info">
+                <p><strong>Nom :</strong> Karbal Adam</p>
+                <p><strong>Âge :</strong> 8 ans</p>
+                <p><strong>Durée Totale de Jeu :</strong> 1h 15min</p>
+                <p><strong>Fréquence de Jeu :</strong> 5 sessions cette semaine</p>
+            </div>
+        </div>
+    </stats-menu>
+
+    <stats-menu [titre]="'Statistiques détailles'">
+      <div class="chart">
+        <!-- Y-Axis Title -->
+        <div class="y-axis-title">Valeur</div> <!-- Title for the Y-axis -->
+
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="line-chart">
+          <!-- Lignes de fond -->
+          <line x1="0" y1="7.5" x2="100" y2="7.5" stroke="#f1f1f1" stroke-width="0.5"/>
+          <line x1="0" y1="25" x2="100" y2="25" stroke="#f1f1f1" stroke-width="0.5"/>
+          <line x1="0" y1="42.5" x2="100" y2="42.5" stroke="#f1f1f1" stroke-width="0.5"/>
+          <line x1="0" y1="60" x2="100" y2="60" stroke="#f1f1f1" stroke-width="0.5"/>
+          <line x1="0" y1="77.5" x2="100" y2="77.5" stroke="#f1f1f1" stroke-width="0.5"/>
+          <line x1="0" y1="94.5" x2="100" y2="94.5" stroke="#f1f1f1" stroke-width="0.5"/>
+
+          <!-- Courbe -->
+          <polyline
+            fill="none"
+            stroke="#0077cc"
+            stroke-width="0.7"
+            points="13,70 24.5,40 36,55 47.5,35 59,45 70.5,35 81.5,50 93,20"/>
+
+          <!-- Points clés -->
+          <circle cx="13" cy="69.8" r="0.8" fill="#34a853" />
+          <circle cx="24.5" cy="40" r="0.8" fill="#34a853" />
+          <circle cx="36" cy="55" r="0.8" fill="#34a853" />
+          <circle cx="47.5" cy="35" r="0.8" fill="#34a853" />
+          <circle cx="59" cy="45" r="0.8" fill="#34a853" />
+          <circle cx="70.5" cy="35" r="0.8" fill="#34a853" />
+          <circle cx="81.5" cy="50" r="0.8" fill="#34a853" />
+          <circle cx="93" cy="20" r="0.8" fill="#34a853" />
+        </svg>
+
+        <!-- X-Axis Title -->
+        <div class="x-axis-title">Nombre d'erreurs</div> <!-- Title for the X-axis -->
+
+        <!-- Axe horizontal : Abscisse -->
+        <div class="y-axis">
+          <div class="y-tick">100</div>
+          <div class="y-tick">80</div>
+          <div class="y-tick">60</div>
+          <div class="y-tick">40</div>
+          <div class="y-tick">20</div>
+          <div class="y-tick">0</div>
+        </div>
+
+        <!-- Axe horizontal : Ordonnée -->
+        <div class="x-axis">
+          <div class="x-tick">Jan</div>
+          <div class="x-tick">Fev</div>
+          <div class="x-tick">Mar</div>
+          <div class="x-tick">Avr</div>
+          <div class="x-tick">Mai</div>
+          <div class="x-tick">Jun</div>
+          <div class="x-tick">Jui</div>
+          <div class="x-tick">Aou</div>
+        </div>
+      </div>
+
+    </stats-menu>
+
+    <stats-menu [titre]="'Progression dans le Jeu'">
+        <div class="progress-stats">
+            <table>
+                <thead>
+                <tr>
+                    <th>Niveau</th>
+                    <th>Objectif Atteint</th>
+                    <th>Erreurs</th>
+                    <th>Temps Pris</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Complété</td>
+                    <td>3</td>
+                    <td>4min</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Complété</td>
+                    <td>2</td>
+                    <td>6min</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </stats-menu>
+
+    <stats-menu [titre]="'Retour Émotionnel'">
+        <div class="emotional-feedback">
+            <p><strong>Indicateur de Frustration :</strong> Modéré (3 incidents)</p>
+            <p><strong>Pourcentage d'interactions réussies :</strong> Haut (70%)</p>
+        </div>
+    </stats-menu>
+
+  <stats-menu [titre]="'Statistiques d\'Interaction'">
+    <div class="interaction-stats">
+      <table>
+        <thead>
+        <tr>
+          <th>Interaction</th>
+          <th>Succès</th>
+          <th>Échecs</th>
+          <th>Temps entre deux lettres</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Saisie clavier</td>
+          <td>45</td>
+          <td>5</td>
+          <td>5s</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </stats-menu>
+
+</div>
+</body>
+</html>

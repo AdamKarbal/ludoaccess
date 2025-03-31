@@ -1,0 +1,12 @@
+<div class="child" [class.active]="isSelected" (click)="onClick()">
+    <img [src]="child.imageUrl || '../../assets/ressources/e1.jpg'" alt="Photo de {{child.firstName}}" class="child-avatar">
+    <div class="child-info">
+        <h2>{{child.firstName}} {{child.lastName}}</h2>
+    </div>
+    <button class="delete-btn" (click)="delete($event)">
+        <i class="fas fa-trash"></i> Delete
+    </button>
+</div>
+<div class="child-settings" *ngIf="isSelected">
+    <app-setting [childId]="child.id"></app-setting>
+</div>
