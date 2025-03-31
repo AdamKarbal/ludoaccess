@@ -8,15 +8,16 @@ import { LevelBarComponent } from './components/level_bar/level_bar.component';
 import { Word2GuessComponent } from './components/word2guess/word2guess.component';
 import { JeuEtape1Component } from './pages/jeu_etape1/jeu_etape1.component';
 import { JeuEtape2Component } from './pages/jeu_etape2/jeu_etape2.component';
+import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
+import { InfosComponent } from './components/infos/infos.component';
+import { CoeursComponent } from './components/coeurs/coeurs.components';
+import { finishComponent } from './components/finishScreen/finishScreen.component';
 
 @NgModule({
   declarations: [
-    AppComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component
+    AppComponent, ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component, JeuEtape3Component, AppComponent, InfosComponent, CoeursComponent, finishComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })
