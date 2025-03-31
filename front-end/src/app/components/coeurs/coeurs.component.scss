@@ -1,0 +1,30 @@
+.coeurs{
+    position: fixed;
+    top: 0;
+    right: 1.6vw;
+    margin-top: 12vh;
+    margin-left: 77vw;;
+    height : 11vh;
+    width: 21vw;
+    background-color: rgb(255, 224, 47);
+    border-radius: 20px;
+    border : solid rgb(7, 5, 1) 4px;
+}
+
+#left{
+    padding-top : 1vh;
+    padding-left : 1.35vw; 
+    width : 25%;
+}
+
+#middle{
+    padding-top : 1vh;
+    padding-left : 1.5vw; 
+    width : 25%;
+}
+
+#right{
+    padding-top : 1vh;
+    padding-left : 1.5vw; 
+    width : 25%;
+}
