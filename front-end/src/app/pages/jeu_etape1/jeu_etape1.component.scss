@@ -1,6 +1,6 @@
 
-
 .sol{
+    position: fixed;
     background-image: url('../../../assets/ressources/texture_roche.jpg');    
     filter: hue-rotate(180deg); 
     height: var(--sol-height);
@@ -11,6 +11,7 @@
 }
 
 .fond{
+    position: fixed;
     background-image: url('../../../assets/ressources/back3.jpg');
     background-size: cover;
     height: calc(100vh - (var(--sol-height)));
@@ -25,8 +26,8 @@
 }
     
 #megaman{
-    position: relative;
-    bottom:25vh;
+    position: fixed;
+    bottom:10vh;
     left: 60vw;
     width :11vw;
     height: 15vh;
@@ -34,18 +35,18 @@
 }
 
 #bulle{
-    position: relative;
-    bottom:36vh;
-    left: 27.3vw;
+    position: fixed;
+    bottom:22vh;
+    left: 38vw;
     width :25vw;
     height: 15vh;
     z-index: 10;
 }
 
 .texte-bulle{
-    position: relative;
-    bottom:47vh;
-    left: 5.1vw;
+    position: fixed;
+    bottom:29vh;
+    left: 39.5vw;
     font-size: 1.2em;
     font-family:  'Bangers', sans-serif;
     text-align: center;
