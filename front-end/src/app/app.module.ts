@@ -11,11 +11,13 @@ import {ChildListComponent} from './component/child-list/child-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { StatsComponent} from "./pages/stats/stats";
+import { GameComponent } from './component/game/game.component';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent
+    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent, GameComponent
   ],
   imports: [
     BrowserModule,
