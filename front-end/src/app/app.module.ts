@@ -25,7 +25,7 @@ import { GameComponent } from './components/game/game.component';
 
 @NgModule({
   declarations: [
-    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent
+    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent
   ],
   imports: [
     BrowserModule,
