@@ -35,6 +35,13 @@
                name="jumpDifficulty">
         <span>Sauts plus compliqués</span>
       </label>
+
+      <label class="setting">
+        <input type="checkbox" 
+               [(ngModel)]="currentSettings.adaptDifficulty"
+               name="adaptDifficulty">
+        <span>Adapter la difficulté</span>
+      </label>
   
       <label class="setting">
         <input type="checkbox" 
@@ -70,6 +77,17 @@
                  placeholder="Max"
                  min="1" max="20">
         </div>
+      </label>
+
+      <label class="setting">
+        <span>Simplifier le jeu au bout de (en minutes):</span>
+        <div class="range-inputs">
+          <input type="number" 
+                 [(ngModel)]="currentSettings.simplifyGameAfter"
+                 name="simplifyGameAfter"
+                 placeholder="minutes"
+                 min="1" max="60">
+        </div>       
       </label>
   
       <label class="setting">
