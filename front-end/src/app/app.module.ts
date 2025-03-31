@@ -3,6 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { StatsMenuModule} from "./components/stats-menu/menu";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ToolbarGameComponent } from './components/toolbar_game/toolbar_game.component';
+import { LevelBarComponent } from './components/level_bar/level_bar.component';
+import { Word2GuessComponent } from './components/word2guess/word2guess.component';
+import { JeuEtape1Component } from './pages/jeu_etape1/jeu_etape1.component';
+import { JeuEtape2Component } from './pages/jeu_etape2/jeu_etape2.component';
+import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
+import { InfosComponent } from './components/infos/infos.component';
+import { CoeursComponent } from './components/coeurs/coeurs.components';
+import { finishComponent } from './components/finishScreen/finishScreen.component';
 import { SettingComponent} from './component/setting/setting.component';
 import { ReglagePageComponent } from './pages/reglage/reglage.component';
 import { HeaderComponent } from './component/header/header.component';  
@@ -14,18 +23,15 @@ import { StatsComponent} from "./pages/stats/stats";
 import { GameComponent } from './component/game/game.component';
 
 
-
 @NgModule({
   declarations: [
-    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent, GameComponent
+    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
-  ],
+    FormsModule],
   providers: [],
-  bootstrap: [AppComponent,StatsMenuModule]
-})
+  bootstrap: [AppComponent,StatsMenuModule]})
 export class AppModule { }
