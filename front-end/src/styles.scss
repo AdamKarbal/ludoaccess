@@ -1,3 +1,4 @@
+
 /* You can add global styles to this file, and also import other style files */
 :root {
     --sol-height: 10vh;
@@ -7,10 +8,21 @@
     --PLAT-height : 5vh;
 }
 
-body{
+html, body {
     height: 100vh;
     width: 100vw;   
     margin: 0;
     padding: 0;
-    
+    border: 0;
+    outline: 0;
+}
+
+app-setting {
+  display: block;
+  contain: content;
+}
+
+.settings-wrapper {
+  display: block !important;
+
 }
