@@ -22,7 +22,6 @@
 .fond{
     background-image: url('../../../assets/ressources/back3.jpg');
     background-size: cover;
-    display : grid;
     height: calc(100vh - (var(--sol-height)));
     width: 100vw;
     z-index: -1;

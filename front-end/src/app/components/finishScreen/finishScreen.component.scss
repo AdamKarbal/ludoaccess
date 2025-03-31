@@ -1,15 +1,13 @@
 .finish-screen{
-    position: relative;
-    padding-top: 15vh;
+    position: fixed;
+    top: 11.5%;
+    left: 17.5%;
+    padding: 13vh 5vw 2vh 5vw;
     font-family : 'Caveat', 'Indie Flower', 'Pacifico', cursive;
     color : white;
     font-size : 1.75em;
     text-align: center;
     background-color: black;
-    margin-top : 11vh;
-    margin-bottom : 2vh;
-    margin-left : 45vh;
-    margin-right : 45vh;
     opacity: 0.7;
     border-radius: 5%;
     z-index: 3;
