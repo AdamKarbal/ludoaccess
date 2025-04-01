@@ -14,19 +14,15 @@ import { CoeursComponent } from './components/coeurs/coeurs.components';
 import { finishComponent } from './components/finishScreen/finishScreen.component';
 import { SettingComponent} from './components/setting/setting.component';
 import { ReglagePageComponent } from './pages/reglage/reglage.component';
-import { HeaderComponent } from './components/header/header.component';  
+import { HeaderComponent } from './components/header/header.component';
 import { ChildComponent } from './components/child/child.component';
 import {ChildListComponent} from './components/child-list/child-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { StatsComponent} from "./pages/stats/stats";
+
 import { GameComponent } from './components/game/game.component';
 import { Jeu} from './pages/jeu/jeu.component';
-import { HeaderComponent } from './component/header/header.component';
-import { ChildComponent } from './component/child/child.component';
-import {ChildListComponent} from './component/child-list/child-list.component';
-import {HttpClientModule} from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+
 import {UserStatsChartComponent} from "./component/stats-chart/stats-chart";
 import {UserStatsService} from "../services/stats.service";
 import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
@@ -37,7 +33,7 @@ import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component"
     declarations: [
         AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent, ChildComponent, ChildListComponent, StatsMenuModule, UserStatsChartComponent,
         PlayerStatsComponent,
-      AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu
+      AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu
     ],
     imports: [
         BrowserModule,

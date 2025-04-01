@@ -7,7 +7,14 @@ import { JeuEtape2Component } from './pages/jeu_etape2/jeu_etape2.component';
 import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
 import { GameComponent } from './components/game/game.component';
 import { Jeu} from './pages/jeu/jeu.component';
-
+const routes: Routes = [
+  {path : 'reglage', component : ReglagePageComponent},
+  {path: 'stats', component: PlayerStatsComponent},
+  {path : 'jeu_etape1', component : JeuEtape1Component},
+  {path : 'jeu_etape2', component : JeuEtape2Component},
+  {path : 'jeu_etape3', component : JeuEtape3Component},
+  {path : 'game', component : GameComponent}
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
