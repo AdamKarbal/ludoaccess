@@ -8,4 +8,8 @@ import { Component, OnInit } from "@angular/core";
 export class LevelBarComponent {
   constructor() {}
   ngOnInit(): void {}
+  progress: number = 35;
+  updateProgress(newValue: number) {
+    this.progress = Math.max(0, Math.min(100, newValue)); // Assure que la valeur reste entre 0 et 100
+  }
 }
