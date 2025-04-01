@@ -14,7 +14,7 @@ const routes: Routes = [
   {path : 'jeu_etape1', component : JeuEtape1Component},
   {path : 'jeu_etape2', component : JeuEtape2Component},
   {path : 'jeu_etape3', component : JeuEtape3Component},
-  {path : 'game', component : GameComponent}
+  {path : 'game', component : GameComponent},
 ];
 
 @NgModule({

@@ -9,7 +9,16 @@ export class LevelBarComponent {
   constructor() {}
   ngOnInit(): void {}
   progress: number = 35;
-  updateProgress(newValue: number) {
-    this.progress = Math.max(0, Math.min(100, newValue)); // Assure que la valeur reste entre 0 et 100
+  level:number = 0;
+  increaseProgress(amount: number) {
+    this.progress += amount;
+
+    if (this.progress >= 100) {
+      this.levelUp();
+    }
+  }
+  levelUp() {
+    this.level++;
+    this.progress = 0; // Réinitialise la progression pour le nouveau niveau
   }
 }
