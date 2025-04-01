@@ -22,17 +22,36 @@ import { FormsModule } from '@angular/forms';
 import { StatsComponent} from "./pages/stats/stats";
 import { GameComponent } from './components/game/game.component';
 import { Jeu} from './pages/jeu/jeu.component';
+import { HeaderComponent } from './component/header/header.component';
+import { ChildComponent } from './component/child/child.component';
+import {ChildListComponent} from './component/child-list/child-list.component';
+import {HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import {UserStatsChartComponent} from "./component/stats-chart/stats-chart";
+import {UserStatsService} from "../services/stats.service";
+import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
+
 
 
 @NgModule({
-  declarations: [
-    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu
+    declarations: [
+        AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent, ChildComponent, ChildListComponent, StatsMenuModule, UserStatsChartComponent,
+        PlayerStatsComponent,
+      AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
+    providers: [UserStatsService],
+  exports: [
+    StatsMenuModule,
+    UserStatsChartComponent,
+    PlayerStatsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule],
-  providers: [],
-  bootstrap: [AppComponent,StatsMenuModule]})
+    bootstrap: [AppComponent, StatsMenuModule]
+})
+
 export class AppModule { }

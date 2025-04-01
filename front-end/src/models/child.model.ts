@@ -5,4 +5,7 @@ export interface Child {
     imageUrl?: string;
     level?: number;
     lastPlayed?: Date;
+    playDuration?: number;
+    frequency?: number;
+    age?: number;
   }
