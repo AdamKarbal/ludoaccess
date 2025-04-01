@@ -21,11 +21,12 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { StatsComponent} from "./pages/stats/stats";
 import { GameComponent } from './components/game/game.component';
+import { Jeu} from './pages/jeu/jeu.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent
+    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
 
 export class CoeurService {
   private maxLives = 6;
-  private livesSubject = new BehaviorSubject<number>(this.maxLives);
+  public livesSubject = new BehaviorSubject<number>(this.maxLives);
   lives$ = this.livesSubject.asObservable();
 
   loseLife(){
