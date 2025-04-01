@@ -37,13 +37,14 @@ export class SettingsService {
       enableLifeLoss: false,
       jumpDifficulty: false,
       clearWordAfterRecovery: false,
+      adaptDifficulty:false,
+      simplifyGameAfter:30,
       wordWritingTime: 30,
       wordDifficulty: 'Facile',
       preferredWordLength: 8,
       minWordLength: 3,
-      maxWordLength: 10,
-      simplifyAfterMinutes: 15
-    };
+      maxWordLength: 10
+       };
   }
 
   resetSettings(childId: string): void {
