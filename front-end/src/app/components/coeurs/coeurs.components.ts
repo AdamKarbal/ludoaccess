@@ -9,5 +9,7 @@ import {Component, OnInit} from '@angular/core';
 export class CoeursComponent implements OnInit{
     constructor(){}
     ngOnInit(): void {}
+
+    
 }
 

@@ -10,14 +10,15 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   private ctx!: CanvasRenderingContext2D;
   private mob = new Mob(1300, 500);
   private miniGame!: MiniGame;
+  private player: Player = new Player();
 
   private backgroundImage!: HTMLImageElement;
 
   ngOnInit() {
     this.miniGame = new MiniGame(() => {
       this.mob = new Mob(1300, 500);
-    });
-  }
+    }, this.player);
+  };
 
   ngOnDestroy() {
     this.miniGame.cleanup();
@@ -47,7 +48,7 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
     if (!this.miniGame.isActive) {
       this.mob.update();
       if (this.detectCollision()) {
-        //this.miniGame.start();
+        this.miniGame.start();
       }
     } else {
       this.miniGame.update();
@@ -57,7 +58,6 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   private draw() {
     const canvas = this.canvasRef.nativeElement;
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     if (this.backgroundImage.complete) {
       const ratio = Math.max(
         canvas.width / this.backgroundImage.width,
@@ -69,7 +69,6 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
       const y = (canvas.height - height) / 2;
       this.ctx.drawImage(this.backgroundImage, x, y, width, height);
     }
-
     if (this.miniGame.isActive) {
       this.miniGame.draw(this.ctx);
     } else {
@@ -170,9 +169,11 @@ class MiniGame {
   private currentText: string = "";
   private onEndCallback: () => void;
   private keyHandler: (event: KeyboardEvent) => void;
+  private player: Player;
 
-  constructor(onEndCallback: () => void) {
+  constructor(onEndCallback: () => void, player: Player) {
     this.onEndCallback = onEndCallback;
+    this.player = player;
     this.img1 = new Image();
     this.img1.src = '../../../assets/ressources/megaman_de_face.png';
     this.img2 = new Image();
@@ -196,22 +197,22 @@ class MiniGame {
   }
 
   update() {
+    // Logique de mise à jour si nécessaire
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctx.fillRect(this.letterX - 50, this.letterY - 50, 100, 100);
-
     ctx.drawImage(this.img1, 1300, 500, 300, 200);
     ctx.drawImage(this.img2, 1030, 350, 375, 200);
-
     ctx.font = "15px 'Luckiest Guy', cursive";
     ctx.fillStyle = "black";
     const lines = this.currentText.split('\n');
     let textX = 1057;
     let textY = 400;
     lines.forEach((line, index) => ctx.fillText(line, textX, textY + index * 25));
-
+    ctx.font = "20px 'Luckiest Guy', cursive";
+    ctx.fillStyle = "white";
     if (this.isAnimatingError) {
       ctx.strokeStyle = "red";
       ctx.lineWidth = 5;
@@ -221,7 +222,6 @@ class MiniGame {
       ctx.lineWidth = 5;
       ctx.strokeRect(this.letterX - 50, this.letterY - 50, 100, 100);
     }
-
     ctx.font = "80px 'Luckiest Guy', cursive";
     ctx.fillStyle = "white";
     ctx.fillText(this.targetLetter, this.letterX - 20, this.letterY + 30);
@@ -243,6 +243,7 @@ class MiniGame {
       this.currentText = this.successText;
       setTimeout(() => {
         this.isAnimatingSuccess = false;
+        this.player.applyDamage(1)
         this.nextLetter();
       }, 300);
     } else {
@@ -266,5 +267,25 @@ class MiniGame {
   private end() {
     this.isActive = false;
     this.onEndCallback();
+  }
+}
+
+class Player {
+  private health: number;
+
+  constructor() {
+    this.health = 6;
+  }
+
+  getHealth(): number {
+    return this.health;
+  }
+
+  applyDamage(amount: number) {
+    this.health = Math.max(0, this.health - amount);
+  }
+
+  isAlive(): boolean {
+    return this.health > 0;
   }
 }
