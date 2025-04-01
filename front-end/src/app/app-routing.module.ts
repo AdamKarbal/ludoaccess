@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReglagePageComponent } from './pages/reglage/reglage.component';
-import { StatsMenuModule } from './components/stats-menu/menu';
-import { StatsComponent} from "./pages/stats/stats";
+import { PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
 
 
 const routes: Routes = [
-  {path: 'StatsMenu', component: StatsMenuModule},
-  {path: 'StatsComponent', component: StatsComponent},
-  {path : 'reglage', component : ReglagePageComponent}
+  {path : 'reglage', component : ReglagePageComponent},
+  {path: 'stats', component: PlayerStatsComponent},
+
 ];
 
 @NgModule({

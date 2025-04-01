@@ -5,25 +5,33 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SettingComponent} from './component/setting/setting.component';
 import { ReglagePageComponent } from './pages/reglage/reglage.component';
-import { HeaderComponent } from './component/header/header.component';  
+import { HeaderComponent } from './component/header/header.component';
 import { ChildComponent } from './component/child/child.component';
 import {ChildListComponent} from './component/child-list/child-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { StatsComponent} from "./pages/stats/stats";
+import {UserStatsChartComponent} from "./component/stats-chart/stats-chart";
+import {UserStatsService} from "../services/stats.service";
+import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
 
 
 @NgModule({
-  declarations: [
-    AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule, StatsComponent
+    declarations: [
+        AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent, ChildComponent, ChildListComponent, StatsMenuModule, UserStatsChartComponent,
+        PlayerStatsComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
+    providers: [UserStatsService],
+  exports: [
+    StatsMenuModule,
+    UserStatsChartComponent,
+    PlayerStatsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent,StatsMenuModule]
+    bootstrap: [AppComponent, StatsMenuModule]
 })
 export class AppModule { }
