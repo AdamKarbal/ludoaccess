@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { CoeurService } from '../../../services/coeurs.services'; 
 
 @Component({
   selector: 'app-game',
@@ -10,14 +11,31 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   private ctx!: CanvasRenderingContext2D;
   private mob = new Mob(1300, 500);
   private miniGame!: MiniGame;
+<<<<<<< HEAD
   private backgroundImage!: HTMLImageElement;
   private ground!: Ground;
   private platforms: Platform[] = [];
   private coins: Coin[] = [];
+=======
+  private player: Player = new Player();
+  private backgroundImage!: HTMLImageElement;
+  gameOver: boolean = false;
+  lives: number = 6;
+
+  constructor(private coeurService: CoeurService) {
+    this.coeurService.lives$.subscribe(lives => {
+      this.lives = lives;
+      if (this.lives <= 0) {
+        this.gameOver = true;
+      }
+    });
+  }
+>>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
 
   ngOnInit() {
     this.miniGame = new MiniGame(() => {
       this.mob = new Mob(1300, 500);
+<<<<<<< HEAD
     });
 
     this.ground = new Ground();
@@ -27,6 +45,9 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.coins.push(new Coin(450,50, "A"));
     this.coins.push(new Coin(750,50, "B"));
+=======
+    }, this.player, this.coeurService);
+>>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
   }
 
   ngOnDestroy() {
@@ -42,7 +63,12 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
     this.backgroundImage = new Image();
     this.backgroundImage.src = '../../../assets/ressources/back3.jpg';
     this.backgroundImage.onload = () => this.startGameLoop();
-  }
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        this.draw();
+    });
+}
 
   private startGameLoop() {
     const loop = () => {
@@ -54,10 +80,12 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   private update() {
+    if (this.gameOver) return;
+
     if (!this.miniGame.isActive) {
       this.mob.update();
       if (this.detectCollision()) {
-        //this.miniGame.start();
+        this.miniGame.start();
       }
     } else {
       this.miniGame.update();
@@ -67,6 +95,11 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   private draw() {
     const canvas = this.canvasRef.nativeElement;
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (this.gameOver) {
+      this.drawGameOver();
+      return;
+    }
 
     if (this.backgroundImage.complete) {
       const ratio = Math.max(
@@ -91,12 +124,43 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
+  private drawGameOver() {
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = this.ctx;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '80px "Luckiest Guy", cursive';
+    ctx.fillStyle = 'red';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 50);
+    ctx.font = '30px "Luckiest Guy", cursive';
+    ctx.fillStyle = 'white';
+    ctx.fillText('Cliquez pour recommencer', canvas.width / 2, canvas.height / 2 + 50);
+  }
+
   private detectCollision(): boolean {
     const player = { x: 1000, y: 500, width: 100, height: 100 };
     return !(this.mob.x + this.mob.width < player.x ||
              this.mob.x > player.x + player.width ||
              this.mob.y + this.mob.height < player.y ||
              this.mob.y > player.y + player.height);
+  }
+
+  handleCanvasClick() {
+    if (this.gameOver) {
+      this.restartGame();
+    }
+  }
+
+  restartGame() {
+    this.gameOver = false;
+    this.coeurService.resetLives();
+    this.mob = new Mob(1300, 500);
+    this.miniGame.cleanup();
+    this.miniGame = new MiniGame(() => {
+      this.mob = new Mob(1300, 500);
+    }, this.player, this.coeurService);
+    this.ngAfterViewInit(); 
   }
 }
 
@@ -119,38 +183,39 @@ class Mob {
   isFacingRight: boolean;
 
   constructor(x: number, y: number) {
-      this.x = x;
-      this.y = y;
-      this.width = 150;
-      this.height = 150;
-      this.speedX = 1;
-      this.isFacingRight = true;
-      this.spriteSheet = new Image();
-      this.spriteSheet.src = '../../../assets/ressources/Worm/Walk.png';
-      this.spriteSheetReversed = new Image();
-      this.spriteSheetReversed.src = '../../../assets/ressources/Worm/Walk_Reversed.png';
-      this.currentFrame = 0;
-      this.totalFrames = 9;
-      this.spriteWidth = 90;
-      this.spriteHeight = 90;
-      this.frameSpeed = 10;
-      this.frameCounter = 0;
+    this.x = x;
+    this.y = y;
+    this.width = 150;
+    this.height = 150;
+    this.speedX = 2;
+    this.isFacingRight = true;
+    this.spriteSheet = new Image();
+    this.spriteSheet.src = '../../../assets/ressources/Worm/Walk.png';
+    this.spriteSheetReversed = new Image();
+    this.spriteSheetReversed.src = '../../../assets/ressources/Worm/Walk_Reversed.png';
+    this.currentFrame = 0;
+    this.totalFrames = 9;
+    this.spriteWidth = 90;
+    this.spriteHeight = 90;
+    this.frameSpeed = 10;
+    this.frameCounter = 0;
   }
 
   update() {
-      this.x += this.speedX;
-      if (this.x + this.width > window.innerWidth || this.x < 0) {
-          this.speedX *= -1;
-          this.isFacingRight = !this.isFacingRight;
-      }
-      this.frameCounter++;
-      if (this.frameCounter >= this.frameSpeed) {
-          this.frameCounter = 0;
-          this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
-      }
+    this.x += this.speedX;
+    if (this.x + this.width > window.innerWidth || this.x < 0) {
+      this.speedX *= -1;
+      this.isFacingRight = !this.isFacingRight;
+    }
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameSpeed) {
+      this.frameCounter = 0;
+      this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D) {
+<<<<<<< HEAD
       const x = this.currentFrame * this.spriteWidth;
       const y = 0;
       const currentSprite = this.isFacingRight ? this.spriteSheet : this.spriteSheetReversed;
@@ -165,6 +230,22 @@ class Mob {
           this.width,
           this.height
       );
+=======
+    const x = this.currentFrame * this.spriteWidth;
+    const y = 0;
+    const currentSprite = this.isFacingRight ? this.spriteSheet : this.spriteSheetReversed;
+    ctx.drawImage(
+      currentSprite, 
+      x, 
+      y, 
+      this.spriteWidth, 
+      this.spriteHeight, 
+      this.x, 
+      this.y, 
+      this.width, 
+      this.height
+    );
+>>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
   }
 }
 
@@ -306,9 +387,13 @@ class MiniGame {
   private currentText: string = "";
   private onEndCallback: () => void;
   private keyHandler: (event: KeyboardEvent) => void;
+  private player: Player;
+  private coeurService: CoeurService;
 
-  constructor(onEndCallback: () => void) {
+  constructor(onEndCallback: () => void, player: Player, coeurService: CoeurService) {
     this.onEndCallback = onEndCallback;
+    this.player = player;
+    this.coeurService = coeurService;
     this.img1 = new Image();
     this.img1.src = '../../../assets/ressources/megaman_de_face.png';
     this.img2 = new Image();
@@ -332,22 +417,22 @@ class MiniGame {
   }
 
   update() {
+    // Logique de mise à jour si nécessaire
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctx.fillRect(this.letterX - 50, this.letterY - 50, 100, 100);
-
     ctx.drawImage(this.img1, 1300, 500, 300, 200);
     ctx.drawImage(this.img2, 1030, 350, 375, 200);
-
     ctx.font = "15px 'Luckiest Guy', cursive";
     ctx.fillStyle = "black";
     const lines = this.currentText.split('\n');
     let textX = 1057;
     let textY = 400;
     lines.forEach((line, index) => ctx.fillText(line, textX, textY + index * 25));
-
+    ctx.font = "20px 'Luckiest Guy', cursive";
+    ctx.fillStyle = "white";
     if (this.isAnimatingError) {
       ctx.strokeStyle = "red";
       ctx.lineWidth = 5;
@@ -357,7 +442,6 @@ class MiniGame {
       ctx.lineWidth = 5;
       ctx.strokeRect(this.letterX - 50, this.letterY - 50, 100, 100);
     }
-
     ctx.font = "80px 'Luckiest Guy', cursive";
     ctx.fillStyle = "white";
     ctx.fillText(this.targetLetter, this.letterX - 20, this.letterY + 30);
@@ -366,8 +450,11 @@ class MiniGame {
   private generateRandomLetter() {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     this.targetLetter = letters.charAt(Math.floor(Math.random() * letters.length));
-    this.letterX = Math.random() * (window.innerWidth - 100) + 50;
-    this.letterY = Math.random() * (window.innerHeight - 100) + 50;
+    const canvas = document.querySelector('canvas');
+    if (canvas) {
+      this.letterX = canvas.width / 2;
+      this.letterY = canvas.height / 2;
+    }
   }
 
   private handleKeyPress(event: KeyboardEvent) {
@@ -379,6 +466,7 @@ class MiniGame {
       this.currentText = this.successText;
       setTimeout(() => {
         this.isAnimatingSuccess = false;
+        this.player.applyDamage(1);
         this.nextLetter();
       }, 300);
     } else {
@@ -386,6 +474,7 @@ class MiniGame {
       this.currentText = this.errorText;
       setTimeout(() => {
         this.isAnimatingError = false;
+        this.coeurService.loseLife(); 
       }, 300);
     }
   }
@@ -404,3 +493,18 @@ class MiniGame {
     this.onEndCallback();
   }
 }
+<<<<<<< HEAD
+=======
+
+class Player {
+  private health: number;
+
+  constructor() {
+    this.health = 6;
+  }
+
+  applyDamage(amount: number) {
+    this.health = Math.max(0, this.health - amount);
+  }
+}
+>>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
