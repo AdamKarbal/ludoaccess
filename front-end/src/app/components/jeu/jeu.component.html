@@ -1,0 +1,4 @@
+<button (click)="startMiniGame()">Lancer le Mini-Jeu</button>
+
+<app-mini-game *ngIf="isActive$ | async"></app-mini-game>
+<app-mob></app-mob> 
