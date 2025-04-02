@@ -1,26 +1,18 @@
 <div class="minecraft-home">
-    <!-- Fond d'écran -->
     <div class="background"></div>
-    
-    <!-- Contenu principal -->
-    <div class="content">
+        <div class="content">
       <h1 class="title">page acceuil temporrair
       </h1>
-      
-      <!-- Boutons principaux -->
-      <div class="main-buttons">
+            <div class="main-buttons">
         <button class="minecraft-btn" routerLink="/jeuComponent">Jouer</button>
         <button class="minecraft-btn" routerLink="/reglage">Réglages</button>
       </div>
-      
-      <!-- Menu burger -->
-      <div class="burger-menu" (click)="toggleMenu()">
+            <div class="burger-menu" (click)="toggleMenu()">
         <div class="burger-line"></div>
         <div class="burger-line"></div>
         <div class="burger-line"></div>
       </div>
       
-      <!-- Menu déroulant -->
       <div class="dropdown-menu" *ngIf="menuOpen">
         <button class="minecraft-btn" routerLink="/jeu_etape1">Étape 1</button>
         <button class="minecraft-btn" routerLink="/jeu_etape2">Étape 2</button>
