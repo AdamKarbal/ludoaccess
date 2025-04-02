@@ -24,6 +24,7 @@ import { GameComponent } from './components/game/game.component';
 import { JeuComponent } from './components/jeu/jeu.component';
 import { MiniGameComponent } from './components/minigame/minigame.component';
 import { UserStatsService } from "../services/stats.service";
+import { HomeComponent } from './pages/ac/ac.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UserStatsService } from "../services/stats.service";
     GameComponent,
     JeuComponent,
     MobComponent,
-    MiniGameComponent
+    MiniGameComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,24 @@
+<div class="minecraft-home">
+    <div class="background"></div>
+        <div class="content">
+      <h1 class="title">page acceuil temporrair
+      </h1>
+            <div class="main-buttons">
+        <button class="minecraft-btn" routerLink="/jeuComponent">Jouer</button>
+        <button class="minecraft-btn" routerLink="/reglage">Réglages</button>
+      </div>
+            <div class="burger-menu" (click)="toggleMenu()">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+      </div>
+      
+      <div class="dropdown-menu" *ngIf="menuOpen">
+        <button class="minecraft-btn" routerLink="/jeu_etape1">Étape 1</button>
+        <button class="minecraft-btn" routerLink="/jeu_etape2">Étape 2</button>
+        <button class="minecraft-btn" routerLink="/jeu_etape3">Étape 3</button>
+        <button class="minecraft-btn" routerLink="/game">Game</button>
+        <button class="minecraft-btn" routerLink="/mob">Mobs</button>
+      </div>
+    </div>
+  </div>
