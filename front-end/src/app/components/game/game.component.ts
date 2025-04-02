@@ -9,7 +9,7 @@ import { CoeurService } from '../../../services/coeurs.services';
 export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('gameCanvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   private ctx!: CanvasRenderingContext2D;
-  private mob = new Mob(1300, 300);
+  private mob = new Mob(1300, 530);
   private miniGame!: MiniGame;
   private ground!: Ground;
   private platforms: Platform[] = [];
@@ -179,7 +179,7 @@ class Mob {
     this.y = y;
     this.width = 150;
     this.height = 150;
-    this.speedX = 2;
+    this.speedX = 1;
     this.isFacingRight = true;
     this.spriteSheet = new Image();
     this.spriteSheet.src = '../../../assets/ressources/Worm/Walk.png';
@@ -406,7 +406,7 @@ class MiniGame {
     ctx.font = "20px 'Luckiest Guy', cursive";
     ctx.fillStyle = "white";
     if (this.isAnimatingError) {
-      ctx.strokeStyle = "red";
+      ctx.strokeStyle = "red";  
       ctx.lineWidth = 5;
       ctx.strokeRect(this.letterX - 50, this.letterY - 50, 100, 100);
     } else if (this.isAnimatingSuccess) {
