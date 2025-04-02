@@ -1,6 +1,4 @@
 .sol{
-    grid-row : 2;
-    grid-column: 1;
     background-image: url('/src/assets/ressources/texture_roche.jpg');    
     filter: hue-rotate(180deg); 
     height: var(--sol-height);
