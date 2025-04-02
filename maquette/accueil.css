@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("src/assets/ressources/thumbnail_back2.jpg");
+    background-size: cover; /* Ajuste l’image pour couvrir tout l’écran */
+    background-position: center; /* Centre l’image */
+    background-repeat: no-repeat; /* Empêche la répétition */
+    height: 100vh; /* Assure que l’image couvre toute la hauteur */
+}
+
+.start{
+    top:100px;
+}
+
+
+.burger-btn {
+    font-size: 30px;
+    cursor: pointer;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+}
+
+/* Style du stats-menu latéral */
+.menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+
+.menu a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background-color: #575757;
+}
+
+/* Bouton de fermeture */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.logout {
+    display: flex;
+    font-family: 'Luckiest Guy', cursive;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 3px solid #023e8a; /* Bordure bleu marine */
+    background-color: #fff;
+    color: #0077b6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+    display: flex;
+    font-family: 'Luckiest Guy', cursive;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b62400;
+    padding: 10px 20px;
+    border-bottom: 4px solid #023e8a;
+    color: #fff;
+}
