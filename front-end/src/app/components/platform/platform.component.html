@@ -1,1 +1,14 @@
-<div class="platform"></div>
+<div class="platform" [ngStyle]="{
+    'left': x + 'px', 
+    'top': y + 'px', 
+    'width': width + 'vw', 
+    'height': height + 'vh'
+  }">
+  <img *ngIf="coinImage" [src]="coinImage" alt="Coin" class="coin-image" [style.left.px]="x + 20" [style.top.px]="y + 30">
+  </div>
+
+
+
+
+  
+  

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { PlatformService , Platform} from '../../../services/platform.service';
+
 
 @Component({
     selector: 'app-map',
@@ -7,6 +9,12 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class MapComponent implements OnInit {
-    constructor(){}
-    ngOnInit(): void {}
-}
+    platforms: Platform[] = [];
+  
+    constructor(private platformService: PlatformService) {}
+  
+    ngOnInit(): void {
+      this.platformService.generateRandomPlatforms("arbre");
+      this.platforms = this.platformService.getPlatforms();
+    }
+  }

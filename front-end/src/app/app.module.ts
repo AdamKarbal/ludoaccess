@@ -29,9 +29,11 @@ import { BackgroundComponent } from './components/background/background.componen
 import { MapComponent } from './components/map/map.component';
 import { GroundComponent } from './components/ground/ground.component';
 import { PlatformComponent } from './components/platform/platform.component';
+import { CoinComponent } from './components/coin/coin.component';
 
 @NgModule({
   declarations: [
+    CoinComponent,
     PlatformComponent,
     GroundComponent,
     MapComponent,

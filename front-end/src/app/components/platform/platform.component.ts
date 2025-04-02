@@ -1,12 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-platform',
-    templateUrl: './platform.component.html',
-    styleUrls: ['./platform.component.scss'],
+  selector: 'app-platform',
+  templateUrl: './platform.component.html',
+  styleUrls: ['./platform.component.scss']
 })
-
 export class PlatformComponent implements OnInit {
-    constructor(){}
-    ngOnInit(): void {}
+  @Input() x!: number;
+  @Input() y!: number;
+  @Input() width!: number;
+  @Input() height!: number;
+  @Input() coinImage!: string;
+
+  constructor() { }
+
+  ngOnInit(): void {
+
+  }
 }
