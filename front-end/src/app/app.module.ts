@@ -25,9 +25,17 @@ import { JeuComponent } from './components/jeu/jeu.component';
 import { MiniGameComponent } from './components/minigame/minigame.component';
 import { UserStatsService } from "../services/stats.service";
 import { HomeComponent } from './pages/ac/ac.component';
+import { BackgroundComponent } from './components/background/background.component';
+import { MapComponent } from './components/map/map.component';
+import { GroundComponent } from './components/ground/ground.component';
+import { PlatformComponent } from './components/platform/platform.component';
 
 @NgModule({
   declarations: [
+    PlatformComponent,
+    GroundComponent,
+    MapComponent,
+    BackgroundComponent,
     AppComponent,
     SettingComponent,
     ReglagePageComponent,

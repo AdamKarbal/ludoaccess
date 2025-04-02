@@ -1,5 +1,11 @@
-<button (click)="startMiniGame()">Lancer le Mini-Jeu</button>
+<head>
+    <app-mini-game *ngIf="isActive$ | async"></app-mini-game>
+</head>
 
-<app-mini-game *ngIf="isActive$ | async"></app-mini-game>
-<app-mob></app-mob> 
-<app-coeurs></app-coeurs>
+<body>
+    <app-map></app-map>
+    <app-levelbar></app-levelbar>
+    <app-word2guess></app-word2guess>
+    <app-mob></app-mob> 
+    <app-coeurs></app-coeurs>
+</body>
