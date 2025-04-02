@@ -18,18 +18,31 @@
     width : 18vw;
     z-index: 4;
 }
-#mot{
+#mot {
     width: 100%;
-    height: auto;
-    margin-top: -13vh;
+    display: flex; /* Utilisation de flexbox pour les lettres */
+    justify-content: center; /* Centrer les lettres */
+    align-items: center; /* Centrer verticalement */
+    margin-top: 0; /* Enlever les marges top inutiles */
+}
+#mot span{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5vw;
+    height: 2vh ;
+    margin: 0 5px; /* Espacement entre les lettres */
+    font-size: 3rem; /* Taille de la lettre */
+    transition: color 0.3s ease; /* Transition pour la couleur */
 }
 
 #tirets{
+    display: inline-flex;
     justify-content: center;
+    align-items: center;
     width:100%;
     height: 5%;
     font-size: calc(var(--W2G-height) / 2);
     font-family :  'Bangers', sans-serif;
-    text-align: center;
-    margin-top: -14.5vh;
+    letter-spacing: 1px;
 }

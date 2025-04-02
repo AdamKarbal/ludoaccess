@@ -6,6 +6,7 @@ import { JeuEtape1Component } from './pages/jeu_etape1/jeu_etape1.component';
 import { JeuEtape2Component } from './pages/jeu_etape2/jeu_etape2.component';
 import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
 import { GameComponent } from './components/game/game.component';
+import { Word2GuessComponent } from './components/word2guess/word2guess.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path : 'jeu_etape2', component : JeuEtape2Component},
   {path : 'jeu_etape3', component : JeuEtape3Component},
   {path : 'game', component : GameComponent},
+  {path : 'word', component : Word2GuessComponent}
 ];
 
 @NgModule({
