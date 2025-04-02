@@ -16,24 +16,28 @@ import { SettingComponent} from './components/setting/setting.component';
 import { ReglagePageComponent } from './pages/reglage/reglage.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ChildComponent } from './components/child/child.component';
-import {ChildListComponent} from './components/child-list/child-list.component';
-import {HttpClientModule} from '@angular/common/http';
+import { ChildListComponent} from './components/child-list/child-list.component';
+import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { GameComponent } from './components/game/game.component';
 import { Jeu} from './pages/jeu/jeu.component';
 
-import {UserStatsChartComponent} from "./component/stats-chart/stats-chart";
+//import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
 import {UserStatsService} from "../services/stats.service";
-import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
+//import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
 
 
 
 @NgModule({
     declarations: [
-        AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent, ChildComponent, ChildListComponent, StatsMenuModule, UserStatsChartComponent,
-        PlayerStatsComponent,
-      AppComponent, SettingComponent, ReglagePageComponent, HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule,ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu
+        AppComponent, SettingComponent, ReglagePageComponent, 
+        HeaderComponent, ChildComponent, ChildListComponent, 
+        StatsMenuModule, AppComponent, SettingComponent, ReglagePageComponent, 
+        HeaderComponent,ChildComponent,ChildListComponent,StatsMenuModule,
+        ToolbarGameComponent,LevelBarComponent,Word2GuessComponent,
+        JeuEtape1Component,JeuEtape2Component,JeuEtape3Component,
+        InfosComponent,CoeursComponent,finishComponent,GameComponent,Jeu 
     ],
     imports: [
         BrowserModule,
@@ -44,8 +48,8 @@ import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component"
     providers: [UserStatsService],
   exports: [
     StatsMenuModule,
-    UserStatsChartComponent,
-    PlayerStatsComponent
+    //UserStatsChartComponent,
+    //PlayerStatsComponent
   ],
     bootstrap: [AppComponent, StatsMenuModule]
 })

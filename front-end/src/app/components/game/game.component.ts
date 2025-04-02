@@ -9,14 +9,12 @@ import { CoeurService } from '../../../services/coeurs.services';
 export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('gameCanvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   private ctx!: CanvasRenderingContext2D;
-  private mob = new Mob(1300, 500);
+  private mob = new Mob(1300, 300);
   private miniGame!: MiniGame;
-<<<<<<< HEAD
-  private backgroundImage!: HTMLImageElement;
   private ground!: Ground;
   private platforms: Platform[] = [];
   private coins: Coin[] = [];
-=======
+
   private player: Player = new Player();
   private backgroundImage!: HTMLImageElement;
   gameOver: boolean = false;
@@ -30,24 +28,20 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
       }
     });
   }
->>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
+
 
   ngOnInit() {
     this.miniGame = new MiniGame(() => {
-      this.mob = new Mob(1300, 500);
-<<<<<<< HEAD
-    });
-
+      this.mob = new Mob(1300, 300);
+    }, 
+    this.player, this.coeurService);
     this.ground = new Ground();
 
     this.platforms.push(new Platform(400, 400, 200));
     this.platforms.push(new Platform(700, 300, 200));
 
-    this.coins.push(new Coin(450,50, "A"));
+    this.coins.push(new Coin(400,200, "A"));
     this.coins.push(new Coin(750,50, "B"));
-=======
-    }, this.player, this.coeurService);
->>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
   }
 
   ngOnDestroy() {
@@ -119,7 +113,7 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
 
     if (this.miniGame.isActive) {
       this.miniGame.draw(this.ctx);
-    } else {
+    }else{
       this.mob.draw(this.ctx);
     }
   }
@@ -163,8 +157,6 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
     this.ngAfterViewInit(); 
   }
 }
-
-////////////// CLASSES POUR LES ÉLÉMENTS (Mettez vos classes ici sinon c'est le bordel) ///////////////////////
 
 class Mob {
   x: number;
@@ -215,24 +207,9 @@ class Mob {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-<<<<<<< HEAD
-      const x = this.currentFrame * this.spriteWidth;
-      const y = 0;
-      const currentSprite = this.isFacingRight ? this.spriteSheet : this.spriteSheetReversed;
-      ctx.drawImage(
-          currentSprite,
-          x,
-          y,
-          this.spriteWidth,
-          this.spriteHeight,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-      );
-=======
     const x = this.currentFrame * this.spriteWidth;
     const y = 0;
+    console.log(this.x, this.y);
     const currentSprite = this.isFacingRight ? this.spriteSheet : this.spriteSheetReversed;
     ctx.drawImage(
       currentSprite, 
@@ -245,7 +222,6 @@ class Mob {
       this.width, 
       this.height
     );
->>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91
   }
 }
 
@@ -291,18 +267,16 @@ class Ground {
   }
 }
 
-
-
-
-
-class Coin{
-  private x : number;
-  private y : number;
-  private letter : string;
+class Coin {
+  private x: number;
+  private y: number;
+  private letter: string;
   private collected: boolean = false;
   private image!: HTMLImageElement;
+  private width: number = 100;
+  private height: number = 55; 
 
-  constructor(x: number, y: number, letter: string){
+  constructor(x: number, y: number, letter: string) {
     this.x = x;
     this.y = y;
     this.letter = letter;
@@ -312,12 +286,12 @@ class Coin{
   }
 
   private getImagePath(letter: string): string {
-    return '../../assets/ressources/Coins/' + letter + '.jpg';
+    return '../../assets/ressources/Coins/' + letter + '.png';
   }
 
-  draw(ctx: CanvasRenderingContext2D){
-    if(!this.collected && this.image.complete){
-      ctx.drawImage(this.image, this.x, this.y);
+  draw(ctx: CanvasRenderingContext2D) {
+    if (!this.collected && this.image.complete) {
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
 }
@@ -350,6 +324,7 @@ class Platform {
     };
   }
 
+  
   draw(ctx: CanvasRenderingContext2D) {
     if (this.pattern) {
       ctx.fillStyle = this.pattern;
@@ -364,9 +339,6 @@ class Platform {
     }
   }
 }
-
-
-//////////////////////// FIN DES CLASSES POUR LES ÉLÉMENTS /////////////////
 
 
 class MiniGame {
@@ -493,8 +465,6 @@ class MiniGame {
     this.onEndCallback();
   }
 }
-<<<<<<< HEAD
-=======
 
 class Player {
   private health: number;
@@ -507,4 +477,3 @@ class Player {
     this.health = Math.max(0, this.health - amount);
   }
 }
->>>>>>> 5ab12ef87d2419b60f2cd9f4db8728b3d8eaad91

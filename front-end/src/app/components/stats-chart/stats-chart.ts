@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+/*import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart, registerables } from 'chart.js'; // ✅ Import registerables
 import { UserStatsService } from "../../../services/stats.service";
 import { Subscription } from 'rxjs';
@@ -65,3 +65,4 @@ export class UserStatsChartComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe(); // Prevent memory leaks
   }
 }
+*/
