@@ -8,6 +8,7 @@ import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
 import { GameComponent } from './components/game/game.component';
 import { MobComponent } from './components/mob/mob.component';
 import { JeuComponent } from './components/jeu/jeu.component';
+import { HomeComponent } from './pages/ac/ac.component';
 
 const routes: Routes = [
   {path : 'reglage', component : ReglagePageComponent},
@@ -18,6 +19,8 @@ const routes: Routes = [
   {path : 'game', component : GameComponent},
   {path : 'mob', component : MobComponent},
   {path : 'jeuComponent', component : JeuComponent},
+  { path: '', component: HomeComponent }, // Page d'accueil
+
 ];
 
 
