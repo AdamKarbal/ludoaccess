@@ -10,13 +10,23 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
   private ctx!: CanvasRenderingContext2D;
   private mob = new Mob(1300, 500);
   private miniGame!: MiniGame;
-
   private backgroundImage!: HTMLImageElement;
+  private ground!: Ground;
+  private platforms: Platform[] = [];
+  private coins: Coin[] = [];
 
   ngOnInit() {
     this.miniGame = new MiniGame(() => {
       this.mob = new Mob(1300, 500);
     });
+
+    this.ground = new Ground();
+
+    this.platforms.push(new Platform(400, 400, 200));
+    this.platforms.push(new Platform(700, 300, 200));
+
+    this.coins.push(new Coin(450,50, "A"));
+    this.coins.push(new Coin(750,50, "B"));
   }
 
   ngOnDestroy() {
@@ -28,7 +38,7 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     this.ctx = canvas.getContext('2d')!;
-    
+
     this.backgroundImage = new Image();
     this.backgroundImage.src = '../../../assets/ressources/back3.jpg';
     this.backgroundImage.onload = () => this.startGameLoop();
@@ -70,6 +80,10 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
       this.ctx.drawImage(this.backgroundImage, x, y, width, height);
     }
 
+    this.ground.draw(this.ctx);
+    this.platforms.forEach(platform => platform.draw(this.ctx));
+    this.coins.forEach(coin => coin.draw(this.ctx));
+
     if (this.miniGame.isActive) {
       this.miniGame.draw(this.ctx);
     } else {
@@ -79,12 +93,14 @@ export class GameComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private detectCollision(): boolean {
     const player = { x: 1000, y: 500, width: 100, height: 100 };
-    return !(this.mob.x + this.mob.width < player.x || 
-             this.mob.x > player.x + player.width || 
-             this.mob.y + this.mob.height < player.y || 
+    return !(this.mob.x + this.mob.width < player.x ||
+             this.mob.x > player.x + player.width ||
+             this.mob.y + this.mob.height < player.y ||
              this.mob.y > player.y + player.height);
   }
 }
+
+////////////// CLASSES POUR LES ÉLÉMENTS (Mettez vos classes ici sinon c'est le bordel) ///////////////////////
 
 class Mob {
   x: number;
@@ -139,18 +155,138 @@ class Mob {
       const y = 0;
       const currentSprite = this.isFacingRight ? this.spriteSheet : this.spriteSheetReversed;
       ctx.drawImage(
-          currentSprite, 
-          x, 
-          y, 
-          this.spriteWidth, 
-          this.spriteHeight, 
-          this.x, 
-          this.y, 
-          this.width, 
+          currentSprite,
+          x,
+          y,
+          this.spriteWidth,
+          this.spriteHeight,
+          this.x,
+          this.y,
+          this.width,
           this.height
       );
   }
 }
+
+class Ground {
+  private x: number = 0;
+  private y: number;
+  private width: number;
+  private height: number = 70;
+  private image!: HTMLImageElement;
+  private pattern!: CanvasPattern | null;
+  private borderColor: string = "rgb(50, 85, 150)";
+
+  constructor() {
+    this.y = window.innerHeight - this.height;
+    this.width = window.innerWidth;
+
+    this.image = new Image();
+    this.image.src = '../../assets/ressources/texture_roche.jpg';
+
+    this.image.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.filter = "hue-rotate(180deg)";
+        ctx.drawImage(this.image, 0, 0);
+        this.pattern = ctx.createPattern(canvas, 'repeat');
+      }
+    };
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    if (this.pattern) {
+      ctx.fillStyle = this.pattern;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+
+      ctx.fillStyle = this.borderColor;
+      ctx.fillRect(this.x, this.y, this.width, 7);
+
+
+      ctx.strokeStyle = this.borderColor;
+      ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
+  }
+}
+
+
+
+
+
+class Coin{
+  private x : number;
+  private y : number;
+  private letter : string;
+  private collected: boolean = false;
+  private image!: HTMLImageElement;
+
+  constructor(x: number, y: number, letter: string){
+    this.x = x;
+    this.y = y;
+    this.letter = letter;
+
+    this.image = new Image();
+    this.image.src = this.getImagePath(letter);
+  }
+
+  private getImagePath(letter: string): string {
+    return '../../assets/ressources/Coins/' + letter + '.jpg';
+  }
+
+  draw(ctx: CanvasRenderingContext2D){
+    if(!this.collected && this.image.complete){
+      ctx.drawImage(this.image, this.x, this.y);
+    }
+  }
+}
+
+class Platform {
+  private x: number;
+  private y: number;
+  private width: number;
+  private height: number = 40;
+  private image!: HTMLImageElement;
+  private pattern!: CanvasPattern | null;
+  private borderColor: string = "rgb(50, 85, 150)";
+
+  constructor(x: number, y: number, width: number) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+
+    this.image = new Image();
+    this.image.src = '../../assets/ressources/texture_roche.jpg';
+
+    this.image.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.filter = "hue-rotate(180deg)";
+        ctx.drawImage(this.image, 0, 0);
+        this.pattern = ctx.createPattern(canvas, 'repeat');
+      }
+    };
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    if (this.pattern) {
+      ctx.fillStyle = this.pattern;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+
+      ctx.fillStyle = this.borderColor;
+      ctx.fillRect(this.x, this.y, this.width, 3);
+
+
+      ctx.strokeStyle = this.borderColor;
+      ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
+  }
+}
+
+
+//////////////////////// FIN DES CLASSES POUR LES ÉLÉMENTS /////////////////
+
 
 class MiniGame {
   isActive: boolean = false;
@@ -161,7 +297,7 @@ class MiniGame {
   isAnimatingSuccess: boolean = false;
   letterX: number = 0;
   letterY: number = 0;
-  
+
   private img1: HTMLImageElement;
   private img2: HTMLImageElement;
   private baseText: string = "Tu as été touché par un monstre !\nTape vite sur les touches du clavier\nqui s'affichent pour ne pas perdre de vie !";
@@ -177,7 +313,7 @@ class MiniGame {
     this.img1.src = '../../../assets/ressources/megaman_de_face.png';
     this.img2 = new Image();
     this.img2.src = '../../../assets/ressources/bulle_dialogue.png';
-    
+
     this.keyHandler = this.handleKeyPress.bind(this);
     window.addEventListener('keydown', this.keyHandler);
     this.currentText = this.baseText;
