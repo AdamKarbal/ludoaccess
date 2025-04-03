@@ -10,11 +10,11 @@ export class PlatformComponent implements OnInit {
   @Input() y!: number;
   @Input() width!: number;
   @Input() height!: number;
-  @Input() coinImage!: string;
+  @Input() coinLetter!: string;
 
   constructor() { }
 
   ngOnInit(): void {
-
+    console.log('coinLetter:', this.coinLetter);
   }
 }

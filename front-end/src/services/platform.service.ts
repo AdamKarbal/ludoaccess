@@ -5,7 +5,7 @@ export interface Platform {
   y: number;
   width: number;
   height: number;
-  coinImage : string;
+  coinLetter : string;
 }
 
 @Injectable({
@@ -33,9 +33,9 @@ export class PlatformService {
       let yCoord = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
 
       let width = Math.floor(Math.random() * 12) + 8;
-      const coinImagePath = `src/assets/ressources/Coins/${word[i]}.png`;
+      const coinLetter = word[i].toUpperCase();
 
-      this.platforms.push({ x: xCoord, y: yCoord, width: width, height: fixedHeight, coinImage: coinImagePath });
+      this.platforms.push({ x: xCoord, y: yCoord, width: width, height: fixedHeight, coinLetter: coinLetter });
     }
   }
 

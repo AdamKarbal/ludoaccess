@@ -1,7 +1,12 @@
 .coin{
     position: absolute;
-    top : 45vh;
-    left: 20vw;
-    width: 12vh;
-    height: auto;
+    width: 5vw; 
+    height: 5vh;
+    bottom: 130%;
+    left: 20%; 
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
+    z-index: 5;
+    filter: hue-rotate(90deg);
 }
