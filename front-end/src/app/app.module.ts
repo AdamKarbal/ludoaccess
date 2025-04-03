@@ -30,6 +30,8 @@ import { MapComponent } from './components/map/map.component';
 import { GroundComponent } from './components/ground/ground.component';
 import { PlatformComponent } from './components/platform/platform.component';
 import { CoinComponent } from './components/coin/coin.component';
+import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
+import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
 
 @NgModule({
   declarations: [
@@ -52,21 +54,24 @@ import { CoinComponent } from './components/coin/coin.component';
     JeuEtape3Component,
     InfosComponent,
     CoeursComponent,
+    StatsMenuModule,
     finishComponent,
     GameComponent,
     JeuComponent,
     MobComponent,
     MiniGameComponent,
-    HomeComponent
+    HomeComponent,
+    PlayerStatsComponent,
+    UserStatsChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    //StatsMenuModule 
+    //StatsMenuModule
   ],
   providers: [UserStatsService],
-  bootstrap: [AppComponent] 
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
