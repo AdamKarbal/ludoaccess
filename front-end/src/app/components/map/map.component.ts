@@ -14,7 +14,7 @@ export class MapComponent implements OnInit {
     constructor(private platformService: PlatformService) {}
   
     ngOnInit(): void {
-      this.platformService.generateRandomPlatforms("arbre");
+      this.platformService.generateRandomPlatforms("voiture");
       this.platforms = this.platformService.getPlatforms();
     }
   }
