@@ -3,9 +3,9 @@
 <div class="fond"></div>
 <div><app-toolbar-game></app-toolbar-game></div>
 <div><app-coeurs></app-coeurs></div>>
-<div><app-word2guess></app-word2guess></div>
-<div><app-finishScreen></app-finishScreen></div>
-<div><app-levelbar></app-levelbar></div>
+<div><app-word2guess [userInput]="userInput" (wordGuessed)="onWordCompleted($event)" (letterGuessed)="onLetterGuessed($event)"></app-word2guess></div>
+<div><app-finishScreen [reussite]="wordCompleted" [letterGuessed]="letterGuessed"></app-finishScreen></div>
+<div><app-levelbar [wordCompleted]="wordCompleted"></app-levelbar></div>
 <div class="plateformes">
     <div id="plateforme1"></div>
     <div id="plateforme2"></div>
