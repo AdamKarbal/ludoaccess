@@ -23,7 +23,6 @@ import { MobComponent } from './components/mob/mob.component';
 import { GameComponent } from './components/game/game.component';
 import { JeuComponent } from './components/jeu/jeu.component';
 import { MiniGameComponent } from './components/minigame/minigame.component';
-import { UserStatsService } from "../services/stats.service";
 import { HomeComponent } from './pages/ac/ac.component';
 import { BackgroundComponent } from './components/background/background.component';
 import { MapComponent } from './components/map/map.component';
@@ -32,6 +31,7 @@ import { PlatformComponent } from './components/platform/platform.component';
 import { CoinComponent } from './components/coin/coin.component';
 import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
 import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
+import {PlayerComponent} from "./components/player/player.component";
 
 @NgModule({
   declarations: [
@@ -62,7 +62,8 @@ import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component"
     MiniGameComponent,
     HomeComponent,
     PlayerStatsComponent,
-    UserStatsChartComponent
+    UserStatsChartComponent,
+    PlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +72,7 @@ import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component"
     FormsModule,
     //StatsMenuModule
   ],
-  providers: [UserStatsService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

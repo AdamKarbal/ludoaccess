@@ -9,7 +9,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class CoinComponent implements OnInit {
     constructor(){}
     ngOnInit(): void {
-        console.log('Image path:', this.imagePath);
+        //console.log('Image path:', this.imagePath);
     }
 
     @Input() letter!: string;

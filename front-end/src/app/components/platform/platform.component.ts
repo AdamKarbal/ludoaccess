@@ -15,6 +15,6 @@ export class PlatformComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('coinLetter:', this.coinLetter);
+    //console.log('coinLetter:', this.coinLetter);
   }
 }

@@ -9,7 +9,7 @@ import { GameComponent } from './components/game/game.component';
 import { MobComponent } from './components/mob/mob.component';
 import { JeuComponent } from './components/jeu/jeu.component';
 import { HomeComponent } from './pages/ac/ac.component';
-import { UserStatsChartComponent } from './components/stats-chart/stats-chart';
+
 
 const routes: Routes = [
   {path : 'reglage', component : ReglagePageComponent},

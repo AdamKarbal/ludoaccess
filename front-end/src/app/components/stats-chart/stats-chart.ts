@@ -34,7 +34,7 @@ export class UserStatsChartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.userStatsService.stats$.subscribe(data => {
-      console.log('Data received:', data);
+      //console.log('Data received:', data);
       this.stats = data;
       this.renderChart();
     });

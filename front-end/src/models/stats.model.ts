@@ -4,9 +4,11 @@ import {Child} from "./child.model";
 export interface UserStats{
   child: Child;
   nbError: number;
-  listError: string[];
+  listLetterErrors: string[];
   listNbError: number[];
   listWordLength: string[];
+  listErrorPosition: string[];
+  listErrorOccurences: number[];
   nbFailed: number[];
   progression: Progression[];
   interaction: Interaction[];
