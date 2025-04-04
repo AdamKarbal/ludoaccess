@@ -31,7 +31,7 @@ import { GroundComponent } from './components/ground/ground.component';
 import { PlatformComponent } from './components/platform/platform.component';
 import { CoinComponent } from './components/coin/coin.component';
 import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
-import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
+// import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component"
     MobComponent,
     MiniGameComponent,
     HomeComponent,
-    PlayerStatsComponent,
+    // PlayerStatsComponent,
     UserStatsChartComponent
   ],
   imports: [
