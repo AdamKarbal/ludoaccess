@@ -11,7 +11,7 @@ export class JeuEtape3Component implements OnInit{
   currentLevelStep: number = 1; // Étape du Niveau 3
   userInput: string = ''; // Entrée de l'utilisateur
   wordCompleted: boolean = false;
-  letterGuessed: boolean = false;
+  letterGuessed?: boolean = undefined;
 
   // Utilisation de HostListener pour capter la touche du clavier
   @HostListener('document:keydown', ['$event'])
@@ -30,9 +30,6 @@ export class JeuEtape3Component implements OnInit{
     else this.wordCompleted=false;
   }
   onLetterGuessed(isLetterGuessed: boolean){
-    if(isLetterGuessed){
-      this.letterGuessed=true;
-    }
-    else this.letterGuessed=false;
+    this.letterGuessed = isLetterGuessed;
   }
 }
