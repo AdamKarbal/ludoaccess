@@ -1,5 +1,7 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 
+
+
 @Component({
     selector: 'app-finishScreen',
     templateUrl: './finishScreen.component.html',
@@ -7,32 +9,41 @@ import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 })
 
 export class finishComponent implements OnInit,OnChanges{
+  message = { title: '', subtitle: '', instruction: '' };
     constructor(){}
     ngOnInit(): void {
       this.chooseMessage(3);
-      this.getFinishScreenText();
+    this.message = this.getFinishScreenText();
 }
     currentStep: number = 3; // Étape du Niveau 3
     @Input() reussite : boolean =false;
-    @Input() letterGuessed : boolean =false;
+    @Input() letterGuessed ?: boolean;
 
+    hasStarted : boolean = false ;
 
     ngOnChanges(changes: SimpleChanges): void {
-      if(changes['reussite'] && this.reussite){
+      if (changes['letterGuessed']) {
+        console.log("CHANGEMENT letterGuessed: ", changes['letterGuessed']);
+  
+        // Ignore les premiers changements tant que le joueur n'a pas commencé
+        if (!this.hasStarted && changes['letterGuessed'].currentValue !== undefined) {
+          this.hasStarted = true;
+        }
+  
+        if (this.hasStarted) {
+          if (this.letterGuessed === false) {
+            this.chooseMessage(2); // Mauvaise lettre
+          } else if (this.letterGuessed === true) {
+            this.chooseMessage(1); // Bonne lettre
+          }
+          this.message = this.getFinishScreenText();
+        }
+      }
+  
+      if (changes['reussite'] && this.reussite) {
         this.chooseMessage(4);
-        this.getFinishScreenText();}
-        else if (changes['letterGuessed']&& this.letterGuessed==false){
-          this.chooseMessage(2);
-          this.getFinishScreenText();
-        }
-        else if(changes['letterGuessed']&& this.letterGuessed){
-          this.chooseMessage(1);
-          this.getFinishScreenText();
-        }
-        else{
-          this.getFinishScreenText();
-        }
-        
+        this.message = this.getFinishScreenText();
+      }
     }
     
 
