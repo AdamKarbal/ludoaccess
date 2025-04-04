@@ -6,7 +6,7 @@ import { BehaviorSubject, interval } from 'rxjs';
 })
 
 export class MobService {
-  private position = { x: 100, y: window.innerHeight - 200, frame: 0, isFacingRight: true };
+  private position = { x: 100, y: window.innerHeight - 130, frame: 0, isFacingRight: true };
   private speedX = 2;
   private totalFrames = 9;
   private frameSpeed = 10;
