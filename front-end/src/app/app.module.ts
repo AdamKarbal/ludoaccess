@@ -70,7 +70,7 @@ import {PlayerComponent} from "./components/player/player.component";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    //StatsMenuModule
+    // StatsMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
