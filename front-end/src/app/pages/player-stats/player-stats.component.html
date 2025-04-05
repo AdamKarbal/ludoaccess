@@ -1,0 +1,69 @@
+<div class="container">
+  <header>
+    <h1>Statistiques du Joueur</h1>
+  </header>
+
+  <stats-menu [titre]="'Informations du Joueur'">
+    <div class="player-stats">
+      <div class="info">
+        <p><strong>Nom :</strong> {{child.lastName+" "+child.firstName}}</p>
+        <p><strong>Âge :</strong> {{child.age}}</p>
+        <p><strong>Durée Totale de Jeu :</strong>{{child.playDuration}} minutes</p>
+        <p><strong>Fréquence de Jeu :</strong> {{child.frequency}} sessions cette semaine</p>
+      </div>
+    </div>
+  </stats-menu>
+
+  <stats-menu [titre]="'Statistiques détaillées'">
+    <button id="letterError"(click)="setId(1)">Afficher les erreurs par lettre</button>
+    <button id="positionError"(click)="setId(2)">Afficher les erreurs par position</button>
+    <app-user-stats-chart></app-user-stats-chart>
+  </stats-menu>
+
+  <stats-menu [titre]="'Progression dans le Jeu'">
+    <div class="progress-stats">
+      <table>
+        <thead>
+        <tr>
+          <th>Mot</th>
+          <th>Objectif Atteint</th>
+          <th>Erreurs</th>
+          <th>Temps Pris</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let level of progression">
+          <td>{{ level.word }}</td>
+          <td>{{ level.completed ? 'Complété' : 'Non Complété' }}</td>
+          <td>{{ level.nbError }}</td>
+          <td>{{ level.timeSpent }} sec</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </stats-menu>
+
+
+  <stats-menu [titre]="'Statistiques d\'Interaction'">
+    <div class="interaction-stats">
+      <table>
+        <thead>
+        <tr>
+          <th>Interaction</th>
+          <th>Succès</th>
+          <th>Échecs</th>
+          <th>Temps entre deux lettres</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let interaction of interactions">
+          <td>{{ interaction.action }}</td>
+          <td>{{ interaction.success }}</td>
+          <td>{{ interaction.failures }}</td>
+          <td>{{ interaction.timeSpent }} sec</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </stats-menu>
+</div>
