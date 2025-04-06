@@ -32,6 +32,7 @@ import { CoinComponent } from './components/coin/coin.component';
 import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
 import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
 import {PlayerComponent} from "./components/player/player.component";
+import { BulleDialogueComponent } from './components/bulle_dialogue/bulle_dialogue';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {PlayerComponent} from "./components/player/player.component";
     PlayerStatsComponent,
     UserStatsChartComponent,
     PlayerComponent,
+    BulleDialogueComponent
   ],
   imports: [
     BrowserModule,
