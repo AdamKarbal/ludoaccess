@@ -4,9 +4,10 @@ import { PlayerService } from '../../../services/player.service';
 @Component({
   selector: 'app-player',
   template: `
-    <div class="player" [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'">
+    <div #player class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
       <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
     </div>
+
   `,
   styles: [`
     .player {
