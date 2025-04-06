@@ -10,9 +10,9 @@ import { PlatformService , Platform} from '../../../services/platform.service';
 
 export class MapComponent implements OnInit {
     platforms: Platform[] = [];
-  
+
     constructor(private platformService: PlatformService) {}
-  
+
     ngOnInit(): void {
       //this.platformService.generateRandomPlatforms("voiture");
       //this.platforms = this.platformService.getPlatforms();
@@ -22,5 +22,7 @@ export class MapComponent implements OnInit {
       this.platforms.push({ x: 40, y: 60, width: 18, height: 5, coinLetter: 'B' });
       this.platforms.push({ x: 58.5, y: 50, width: 10, height: 5, coinLetter: 'R' });
       this.platforms.push({ x: 68.5, y: 40, width: 16, height: 5, coinLetter: 'E' });
+      //this.platforms=this.platformService.getPlatforms();
+      console.log(this.platforms);
     }
   }

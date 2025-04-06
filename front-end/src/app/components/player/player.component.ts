@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
 
 @Component({
@@ -29,5 +29,13 @@ export class PlayerComponent implements OnInit {
     this.playerService.position$.subscribe((pos) => {
       this.position = pos;
     });
+  }
+  @HostListener('document:keydown', ['$event'])
+  onKeyPress(event: KeyboardEvent): void {
+    const key = event.key;
+    this.playerService.movePlayer(key);  // Pass key to the PlayerService
+  }
+  public getY():number {
+    return this.position.y;
   }
 }
