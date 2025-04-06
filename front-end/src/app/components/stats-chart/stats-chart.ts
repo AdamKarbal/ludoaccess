@@ -10,14 +10,14 @@ import { Subscription } from 'rxjs';
       <canvas id="userStatsChart"></canvas>
     </div>
 
-    <div class="error-list">
+    <!--<div class="error-list">
       <h3>Liste des erreurs</h3>
       <ul>
         <li *ngFor="let stat of stats">
           Lettre : {{ stat.name }} - Nb d'erreurs : {{ stat.errors }}
         </li>
       </ul>
-    </div>
+    </div>-->
   `,
   styles: [
     `.chart-container { width: 100%; height: 400px; }`

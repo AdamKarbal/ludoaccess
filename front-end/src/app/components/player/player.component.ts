@@ -4,27 +4,29 @@ import { PlayerService } from '../../../services/player.service';
 @Component({
   selector: 'app-player',
   template: `
-      <div class="player" [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'"></div>
+    <div class="player" [style.transform]="'translate(' + position.x + 'px, ' + position.y + 'px)'">
+      <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
+    </div>
   `,
-  styles:[
-    `.player {
-        width: 50px;
-        height: 50px;
-        background-size: cover;
-        background-position: center;
-        background-image: url('../../../assets/ressources/megaman_de_face.png');
-        position: absolute;
-      transition: transform 0.3s ease-in-out;
-      }`]
+  styles: [`
+    .player {
+      position: fixed;
+      bottom: 10vh;
+      width: 4%;
+      z-index: 20;
+    }
+    .player img {
+      width: 100%;
+    }
+  `]
 })
 export class PlayerComponent implements OnInit {
-  position = { x: 0, y: 0 };
+  position = { x: 0, y: window.innerHeight * 0.1 };
 
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.playerService.position$.subscribe((pos) => {
-      console.log(this.position);
       this.position = pos;
     });
   }

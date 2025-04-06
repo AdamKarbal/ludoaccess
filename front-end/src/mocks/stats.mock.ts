@@ -11,7 +11,7 @@ export const mockUserStats :UserStats= {
   nbFailed: [2, 1, 3],
   progression: [
     { word:"Taxi", completed: true, nbError:0,timeSpent: 300 },
-    { word:"ChatGPT", completed: false, nbError:3,timeSpent: 400 },
+    { word:"Arbre", completed: false, nbError:3,timeSpent: 400 },
   ],
   interaction: [
     { action: "1ère lettre", success: 10, failures: 200 , timeSpent: 300 },
