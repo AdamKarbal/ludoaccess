@@ -1,0 +1,12 @@
+.mob {
+    width: 90px;
+    height: 90px;
+    background-image: url('../../../assets/ressources/Worm/Walk.png');
+    background-size: 810px 90px;
+    position: absolute;
+    transition: left 0.1s linear, top 0.1s linear;
+  }
+  
+  .reverse {
+    transform: scaleX(-1);
+  }

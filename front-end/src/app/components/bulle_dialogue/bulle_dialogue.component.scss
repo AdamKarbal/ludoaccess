@@ -1,0 +1,25 @@
+.bulle-dialogue {
+    position: relative;
+    top:60vh;
+    left: 43vw;
+    width: 20vw; /* adapte à la taille de ta bulle */
+  }
+  
+  #bulle {
+    width: 100%;
+    display: block;
+  }
+  
+  .texte-bulle {
+    position: absolute;
+    top:13%; /* ajuste selon ta bulle */
+    left: 10%;
+    right: 10%;
+    font-size: 0.5em;
+    font-family: 'Nintendo';
+    line-height: 1.4;
+    white-space: normal;
+    word-wrap: break-word;
+    color: black; /* ou ce qui rend bien sur la bulle */
+  }
+  

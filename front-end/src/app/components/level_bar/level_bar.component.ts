@@ -1,17 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit, SimpleChanges,OnChanges } from "@angular/core";
 
 @Component({
   selector: "app-levelbar",
     templateUrl: "./level_bar.component.html",
     styleUrls: ["./level_bar.component.scss"],
 })
-export class LevelBarComponent {
+export class LevelBarComponent implements OnInit, OnChanges {
   constructor() {}
   ngOnInit(): void {}
-  progress: number = 35;
+  @Input() progress: number = 35;
   level:number = 0;
-  increaseProgress(amount: number) {
-    this.progress += amount;
+  @Input() wordCompleted: boolean = false;
+
+  ngOnChanges(changes:SimpleChanges){
+    if(changes['wordCompleted'] && this.wordCompleted)this.increaseProgress(20)
+  }
+  increaseProgress(progress: number) {
+    this.progress += progress;
 
     if (this.progress >= 100) {
       this.levelUp();

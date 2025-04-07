@@ -1,4 +1,4 @@
-/*import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart, registerables } from 'chart.js'; // ✅ Import registerables
 import { UserStatsService } from "../../../services/stats.service";
 import { Subscription } from 'rxjs';
@@ -10,14 +10,14 @@ import { Subscription } from 'rxjs';
       <canvas id="userStatsChart"></canvas>
     </div>
 
-    <div class="error-list">
+    <!--<div class="error-list">
       <h3>Liste des erreurs</h3>
       <ul>
         <li *ngFor="let stat of stats">
           Lettre : {{ stat.name }} - Nb d'erreurs : {{ stat.errors }}
         </li>
       </ul>
-    </div>
+    </div>-->
   `,
   styles: [
     `.chart-container { width: 100%; height: 400px; }`
@@ -34,7 +34,7 @@ export class UserStatsChartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.userStatsService.stats$.subscribe(data => {
-      console.log('Data received:', data);
+      //console.log('Data received:', data);
       this.stats = data;
       this.renderChart();
     });
@@ -65,4 +65,3 @@ export class UserStatsChartComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe(); // Prevent memory leaks
   }
 }
-*/

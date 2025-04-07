@@ -26,3 +26,15 @@ app-setting {
   display: block !important;
 
 }
+@font-face {
+  font-family: 'Pretendo'; /* Donne un nom à ta police */
+  src: url('/assets/fonts/Pretendo.ttf') format('truetype'); /* Chemin vers la police */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nintendo'; /* Donne un nom à ta police */
+  src: url('/assets/fonts/NintendoLabo.ttf') format('truetype'); /* Chemin vers la police */
+  font-weight: normal;
+  font-style: normal;
+}

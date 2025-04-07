@@ -1,0 +1,19 @@
+.sol{
+    background-image: url('../../../assets/ressources/texture_roche.jpg');    
+    z-index: 0;
+    filter: hue-rotate(180deg); 
+    height: 10vh;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: solid 0.8vh rgb(103, 61, 1);
+}
+
+.sol::before {
+    content: "";
+    background: rgb(133, 78, 1);
+    width: 100%;
+    height: 5vh;
+    z-index: 20;
+}
