@@ -9,7 +9,10 @@ import { MiniGameService } from '../../../services/minigame.service';
 export class MiniGameComponent implements OnInit {
   constructor(public miniGameService: MiniGameService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  // Méthode pour lancer le mini-jeu via le bouton
+  startGame() {
     this.miniGameService.start();
   }
 }

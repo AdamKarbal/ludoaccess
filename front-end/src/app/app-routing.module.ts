@@ -6,7 +6,7 @@ import { JeuEtape1Component } from './pages/jeu_etape1/jeu_etape1.component';
 import { JeuEtape2Component } from './pages/jeu_etape2/jeu_etape2.component';
 import { JeuEtape3Component } from './pages/jeu_etape3/jeu_etape3.component';
 import { GameComponent } from './components/game/game.component';
-import { MobComponent } from './components/mob/mob.component';
+import { MiniGameComponent } from './components/minigame/minigame.component';
 import { JeuComponent } from './components/jeu/jeu.component';
 import { HomeComponent } from './pages/ac/ac.component';
 
@@ -18,7 +18,7 @@ const routes: Routes = [
   {path : 'jeu_etape2', component : JeuEtape2Component},
   {path : 'jeu_etape3', component : JeuEtape3Component},
   {path : 'game', component : GameComponent},
-  {path : 'mob', component : MobComponent},
+  {path : 'mob', component : MiniGameComponent},
   {path : 'jeuComponent', component : JeuComponent},
   { path: '', component: HomeComponent }, // Page d'accueil
 
