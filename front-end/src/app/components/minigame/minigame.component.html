@@ -1,16 +1,20 @@
+<!-- Bouton pour démarrer le mini-jeu -->
+<button (click)="startGame()">Lancer le mini-jeu</button>
+
+<!-- Affichage du mini-jeu lorsque celui-ci est actif -->
 <div *ngIf="miniGameService.isActive$ | async" class="minigame-overlay">
-    <div class="minigame-container">
-      <div class="character-container">
-        <img src="../../../assets/ressources/megaman_de_face.png" alt="Character" class="character"/>
-        <div class="dialog-container">
-          <img src="../../../assets/ressources/bulle_dialogue.png" alt="Dialogue Bubble" class="dialog-bubble"/>
-          <p class="dialog-text">{{ miniGameService.currentText$ | async }}</p>
-        </div>
-      </div>
-      
-      <div class="letter-box" 
-        [ngClass]="{'error': miniGameService.isAnimatingError$ | async, 'success': miniGameService.isAnimatingSuccess$ | async}">
-        {{ miniGameService.targetLetter$ | async }}
+  <div class="minigame-container">
+    <div class="character-container">
+      <img src="../../../assets/ressources/megaman_de_face.png" alt="Character" class="character"/>
+      <div class="dialog-container">
+        <img src="../../../assets/ressources/bulle_dialogue.png" alt="Dialogue Bubble" class="dialog-bubble"/>
+        <p class="dialog-text">{{ miniGameService.currentText$ | async }}</p>
       </div>
     </div>
-  </div>    
+    
+    <div class="letter-box" 
+      [ngClass]="{'error': miniGameService.isAnimatingError$ | async, 'success': miniGameService.isAnimatingSuccess$ | async}">
+      {{ miniGameService.targetLetter$ | async }}
+    </div>
+  </div>
+</div>
