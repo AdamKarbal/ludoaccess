@@ -13,7 +13,6 @@ import { PlayerService } from '../../../services/player.service';
     .player {
       position: absolute;
       bottom: 14vh;
-      z-index: 20;
       width:3.5vw;
       height:3.5vh;
     }

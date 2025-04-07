@@ -25,4 +25,5 @@ export class MapComponent implements OnInit {
       this.platforms=this.platformService.getPlatforms();*/
       console.log(this.platforms);
     }
+
   }
