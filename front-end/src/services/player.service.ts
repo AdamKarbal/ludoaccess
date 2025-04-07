@@ -37,8 +37,7 @@ export class PlayerService {
   movePlayer(key: string): void {
     const currentPosition = this.positionSubject.getValue();
     let { x, y } = currentPosition;
-    console.log(currentPosition);
-
+    console.log(this.platforms[0]);
     switch (key) {
       case 'ArrowUp':
         if (this.onGround || y === 0) {
@@ -51,6 +50,7 @@ export class PlayerService {
         break;
       case 'ArrowRight':
         x += this.speed;
+        console.log("x"+x);
         break;
     }
 
@@ -74,6 +74,7 @@ export class PlayerService {
 
     const player: CollisionObject = { x, y, width: 47, height: 18 };
     if (this.collisionService.isOnGround(player,this.platformService.getPlatforms())) {
+      console.log("Coucou");
       y = this.platformService.getPlatforms()[0].y - 18;
       this.velocityY = 0;
       this.onGround = true;

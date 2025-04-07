@@ -11,10 +11,11 @@ import { PlayerService } from '../../../services/player.service';
   `,
   styles: [`
     .player {
-      position: fixed;
-      bottom: 10vh;
-      width: 4%;
+      position: absolute;
+      bottom: 14vh;
       z-index: 20;
+      width:3.5vw;
+      height:3.5vh;
     }
     .player img {
       width: 100%;
