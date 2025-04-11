@@ -12,4 +12,8 @@ export interface ChildSettings {
     minWordLength?: number;
     maxWordLength?: number;
     simplifyGameAfter?: number;
+    displaymotsec: number;
+    choosefont: 'Lucky Boy' | 'Nintendo' | 'Arial' | 'Comic Sans MS' | 'Courier New' | 'Georgia' | 'Times New Roman' | 'Verdana';
+    chooseBackGround : 'Forest' | 'Blue earth' | 'Orange earth' | 'Aléatoire';
+    lettersize: number;
   }

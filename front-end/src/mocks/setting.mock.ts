@@ -13,7 +13,11 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     wordWritingTime: 45,
     preferredWordLength: 6,
     simplifyGameAfter: 10,
-    wordDifficulty: 'Moyen'
+    wordDifficulty: 'Moyen',
+    displaymotsec:10,
+    choosefont:'Arial',
+    lettersize:20,
+    chooseBackGround:'Aléatoire',
   },
   '2': {
     id: '2',
@@ -28,7 +32,11 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     maxWordLength: 8,
     preferredWordLength: 10,
     simplifyGameAfter: 20,
-    wordDifficulty: 'Difficile'
+    wordDifficulty: 'Difficile',
+    displaymotsec:5,
+    choosefont:'Nintendo',
+    lettersize:25,
+    chooseBackGround:'Forest',
   },
   '3': {
     id: '3',
@@ -41,7 +49,11 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     wordWritingTime: 30,
     preferredWordLength: 5,
     simplifyGameAfter: 15,
-    wordDifficulty: 'Facile'
+    wordDifficulty: 'Facile',
+    displaymotsec:8,
+    choosefont:'Lucky Boy',
+    lettersize:30,
+    chooseBackGround:'Orange earth',
   },
   '4': {
     id: '4',
@@ -56,6 +68,10 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     maxWordLength: 10,
     preferredWordLength: 8,
     simplifyGameAfter: 25,
-    wordDifficulty: 'Moyen'
+    wordDifficulty: 'Moyen',
+    displaymotsec:25,
+    choosefont:'Times New Roman',
+    lettersize:18,
+    chooseBackGround:'Blue earth',
   }
 };
