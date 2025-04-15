@@ -9,9 +9,13 @@
     font-size : 1.5em;
     text-align: center;
     background-color: black;
-    opacity: 0.7; /* Caché par défaut */
+    opacity: 0.7; 
+    transition: opacity 2.5s ease;
     z-index: 3;
     border-radius: 15px;
     border: 3px solid white;
     
 }
+.fade-out {
+    opacity: 0;
+  }

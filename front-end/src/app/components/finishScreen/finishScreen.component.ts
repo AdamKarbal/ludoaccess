@@ -12,16 +12,27 @@ export class finishComponent implements OnInit,OnChanges{
   message = { title: '', subtitle: '', instruction: '' };
     constructor(){}
     ngOnInit(): void {
-      this.chooseMessage(3);
-    this.message = this.getFinishScreenText();
+      
+     
 }
     currentStep: number = 3; // Étape du Niveau 3
     @Input() reussite : boolean =false;
     @Input() letterGuessed ?: boolean;
 
     hasStarted : boolean = false ;
+    fadeOut : boolean = false;
+    hasInitializedMessage: boolean = false;
+
 
     ngOnChanges(changes: SimpleChanges): void {
+      if(!this.hasInitializedMessage){
+        this.chooseMessage(3);
+        this.message=this.getFinishScreenText();
+        this.hasInitializedMessage = true;
+        setTimeout(() => {
+          this.fadeOut = true;
+        }, 4000);
+      }
       if (changes['letterGuessed']) {
         console.log("CHANGEMENT letterGuessed: ", changes['letterGuessed']);
   
@@ -30,17 +41,18 @@ export class finishComponent implements OnInit,OnChanges{
           this.hasStarted = true;
         }
   
-        if (this.hasStarted) {
-          if (this.letterGuessed === false) {
-            this.chooseMessage(2); // Mauvaise lettre
-          } else if (this.letterGuessed === true) {
-            this.chooseMessage(1); // Bonne lettre
-          }
-          this.message = this.getFinishScreenText();
-        }
-      }
+      //   if (this.hasStarted) {
+      //     if (this.letterGuessed === false) {
+      //       this.chooseMessage(2); // Mauvaise lettre
+      //     } else if (this.letterGuessed === true) {
+      //       this.chooseMessage(1); // Bonne lettre
+      //     }
+      //     this.message = this.getFinishScreenText();
+      //   }
+       }
   
       if (changes['reussite'] && this.reussite) {
+        this.fadeOut = false; // Réinitialiser fadeOut pour le nouvel écran de fin
         this.chooseMessage(4);
         this.message = this.getFinishScreenText();
       }
@@ -50,25 +62,6 @@ export class finishComponent implements OnInit,OnChanges{
     chooseMessage(etape : number){
       this.currentStep=etape;
     }
-  nextStep() {
-    switch(this.currentStep){
-      case 1 : 
-      this.currentStep=2;
-      break;
-      case 2: 
-      this.currentStep=3;
-      break;
-      case 3: 
-      this.currentStep=1;
-      break
-    }
-  }
-
-  prevStep() {
-    if (this.currentStep > 1) {
-      this.currentStep--;
-    }
-  }
 
   getFinishScreenText(): { title: string, subtitle: string, instruction: string } {
     switch (this.currentStep) {
