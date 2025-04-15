@@ -48,3 +48,28 @@
     font-family :  'Bangers', sans-serif;
     letter-spacing: 1px;
 }
+.correct {
+    color: black ; /* Lettre correcte devient noire */
+  }
+  
+.incorrect {
+    color: red ; /* Lettre incorrecte devient rouge */
+    animation: flashRed 0.5s ease-in-out; /* Animation rouge temporaire */
+  }
+  @keyframes flashRed {
+    0% {
+      color: red;
+    }
+    50% {
+      color: transparent; /* Moment où la lettre devient transparente */
+    }
+    100% {
+      color: red;
+    }
+}
+
+  .letter {
+    color: grey ;
+    border-bottom: 2px solid grey;
+    padding: 13px 2px,
+  }
