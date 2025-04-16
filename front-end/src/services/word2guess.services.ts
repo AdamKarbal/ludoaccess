@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   })
 
 export class Word2GuessService {
-    private word: string= 'Arbre';
+    private word: string= 'Açbre';
     private guessedIndexes: number[] = [];
     public currentIndex = 0;
   
@@ -18,7 +18,7 @@ export class Word2GuessService {
       }
     
       guessLetter(letter: string): boolean {
-        if (!letter.match(/[A-Za-z]/)) return false;
+        if (!letter.match(/^\p{L}$/u)) return false;
         console.log(`Comparing "${letter}" with "${this.word[this.currentIndex]}"`);
     // Comparer la lettre entrée avec celle du mot, en tenant compte de la casse
         if (letter === this.word[this.currentIndex]) {
