@@ -1,4 +1,5 @@
 import { Component, OnInit,Input,Output,EventEmitter,OnChanges,SimpleChanges} from "@angular/core";
+import { Word2GuessService } from "src/services/word2guess.services";
 
 @Component({
   selector: "app-word2guess",
@@ -6,68 +7,50 @@ import { Component, OnInit,Input,Output,EventEmitter,OnChanges,SimpleChanges} fr
     styleUrls: ["./word2guess.component.scss"],
 })
 export class Word2GuessComponent implements OnInit{
-  constructor() {}
   ngOnInit(): void {}
   @Input() userInput: string = '';
   @Output() wordGuessed = new EventEmitter<boolean>();
-  @Output() letterGuessed= new EventEmitter<boolean>();
+  @Output() letterGuessed = new EventEmitter<boolean>();
 
-  word: string = "ARBRE"; // Mot à deviner
-  hiddenWord: string = "_ _ _ _ _"; // Affichage caché
-  guessedIndexes: number[] = []; // Indices des lettres trouvées
-  currentIndex: number = 0; // L'index où on doit deviner la lettre
-  hasStarted : boolean = false ;
+  hasStarted: boolean = false;
+
+  incorrectLetters: Set<number> = new Set(); // To track incorrect letters for the temporary red effect
+
+  constructor(public game: Word2GuessService) {} // rend le service accessible au template
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('CHANGEMENT userInput:', changes['userInput']);
+    if (!this.userInput) return;
 
-    if (!this.userInput || this.userInput.length === 0) {
-      return; // On ne fait rien si vide
-    }
+    const isCorrect = this.game.guessLetter(this.userInput);
 
-    const isCorrect = this.checkLetter(this.userInput);
-
-    // On commence à émettre seulement si l'utilisateur a VRAIMENT tapé une lettre
     if (!this.hasStarted) {
       this.hasStarted = true;
     }
-
-    if (this.hasStarted) {
-      console.log(">>> EMIT letterGuessed =", isCorrect);
-      this.letterGuessed.emit(isCorrect); // Ne sera jamais émis avant une vraie lettre
+    if(isCorrect){
+      this.letterGuessed.emit(true); 
+    }
+    else{
+      this.letterGuessed.emit(false); // Emit false when the letter is incorrect
+      const incorrectIndex = this.game.currentIndex;
+      this.incorrectLetters.add(incorrectIndex); // Track the index of the incorrect letter
+      // Remove the incorrect letter color after a brief moment
+      setTimeout(() => {
+        this.incorrectLetters.delete(incorrectIndex); // Reset the incorrect letter state
+      }, 500); // Temporary red color for 500ms
     }
 
-    if (this.checkWord()) {
+    
+
+    if (this.game.isWordComplete()) {
       this.wordGuessed.emit(true);
     }
-}
-
-
-  checkLetter(letter: string): boolean {
-    letter = letter.toUpperCase();
-    if (!letter.match(/[A-Z]/)) {
-      return false; // ignore tout ce qui n'est pas une lettre
-    }
-    // Vérifie si la lettre est correcte ET au bon endroit
-    if (letter && this.word[this.currentIndex] === letter) {
-      this.guessedIndexes.push(this.currentIndex); // Ajoute l'index trouvé
-      this.currentIndex++; // Passe à la lettre suivante
-      this.updateHiddenWord();
-      return true;
-    }
-    return false;
-
   }
-  updateHiddenWord() {
-    this.hiddenWord = this.word
-      .split('')
-      .map((letter, index) =>
-        this.guessedIndexes.includes(index) ? '\u2000' : '_'
-      )
-      .join(' ');
+
+  get word(): string {
+    return this.game.getWord();
   }
-  checkWord():boolean{
-    return this.guessedIndexes.length === this.word.length;
-    
+
+  get guessedIndexes(): number[] {
+    return this.game.getGuessedIndexes();
   }
 }
