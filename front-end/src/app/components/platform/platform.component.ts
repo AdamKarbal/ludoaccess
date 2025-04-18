@@ -17,4 +17,11 @@ export class PlatformComponent implements OnInit {
   ngOnInit(): void {
     //console.log('coinLetter:', this.coinLetter);
   }
+
+  getX():number {
+    return this.x;
+  }
+  getY():number {
+    return this.y;
+  }
 }

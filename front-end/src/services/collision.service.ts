@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Platform} from "./platform.service";
+import {PlayerComponent} from "../app/components/player/player.component";
 
 export interface CollisionObject {
   x: number;
@@ -12,19 +13,18 @@ export interface CollisionObject {
   providedIn: 'root',
 })
 export class CollisionService {
-  // Check if the player is on the ground (collision with platform)
-  isOnGround(player: CollisionObject, platforms: Platform[]): boolean {
+
+  getGroundPlatform(player: PlayerComponent, platforms: Platform[]): Platform | null {
     for (const platform of platforms) {
-      // Check if player is above the platform and within its x bounds
       if (
-        player.x < platform.x + platform.width &&
-        player.x + player.width > platform.x &&
-        player.y + player.height <= platform.y + platform.height &&
-        player.y + player.height > platform.y
+        platform.x<=player.x+player.width&&
+        player.x+player.width<=platform.x+platform.width&&
+        Math.abs(player.y-player.height)>=platform.y+platform.height
       ) {
-        return true; // Player is on the platform
+        return platform;
       }
     }
-    return false; // Player is not on the ground
+    return null;
   }
+
 }

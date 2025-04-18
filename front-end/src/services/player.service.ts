@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CollisionService, CollisionObject } from './collision.service';
 import {PlatformService} from './platform.service';
 import {Collidable} from "../models/collidable.model";
+import {PlayerComponent} from "../app/components/player/player.component";
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,15 @@ export class PlayerService {
   private jumpForce = -10;
   private onGround = false;
   private groundY = 0;
-  private playerWidthVw: number = 0;
-  private playerHeightVh: number = 0;
+  private player?: PlayerComponent;
+
+  setPlayer(player: PlayerComponent): void {
+    this.player = player;
+  }
+
+  getPlayer(): PlayerComponent | undefined {
+    return this.player;
+  }
 
 
   constructor(
@@ -29,22 +37,8 @@ export class PlayerService {
       this.applyGravity();
     }, 32);
   }
-  ngAfterViewInit() {
-    this.getPlayerDimensions();
-  }
-  getPlayerDimensions(): void {
-    const playerElement = document.querySelector('.player') as HTMLElement;
 
-    if (playerElement) {
-      const playerWidthPx = playerElement.offsetWidth;
-      const playerHeightPx = playerElement.offsetHeight;
 
-      this.playerWidthVw = (playerWidthPx / window.innerWidth) * 100;
-      this.playerHeightVh = (playerHeightPx / window.innerHeight) * 100;
-
-      console.log('Player size in vw/vh:', this.playerWidthVw, this.playerHeightVh);
-    }
-  }
 
   // Fct pr traiter les input
   movePlayer(key: string): void {
@@ -84,9 +78,12 @@ export class PlayerService {
     y += this.velocityY;
 
 
-    const player: CollisionObject = { x, y, width: this.playerWidthVw, height: this.playerHeightVh };
-    if (this.collisionService.isOnGround(player,this.platformService.getPlatforms())) {
-      y = this.platformService.getPlatforms()[0].y - 18;
+    /*console.log(this.player!.x+"x");
+    console.log(this.player!.y+"y");*/
+
+    const plateforme = this.collisionService.getGroundPlatform(this.player!, this.platformService.getPlatforms());
+    if (plateforme != null) {
+      y = plateforme.y - this.player!.height;
       this.velocityY = 0;
       this.onGround = true;
     } else if (y >= this.groundY) {
