@@ -7,6 +7,7 @@ import { MotService } from "src/services/mot.service";
 @Component({
   selector: 'app-plateformes',
   templateUrl: './platform.component.html',
+  styleUrls: ['./platform.component.scss'],
 })
 export class PlatformComponent implements OnInit {
   platforms: Platform[] = [];
