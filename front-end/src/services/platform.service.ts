@@ -10,24 +10,30 @@ export class PlatformService {
     const SOL_Y = 10;   
     const CEILING_Y = 60;
     this.platforms = [];
-
-    let dernierY = CEILING_Y;
-    let dernierX = -5;  // en vw
+  
+   
+    let lettresDisponibles = word.split('');
+    const hauteurs = [20, 30, 40,50]; // On peut changer les hauteurs pour la difficulté
+    let hauteurIndex = 0;
+  
+    let dernierX = 0; // en vw
     console.log('Mot utilisé :', word);
+  
+    while (lettresDisponibles.length > 0) {
+      const largeur = this.getRandom(10, 15);
+      const x = this.getRandom(dernierX + 10, dernierX + 15); // Espacement horizontale entre les plateformes
+      const y = hauteurs[hauteurIndex]; // Hauteur de la plateforme
+      hauteurIndex = (hauteurIndex + 1) % hauteurs.length;
 
-    for (let i = 0; i < word.length; i++) {
-      const largeur = this.getRandom(10, 20);
-      const x = this.getRandom(dernierX + 10, dernierX + 15); // espacement entre plateformes
-      const y = this.getRandom(Math.max(SOL_Y + 5, dernierY - 15), Math.min(CEILING_Y, dernierY - 5)); 
-      
-      const p = new Platform(x, y, largeur, undefined, word[i]);
-      console.log('Lettre actuelle :', word[i]);
+      const randomIndex = Math.floor(Math.random() * lettresDisponibles.length);
+      const lettre = lettresDisponibles.splice(randomIndex, 1)[0];
+
+      const p = new Platform(x, y, largeur, undefined, lettre);
+      console.log('Lettre actuelle :', lettre);
       this.platforms.push(p);
-
       dernierX = x;
-      dernierY = y;
     }
-
+  
     return this.platforms;
   }
 
@@ -39,5 +45,4 @@ export class PlatformService {
     return this.platforms;
   }
 }
-
 
