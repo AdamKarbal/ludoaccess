@@ -1,5 +1,5 @@
 .platform {
-    position: absolute;
+    position: absolute !important;
     background-image: url('../../../assets/ressources/texture_roche.jpg');
     filter: hue-rotate(180deg);
     border-top: solid 5px rgb(85, 50, 1);
