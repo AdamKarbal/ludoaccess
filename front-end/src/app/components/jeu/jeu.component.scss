@@ -25,10 +25,7 @@ body, :host {
     top: 0;
     left: 0;
     z-index: 10;
+    height: 100%;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 1vh 2vw;
-    pointer-events: none; /* permet de cliquer sur le jeu derrière */
   }
   
