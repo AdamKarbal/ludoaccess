@@ -13,6 +13,7 @@ export class PlatformService {
   
    
     let lettresDisponibles = word.split('');
+    
     const hauteurs = [20, 30, 40,50]; // On peut changer les hauteurs pour la difficulté
     let hauteurIndex = 0;
   
@@ -21,9 +22,16 @@ export class PlatformService {
   
     while (lettresDisponibles.length > 0) {
       const largeur = this.getRandom(10, 15);
-      const x = this.getRandom(dernierX + 10, dernierX + 15); // Espacement horizontale entre les plateformes
-      const y = hauteurs[hauteurIndex]; // Hauteur de la plateforme
-      hauteurIndex = (hauteurIndex + 1) % hauteurs.length;
+      const x = this.getRandom(dernierX + 10, dernierX + 15); 
+      const y = hauteurs[hauteurIndex];
+      
+      const randomChoice = this.getRandom(0, 5); 
+      if (randomChoice <= 3) {
+        hauteurIndex = (hauteurIndex + 1) % hauteurs.length; 
+      } else {
+        if(hauteurIndex == 0) hauteurIndex = (hauteurIndex + 1) % hauteurs.length;
+        else hauteurIndex = (hauteurIndex - 1) % hauteurs.length; 
+      }
 
       const randomIndex = Math.floor(Math.random() * lettresDisponibles.length);
       const lettre = lettresDisponibles.splice(randomIndex, 1)[0];

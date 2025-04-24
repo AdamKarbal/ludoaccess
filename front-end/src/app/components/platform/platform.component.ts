@@ -15,6 +15,6 @@ export class PlatformComponent implements OnInit {
   constructor(private platformService: PlatformService, private motService : MotService) {}
 
   ngOnInit(): void {
-    this.platforms = this.platformService.genererPlateformes("aaaaaa");
+    this.platforms = this.platformService.genererPlateformes(this.motService.getMotParNiveau(2));
   }
 }
