@@ -1,5 +1,5 @@
 <div *ngFor="let platform of platforms" 
      class="platform"
-     [attr.style]="'position: absolute !important; left: ' + platform.getX() + 'vw !important; bottom: ' + platform.getY() + 'vh !important; width: ' + platform.getWidth() + 'vw; height: ' + platform.getHeight() + 'vh;'">
+     [attr.style]="'position: absolute ; left: ' + platform.getX() + 'vw ; bottom: ' + platform.getY() + 'vh ; width: ' + platform.getWidth() + 'vw; height: ' + platform.getHeight() + 'vh;'">
   <app-coin *ngIf="platform.getCoinLetter()" [letter]="platform.getCoinLetter()"></app-coin>
 </div>
