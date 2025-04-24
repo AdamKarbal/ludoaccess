@@ -1,23 +1,36 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CollisionService, CollisionObject } from './collision.service';
-import {PlatformService} from './platform.service';
-import {Collidable} from "../models/collidable.model";
-import {PlayerComponent} from "../app/components/player/player.component";
+import { CollisionService } from './collision.service';
+import { PlatformService } from './platform.service';
+import { PlayerComponent } from '../app/components/player/player.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayerService {
-  private positionSubject = new BehaviorSubject<{ x: number; y: number }>({ x: 0, y: 0 });
+  private groundY = 85; // position du sol (en vh)
+
+  private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
+    x: 0,
+    y: this.groundY,
+  });
   position$ = this.positionSubject.asObservable();
-  private speed = 5;
-  private gravity = 1;
+
+  private speed = 2;
+  private gravity = 0.5;
   private velocityY = 0;
-  private jumpForce = -10;
+  private jumpForce = -8;
   private onGround = false;
-  private groundY = 0;
   private player?: PlayerComponent;
+
+  constructor(
+    private collisionService: CollisionService,
+    private platformService: PlatformService
+  ) {
+    setInterval(() => {
+      this.applyGravity();
+    }, 32);
+  }
 
   setPlayer(player: PlayerComponent): void {
     this.player = player;
@@ -27,63 +40,53 @@ export class PlayerService {
     return this.player;
   }
 
-
-  constructor(
-    private collisionService: CollisionService,
-    private platformService: PlatformService
-  ) {
-    // Gravité ttes les 32 frames
-    setInterval(() => {
-      this.applyGravity();
-    }, 32);
-  }
-
-
-
-  // Fct pr traiter les input
   movePlayer(key: string): void {
     const currentPosition = this.positionSubject.getValue();
     let { x, y } = currentPosition;
+
     switch (key) {
       case 'ArrowUp':
-        if (this.onGround || y === 0) {
+        if (this.onGround) {
           this.velocityY = this.jumpForce;
           this.onGround = false;
         }
         break;
       case 'ArrowLeft':
-        x -= this.speed;
+        x = Math.max(0, x - this.speed);
         break;
       case 'ArrowRight':
-        x += this.speed;
-        console.log("x"+x);
+        x = Math.min(100, x + this.speed);
         break;
     }
-
 
     this.positionSubject.next({ x, y });
   }
 
-
   applyGravity(): void {
-    const currentPosition = this.positionSubject.getValue();
-    let { x, y } = currentPosition;
+    if (!this.player) return;
 
+    let { x, y } = this.positionSubject.getValue();
 
     if (!this.onGround) {
       this.velocityY += this.gravity;
     }
 
-
     y += this.velocityY;
 
+    // ⚠️ Convert player to pixels for platform collision
+    const plateforme = this.collisionService.getGroundPlatform(
+      this.player,
+      this.platformService.getPlatforms()
+    );
 
-    /*console.log(this.player!.x+"x");
-    console.log(this.player!.y+"y");*/
+    if (plateforme) {
+      const platformTopPx = (plateforme.y / 100) * window.innerHeight;
+      const playerHeightPx = (this.player.height / 100) * window.innerHeight;
+      const yPixels = platformTopPx - playerHeightPx;
 
-    const plateforme = this.collisionService.getGroundPlatform(this.player!, this.platformService.getPlatforms());
-    if (plateforme != null) {
-      y = plateforme.y - this.player!.height;
+      // Convert back to vh for display
+      y = yPixels / window.innerHeight * 100;
+
       this.velocityY = 0;
       this.onGround = true;
     } else if (y >= this.groundY) {
@@ -93,7 +96,6 @@ export class PlayerService {
     } else {
       this.onGround = false;
     }
-
 
     this.positionSubject.next({ x, y });
   }

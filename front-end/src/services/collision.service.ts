@@ -15,16 +15,41 @@ export interface CollisionObject {
 export class CollisionService {
 
   getGroundPlatform(player: PlayerComponent, platforms: Platform[]): Platform | null {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    const playerBottom = player.y + player.height;
+    const playerRight = player.x + player.width;
+
     for (const platform of platforms) {
-      if (
-        platform.x<=player.x+player.width&&
-        player.x+player.width<=platform.x+platform.width&&
-        Math.abs(player.y-player.height)>=platform.y+platform.height
-      ) {
+      // Convert percentage-based platform values into pixels
+      const platformPx = {
+        x: platform.x / 100 * screenWidth,
+        y: platform.y / 100 * screenHeight,
+        width: platform.width / 100 * screenWidth,
+        height: platform.height / 100 * screenHeight
+      };
+
+      const platformRight = platformPx.x + platformPx.width;
+      const platformTop = platformPx.y;
+
+      const horizontallyAligned =
+        player.x < platformRight && playerRight > platformPx.x;
+
+      const verticallyTouching =
+        playerBottom >= platformTop &&
+        player.y < platformTop &&
+        (playerBottom - platformTop <= 10); // Small threshold
+
+      if (horizontallyAligned && verticallyTouching) {
+        console.log(`✅ Collision detected with platform '${platform.coinLetter}'`);
         return platform;
       }
     }
+
     return null;
   }
+
+
 
 }

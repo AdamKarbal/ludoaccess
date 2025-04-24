@@ -1,19 +1,18 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
-import { Collidable } from "../../../models/collidable.model";
+import { Collidable } from '../../../models/collidable.model';
 
 @Component({
   selector: 'app-player',
   template: `
-    <div #player class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
+    <div class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
       <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
     </div>
   `,
   styles: [`
     .player {
       position: absolute;
-      bottom: 16vh;
-      left: 0;
+      top: 0;
       width: 3vw;
       height: 3vh;
     }
@@ -23,8 +22,7 @@ import { Collidable } from "../../../models/collidable.model";
   `]
 })
 export class PlayerComponent implements OnInit, Collidable {
-
-  position = { x: 0, y: 0 };
+  position = { x: 10, y: 20 }; // position initiale du joueur
 
   constructor(private playerService: PlayerService) {}
 
@@ -35,30 +33,27 @@ export class PlayerComponent implements OnInit, Collidable {
     });
   }
 
-
   @HostListener('document:keydown', ['$event'])
   onKeyPress(event: KeyboardEvent): void {
     this.playerService.movePlayer(event.key);
   }
 
-  // Collidable interface properties
   get x(): number {
-    return this.position.x;
+    return (this.position.x / 100) * window.innerWidth;
   }
 
   get y(): number {
-    return this.position.y;
+    return (this.position.y / 100) * window.innerHeight;
   }
 
   get width(): number {
-    return 3; // car 3vw
+    return (3 / 100) * window.innerWidth;
   }
 
   get height(): number {
-    return 3; // car 3vh
+    return (3 / 100) * window.innerHeight;
   }
 
-  action(): void {
-    // action liée au joueur (optionnel selon ton interface)
-  }
+
+  action(): void {}
 }
