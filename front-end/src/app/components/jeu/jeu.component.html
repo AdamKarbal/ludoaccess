@@ -1,13 +1,14 @@
-<head>
-    <app-mini-game *ngIf="isActive$ | async"></app-mini-game>
-</head>
-
-<body>
-    <app-map></app-map>
+<div class="game-ui">
     <app-levelbar></app-levelbar>
     <app-word2guess></app-word2guess>
     <app-mob></app-mob>
     <app-coeurs></app-coeurs>
     <app-toolbar-game></app-toolbar-game>
-    <app-coin></app-coin>
-</body>
+  </div>
+  
+<div class="game-zone">
+    <app-map></app-map> 
+</div>
+  
+<app-mini-game *ngIf="isActive$ | async"></app-mini-game>
+  

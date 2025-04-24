@@ -1,1 +1,5 @@
-<div class="coin" [style.background-image]="'url(' + imagePath + ')'"></div>
+<div 
+  class="coin" 
+  *ngIf="letter" 
+  [style.background-image]="'url(' + imagePath + ')'">
+</div>

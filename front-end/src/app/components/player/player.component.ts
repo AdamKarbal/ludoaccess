@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+/*import {Component, HostListener, OnInit} from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
 
 @Component({
@@ -39,4 +39,4 @@ export class PlayerComponent implements OnInit {
   public getY():number {
     return this.position.y;
   }
-}
+}*/

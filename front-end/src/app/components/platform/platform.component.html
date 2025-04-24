@@ -1,11 +1,10 @@
-<div class="platform" [ngStyle]="{
-  'left': x + 'vw', 
-  'top': y + 'vh', 
-  'width': width + 'vw', 
-  'height': height + 'vh'
-}">
-<app-coin *ngIf="coinLetter" [letter]="coinLetter"></app-coin>
+<div *ngFor="let platform of platforms" 
+         class="platform"
+         [ngStyle]="{
+           'left': platform.getX() + 'vw',
+           'bottom': platform.getY() + 'vh',
+           'width': platform.getWidth() + 'vw',
+           'height': platform.getHeight() + 'vh'
+         }">
+    <app-coin *ngIf="platform.getCoinLetter()" [letter]="platform.getCoinLetter()"></app-coin>
 </div>
-
-  
-  

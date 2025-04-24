@@ -1,1 +1,34 @@
-        
+/*body{
+    position : relative;
+    width: 100vw;
+    height : 100vh;
+    overflow : hidden;
+}*/
+
+body, :host {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+  }
+  
+  .game-zone {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+  }  
+  
+  .game-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1vh 2vw;
+    pointer-events: none; /* permet de cliquer sur le jeu derrière */
+  }
+  

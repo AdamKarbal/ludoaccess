@@ -11,13 +11,15 @@
     z-index: 1;
 }
 
-#pause{
-    left : 47.5%;
+#pause {
     position: fixed;
-    width : 5%; 
+    left: 50%;
+    transform: translateX(-50%); /* pour un centrage propre */
+    width: 5%;
     filter: invert(100%);
     opacity: 0.8;
-}
+  }
+  
 
 #pause:hover{
     color : white;
@@ -26,15 +28,14 @@
     opacity: 1;
 }
 
-#cross{
-    left: 95%;
+#cross {
     position: fixed;
-    justify-content: flex-end;
-    width : 4%; 
+    right: 1.5vw; /* au lieu de left: 95% + margin-right */
+    width: 4%;
     filter: invert(100%);
     opacity: 0.8;
-    margin-right: 2vw;
-}
+  }
+  
 
 #cross:hover{
     color : white;
@@ -43,15 +44,14 @@
     opacity: 1;
 }
 
-#infoB{
+#infoB {
     position: fixed;
-    justify-content: flex-start;
-    width : 4%; 
+    left: 1.5vw; /* au lieu de margin-left */
+    width: 4%;
     filter: invert(100%) brightness(130%);
-    margin-left: 1.5vw;
     opacity: 0.8;
-    left: 0;
-}
+  }
+  
 
 #infoB:hover{
     color : white;

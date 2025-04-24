@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CollisionService, CollisionObject } from './collision.service';
 import {PlatformService} from './platform.service';
@@ -21,7 +21,7 @@ export class PlayerService {
 
 
   constructor(
-    private collisionService: CollisionService,
+    //private collisionService: CollisionService,
     private platformService: PlatformService
   ) {
     // Gravité ttes les 32 frames
@@ -86,7 +86,7 @@ export class PlayerService {
 
     const player: CollisionObject = { x, y, width: this.playerWidthVw, height: this.playerHeightVh };
     if (this.collisionService.isOnGround(player,this.platformService.getPlatforms())) {
-      y = this.platformService.getPlatforms()[0].y - 18;
+      y = this.platformService.getPlatforms()[0].getY() - 18;
       this.velocityY = 0;
       this.onGround = true;
     } else if (y >= this.groundY) {
@@ -101,3 +101,4 @@ export class PlayerService {
     this.positionSubject.next({ x, y });
   }
 }
+*/

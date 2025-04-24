@@ -1,3 +1,4 @@
+/*
 import {Injectable} from "@angular/core";
 import {Platform} from "./platform.service";
 
@@ -28,3 +29,4 @@ export class CollisionService {
     return false; // Player is not on the ground
   }
 }
+*/

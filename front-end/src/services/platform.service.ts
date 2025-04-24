@@ -1,47 +1,38 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'src/models/platform.model';
 
-export interface Platform {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  coinLetter : string;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root'})
 
 export class PlatformService {
-  private platforms: Platform[] = [];
+  platforms: Platform[] = [];
 
-  constructor() { }
+  genererPlateformes(word: string): Platform[] {
+    const SOL_Y = 10;   
+    const CEILING_Y = 60;
+    this.platforms = [];
 
-  generateRandomPlatforms(word : string): void {
-
-    /*const fixedHeight = 5;
+    let dernierY = CEILING_Y - 5;
+    let dernierX = 20;  // en vw
+    console.log('Mot utilisé :', word);
 
     for (let i = 0; i < word.length; i++) {
-      const screenWidth = window.innerWidth;
-      const minW = 150;
-      const maxW = screenWidth - 450;
-      let xCoord = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
+      const largeur = this.getRandom(10, 20);
+      const x = this.getRandom(dernierX + 5, dernierX + 20); // espacement entre plateformes
+      const y = this.getRandom(Math.max(SOL_Y + 5, dernierY - 15), Math.min(CEILING_Y, dernierY - 5)); 
+      
+      const p = new Platform(x, y, largeur, undefined, word[i]);
+      console.log('Lettre actuelle :', word[i]);
+      this.platforms.push(p);
 
-      const screenHeight = window.innerHeight;
-      const minH = 350;
-      const maxH = screenHeight - 250;
-      let yCoord = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
+      dernierX = x;
+      dernierY = y;
+    }
 
-      let width = Math.floor(Math.random() * 12) + 8;
-      const coinLetter = word[i].toUpperCase();
+    return this.platforms;
+  }
 
-      this.platforms.push({ x: xCoord, y: yCoord, width: width, height: fixedHeight, coinLetter: coinLetter });
-    }*/
-    this.platforms.push({ x: 10, y: 60, width: 10, height: 5, coinLetter: 'A' });
-    this.platforms.push({ x: 25, y: 72, width: 15, height: 5, coinLetter: 'R' });
-    this.platforms.push({ x: 40, y: 60, width: 18, height: 5, coinLetter: 'B' });
-    this.platforms.push({ x: 58.5, y: 50, width: 10, height: 5, coinLetter: 'R' });
-    this.platforms.push({ x: 68.5, y: 40, width: 16, height: 5, coinLetter: 'E' });
+  private getRandom(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   getPlatforms(): Platform[] {
