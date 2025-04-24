@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CollisionService, CollisionObject } from './collision.service';
-import {Platform, PlatformService} from './platform.service';
+import {PlatformService} from './platform.service';
+import {Collidable} from "../models/collidable.model";
 
 @Injectable({
   providedIn: 'root',
@@ -15,30 +16,40 @@ export class PlayerService {
   private jumpForce = -10;
   private onGround = false;
   private groundY = 0;
-  private platforms: Platform[] = [];
+  private playerWidthVw: number = 0;
+  private playerHeightVh: number = 0;
+
 
   constructor(
     private collisionService: CollisionService,
     private platformService: PlatformService
   ) {
-    this.platforms.push({ x: 10, y: 60, width: 10, height: 5, coinLetter: 'A' });
-    this.platforms.push({ x: 25, y: 72, width: 15, height: 5, coinLetter: 'R' });
-    this.platforms.push({ x: 40, y: 60, width: 18, height: 5, coinLetter: 'B' });
-    this.platforms.push({ x: 58.5, y: 50, width: 10, height: 5, coinLetter: 'R' });
-    this.platforms.push({ x: 68.5, y: 40, width: 16, height: 5, coinLetter: 'E' });
-    console.log(this.platforms);
     // Gravité ttes les 32 frames
     setInterval(() => {
       this.applyGravity();
     }, 32);
+  }
+  ngAfterViewInit() {
+    this.getPlayerDimensions();
+  }
+  getPlayerDimensions(): void {
+    const playerElement = document.querySelector('.player') as HTMLElement;
+
+    if (playerElement) {
+      const playerWidthPx = playerElement.offsetWidth;
+      const playerHeightPx = playerElement.offsetHeight;
+
+      this.playerWidthVw = (playerWidthPx / window.innerWidth) * 100;
+      this.playerHeightVh = (playerHeightPx / window.innerHeight) * 100;
+
+      console.log('Player size in vw/vh:', this.playerWidthVw, this.playerHeightVh);
+    }
   }
 
   // Fct pr traiter les input
   movePlayer(key: string): void {
     const currentPosition = this.positionSubject.getValue();
     let { x, y } = currentPosition;
-    console.log(currentPosition);
-
     switch (key) {
       case 'ArrowUp':
         if (this.onGround || y === 0) {
@@ -51,6 +62,7 @@ export class PlayerService {
         break;
       case 'ArrowRight':
         x += this.speed;
+        console.log("x"+x);
         break;
     }
 
@@ -72,7 +84,7 @@ export class PlayerService {
     y += this.velocityY;
 
 
-    const player: CollisionObject = { x, y, width: 47, height: 18 };
+    const player: CollisionObject = { x, y, width: this.playerWidthVw, height: this.playerHeightVh };
     if (this.collisionService.isOnGround(player,this.platformService.getPlatforms())) {
       y = this.platformService.getPlatforms()[0].y - 18;
       this.velocityY = 0;

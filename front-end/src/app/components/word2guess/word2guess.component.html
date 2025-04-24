@@ -1,11 +1,24 @@
 <div class="word2Guess">
     <div id="mot">
 
-        <span *ngFor="let letter of word.split(''); let i = index" [ngStyle]="{'color': guessedIndexes.includes(i) ? 'black' : 'grey',
-        'padding': '10px 2px'}">
+        <span  *ngFor="let letter of word.split(''); let i = index"
+
+        
+        [ngClass]="{
+      'correct': guessedIndexes.includes(i),
+      'incorrect': incorrectLetters.has(i)
+      }"
+         
+        [ngStyle]="{
+          'color': incorrectLetters.has(i) ? 'red' : guessedIndexes.includes(i) ? 'black' : 'grey', 
+          'border-bottom': guessedIndexes.includes(i) ? 'none' : '2px solid grey',
+          'padding': '13px 2px'
+        }"
+        class="letter"
+          >
         {{letter}}
       </span>
     </div>
-    <div id="tirets">{{hiddenWord}}</div>
+    
     <!-- <input type="text" (input)="checkLetter($letter)" maxlength="1" placeholder="Tape une lettre" /> -->
 </div>
