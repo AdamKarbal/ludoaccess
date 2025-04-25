@@ -1,3 +1,4 @@
+/*
 import {Injectable} from "@angular/core";
 import {Platform} from "./platform.service";
 import {PlayerComponent} from "../app/components/player/player.component";
@@ -53,3 +54,4 @@ export class CollisionService {
 
 
 }
+*/

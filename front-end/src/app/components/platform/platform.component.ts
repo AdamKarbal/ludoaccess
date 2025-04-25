@@ -1,21 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { Platform } from "src/models/platform.model";
+import { PlatformService } from "src/services/platform.service";
+import { MotService } from "src/services/mot.service";
+
 
 @Component({
-  selector: 'app-platform',
+  selector: 'app-plateformes',
   templateUrl: './platform.component.html',
-  styleUrls: ['./platform.component.scss']
+  styleUrls: ['./platform.component.scss'],
 })
 export class PlatformComponent implements OnInit {
-  @Input() x!: number;
-  @Input() y!: number;
-  @Input() width!: number;
-  @Input() height!: number;
-  @Input() coinLetter!: string;
+  platforms: Platform[] = [];
 
-  constructor() { }
+  constructor(private platformService: PlatformService, private motService : MotService) {}
 
   ngOnInit(): void {
-    //console.log('coinLetter:', this.coinLetter);
+    this.platforms = this.platformService.genererPlateformes(this.motService.getMotParNiveau(3));
   }
 
   getX():number {

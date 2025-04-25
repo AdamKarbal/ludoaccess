@@ -1,52 +1,80 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'src/models/platform.model';
+import { Coin } from 'src/models/coin.model'; // Assurez-vous que Coin est bien importé
 
-export interface Platform {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  coinLetter : string;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable({ providedIn: 'root' })
 export class PlatformService {
-  private platforms: Platform[] = [];
+  platforms: Platform[] = [];
 
-  constructor() { }
+  genererPlateformes(word: string): Platform[] {
+    const MAX_PLATFORMS = 6;
+    const SOL_Y = 10;
+    const CEILING_Y = 60;
+    this.platforms = [];
+    let nbPt = 0;
+    let lettresDisponibles = word.split('');
 
-  generateRandomPlatforms(word : string): void {
+    const hauteurs = [20, 30, 40, 50]; // On peut changer les hauteurs pour la difficulté
+    let hauteurIndex = 0;
 
-    /*const fixedHeight = 5;
+    let dernierX = 0; // en vw
+    console.log('Mot utilisé :', word);
+    
+    for (let i = 0; i < MAX_PLATFORMS; i++) {
+      const largeur = this.getRandom(10, 15);
+      const x = this.getRandom(dernierX + 10, dernierX + 15);
+      const y = hauteurs[hauteurIndex];
 
-    for (let i = 0; i < word.length; i++) {
-      const screenWidth = window.innerWidth;
-      const minW = 150;
-      const maxW = screenWidth - 450;
-      let xCoord = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
+      const randomChoice = this.getRandom(0, 5);
+      if (randomChoice <= 3) {
+        hauteurIndex = (hauteurIndex + 1) % hauteurs.length;
+      } else {
+        if (hauteurIndex == 0) hauteurIndex = (hauteurIndex + 1) % hauteurs.length;
+        else hauteurIndex = (hauteurIndex - 1) % hauteurs.length;
+      }
+      
+      let p = new Platform(x, y, largeur, undefined);
+      this.platforms.push(p);
+      nbPt++;
+      dernierX = x;
+    }
 
-      const screenHeight = window.innerHeight;
-      const minH = 350;
-      const maxH = screenHeight - 250;
-      let yCoord = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
+    let i = 0;
+    // On affecte les lettres aux plateformes
+    while (lettresDisponibles.length > 0) {
+      const randomIndex = Math.floor(Math.random() * lettresDisponibles.length);
+      const lettre = lettresDisponibles.splice(randomIndex, 1)[0];
 
-      let width = Math.floor(Math.random() * 12) + 8;
-      const coinLetter = word[i].toUpperCase();
+      if (lettre !== undefined) {
+        const targetPlatform = this.platforms[i % this.platforms.length];
+        console.log(`Affectation de la lettre '${lettre}' à la plateforme ${i % this.platforms.length + 1}`);
 
-      this.platforms.push({ x: xCoord, y: yCoord, width: width, height: fixedHeight, coinLetter: coinLetter });
-    }*/
-    this.platforms.push({ x: 10, y: 60, width: 10, height: 5, coinLetter: 'A' });
-    this.platforms.push({ x: 25, y: 72, width: 10, height: 5, coinLetter: 'R' });
-    this.platforms.push({ x: 40, y: 60, width: 18, height: 5, coinLetter: 'B' });
-    this.platforms.push({ x: 58.5, y: 50, width: 10, height: 5, coinLetter: 'R' });
-    this.platforms.push({ x: 68.5, y: 40, width: 16, height: 5, coinLetter: 'E' });
+        // Créer un objet Coin avec la lettre
+        const coin = new Coin(targetPlatform.x, targetPlatform.y, lettre);
+
+        // Utilisation de addLetter pour affecter le coin
+        if (!targetPlatform.addCoin(coin)) {
+          // Si la plateforme ne peut pas ajouter la lettre, on passe à la suivante
+          console.log(`La plateforme ${i % this.platforms.length + 1} est pleine, réessayer avec une autre plateforme`);
+          i++;
+          lettresDisponibles.unshift(lettre); // remet la lettre dans la pile si échec
+        }
+
+        i++;
+      }
+    }
+
+    // Afficher les plateformes après affectation des lettres
+    console.log('Plateformes après affectation des lettres :', this.platforms);
+
+    return this.platforms;
+  }
+
+  private getRandom(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   getPlatforms(): Platform[] {
     return this.platforms;
   }
 }
-
-

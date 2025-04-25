@@ -1,10 +1,24 @@
 .platform {
-    position : relative;
+    position: absolute !important;
     background-image: url('../../../assets/ressources/texture_roche.jpg');
     filter: hue-rotate(180deg);
-    position: absolute;
     border-top: solid 5px rgb(85, 50, 1);
     border-radius: 7px;
-    bottom:0;
-  left: 0;
+    z-index: 5;
 }
+
+app-coin.first {
+    position: absolute;
+    bottom: 130%; // ou ajuste selon le rendu souhaité
+    left: 10%; 
+  }
+  
+  app-coin.second {
+    position: absolute;
+    bottom: 130%; // même hauteur verticale que la first
+    left: 50%; 
+  }
+  
+
+
+  

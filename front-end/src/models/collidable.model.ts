@@ -1,7 +1,7 @@
 export interface Collidable {
-  x:number;
-  y:number;
-  width:number;
-  height:number;
-  action:() => void;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  checkCollision(other: Collidable): boolean;
 }

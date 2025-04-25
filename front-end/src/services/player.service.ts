@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CollisionService } from './collision.service';
 import { PlatformService } from './platform.service';
@@ -24,7 +24,7 @@ export class PlayerService {
   private player?: PlayerComponent;
 
   constructor(
-    private collisionService: CollisionService,
+    //private collisionService: CollisionService,
     private platformService: PlatformService
   ) {
     setInterval(() => {
@@ -100,3 +100,4 @@ export class PlayerService {
     this.positionSubject.next({ x, y });
   }
 }
+*/
