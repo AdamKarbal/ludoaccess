@@ -1,11 +1,20 @@
-export class Platform {
+import { Collidable } from "./collidable.model";
+
+export class Platform implements Collidable{
+      x !: number;
+      y !: number;
+       width!: number;
+       height: number = 5;
+       coinLetterFirst : string = '';
+       coinLetterSecond : string = ''
     
     constructor(
-      private x : number,
-      private y : number,
-      private width: number,
-      private height: number = 5,
-      private coinLetter : string
+       x : number,
+       y : number,
+       width: number,
+       height: number = 5,
+       coinLetterFirst : string = '',
+       coinLetterSecond : string = ''
     ) {}
 
       getX(): number {
@@ -24,8 +33,50 @@ export class Platform {
         return this.height;
       }
     
-      getCoinLetter(): string {
-        return this.coinLetter;
+      getCoinLetterFirst(): string {
+        return this.coinLetterFirst;
       }  
+
+      getCoinLetterSecond(): string {
+        return this.coinLetterSecond;
+      }  
+      setCoinLetterFirst(letter: string): void {
+        this.coinLetterFirst = letter;
+      }
+    
+      setCoinLetterSecond(letter: string): void {
+        this.coinLetterSecond = letter;
+      }
+    
+      
+      hasSlot(): boolean {
+        return !this.coinLetterFirst || !this.coinLetterSecond;
+      }
+    
+    
+      addLetter(letter: string): boolean {
+        if (!this.coinLetterFirst) {
+          this.coinLetterFirst = letter;
+          return true;
+        } else if (!this.coinLetterSecond) {
+          this.coinLetterSecond = letter;
+          return true;
+        }
+        return false;
+      }
+    
+   
+      getLetterCount(): number {
+        return [this.coinLetterFirst, this.coinLetterSecond].filter(l => l).length;
+      }
+
+      checkCollision(other: Collidable): boolean {
+        return (
+            this.x < other.x + other.width &&
+            this.x + this.width > other.x &&
+            this.y < other.y + other.height &&
+            this.y + this.height > other.y
+        );
+      }
 }
   

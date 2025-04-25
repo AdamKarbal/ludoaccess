@@ -2,19 +2,12 @@
 import {Injectable} from "@angular/core";
 import {Platform} from "./platform.service";
 
-export interface CollisionObject {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class CollisionService {
   // Check if the player is on the ground (collision with platform)
-  isOnGround(player: CollisionObject, platforms: Platform[]): boolean {
+  isOnGround(player: Collidable, platforms: Platform[]): boolean {
     for (const platform of platforms) {
       // Check if player is above the platform and within its x bounds
       if (

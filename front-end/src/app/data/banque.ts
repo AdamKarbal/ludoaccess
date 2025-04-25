@@ -20,7 +20,7 @@ export const BANQUE_MOTS = {
     'magicien', 'bibliothèque', 'harmonica', 'camomille', 'figurine', 'triangle',
     'panorama', 'aventure', 'cerisier', 'licorne', 'couronne', 'girafe', 'vacances',
     'téléphone', 'éléphant', 'épouvantail', 'aquarium', 'croissant', 'manège',
-    'poussette', 'tortue', 'coccinelle', 'coquillage', 'tracteur',
+    'poussette', 'tortue', 'coccinelle', 'coquillage', 'tracteur', 'madandar',
     'montagne', 'animalier', 'colorier'
   ]
 };
