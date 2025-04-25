@@ -1,20 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-coin',
-    templateUrl: './coin.component.html',
-    styleUrls: ['./coin.component.scss'],
+  selector: 'app-coin',
+  templateUrl: './coin.component.html',
+  styleUrls: ['./coin.component.scss'],
 })
-
 export class CoinComponent implements OnInit {
-    constructor(){}
-    ngOnInit(): void {
-        console.log('Image path:', this.imagePath);
-    }
+  
+  @Input() coinLetter!: string;  
 
-    @Input() letter!: string;
+  constructor() {}
 
-    get imagePath(): string {
-        return `assets/ressources/Coins/${this.letter}.png`;
-    }
+  ngOnInit(): void {
+    console.log('Image path:', this.imagePath);
+  }
+
+  get imagePath(): string {
+    return this.coinLetter ? `assets/ressources/Coins/${this.coinLetter}.png` : '';
+  }
 }

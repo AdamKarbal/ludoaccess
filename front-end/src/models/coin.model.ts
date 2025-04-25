@@ -1,19 +1,17 @@
 import { Collidable } from "./collidable.model";
 
 export class Coin implements Collidable{
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    letter: string;
-    collected: boolean = false;
+  private _x: number;
+  private _y: number;
+  private _width: number = 50;
+  private _height: number = 50;
+  private _letter: string = '';
+  private collected: boolean = false;
   
     constructor(x: number, y: number, letter: string) {
-      this.x = x;
-      this.y = y;
-      this.letter = letter;
-      this.width = 50; 
-      this.height = 50; 
+      this._x = x;
+      this._y = y;
+      this._letter = letter;
     }
   
     collect(): void {
@@ -24,27 +22,38 @@ export class Coin implements Collidable{
       return `assets/ressources/Coins/${this.letter}.png`;
     }
 
-    checkCollision(other: Collidable): boolean {
-        return (
-            this.x < other.x + other.width &&
-            this.x + this.width > other.x &&
-            this.y < other.y + other.height &&
-            this.y + this.height > other.y
-        );
+    get x(): number {
+      return this._x;
+    }
+  
+    get y(): number {
+      return this._y;
+    }
+  
+    get width(): number {
+      return this._width;
+    }
+  
+    get height(): number {
+      return this._height;
     }
 
-    getX(): number{
-        return this.x;
+    get letter(): string {
+      return this._letter;
     }
-    getY(): number{
-        return this.y;
+
+    setLetter(letter: string): void {
+      this._letter = letter;
     }
-    getHeight(): number{
-        return this.height;
-    }
-    getWidth(): number{
-        return this.width;
-    }
-    
+
+    checkCollision(other: Collidable): boolean {
+      return (
+          this.x < other.x + other.width &&
+          this.x + this.width > other.x &&
+          this.y < other.y + other.height &&
+          this.y + this.height > other.y
+      );
+    } 
+
   }
   

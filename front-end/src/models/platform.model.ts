@@ -1,82 +1,89 @@
-import { Collidable } from "./collidable.model";
+import { Collidable } from './collidable.model';
+import { Coin } from './coin.model';
 
-export class Platform implements Collidable{
-      x !: number;
-      y !: number;
-       width!: number;
-       height: number = 5;
-       coinLetterFirst : string = '';
-       coinLetterSecond : string = ''
-    
-    constructor(
-       x : number,
-       y : number,
-       width: number,
-       height: number = 5,
-       coinLetterFirst : string = '',
-       coinLetterSecond : string = ''
-    ) {}
+export class Platform implements Collidable {
+  private _x: number;
+  private _y: number;
+  private _width: number;
+  private _height: number;
+  private coinFirst?: Coin;
+  private coinSecond?: Coin;
 
-      getX(): number {
-        return this.x;
-      }
-    
-      getY(): number {
-        return this.y;
-      }
-    
-      getWidth(): number {
-        return this.width;
-      }
-    
-      getHeight(): number {
-        return this.height;
-      }
-    
-      getCoinLetterFirst(): string {
-        return this.coinLetterFirst;
-      }  
+  constructor(
+    x: number,
+    y: number,
+    width: number,
+    height: number = 5,
+    coinFirst?: Coin,
+    coinSecond?: Coin
+  ) {
+    this._x = x;
+    this._y = y;
+    this._width = width;
+    this._height = height;
+    this.coinFirst = coinFirst;
+    this.coinSecond = coinSecond;
+  }
 
-      getCoinLetterSecond(): string {
-        return this.coinLetterSecond;
-      }  
-      setCoinLetterFirst(letter: string): void {
-        this.coinLetterFirst = letter;
-      }
-    
-      setCoinLetterSecond(letter: string): void {
-        this.coinLetterSecond = letter;
-      }
-    
-      
-      hasSlot(): boolean {
-        return !this.coinLetterFirst || !this.coinLetterSecond;
-      }
-    
-    
-      addLetter(letter: string): boolean {
-        if (!this.coinLetterFirst) {
-          this.coinLetterFirst = letter;
-          return true;
-        } else if (!this.coinLetterSecond) {
-          this.coinLetterSecond = letter;
-          return true;
-        }
-        return false;
-      }
-    
-   
-      getLetterCount(): number {
-        return [this.coinLetterFirst, this.coinLetterSecond].filter(l => l).length;
-      }
 
-      checkCollision(other: Collidable): boolean {
-        return (
-            this.x < other.x + other.width &&
-            this.x + this.width > other.x &&
-            this.y < other.y + other.height &&
-            this.y + this.height > other.y
-        );
-      }
+
+  get x(): number {
+    return this._x;
+  }
+
+  get y(): number {
+    return this._y;
+  }
+
+  get width(): number {
+    return this._width;
+  }
+
+  get height(): number {
+    return this._height;
+  }
+
+  getCoinLetterFirst(): string | undefined {
+    return this.coinFirst?.letter;
+  }
+
+  getCoinLetterSecond(): string | undefined {
+    return this.coinSecond?.letter;
+  }
+
+  setCoinFirst(coin: Coin): void {
+    this.coinFirst = coin;
+  }
+
+  setCoinSecond(coin: Coin): void {
+    this.coinSecond = coin;
+  }
+
+  hasSlot(): boolean {
+    return !this.coinFirst || !this.coinSecond;
+  }
+
+  addCoin(coin: Coin): boolean {
+    if (!this.coinFirst) {
+      this.setCoinFirst(coin);
+      return true;
+    } else if (!this.coinSecond) {
+      this.setCoinSecond(coin);
+      return true;
+    }
+    return false;
+  }
+
+  getLetterCount(): number {
+    return [this.coinFirst, this.coinSecond].filter(Boolean).length;
+  }
+
+  checkCollision(other: Collidable): boolean {
+    return (
+      this.x < other.x + other.width &&
+      this.x + this.width > other.x &&
+      this.y < other.y + other.height &&
+      this.y + this.height > other.y
+    );
+  }
 }
-  

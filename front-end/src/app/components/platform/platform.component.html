@@ -1,6 +1,15 @@
 <div *ngFor="let platform of platforms" 
      class="platform"
-     [attr.style]="'position: absolute ; left: ' + platform.getX() + 'vw ; bottom: ' + platform.getY() + 'vh ; width: ' + platform.getWidth() + 'vw; height: ' + platform.getHeight() + 'vh;'">
-  <app-coin class="first" *ngIf="platform.getCoinLetterFirst()" [letter]="platform.getCoinLetterFirst()"></app-coin>
-  <app-coin class="second" *ngIf="platform.getCoinLetterSecond()" [letter]="platform.getCoinLetterSecond()"></app-coin>
+     [attr.style]="'position: absolute ; left: ' + platform.x + 'vw ; bottom: ' + platform.y + 'vh ; width: ' + platform.width + 'vw; height: ' + platform.height + 'vh;'">
+     <app-coin
+     class="first"
+     *ngIf="platform.getCoinLetterFirst()"
+     [coinLetter]="platform.getCoinLetterFirst()!">
+   </app-coin>
+   
+   <app-coin
+     class="second"
+     *ngIf="platform.getCoinLetterSecond()"
+     [coinLetter]="platform.getCoinLetterSecond()!">
+   </app-coin>
 </div>
