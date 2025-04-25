@@ -66,7 +66,6 @@ import { literal } from '@angular/compiler';
     HomeComponent,
     PlayerStatsComponent,
     UserStatsChartComponent,
-    PlayerComponent,
     BulleDialogueComponent,
     LoginComponent,
     ListOfPeopleComponent,
