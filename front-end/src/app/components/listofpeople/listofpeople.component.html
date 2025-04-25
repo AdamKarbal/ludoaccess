@@ -1,4 +1,8 @@
 <div class="people-list">
-    <app-people *ngFor="let person of peopleList$ | async" [person]="person"></app-people>
+    <app-people *ngFor="let person of peopleList$ | async" 
+                [person]="person" 
+                (personSelected)="onPersonSelected($event)" 
+                [isSelected]="selectedId === person.id">
+    </app-people>
   </div>
   

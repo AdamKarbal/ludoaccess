@@ -1,12 +1,10 @@
 <div class="page-connexion">
     <div class="arriere-plan"></div>
-  
     <div class="contenu">
-      <h1 class="titre">Connexion</h1>
+        <h1 class="titre">Connexion</h1>
         <div class="liste-personnes">
-        <app-listofpeople></app-listofpeople>
-      </div>
+            <app-listofpeople (userSelected)="onUserSelected($event)"></app-listofpeople>
+        </div>
         <button class="btn-principal mt-6" (click)="pageSuivante()">Se connecter</button>
     </div>
-  </div>
-  
+</div>

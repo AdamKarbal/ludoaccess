@@ -1,13 +1,12 @@
-<div class="person">
-    <img [src]="person.imageUrl || '../../assets/ressources/e1.jpg'" alt="Photo de {{person.firstName}}" class="person-avatar">
-    <div class="person-info">
-        <h2>{{person.firstName}} {{person.lastName}}</h2>
-    </div>
-
-    <!-- Ajout du label pour le type de personne -->
-    <div class="person-type">
-        <span *ngIf="person.role === 'ergo'; else childLabel" class="ergo-label">Ergo</span>
-        <ng-template #childLabel><span class="child-label">Child</span></ng-template>
-
-    </div>
+<div class="person" 
+     (click)="onClick()" 
+     [ngClass]="{ 'selected': isSelected }">
+  <img [src]="person.imageUrl || '../../assets/ressources/e1.jpg'" alt="Photo de {{person.firstName}}" class="person-avatar">
+  <div class="person-info">
+      <h2>{{person.firstName}} {{person.lastName}}</h2>
+  </div>
+  <div class="person-type">
+      <span *ngIf="person.role === 'ergo'; else childLabel" class="ergo-label">Ergo</span>
+      <ng-template #childLabel><span class="child-label">Child</span></ng-template>
+  </div>
 </div>
