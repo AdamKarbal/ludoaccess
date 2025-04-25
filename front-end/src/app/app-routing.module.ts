@@ -9,6 +9,7 @@ import { GameComponent } from './components/game/game.component';
 import { MiniGameComponent } from './components/minigame/minigame.component';
 import { JeuComponent } from './components/jeu/jeu.component';
 import { HomeComponent } from './pages/ac/ac.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 const routes: Routes = [
@@ -20,8 +21,8 @@ const routes: Routes = [
   {path : 'game', component : GameComponent},
   {path : 'mob', component : MiniGameComponent},
   {path : 'jeuComponent', component : JeuComponent},
-  { path: '', component: HomeComponent }, // Page d'accueil
-
+  { path: '', component: LoginComponent },
+  { path: 'acceuil', component: HomeComponent },
 ];
 
 

@@ -1,7 +1,7 @@
 import { UserStats} from "../models/stats.model";
 
 export const mockUserStats :UserStats= {
-  child: { id:"1",firstName: "Adam",lastName:"Karbal",playDuration:500,frequency:5,age:8 },
+  child: { id:"1",firstName: "Adam",lastName:"Karbal",playDuration:500,frequency:5,age:8,role:"child" },
   nbError: 15,
   listLetterErrors: ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s", "t","u","v","w","x","y","z"],
   listNbError: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],
