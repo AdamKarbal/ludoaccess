@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Coin } from 'src/models/coin.model';
 
 @Component({
   selector: 'app-coin',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CoinComponent implements OnInit {
   
-  @Input() coinLetter!: string;  
+    @Input() coin!: Coin; 
 
   constructor() {}
 
@@ -16,6 +17,6 @@ export class CoinComponent implements OnInit {
   }
 
   get imagePath(): string {
-    return this.coinLetter ? `assets/ressources/Coins/${this.coinLetter}.png` : '';
+    return this.coin.letter ? `assets/ressources/Coins/${this.coin.letter}.png` : '';
   }
 }

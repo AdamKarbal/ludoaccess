@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Platform } from "src/models/platform.model";
 import { PlatformService } from "src/services/platform.service";
 import { MotService } from "src/services/mot.service";
+import { GameService } from "src/services/game.service";
 
 
 @Component({
@@ -12,10 +13,10 @@ import { MotService } from "src/services/mot.service";
 export class PlatformComponent implements OnInit {
   platforms: Platform[] = [];
 
-  constructor(private platformService: PlatformService, private motService : MotService) {}
+  constructor(private platformService: PlatformService, private gameService : GameService) {}
 
   ngOnInit(): void {
-    this.platforms = this.platformService.genererPlateformes(this.motService.getMotParNiveau(3));
+    this.platforms = this.platformService.genererPlateformes(this.gameService.w2g);
   }
 
   getX():number {

@@ -1,5 +1,5 @@
 <div 
   class="coin" 
-  *ngIf="coinLetter" 
+  *ngIf="(coin.letter !== '') && !coin.isCollected" 
   [style.background-image]="'url(' + imagePath + ')'">
 </div>

@@ -3,13 +3,13 @@
      [attr.style]="'position: absolute ; left: ' + platform.x + 'vw ; bottom: ' + platform.y + 'vh ; width: ' + platform.width + 'vw; height: ' + platform.height + 'vh;'">
      <app-coin
      class="first"
-     *ngIf="platform.getCoinLetterFirst()"
-     [coinLetter]="platform.getCoinLetterFirst()!">
+     *ngIf="platform.getCoinFirst()"
+     [coin]="platform.getCoinFirst()!">
    </app-coin>
    
    <app-coin
      class="second"
-     *ngIf="platform.getCoinLetterSecond()"
-     [coinLetter]="platform.getCoinLetterSecond()!">
+     *ngIf="platform.getCoinSecond()"
+     [coin]="platform.getCoinSecond()!">
    </app-coin>
 </div>

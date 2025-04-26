@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
+import { GameService } from './game.service';
 
 @Injectable({
     providedIn: 'root'
   })
 
 export class Word2GuessService {
-    private word: string= 'Açbre';
+    private word: string;
+    private display: string;
     private guessedIndexes: number[] = [];
     public currentIndex = 0;
+
+    constructor(private gameService: GameService) {
+      this.word = this.gameService.w2g;
+      this.display = "_".repeat(this.word.length);
+    }
   
     getWord(): string {
         return this.word;
@@ -38,5 +45,7 @@ export class Word2GuessService {
         this.guessedIndexes = [];
         this.currentIndex = 0;
       }
+
+
   }
   

@@ -43,12 +43,12 @@ export class Platform implements Collidable {
     return this._height;
   }
 
-  getCoinLetterFirst(): string | undefined {
-    return this.coinFirst?.letter;
+  getCoinFirst(): Coin | undefined {
+    return this.coinFirst;
   }
 
-  getCoinLetterSecond(): string | undefined {
-    return this.coinSecond?.letter;
+  getCoinSecond(): Coin | undefined {
+    return this.coinSecond;
   }
 
   setCoinFirst(coin: Coin): void {

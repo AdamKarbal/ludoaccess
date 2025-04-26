@@ -14,10 +14,6 @@ export class Coin implements Collidable{
       this._letter = letter;
     }
   
-    collect(): void {
-      this.collected = true;
-    }
-  
     get imagePath(): string {
       return `assets/ressources/Coins/${this.letter}.png`;
     }
@@ -40,6 +36,14 @@ export class Coin implements Collidable{
 
     get letter(): string {
       return this._letter;
+    }
+
+    get isCollected(): boolean{
+      return this.collected;
+    }
+
+    collect(): void{
+      this.collected = true;
     }
 
     setLetter(letter: string): void {

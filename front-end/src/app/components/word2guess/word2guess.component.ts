@@ -6,6 +6,7 @@ import { Word2GuessService } from "src/services/word2guess.services";
     templateUrl: "./word2guess.component.html",
     styleUrls: ["./word2guess.component.scss"],
 })
+
 export class Word2GuessComponent implements OnInit{
   ngOnInit(): void {}
   @Input() userInput: string = '';
