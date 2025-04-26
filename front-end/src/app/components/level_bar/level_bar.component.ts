@@ -6,7 +6,7 @@ import { LevelService } from "src/services/levels.service";
     templateUrl: "./level_bar.component.html",
     styleUrls: ["./level_bar.component.scss"],
 })
-export class LevelBarComponent implements OnInit, OnChanges {
+export class LevelBarComponent implements OnInit {
   @Input() wordCompleted: boolean = false;
 
   constructor(public levelBarService : LevelService) {}
@@ -16,7 +16,7 @@ export class LevelBarComponent implements OnInit, OnChanges {
     console.log(this.levelBarService.progress);
   }
 
-  ngOnChanges(changes:SimpleChanges){
-    if(changes['wordCompleted'] && this.wordCompleted) this.levelBarService.increaseProgress(20);
-  }
+  // ngOnChanges(changes:SimpleChanges){
+  //   if(changes['wordCompleted'] && this.wordCompleted) this.levelBarService.increaseProgress(20);
+  // }
 }

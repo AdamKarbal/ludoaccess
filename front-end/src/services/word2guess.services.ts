@@ -3,6 +3,7 @@ import { GameService } from './game.service';
 import { FreezeGameService } from './freeze-game.services';
 import { CoinCollectionService } from './coincollection.service';
 import { Coin } from 'src/models/coin.model';
+import { LevelService } from "./levels.service";
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,7 @@ export class Word2GuessService {
     public isCrossed: boolean = false;
     public isI: boolean = false;
 
-    constructor(private gameService: GameService,private freezeGameService: FreezeGameService) {
+    constructor(private gameService: GameService,private freezeGameService: FreezeGameService,private LevelService:LevelService) {
       this.freezeGameService.isPaused$.subscribe(paused => {
         this.isPaused = paused;
       });
@@ -61,6 +62,11 @@ export class Word2GuessService {
       isWordComplete(): boolean {
         return this.guessedIndexes.length === this.word.length;
       }
+      onWordCompleted(): void {
+        if (this.isWordComplete()) {
+          this.LevelService.increaseProgress(this.word.length); // Augmente le niveau de progression de 20% lorsque le mot est trouvé
+      }
+    }
     
       reset(word: string = 'ArBRE') {
         this.word = word;
