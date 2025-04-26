@@ -1,6 +1,11 @@
 <div class="word2Guess">
     <div id="mot" [style.font-family]="currentFont">
-
+      <!-- Si mode = coin => affichage simple avec display -->
+    <ng-container *ngIf="mode === 'coin'; else typingMode">
+      {{ display }}
+    </ng-container>
+    <!-- Si mode = typing => affichage avec lettres individuelles -->
+    <ng-template #typingMode>
         <span  *ngFor="let letter of word.split(''); let i = index"
 
         
@@ -18,6 +23,7 @@
           >
         {{letter}}
       </span>
+    </ng-template>
     </div>
     
     <!-- <input type="text" (input)="checkLetter($letter)" maxlength="1" placeholder="Tape une lettre" /> -->
