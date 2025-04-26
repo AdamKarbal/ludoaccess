@@ -84,8 +84,8 @@
   .exit-message {
     position: absolute;
     display: flex;
-    flex-direction: row;  /* Aligne les éléments en colonne */
-  justify-content: center; /* Centrer les éléments verticalement */
+    flex-direction: column;  /* Aligne les éléments en colonne */
+  justify-content: flex-start; /* Centrer les éléments verticalement */
   align-items: center;
   font-family: 'Nintendo', sans-serif;  
     top: 50%;
@@ -103,6 +103,7 @@
     z-index: 100;
     opacity: 1;
   }
+
   #button_pause {
     display: flex;
     justify-content: center; /* Centre le texte horizontalement */
@@ -125,4 +126,55 @@
     background-color: #cc0000;
     transform: scale(1.05);
     box-shadow: 0 2px 0 #000;
+  }
+
+  .info-message {
+  position: fixed;
+  top: 10%;
+  left: 0%; /* Cache complètement à gauche au départ */
+  width: 40%;
+  max-width: 70vw;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 3px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  transition: left 0.5s ease-in-out; /* Animation douce */
+  z-index: 100;
+}
+
+.info-message.active {
+  left: 50%;
+  transform: translateX(-50%);
+}
+  
+  h2, h3 {
+    margin-top: 1rem;
+  }
+  
+  ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, background 0.3s ease;
+    z-index: 10000;
+  }
+  
+  .close-button:hover {
+    background: darkred;
+    transform: scale(1.1);
   }

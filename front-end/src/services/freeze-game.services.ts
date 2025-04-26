@@ -26,4 +26,8 @@ export class FreezeGameService {
   exit() {
     this.isCrossedSubject.next(true);
   }
+
+  setInfoState(isInfo: boolean) {
+    this.isInfoSubject.next(isInfo);
+  }
   }

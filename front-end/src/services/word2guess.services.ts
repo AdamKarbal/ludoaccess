@@ -13,6 +13,7 @@ export class Word2GuessService {
     public currentIndex = 0;
     public isPaused: boolean = false;
     public isCrossed: boolean = false;
+    public isI: boolean = false;
 
     constructor(private gameService: GameService,private freezeGameService: FreezeGameService) {
       this.freezeGameService.isPaused$.subscribe(paused => {
@@ -20,6 +21,9 @@ export class Word2GuessService {
       });
       this.freezeGameService.isCrossed$.subscribe(exited => {
         this.isCrossed = exited;
+      });
+      this.freezeGameService.isInfo$.subscribe(info => {
+        this.isI = info;
       });
       this.word = this.gameService.w2g;
       this.display = "_".repeat(this.word.length);
