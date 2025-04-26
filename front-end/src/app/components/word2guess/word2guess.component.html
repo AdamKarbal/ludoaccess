@@ -1,5 +1,5 @@
 <div class="word2Guess">
-    <div id="mot">
+    <div id="mot" [style.font-family]="currentFont">
 
         <span  *ngFor="let letter of word.split(''); let i = index"
 

@@ -1,5 +1,6 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
-
+import { SettingsService } from 'src/services/setting.service'; 
+import { Subscription } from "rxjs";
 
 
 @Component({
@@ -10,12 +11,22 @@ import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 
 export class BulleDialogueComponent implements OnInit,OnChanges{
   message = { text: '' };
-    constructor(){}
+    constructor(private settingsService: SettingsService 
+    ){
+
+    }
     ngOnInit(): void {
         this.currentStep = 3; // Étape du Niveau 3
         this.message=this.getMessage();
+        this.settingsSub = this.settingsService.settings$.subscribe(settings => {
+          if (settings) {
+            this.currentFont = settings.choosefont;
+            console.log('Font mise à jour :', this.currentFont);
+          }
+        });
 }
-
+  currentFont: string = 'initial';
+  private settingsSub!: Subscription;
     currentStep: number = 3; // Étape du Niveau 3
     @Input() reussite : boolean =false;
     @Input() letterGuessed ?: boolean;
@@ -65,6 +76,12 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
           return { text: 'Bravo passons à la suite !' };
         default:
           return { text: 'Oups ...' };
+      }
+    }
+
+    ngOnDestroy(): void {
+      if (this.settingsSub) {
+        this.settingsSub.unsubscribe(); 
       }
     }
 }

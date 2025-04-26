@@ -1,28 +1,69 @@
-import { Component, OnInit } from "@angular/core";
-import { Platform } from "src/models/platform.model";
-import { PlatformService } from "src/services/platform.service";
-import { MotService } from "src/services/mot.service";
-import { GameService } from "src/services/game.service";
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SettingsService } from 'src/services/setting.service';
+import { Subscription } from 'rxjs';
+import { Platform } from 'src/models/platform.model';
+import { PlatformService } from 'src/services/platform.service';
+import { GameService } from 'src/services/game.service';
 
 @Component({
   selector: 'app-plateformes',
   templateUrl: './platform.component.html',
   styleUrls: ['./platform.component.scss'],
 })
-export class PlatformComponent implements OnInit {
+export class PlatformComponent implements OnInit, OnDestroy {
   platforms: Platform[] = [];
+  currentBackground: string = 'Aléatoire'; 
+  currentFilter: string = ''; 
+  private settingsSub!: Subscription;
 
-  constructor(private platformService: PlatformService, private gameService : GameService) {}
+  constructor(
+    private platformService: PlatformService, 
+    private gameService: GameService,
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit(): void {
     this.platforms = this.platformService.genererPlateformes(this.gameService.w2g);
+    
+    this.settingsSub = this.settingsService.settings$.subscribe(settings => {
+      if (settings) {
+        if (settings.chooseBackGround === 'Aléatoire') {
+          this.currentBackground = this.getRandomBackground();
+        } else {
+          this.currentBackground = settings.chooseBackGround;
+        }
+        this.setFilterBasedOnBackground(this.currentBackground); 
+        console.log('Background mis à jour :', this.currentBackground);
+      }
+    });
   }
 
-  /*getX():number {
-    return this.x;
+  ngOnDestroy(): void {
+    if (this.settingsSub) {
+      this.settingsSub.unsubscribe();
+    }
   }
-  getY():number {
-    return this.y;
-  }*/
+
+  private getRandomBackground(): string {
+    const backgrounds = ['Forest', 'Orange_earth', 'Blue_earth'];
+    const randomIndex = Math.floor(Math.random() * backgrounds.length);
+    return backgrounds[randomIndex];
+  }
+
+  private setFilterBasedOnBackground(background: string): void {
+    switch (background) {
+      case 'Forest':
+        this.currentFilter = 'hue-rotate(0deg)'; 
+        break;
+      case 'Orange_earth':
+        this.currentFilter = 'hue-rotate(30deg)'; 
+        break;
+      case 'Blue_earth':
+        this.currentFilter = 'hue-rotate(180deg)'; 
+        break;
+      default:
+        this.currentFilter = '';  
+        break;
+    }
+  }
 }
