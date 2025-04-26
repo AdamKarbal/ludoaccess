@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FreezeGameService } from 'src/services/freeze-game.services';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,13 @@ export class AppComponent {
   public title: string = '';
   public showSuccess = false;
 
-  constructor() {}
+  isPaused = false;
+
+  constructor(private freezeGame: FreezeGameService) {
+    this.freezeGame.isPaused$.subscribe(paused => {
+      this.isPaused = paused;
+    });
+  }
 
   showHideSuccess() {
     this.showSuccess = !this.showSuccess;
