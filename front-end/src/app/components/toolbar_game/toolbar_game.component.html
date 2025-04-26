@@ -1,20 +1,50 @@
 <div class="toolbar">
-        <img id="pause" alt="pause sign" src="../../../assets/ressources/pause.png" (click)=" OnPauseClick()"/>
+        <img id="pause" alt="pause sign" src="../../../assets/ressources/pause.png" (click)="OnPauseClick()"/>
         <img id="cross" alt="cancel" src="../../../assets/ressources/cancel.png"(click)="OnExitClick()"/>
-        <img id="infoB" alt="infos" src="../../../assets/ressources/info.png"/>
+        <img id="infoB" alt="infos" src="../../../assets/ressources/info.png" (click)="OnInfoClick()"/>
 
         
 </div>
 <!-- <div *ngIf="isPaused" class="pause-overlay"></div> -->
 <div *ngIf="isPaused" class="pause-message" (click)="OnPauseClick()">
         <p>⏸ Petite pause...</p>
-        <button id="button_pause"(click)="OnResumeClick()">PARAMÈTRES</button>
+        <button id="button_pause"(click)="navigateToSettings()">PARAMÈTRES</button>
         <button id="button_pause"(click)="OnResumeClick()">REPRENDRE</button>
         <button id="button_pause"(click)="OnResumeClick()">RECOMMENCER</button>
 </div>
 <div *ngIf="isCrossed" class="exit-message" (click)="OnExitClick()">
-        <p>Voulez-vous quitter la partie ?</p>
-        <button id="button_pause"(click)="OnResumeClick()">OUI</button>
+        <p id="question-exit">Voulez-vous quitter la partie ?</p>
+        <button id="button_pause"(click)="navigateToHome()">OUI</button>
         <button id="button_pause"(click)="OnResumeClick()">NON</button>
 
+</div>
+<div *ngIf="isInfo" class="info-message">
+        <button class="close-button" (click)="OnInfoClick()">✖</button>
+        <h2>🧩 LudoAccess - Règles du Jeu</h2>
+
+  <h3>🎯 Objectif :</h3>
+  <p>Devinez le mot caché en tapant les lettres une par une dans l'ordre correct.</p>
+
+  <h3>🕹️ Commandes :</h3>
+  <ul>
+    <li>Utilisez votre clavier pour entrer la prochaine lettre du mot.</li>
+    <li>Cliquez sur <strong>Pause</strong> pour interrompre la partie à tout moment.</li>
+    <li>Accédez aux <strong>Paramètres</strong> pour modifier vos options de jeu.</li>
+  </ul>
+
+  <h3>📜 Règles :</h3>
+  <ul>
+    <li>Seule la <strong>prochaine</strong> lettre correcte est acceptée.</li>
+    <li>Une mauvaise lettre est indiquée par un effet visuel rouge temporaire.</li>
+    <li>Le mot est terminé lorsque toutes les lettres sont correctement saisies !</li>
+  </ul>
+
+  <h3>💡 Astuces :</h3>
+  <p>Restez concentré sur les lettres déjà proposées.<br> Prenez votre temps : mieux vaut être précis que rapide.</p>
+
+  <h3>👤 Crédits :</h3>
+  <p>Développé par Adam, Ismail, Nicolas et Younes. Merci de jouer !</p>
+
+  <h3>🛠️ Version :</h3>
+  <p>v1.0</p>
 </div>

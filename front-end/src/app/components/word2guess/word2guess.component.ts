@@ -34,7 +34,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.word2GuessService.isPaused||this.word2GuessService.isCrossed) {
+    if (this.word2GuessService.isPaused||this.word2GuessService.isCrossed||this.word2GuessService.isI) {
       return; // Sortir de la méthode, aucun changement n'est traité
     }
     
