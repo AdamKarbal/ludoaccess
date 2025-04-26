@@ -1,5 +1,6 @@
 <div 
   class="coin" 
   *ngIf="(coin.letter !== '') && !coin.isCollected" 
-  [style.background-image]="'url(' + imagePath + ')'">
+  [style.background-image]="'url(' + imagePath + ')'"
+  (click)="onClickCollect()">
 </div>

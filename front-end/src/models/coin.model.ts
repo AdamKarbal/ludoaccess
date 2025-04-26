@@ -1,4 +1,5 @@
 import { Collidable } from "./collidable.model";
+import { CoinCollectionService } from "src/services/coincollection.service";
 
 export class Coin implements Collidable{
   private _x: number;

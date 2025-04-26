@@ -19,10 +19,10 @@ export class PlatformComponent implements OnInit {
     this.platforms = this.platformService.genererPlateformes(this.gameService.w2g);
   }
 
-  getX():number {
+  /*getX():number {
     return this.x;
   }
   getY():number {
     return this.y;
-  }
+  }*/
 }

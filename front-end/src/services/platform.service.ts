@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'src/models/platform.model';
-import { Coin } from 'src/models/coin.model'; // Assurez-vous que Coin est bien importé
+import { Coin } from 'src/models/coin.model';
+import { CoinCollectionService } from './coincollection.service'; // Assurez-vous que Coin est bien importé
 
 @Injectable({ providedIn: 'root' })
 export class PlatformService {
-  platforms: Platform[] = [];
+  private _platforms: Platform[] = [];
+  coinCollectionService: CoinCollectionService = new CoinCollectionService;
+
+  constructor(coinCollectionService : CoinCollectionService){}
 
   genererPlateformes(word: string): Platform[] {
     const MAX_PLATFORMS = 6;
     const SOL_Y = 10;
     const CEILING_Y = 60;
-    this.platforms = [];
+    this._platforms = [];
     let nbPt = 0;
     let lettresDisponibles = word.split('');
 
@@ -34,7 +38,7 @@ export class PlatformService {
       }
       
       let p = new Platform(x, y, largeur, undefined);
-      this.platforms.push(p);
+      this._platforms.push(p);
       nbPt++;
       dernierX = x;
     }
@@ -46,8 +50,8 @@ export class PlatformService {
       const lettre = lettresDisponibles.splice(randomIndex, 1)[0];
 
       if (lettre !== undefined) {
-        const targetPlatform = this.platforms[i % this.platforms.length];
-        console.log(`Affectation de la lettre '${lettre}' à la plateforme ${i % this.platforms.length + 1}`);
+        const targetPlatform = this._platforms[i % this._platforms.length];
+        console.log(`Affectation de la lettre '${lettre}' à la plateforme ${i % this._platforms.length + 1}`);
 
         // Créer un objet Coin avec la lettre
         const coin = new Coin(targetPlatform.x, targetPlatform.y, lettre);
@@ -55,9 +59,12 @@ export class PlatformService {
         // Utilisation de addLetter pour affecter le coin
         if (!targetPlatform.addCoin(coin)) {
           // Si la plateforme ne peut pas ajouter la lettre, on passe à la suivante
-          console.log(`La plateforme ${i % this.platforms.length + 1} est pleine, réessayer avec une autre plateforme`);
+          console.log(`La plateforme ${i % this._platforms.length + 1} est pleine, réessayer avec une autre plateforme`);
           i++;
           lettresDisponibles.unshift(lettre); // remet la lettre dans la pile si échec
+        }
+        else{
+          this.coinCollectionService.addExistent(coin);
         }
 
         i++;
@@ -65,16 +72,16 @@ export class PlatformService {
     }
 
     // Afficher les plateformes après affectation des lettres
-    console.log('Plateformes après affectation des lettres :', this.platforms);
+    console.log('Plateformes après affectation des lettres :', this._platforms);
 
-    return this.platforms;
+    return this._platforms;
   }
 
   private getRandom(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  getPlatforms(): Platform[] {
-    return this.platforms;
+  get platforms(): Platform[] {
+    return this._platforms;
   }
 }
