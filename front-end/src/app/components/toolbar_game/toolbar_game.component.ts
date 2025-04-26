@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FreezeGameService } from "src/services/freeze-game.services"; 
 import { Router } from "@angular/router";
+import { GameService } from "src/services/game.service";
 
 @Component({
   selector: "app-toolbar-game",
@@ -15,7 +16,7 @@ export class ToolbarGameComponent {
   isCrossed = false;
   isInfo=false;
 
-  constructor(private freezeGame: FreezeGameService, private router: Router) {
+  constructor(private freezeGame: FreezeGameService, private router: Router, private gameService : GameService) {
     this.freezeGame.isPaused$.subscribe(paused => {
       this.isPaused = paused;
     });
@@ -48,10 +49,10 @@ export class ToolbarGameComponent {
 
   navigateToSettings() {
     this.freezeGame.resume(); // Resume the game before navigating
-    this.router.navigate(['/reglage']);  // Redirige vers la page des paramètres
+    this.gameService.changeStep('/reglage');  // Redirige vers la page des paramètres
   }
   navigateToHome() {
     this.freezeGame.resume(); // Resume the game before navigating
-    this.router.navigate(['/']);  // Redirige vers la page des paramètres
+    this.gameService.changeStep('/');;  // Redirige vers la page des paramètres
   }
 }

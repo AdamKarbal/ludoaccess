@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges,OnChanges } from "@angular/core";
+import { LevelService } from "src/services/levels.service";
 
 @Component({
   selector: "app-levelbar",
@@ -6,24 +7,16 @@ import { Component, Input, OnInit, SimpleChanges,OnChanges } from "@angular/core
     styleUrls: ["./level_bar.component.scss"],
 })
 export class LevelBarComponent implements OnInit, OnChanges {
-  constructor() {}
-  ngOnInit(): void {}
-  @Input() progress: number = 35;
-  level:number = 0;
   @Input() wordCompleted: boolean = false;
 
-  ngOnChanges(changes:SimpleChanges){
-    if(changes['wordCompleted'] && this.wordCompleted)this.increaseProgress(20)
-  }
-  increaseProgress(progress: number) {
-    this.progress += progress;
+  constructor(public levelBarService : LevelService) {}
 
-    if (this.progress >= 100) {
-      this.levelUp();
-    }
+  ngOnInit(): void {
+    console.log(this.levelBarService.level);
+    console.log(this.levelBarService.progress);
   }
-  levelUp() {
-    this.level++;
-    this.progress = 0; // Réinitialise la progression pour le nouveau niveau
+
+  ngOnChanges(changes:SimpleChanges){
+    if(changes['wordCompleted'] && this.wordCompleted) this.levelBarService.increaseProgress(20);
   }
 }

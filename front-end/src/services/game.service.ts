@@ -5,31 +5,53 @@ import { PlatformService } from "./platform.service";
 import { Platform } from "src/models/platform.model";
 import { CoinCollectionService } from "./coincollection.service";
 import { Coin } from "src/models/coin.model";
+import { LevelService } from "./levels.service";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class GameService {
-    constructor(private motService: MotService, private platformService : PlatformService
-        ,private coinCollectionService : CoinCollectionService
-    ){}
+    private availablePaths = [
+        '/reglage', '/stats', '/jeu_etape1', '/jeu_etape2', '/jeu_etape3',
+        '/mob', '/jeuComponent', '/', '/acceuil'
+      ];
+      
+    constructor(
+        private motService: MotService,
+        private platformService : PlatformService,
+        private coinCollectionService : CoinCollectionService,
+        private levelService : LevelService,
+        private router : Router
+    ) {}
 
-    private _w2g : string = this.motService.getWord();
-    private _platforms : Platform[] = this.platformService.platforms;
-    existentCoins : Coin[] = this.coinCollectionService.existentCoins;
-    collectedCoins : Coin[] = this.coinCollectionService.collectedCoins;
-
-    get w2g() : string{
-        return this._w2g;
+    get w2g() : string {
+        return this.motService.getWord();
     }
 
-    get platforms() :Platform[] {
-        return this._platforms;
+    get platforms() : Platform[] {
+        return this.platformService.platforms;
     }
 
-    getExistentCoins() : Coin[]{
-        return this.existentCoins;
+    get existentCoins() : Coin[] {
+        return this.coinCollectionService.existentCoins;
     }
 
-    getCollectedCoins() : Coin[]{
-        return this.collectedCoins;
+    get collectedCoins() : Coin[] {
+        return this.coinCollectionService.collectedCoins;
     }
+
+    get level() : number {
+        return this.levelService.level;
+    }
+
+    get progress() : number {
+        return this.levelService.progress;
+    }
+
+    changeStep(path: string): void {
+        if (this.availablePaths.includes(path)) {
+          this.router.navigate([path]);
+        } else {
+          console.error('Path invalide:', path);
+        }
+      }
 }

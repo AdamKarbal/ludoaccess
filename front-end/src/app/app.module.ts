@@ -38,9 +38,11 @@ import { PeopleComponent } from './components/people/people.component';
 import { literal } from '@angular/compiler';
 import { AuthService } from 'src/services/auth.service';
 import { W2gS2Component } from './components/w2gS2/w2gS2.component';
+import { PlayerComponent } from './components/player/player.component';
 
 @NgModule({
   declarations: [
+    //PlayerComponent,
     W2gS2Component,
     CoinComponent,
     PlatformComponent,

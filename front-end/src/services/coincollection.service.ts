@@ -1,6 +1,8 @@
 import { Coin } from "src/models/coin.model";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { GameService } from "./game.service";
+import { LevelService } from "./levels.service";
 
 @Injectable({ providedIn: 'root' })
 export class CoinCollectionService {
@@ -9,13 +11,14 @@ export class CoinCollectionService {
 
     private collectedCoinSubject = new Subject<Coin>(); 
 
-    collectedCoin$ = this.collectedCoinSubject.asObservable(); 
+    collectedCoin$ = this.collectedCoinSubject.asObservable();
 
-    constructor() {}
+    constructor(private levelService: LevelService) {}
 
     addCollected(coin: Coin): void {
         this._collectedCoins.push(coin);
         this.collectedCoinSubject.next(coin); 
+        this.levelService.increaseProgress(20);
     }
 
     addExistent(coin: Coin): void {

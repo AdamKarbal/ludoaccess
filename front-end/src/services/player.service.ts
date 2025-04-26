@@ -107,7 +107,7 @@ export class PlayerService {
   collectCoin(): void {
     if (!this.player) return;
   
-    this.gameService.getExistentCoins().forEach((coin, index) => {
+    this.gameService.existentCoins.forEach((coin, index) => {
       // Vérifier la collision entre le joueur et la pièce
       if (this.player?.checkCollision(coin)){
         console.log(`Pièce collectée : ${coin}`);

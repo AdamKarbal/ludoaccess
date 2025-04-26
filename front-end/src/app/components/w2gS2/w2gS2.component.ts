@@ -3,6 +3,7 @@ import { Word2GuessService } from "src/services/word2guess.services";
 import { CoinCollectionService } from "src/services/coincollection.service"; // <<< importé ici
 import { Coin } from "src/models/coin.model";
 import { Subscription } from "rxjs";
+import { GameService } from "src/services/game.service";
 
 @Component({
   selector: "app-w2gS2",
@@ -17,7 +18,8 @@ export class W2gS2Component implements OnInit, OnDestroy {
 
   constructor(
     public word2GuessService: Word2GuessService,
-    private coinCollectionService: CoinCollectionService 
+    private coinCollectionService: CoinCollectionService,
+    private gameService : GameService
   ) {}
 
   ngOnInit(): void {
@@ -39,9 +41,11 @@ export class W2gS2Component implements OnInit, OnDestroy {
       }
     }
     this._displayWord = displayWordArray.join(' ');
+    if(this._displayWord === this.word){
+        console.log('On passe à la prochaine étape)');
+        this.gameService.changeStep('/jeu_etape3');
+    }
   }
-  
-  
 
   get word(): string {
     return this._word;
