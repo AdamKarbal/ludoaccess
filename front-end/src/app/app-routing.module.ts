@@ -21,8 +21,8 @@ const routes: Routes = [
   {path : 'game', component : GameComponent},
   {path : 'mob', component : MiniGameComponent},
   {path : 'jeuComponent', component : JeuComponent},
-  { path: '', component: LoginComponent },
-  { path: 'acceuil', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent },
 ];
 
 
