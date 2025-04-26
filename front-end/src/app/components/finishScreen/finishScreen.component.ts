@@ -1,5 +1,6 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
-
+import { SettingsService } from 'src/services/setting.service'; 
+import { Subscription } from "rxjs";
 
 
 @Component({
@@ -10,11 +11,19 @@ import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 
 export class finishComponent implements OnInit,OnChanges{
   message = { title: '', subtitle: '', instruction: '' };
-    constructor(){}
+
+  currentFont: string = 'initial';
+  private settingsSub!: Subscription;
+    constructor(private settingsService : SettingsService){}
     ngOnInit(): void {
-      
-     
-}
+      this.settingsSub = this.settingsService.settings$.subscribe(settings => {
+        if (settings) {
+          this.currentFont = settings.choosefont;
+          console.log('Font mise à jour :', this.currentFont);
+        }
+      });
+    }
+
     currentStep: number = 3; // Étape du Niveau 3
     @Input() reussite : boolean =false;
     @Input() letterGuessed ?: boolean;
@@ -74,6 +83,12 @@ export class finishComponent implements OnInit,OnChanges{
       case 4 :
         return { title: "Félicitations !", subtitle: "Tu as fini tous les niveaux", instruction: "Passons à la suite !" };
       default : return { title: "Oups !", subtitle: "Il semblerait qu'il y ait une erreur", instruction: "Redémarre !" };
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.settingsSub) {
+      this.settingsSub.unsubscribe(); 
     }
   }
 }

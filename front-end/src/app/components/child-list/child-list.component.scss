@@ -3,9 +3,12 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 90%; 
+    max-width: 100%; 
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box; 
+    overflow: hidden; 
+
 }
 
 .children-container {
@@ -13,6 +16,8 @@
     flex-direction: column; 
     gap: 10px;
     width: 100%;
+    max-width: 100%;
+    
 }
 
 .child-with-settings {

@@ -1,69 +1,66 @@
-.toolbar{
-    position: absolute;
-    display: flex;
-    align-items: center; 
-    justify-content: space-between;
-    height : 10.5vh;
-    width : 100%;
-    background-color: #000;
-    opacity : 0.4;
-    top: 0;
-    z-index: 1;
+.toolbar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 10.5vh;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.4;
+  top: 0;
+  z-index: 1;
 }
 
 #pause {
-    position: fixed;
-    left: 47.5%; 
-    width: 5%;
-    filter: invert(100%);
-    opacity: 0.8;
-  }
-  
+  position: fixed;
+  left: 47.5%;
+  width: 5%;
+  filter: invert(100%);
+  opacity: 0.8;
+}
 
-#pause:hover{
-    color : white;
-    width : 5%; 
-    transform: scale(1.1);
-    opacity: 1;
+#pause:hover {
+  color: white;
+  width: 5%;
+  transform: scale(1.1);
+  opacity: 1;
 }
 
 #cross {
-    position: fixed;
-    right: 1.5vw; /* au lieu de left: 95% + margin-right */
-    width: 4%;
-    filter: invert(100%);
-    opacity: 0.8;
-  }
-  
+  position: fixed;
+  right: 1.5vw;
+  width: 4%;
+  filter: invert(100%);
+  opacity: 0.8;
+}
 
-#cross:hover{
-    color : white;
-    width : 4%; 
-    transform: scale(1.1);
-    opacity: 1;
+#cross:hover {
+  color: white;
+  width: 4%;
+  transform: scale(1.1);
+  opacity: 1;
 }
 
 #infoB {
-    position: fixed;
-    left: 1.5vw; /* au lieu de margin-left */
-    width: 4%;
-    filter: invert(100%) brightness(130%);
-    opacity: 0.8;
-  }
-  
+  position: fixed;
+  left: 1.5vw;
+  width: 4%;
+  filter: invert(100%) brightness(130%);
+  opacity: 0.8;
+}
 
-#infoB:hover{
-    color : white;
-    width : 4%; 
-    transform: scale(1.1); 
-    opacity: 1;
+#infoB:hover {
+  color: white;
+  width: 4%;
+  transform: scale(1.1);
+  opacity: 1;
 }
 
 .pause-message {
-    position: absolute;
-    display: flex;
-    flex-direction: column;  /* Aligne les éléments en colonne */
-  justify-content: center; /* Centrer les éléments verticalement */
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   font-family: 'Nintendo', sans-serif;  
     top: 50%;
@@ -178,3 +175,4 @@
     background: darkred;
     transform: scale(1.1);
   }
+

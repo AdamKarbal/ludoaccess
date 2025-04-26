@@ -5,8 +5,8 @@ body {
     background-image: url("src/assets/ressources/thumbnail_back2.jpg");
     background-size: cover; /* Ajuste l’image pour couvrir tout l’écran */
     background-position: center; /* Centre l’image */
-    background-repeat: no-repeat; /* Empêche la répétition */
-    height: 100vh; /* Assure que l’image couvre toute la hauteur */
+    background-repeat: no-repeat;
+    height: 100vh; 
 }
 
 .start{

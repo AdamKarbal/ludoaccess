@@ -1,6 +1,7 @@
 <div *ngFor="let platform of platforms" 
      class="platform"
-     [attr.style]="'position: absolute ; left: ' + platform.x + 'vw ; bottom: ' + platform.y + 'vh ; width: ' + platform.width + 'vw; height: ' + platform.height + 'vh;'">
+     [ngStyle]="{'filter': currentFilter}"
+     [attr.style]="'position: absolute ; left: ' + platform.x + 'vw ; bottom: ' + platform.y + 'vh ; width: ' + platform.width + 'vw; height: ' + platform.height + 'vh;'" >
      <app-coin
      class="first"
      *ngIf="platform.getCoinFirst()"
