@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
+import { GameService } from './game.service';
 
 @Injectable({
     providedIn: 'root'
   })
 
 export class Word2GuessService {
-    private word: string= 'Arbre';
+    private word: string;
+    private display: string;
     private guessedIndexes: number[] = [];
     public currentIndex = 0;
+
+    constructor(private gameService: GameService) {
+      this.word = this.gameService.w2g;
+      this.display = "_".repeat(this.word.length);
+    }
   
     getWord(): string {
         return this.word;
@@ -18,7 +25,7 @@ export class Word2GuessService {
       }
     
       guessLetter(letter: string): boolean {
-        if (!letter.match(/[A-Za-z]/)) return false;
+        if (!letter.match(/^\p{L}$/u)) return false;
         console.log(`Comparing "${letter}" with "${this.word[this.currentIndex]}"`);
     // Comparer la lettre entrée avec celle du mot, en tenant compte de la casse
         if (letter === this.word[this.currentIndex]) {
@@ -38,5 +45,7 @@ export class Word2GuessService {
         this.guessedIndexes = [];
         this.currentIndex = 0;
       }
+
+
   }
   

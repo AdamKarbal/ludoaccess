@@ -43,7 +43,11 @@ export class SettingsService {
       wordDifficulty: 'Facile',
       preferredWordLength: 8,
       minWordLength: 3,
-      maxWordLength: 10
+      maxWordLength: 10,
+      displaymotsec:10,
+      choosefont:'Nintendo',
+      lettersize:20,
+      chooseBackGround:'Aléatoire',
        };
   }
 

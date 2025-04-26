@@ -1,42 +1,59 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
+import { Collidable } from '../../../models/collidable.model';
 
 @Component({
   selector: 'app-player',
   template: `
-    <div #player class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
+    <div class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
       <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
     </div>
-
   `,
   styles: [`
     .player {
       position: absolute;
-      bottom: 14vh;
-      width:3.5vw;
-      height:3.5vh;
+      top: 0;
+      width: 3vw;
+      height: 3vh;
     }
     .player img {
       width: 100%;
     }
   `]
 })
-export class PlayerComponent implements OnInit {
-  position = { x: 0, y: window.innerHeight * 0.1 };
+export class PlayerComponent implements OnInit, Collidable {
+  position = { x: 10, y: 20 }; // position initiale du joueur
 
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
+    this.playerService.setPlayer(this);
     this.playerService.position$.subscribe((pos) => {
       this.position = pos;
     });
   }
+
   @HostListener('document:keydown', ['$event'])
   onKeyPress(event: KeyboardEvent): void {
-    const key = event.key;
-    this.playerService.movePlayer(key);  // Pass key to the PlayerService
+    this.playerService.movePlayer(event.key);
   }
-  public getY():number {
-    return this.position.y;
+
+  get x(): number {
+    return (this.position.x / 100) * window.innerWidth;
   }
+
+  get y(): number {
+    return (this.position.y / 100) * window.innerHeight;
+  }
+
+  get width(): number {
+    return (3 / 100) * window.innerWidth;
+  }
+
+  get height(): number {
+    return (3 / 100) * window.innerHeight;
+  }
+
+
+  action(): void {}
 }

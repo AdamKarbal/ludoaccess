@@ -17,7 +17,6 @@ import { ReglagePageComponent } from './pages/reglage/reglage.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ChildComponent } from './components/child/child.component';
 import { ChildListComponent } from './components/child-list/child-list.component';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MobComponent } from './components/mob/mob.component';
 import { GameComponent } from './components/game/game.component';
@@ -31,9 +30,12 @@ import { PlatformComponent } from './components/platform/platform.component';
 import { CoinComponent } from './components/coin/coin.component';
 import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
 import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
-import {PlayerComponent} from "./components/player/player.component";
+//import {PlayerComponent} from "./components/player/player.component";
 import { BulleDialogueComponent } from './components/bulle_dialogue/bulle_dialogue';
-
+import { LoginComponent } from './pages/login/login.component';
+import { ListOfPeopleComponent } from './components/listofpeople/listofpeople.component';
+import { PeopleComponent } from './components/people/people.component';
+import { literal } from '@angular/compiler';
 @NgModule({
   declarations: [
     CoinComponent,
@@ -64,13 +66,14 @@ import { BulleDialogueComponent } from './components/bulle_dialogue/bulle_dialog
     HomeComponent,
     PlayerStatsComponent,
     UserStatsChartComponent,
-    PlayerComponent,
-    BulleDialogueComponent
+    BulleDialogueComponent,
+    LoginComponent,
+    ListOfPeopleComponent,
+    PeopleComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
     // StatsMenuModule
   ],

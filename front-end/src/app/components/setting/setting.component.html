@@ -10,7 +10,47 @@
                name="showTimer">
         <span>Afficher le chronomètre</span>
       </label>
-  
+      <label class="setting">
+        <span>Temps pour afficher le mot (secondes):</span>
+        <input type="number" 
+               [(ngModel)]="currentSettings.displaymotsec"
+               name="displaymotsec"
+               min="1" max="60">
+      </label>
+      <label class="setting">
+        <span>Taille des caractères :</span>
+        <div class="range-inputs">
+          <input type="number" 
+                 [(ngModel)]="currentSettings.lettersize"
+                 name="lettersize"
+                 placeholder="sp"
+                 min="1" max="60">
+        </div>       
+      </label>
+      <label class="setting">
+        <span>Police d'écriture:</span>
+        <select [(ngModel)]="currentSettings.choosefont"
+                name="choosefont">
+          <option value="Lucky Boy">Lucky Boy</option>
+          <option value="Nintendo">Nintendo</option>
+          <option value="Arial">Arial</option>
+          <option value="Comic Sans MS">Comic Sans MS</option>
+          <option value="Courier New">Courier New</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Verdana">Verdana</option>
+        </select>
+      </label>
+      <label class="setting">
+        <span>Police d'écriture: </span>
+        <select [(ngModel)]="currentSettings.chooseBackGround"
+                name="chooseBackGround">
+          <option value="Aléatoire">Aléatoire</option>
+          <option value="Forest">Forest</option>
+          <option value="Blue earth">Blue earth</option>
+          <option value="Orange earth">Orange earth</option>
+        </select>
+      </label>
       <label class="setting">
         <input type="checkbox" 
                [(ngModel)]="currentSettings.showRanking"

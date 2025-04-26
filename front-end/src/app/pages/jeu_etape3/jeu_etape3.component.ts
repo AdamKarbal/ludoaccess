@@ -19,7 +19,7 @@ export class JeuEtape3Component implements OnInit{
     const key = event.key;
 
     // Vérifie si la touche est une lettre et si elle est valide
-    if (key.length === 1 && /[a-zA-Z]/.test(key)) {
+    if (key.length === 1 && /^\p{L}$/u.test(key)) {
       this.userInput = key;  // Met à jour l'entrée de l'utilisateur
       setTimeout(() => {
         this.userInput = '';
