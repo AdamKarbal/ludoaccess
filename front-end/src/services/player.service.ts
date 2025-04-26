@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { CollisionService } from './collision.service';
 import { PlatformService } from './platform.service';
 import { PlayerComponent } from '../app/components/player/player.component';
+import { GameService } from './game.service';
+import { CoinCollectionService } from './coincollection.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +26,10 @@ export class PlayerService {
   private player?: PlayerComponent;
 
   constructor(
-    //private collisionService: CollisionService,
-    private platformService: PlatformService
+    private collisionService: CollisionService,
+    private platformService: PlatformService,
+    private gameService: GameService,
+    private coinCollectionService : CoinCollectionService
   ) {
     setInterval(() => {
       this.applyGravity();
@@ -76,7 +80,7 @@ export class PlayerService {
     // ⚠️ Convert player to pixels for platform collision
     const plateforme = this.collisionService.getGroundPlatform(
       this.player,
-      this.platformService.getPlatforms()
+      this.platformService.platforms
     );
 
     if (plateforme) {
@@ -98,5 +102,20 @@ export class PlayerService {
     }
 
     this.positionSubject.next({ x, y });
+  }
+
+  collectCoin(): void {
+    if (!this.player) return;
+  
+    this.gameService.getExistentCoins().forEach((coin, index) => {
+      // Vérifier la collision entre le joueur et la pièce
+      if (this.player?.checkCollision(coin)){
+        console.log(`Pièce collectée : ${coin}`);
+        
+        this.gameService.collectedCoins.push(coin);
+        this.gameService.existentCoins.splice(index, 1);
+        this.coinCollectionService.addCollected(coin);
+      }
+    });
   }
 }

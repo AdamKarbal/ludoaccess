@@ -1,6 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Platform} from "./platform.service";
-import {PlayerComponent} from "../app/components/player/player.component";
+import { Injectable } from "@angular/core";
+import { GameService } from "./game.service";
+import { PlayerComponent } from "../app/components/player/player.component";
+import { Platform } from "src/models/platform.model";
 
 export interface CollisionObject {
   x: number;
@@ -13,6 +14,12 @@ export interface CollisionObject {
   providedIn: 'root',
 })
 export class CollisionService {
+
+  platforms: Platform[];
+
+  constructor(private gameService: GameService) {
+    this.platforms = this.gameService.platforms;
+  }
 
   getGroundPlatform(player: PlayerComponent, platforms: Platform[]): Platform | null {
     const screenWidth = window.innerWidth;
@@ -42,13 +49,15 @@ export class CollisionService {
         (playerBottom - platformTop <= 10); // Small threshold
 
       if (horizontallyAligned && verticallyTouching) {
-        console.log(`✅ Collision detected with platform '${platform.coinLetter}'`);
+        console.log(`✅ Collision detected with platform '${platform}'`);
         return platform;
       }
     }
 
     return null;
   }
+
+
 
 
 

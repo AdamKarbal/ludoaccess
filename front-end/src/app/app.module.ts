@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { StatsMenuModule } from "./components/stats-menu/menu";
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +37,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ListOfPeopleComponent } from './components/listofpeople/listofpeople.component';
 import { PeopleComponent } from './components/people/people.component';
 import { literal } from '@angular/compiler';
+import { AuthService } from 'src/services/auth.service';
+
 @NgModule({
   declarations: [
     CoinComponent,
@@ -70,11 +73,13 @@ import { literal } from '@angular/compiler';
     LoginComponent,
     ListOfPeopleComponent,
     PeopleComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule
     // StatsMenuModule
   ],
   providers: [],
