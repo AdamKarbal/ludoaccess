@@ -10,7 +10,7 @@ import { User } from 'src/models/user.model';
 })
 export class LoginComponent {
   selectedRole: string = '';
-  selectedUser!: User;  // Store the selected user
+  selectedUser!: User;  
 
   constructor(private router: Router, private authService: AuthService) {}
 
