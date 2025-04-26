@@ -26,6 +26,15 @@ export class PlayerComponent implements OnInit, Collidable {
 
   constructor(private playerService: PlayerService) {}
 
+  checkCollision(other: Collidable): boolean {
+    return (
+      this.x < other.x + other.width &&
+      this.x + this.width > other.x &&
+      this.y < other.y + other.height &&
+      this.y + this.height > other.y
+    );
+  }
+
   ngOnInit(): void {
     this.playerService.setPlayer(this);
     this.playerService.position$.subscribe((pos) => {

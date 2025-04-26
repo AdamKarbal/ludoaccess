@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GameService } from './game.service';
 import { FreezeGameService } from './freeze-game.services';
+import { CoinCollectionService } from './coincollection.service';
+import { Coin } from 'src/models/coin.model';
 
 @Injectable({
     providedIn: 'root'
@@ -9,6 +11,7 @@ import { FreezeGameService } from './freeze-game.services';
 export class Word2GuessService {
     private word: string;
     private display: string;
+    private collectedCoins : Coin[];
     private guessedIndexes: number[] = [];
     public currentIndex = 0;
     public isPaused: boolean = false;
@@ -23,6 +26,7 @@ export class Word2GuessService {
       });
       this.word = this.gameService.w2g;
       this.display = "_".repeat(this.word.length);
+      this.collectedCoins = [];
     }
   
     getWord(): string {
@@ -54,6 +58,18 @@ export class Word2GuessService {
         this.guessedIndexes = [];
         this.currentIndex = 0;
       }
+
+      getCurrentDisplay(): string {
+        let display = '';
+        for (let i = 0; i < this.word.length; i++) {
+          if (this.guessedIndexes.includes(i)) {
+            display += this.word[i] + ' '; // lettre trouvée
+          } else {
+            display += '_ '; // lettre non trouvée
+          }
+        }
+        return display.trim();
+      }      
 
 
   }
