@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GameService } from './game.service';
+import { FreezeGameService } from './freeze-game.services';
 import { CoinCollectionService } from './coincollection.service';
 import { Coin } from 'src/models/coin.model';
 
@@ -13,8 +14,16 @@ export class Word2GuessService {
     private collectedCoins : Coin[];
     private guessedIndexes: number[] = [];
     public currentIndex = 0;
+    public isPaused: boolean = false;
+    public isCrossed: boolean = false;
 
-    constructor(private gameService: GameService) {
+    constructor(private gameService: GameService,private freezeGameService: FreezeGameService) {
+      this.freezeGameService.isPaused$.subscribe(paused => {
+        this.isPaused = paused;
+      });
+      this.freezeGameService.isCrossed$.subscribe(exited => {
+        this.isCrossed = exited;
+      });
       this.word = this.gameService.w2g;
       this.display = "_".repeat(this.word.length);
       this.collectedCoins = [];
