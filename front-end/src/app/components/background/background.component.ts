@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./background.component.scss'],
 })
 export class BackgroundComponent implements OnInit, OnDestroy {
-  currentBackground: string = 'Aléatoire'; 
+  currentBackground: string = '';  
   private settingsSub!: Subscription;
 
   constructor(private settingsService: SettingsService) {}
@@ -16,12 +16,8 @@ export class BackgroundComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       if (settings) {
-        console.log("entre dans settings")
-        if (settings.chooseBackGround === 'Aléatoire') {
-          this.currentBackground = this.getRandomBackground();
-        } else {
-          this.currentBackground = settings.chooseBackGround;
-        }
+        console.log("entre dans settings");
+        this.currentBackground = this.settingsService.getCurrentBackground();  
         console.log('Background mis à jour :', this.currentBackground);
       }
     });
@@ -31,11 +27,5 @@ export class BackgroundComponent implements OnInit, OnDestroy {
     if (this.settingsSub) {
       this.settingsSub.unsubscribe();
     }
-  }
-
-  private getRandomBackground(): string {
-    const backgrounds = ['Forest', 'Orange_earth', 'Blue_earth'];
-    const randomIndex = Math.floor(Math.random() * backgrounds.length);
-    return backgrounds[randomIndex];
   }
 }

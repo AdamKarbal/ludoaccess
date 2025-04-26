@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
   templateUrl: './ground.component.html',
   styleUrls: ['./ground.component.scss'],
 })
-
 export class GroundComponent implements OnInit, OnDestroy {
   currentBackground: string = 'Aléatoire'; 
   currentFilter: string = ''; 
@@ -18,11 +17,8 @@ export class GroundComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       if (settings) {
-        if (settings.chooseBackGround === 'Aléatoire') {
-          this.currentBackground = this.getRandomBackground();
-        } else {
-          this.currentBackground = settings.chooseBackGround;
-        }
+        this.currentBackground = this.settingsService.getCurrentBackground();
+        console.log("Settings dans ground : ", this.currentBackground);
         this.setFilterBasedOnBackground(this.currentBackground); 
         console.log('Background mis à jour :', this.currentBackground);
       }
@@ -33,12 +29,6 @@ export class GroundComponent implements OnInit, OnDestroy {
     if (this.settingsSub) {
       this.settingsSub.unsubscribe();
     }
-  }
-
-  private getRandomBackground(): string {
-    const backgrounds = ['Forest', 'Orange_earth', 'Blue_earth'];
-    const randomIndex = Math.floor(Math.random() * backgrounds.length);
-    return backgrounds[randomIndex];
   }
 
   private setFilterBasedOnBackground(background: string): void {

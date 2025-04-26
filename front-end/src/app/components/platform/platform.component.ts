@@ -27,13 +27,9 @@ export class PlatformComponent implements OnInit, OnDestroy {
     
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       if (settings) {
-        if (settings.chooseBackGround === 'Aléatoire') {
-          this.currentBackground = this.getRandomBackground();
-        } else {
-          this.currentBackground = settings.chooseBackGround;
-        }
+        this.currentBackground = this.settingsService.getCurrentBackground();
         this.setFilterBasedOnBackground(this.currentBackground); 
-        console.log('Background mis à jour :', this.currentBackground);
+        console.log('Background mis à jour dans platform :', this.currentBackground);
       }
     });
   }
@@ -42,12 +38,6 @@ export class PlatformComponent implements OnInit, OnDestroy {
     if (this.settingsSub) {
       this.settingsSub.unsubscribe();
     }
-  }
-
-  private getRandomBackground(): string {
-    const backgrounds = ['Forest', 'Orange_earth', 'Blue_earth'];
-    const randomIndex = Math.floor(Math.random() * backgrounds.length);
-    return backgrounds[randomIndex];
   }
 
   private setFilterBasedOnBackground(background: string): void {

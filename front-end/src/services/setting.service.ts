@@ -11,7 +11,7 @@ export class SettingsService {
   private currentSettings$ = new BehaviorSubject<ChildSettings | null>(null);
 
   chooseFont: string = 'Nintendo'; 
-  chooseBackground: string = 'Aléatoire'; // <= ajout ici
+  currentBackground: string = 'Aléatoire'; 
 
   constructor() {}
 
@@ -20,7 +20,7 @@ export class SettingsService {
     this.currentSettings$.next(settings);
     this.updateFont(settings.choosefont); 
     this.updateBackGround(settings.chooseBackGround);
-    console.log('Paramètres chargés: font =', this.chooseFont, ', background =', this.chooseBackground);
+    console.log('Paramètres chargés: font =', this.chooseFont, ', background =', this.currentBackground);
   }
 
   get settings$(): Observable<ChildSettings | null> {
@@ -56,9 +56,9 @@ export class SettingsService {
       minWordLength: 3,
       maxWordLength: 10,
       displaymotsec: 10,
-      choosefont: 'Nintendo',
       lettersize: 20,
-      chooseBackGround: 'Aléatoire', // <= bien précisé ici
+      choosefont: 'Nintendo', 
+      chooseBackGround: 'Aléatoire',  
     };
   }
 
@@ -68,23 +68,29 @@ export class SettingsService {
       'Georgia', 'Times New Roman', 'Verdana', 'Calibri', 
       'cursif ecriture A', 'cursif ecriture B', 'Minecraft'
     ];
-    
-    if (allowedFonts.includes(fontName)) {
+        if (allowedFonts.includes(fontName)) {
       this.chooseFont = fontName;
-      console.log('Font mise à jour:', this.chooseFont);
     } else {
       this.chooseFont = 'Nintendo'; 
     }
+    console.log('Font mise à jour:', this.chooseFont);
   }
 
   private updateBackGround(backgroundName: string): void {
-    const allowedBackgrounds = ['Forest', 'Blue_earth', 'Orange_earth', 'Aléatoire'];
-    
-    if (allowedBackgrounds.includes(backgroundName)) {
-      this.chooseBackground = backgroundName;
-      console.log('Background mis à jour:', this.chooseBackground);
+    const allowedBackgrounds = ['Forest', 'Blue_earth', 'Orange_earth'];
+    if (backgroundName === 'Aléatoire') {
+      this.currentBackground = this.getRandomBackground();  
     } else {
-      this.chooseBackground = 'Aléatoire';
-    }
+      this.currentBackground = backgroundName; 
+    console.log('Background mis à jour:', this.currentBackground);
+  }}
+
+  private getRandomBackground(): string {
+    const backgrounds = ['Forest', 'Orange_earth', 'Blue_earth'];
+    const randomIndex = Math.floor(Math.random() * backgrounds.length);
+    return backgrounds[randomIndex];
   }
-}
+
+  public getCurrentBackground(): string {
+    return this.currentBackground;
+}}

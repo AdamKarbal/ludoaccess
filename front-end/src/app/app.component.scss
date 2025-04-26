@@ -33,3 +33,12 @@
     background-color: rgba(0, 0, 0, 0.5); /* fond noir semi-transparent */
     z-index: 99; /* super haut pour passer au-dessus de tout */
   }
+* {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+  
+  html, body {
+    width: 100%;
+    overflow-x: hidden; 
+  }

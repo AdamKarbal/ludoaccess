@@ -20,7 +20,6 @@ import { ChildComponent } from './components/child/child.component';
 import { ChildListComponent } from './components/child-list/child-list.component';
 import { FormsModule } from '@angular/forms';
 import { MobComponent } from './components/mob/mob.component';
-import { GameComponent } from './components/game/game.component';
 import { JeuComponent } from './components/jeu/jeu.component';
 import { MiniGameComponent } from './components/minigame/minigame.component';
 import { HomeComponent } from './pages/ac/ac.component';
@@ -62,7 +61,6 @@ import { AuthService } from 'src/services/auth.service';
     CoeursComponent,
     StatsMenuModule,
     finishComponent,
-    GameComponent,
     JeuComponent,
     MobComponent,
     MiniGameComponent,
