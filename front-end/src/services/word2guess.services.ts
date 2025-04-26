@@ -28,13 +28,18 @@ export class Word2GuessService {
       this.freezeGameService.isInfo$.subscribe(info => {
         this.isI = info;
       });
+
       this.word = this.gameService.w2g;
-      this.display = "_".repeat(this.word.length);
+      this.display = Array(this.word.length).fill('_').join(' ');
       this.collectedCoins = [];
     }
   
-    getWord(): string {
+      getWord(): string {
         return this.word;
+      }
+
+      getDisplay() : string{
+        return this.display;
       }
     
       getGuessedIndexes(): number[] {

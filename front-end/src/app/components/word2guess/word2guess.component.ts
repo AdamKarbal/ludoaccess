@@ -16,7 +16,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   hasStarted: boolean = false;
   incorrectLetters: Set<number> = new Set();
 
-  currentFont: string = 'initial';
+  currentFont: string = 'fantasy';
   private settingsSub!: Subscription;
 
   constructor(

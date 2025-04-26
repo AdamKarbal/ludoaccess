@@ -1,0 +1,22 @@
+.w2g{
+    position: fixed;
+    display: flex;
+    justify-content:center; /* Centre les éléments horizontalement */;
+    align-items: center; /* Centre les éléments verticalement */
+    flex-direction: column;
+    top: 13%;
+    left:50%;
+    transform: translate(-50%, -8%);
+    font-size: calc(var(--W2G-height) / 2);
+    text-align: center;
+    line-height: var(--W2G-height);
+    height : var(--W2G-height);
+    background-color : rgba(255, 255, 255, 0.344);
+    border-radius: 30px;
+    border : solid black 3px;
+    box-shadow : 50px;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    // width : 18vw;
+    z-index: 4;
+}
