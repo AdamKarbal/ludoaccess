@@ -11,11 +11,20 @@ export class AppComponent {
   public showSuccess = false;
 
   isPaused = false;
+  isExited = false;
+  isInfo = false;
 
   constructor(private freezeGame: FreezeGameService) {
     this.freezeGame.isPaused$.subscribe(paused => {
       this.isPaused = paused;
     });
+    this.freezeGame.isCrossed$.subscribe(exited => {
+      this.isExited = exited;
+    });
+    this.freezeGame.isInfo$.subscribe(info => {
+      this.isInfo = info;
+    });
+
   }
 
   showHideSuccess() {

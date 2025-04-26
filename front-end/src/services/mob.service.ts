@@ -24,8 +24,8 @@ export class MobService {
     const ticker$ = interval(16); // boucle de jeu (~60fps)
     
     // Combine le ticker avec l'état de pause
-    combineLatest([ticker$, this.freezeGameService.isPaused$]).subscribe(([_, isPaused]) => {
-      if (isPaused) return;
+    combineLatest([ticker$, this.freezeGameService.isPaused$,this.freezeGameService.isCrossed$]).subscribe(([_, isPaused, isCrossed]) => {
+      if (isPaused||isCrossed) return;
 
       this.position.x += this.speedX;
       if (this.position.x + 150 > window.innerWidth || this.position.x < 0) {

@@ -21,5 +21,9 @@ export class FreezeGameService {
 
   resume() {
     this.isPausedSubject.next(false);
+    this.isCrossedSubject.next(false); // Reset the crossed state when resuming
+  }
+  exit() {
+    this.isCrossedSubject.next(true);
   }
   }

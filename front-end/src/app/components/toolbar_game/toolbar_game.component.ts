@@ -29,8 +29,13 @@ export class ToolbarGameComponent {
   OnPauseClick() {
     this.freezeGame.pause()
   }
+
+  OnExitClick() {
+    this.freezeGame.exit();
+  }
   
   OnResumeClick() {
     this.freezeGame.resume();
+    this.isCrossed = false; // Reset the crossed state when resuming
   }
 }
