@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, interval } from 'rxjs';
+import { BehaviorSubject, interval,combineLatest } from 'rxjs';
+import { FreezeGameService } from './freeze-game.services';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +15,18 @@ export class MobService {
   private mobPosition = new BehaviorSubject(this.position);
   position$ = this.mobPosition.asObservable();
 
-  constructor() {
+  constructor(private freezeGameService: FreezeGameService) {
     this.startMoving();
   }
 
   private startMoving() {
-    interval(16).subscribe(() => {
+    
+    const ticker$ = interval(16); // boucle de jeu (~60fps)
+    
+    // Combine le ticker avec l'état de pause
+    combineLatest([ticker$, this.freezeGameService.isPaused$]).subscribe(([_, isPaused]) => {
+      if (isPaused) return;
+
       this.position.x += this.speedX;
       if (this.position.x + 150 > window.innerWidth || this.position.x < 0) {
         this.speedX *= -1;
