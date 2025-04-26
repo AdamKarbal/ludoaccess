@@ -17,12 +17,12 @@ export class Word2GuessComponent implements OnInit{
 
   incorrectLetters: Set<number> = new Set(); // To track incorrect letters for the temporary red effect
 
-  constructor(public game: Word2GuessService) {} // rend le service accessible au template
+  constructor(public word2GuessService: Word2GuessService) {} // rend le service accessible au template
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.userInput) return;
 
-    const isCorrect = this.game.guessLetter(this.userInput);
+    const isCorrect = this.word2GuessService.guessLetter(this.userInput);
 
     if (!this.hasStarted) {
       this.hasStarted = true;
@@ -32,7 +32,7 @@ export class Word2GuessComponent implements OnInit{
     }
     else{
       this.letterGuessed.emit(false); // Emit false when the letter is incorrect
-      const incorrectIndex = this.game.currentIndex;
+      const incorrectIndex = this.word2GuessService.currentIndex;
       this.incorrectLetters.add(incorrectIndex); // Track the index of the incorrect letter
       // Remove the incorrect letter color after a brief moment
       setTimeout(() => {
@@ -42,16 +42,16 @@ export class Word2GuessComponent implements OnInit{
 
     
 
-    if (this.game.isWordComplete()) {
+    if (this.word2GuessService.isWordComplete()) {
       this.wordGuessed.emit(true);
     }
   }
 
   get word(): string {
-    return this.game.getWord();
+    return this.word2GuessService.getWord();
   }
 
   get guessedIndexes(): number[] {
-    return this.game.getGuessedIndexes();
+    return this.word2GuessService.getGuessedIndexes();
   }
 }
