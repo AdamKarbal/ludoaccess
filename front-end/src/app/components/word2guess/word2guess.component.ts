@@ -34,6 +34,10 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.word2GuessService.isPaused||this.word2GuessService.isCrossed) {
+      return; // Sortir de la méthode, aucun changement n'est traité
+    }
+    
     if (!this.userInput) return;
 
     const isCorrect = this.word2GuessService.guessLetter(this.userInput);
