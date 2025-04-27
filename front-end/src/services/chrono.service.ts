@@ -1,0 +1,93 @@
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, interval, combineLatest } from "rxjs";
+import { FreezeGameService } from "./freeze-game.services";
+import { Word2GuessService } from "./word2guess.services";  
+
+@Injectable({
+    providedIn: "root",
+})
+export class ChronoService {
+    private time: number = 10;
+    private interval: any = null;
+    private isRunning: boolean = false;
+    private chronoSubject = new BehaviorSubject(this.time);
+    time$ = this.chronoSubject.asObservable();
+
+    constructor(private freezeGameService: FreezeGameService, private word2GuessService: Word2GuessService) {
+        this.word2GuessService.isWordComplete$.subscribe(isCompleted => {
+            if (isCompleted) {
+                this.stopTimer();
+                console.log("Timer stopped because the word is complete.");
+            } else {
+                this.startTimer();
+            }
+        });
+        
+    
+        this.freezeGameService.isPaused$.subscribe(paused => {
+            if (paused) this.stopTimer();
+        });
+        this.freezeGameService.isCrossed$.subscribe(exited => { 
+            if (exited) this.stopTimer();
+        });
+        this.freezeGameService.isInfo$.subscribe(info => {
+            if (info) this.stopTimer();
+        });
+    }
+
+    ngOnInit(): void {
+        this.startTimer();
+    }
+
+    private startTimer() {
+        if (!this.isRunning) {
+            this.isRunning = true;
+            // Créer l'intervalle et l'assigner à this.interval
+            this.interval = setInterval(() => {
+                // Vérifie les conditions d'arrêt et arrête le timer si nécessaire
+                this.freezeGameService.isPaused$.subscribe(paused => {
+                    if (paused) return this.stopTimer();
+                    else return this.startTimer();  // Redémarre le timer si pas en pause
+                });
+
+                this.freezeGameService.isCrossed$.subscribe(exited => { 
+                    if (exited) return this.stopTimer();
+                    else return this.startTimer();
+                });
+
+                this.freezeGameService.isInfo$.subscribe(info => {
+                    if (info) return this.stopTimer();
+                    else return this.startTimer();
+                });
+
+                // Vérifie si le mot est complet
+                if (this.word2GuessService.isWordComplete()) {
+                    console.log("Timer stopped because the word is complete.");
+                    this.stopTimer();  // Arrête le timer si le mot est complet
+                } else {
+                    this.time--;  // diminue le temps de 1 seconde
+                    if (this.time <= 0) {
+                        this.stopTimer();  // Arrête le timer si le temps est écoulé
+                        this.time = 0;  // Réinitialise le temps à 0
+                    }
+                    this.chronoSubject.next(this.time);  // Mets à jour l'observable avec le temps
+                }
+            }, 1000);  // L'intervalle est de 1 seconde
+        }
+    }
+    private stopTimer() {
+        if (this.isRunning && this.interval) {
+            clearInterval(this.interval);  // Arrête l'intervalle
+            this.interval = null;  // Réinitialise l'intervalle
+            this.isRunning = false;
+        }
+    }
+    public resetTimer() {
+        this.time = 10;
+        this.chronoSubject.next(this.time);
+        this.startTimer();
+    }
+    public getTime(): number {
+        return this.time;
+    }
+}

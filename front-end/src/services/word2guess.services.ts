@@ -4,6 +4,7 @@ import { FreezeGameService } from './freeze-game.services';
 import { CoinCollectionService } from './coincollection.service';
 import { Coin } from 'src/models/coin.model';
 import { LevelService } from "./levels.service";
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,9 @@ export class Word2GuessService {
     public isPaused: boolean = false;
     public isCrossed: boolean = false;
     public isI: boolean = false;
+
+    private wordCompleteSubject = new BehaviorSubject<boolean>(false);
+    public isWordComplete$ = this.wordCompleteSubject.asObservable();
 
     constructor(private gameService: GameService,private freezeGameService: FreezeGameService,private LevelService:LevelService) {
       this.freezeGameService.isPaused$.subscribe(paused => {
@@ -54,6 +58,7 @@ export class Word2GuessService {
         if (letter === this.word[this.currentIndex]) {
         this.guessedIndexes.push(this.currentIndex);
         this.currentIndex++;
+        this.wordCompleteSubject.next(this.isWordComplete());
         return true;
         }
         return false;
@@ -64,7 +69,9 @@ export class Word2GuessService {
       }
       onWordCompleted(): void {
         if (this.isWordComplete()) {
+          console.log('Mot trouvé !');
           this.LevelService.increaseProgress(this.word.length); // Augmente le niveau de progression de 20% lorsque le mot est trouvé
+          this.wordCompleteSubject.next(true); // Émet l'événement de mot complet
       }
     }
     
