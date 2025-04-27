@@ -89,7 +89,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
       this.letterGuessed.emit(true);
     } else {
       this.letterGuessed.emit(false);
-      const incorrectIndex = this.word2GuessService.currentIndex;
+      const incorrectIndex = this.word2GuessService.currentIndex; //POUR LES STATS RECUPERER ICI LA LETTRE PROBLEMATIQUE 
       this.incorrectLetters.add(incorrectIndex);
       setTimeout(() => {
         this.incorrectLetters.delete(incorrectIndex);

@@ -1,9 +1,9 @@
 <div>
     <app-word2guess [mode]="'typing'" [userInput]="userInput" (wordGuessed)="onWordCompleted($event)" (letterGuessed)="onLetterGuessed($event)"></app-word2guess>
 </div>
-<div class="personnage">
-    <img id="megaman" alt="perso" src="../../../assets/ressources/megaman_de_face.png"/>
-    <app-bulle_dialogue [reussite]="wordCompleted" [letterGuessed]="letterGuessed"></app-bulle_dialogue>
-</div>
+
+<img id="megaman" alt="perso" src="../../../assets/ressources/megaman_de_face.png"/>
+<app-bulle_dialogue [reussite]="wordCompleted" [letterGuessed]="letterGuessed"></app-bulle_dialogue>
+
 
   

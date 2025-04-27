@@ -9,6 +9,7 @@ import { BANQUE_MOTS } from "src/app/data/banque";
 import { SettingsService } from "./setting.service";
 import { Router } from "@angular/router";
 import { ChildSettings } from "src/models/setting.model";
+import { Word2GuessService } from "./word2guess.services";
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -16,9 +17,8 @@ export class GameService {
         '/reglage', '/stats', '/jeu_etape1', '/jeu_etape2', '/jeu_etape3',
         '/mob', '/jeuComponent', '/', '/acceuil'
       ];
-
-    
     private _wordSample : string[] = [];
+    private _wordTarget : string[] = [];
     private _settings? : ChildSettings | null;
 
 
@@ -28,12 +28,14 @@ export class GameService {
         private coinCollectionService : CoinCollectionService,
         private levelService : LevelService,
         private router : Router,
-        private settingService : SettingsService
+        private settingService : SettingsService,
+        private w2gService : Word2GuessService
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings=settings;
         })
-
+        this.fillSample();
+        this.playStep1();
     }
 
     fillSample() : void{
@@ -116,7 +118,23 @@ export class GameService {
         console.log(this._settings?.wordDifficulty + ": difficulté et " + this._wordSample.length + ": sample");
     } 
 
-    
+    playStep1() : void {
+        while(this._wordSample.length !== 0){
+            let word = this._wordSample.pop();
+            if (word) {
+                this.w2gService.newWord(word);
+                while(this.w2gService.isWordComplete() !== true);
+                if(this.w2gService.badLetter == true){
+                    this._wordTarget.push(word);
+                }
+            }
+        }
+        /*if(this._wordTarget.length === 0){
+
+        }*/
+    }
+
+
 
     get w2g() : string {
         return this.motService.getWord();

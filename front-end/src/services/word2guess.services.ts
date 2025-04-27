@@ -19,6 +19,7 @@ export class Word2GuessService {
     public isPaused: boolean = false;
     public isCrossed: boolean = false;
     public isI: boolean = false;
+    private _badLetter : boolean = false; 
 
     private wordCompleteSubject = new BehaviorSubject<boolean>(false);
     public isWordComplete$ = this.wordCompleteSubject.asObservable();
@@ -38,6 +39,9 @@ export class Word2GuessService {
       this.display = Array(this.word.length).fill('_').join(' ');
       this.collectedCoins = [];
     }
+      get badLetter() : boolean{
+        return this._badLetter;
+      }
   
       getWord(): string {
         return this.word;
@@ -52,7 +56,11 @@ export class Word2GuessService {
       }
     
       guessLetter(letter: string): boolean {
-        if (!letter.match(/^\p{L}$/u)) return false;
+        if (!letter.match(/^\p{L}$/u)){
+          this._badLetter = true;   // A REPRENDRE POUR LES STATS
+          console.log("Wrong letter !");
+          return false;
+        }
         console.log(`Comparing "${letter}" with "${this.word[this.currentIndex]}"`);
     // Comparer la lettre entrée avec celle du mot, en tenant compte de la casse
         if (letter === this.word[this.currentIndex]) {
@@ -67,6 +75,7 @@ export class Word2GuessService {
       isWordComplete(): boolean {
         return this.guessedIndexes.length === this.word.length;
       }
+      
       onWordCompleted(): void {
         if (this.isWordComplete()) {
           console.log('Mot trouvé !');
@@ -76,6 +85,7 @@ export class Word2GuessService {
     }
     
       newWord(word: string) {
+        this._badLetter = false;
         this.word = word;
         this.guessedIndexes = [];
         this.currentIndex = 0;
