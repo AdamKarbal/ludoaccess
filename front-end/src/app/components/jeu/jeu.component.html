@@ -1,16 +1,14 @@
 <div class="game-ui">
     <app-levelbar></app-levelbar>
-    <!-- <app-w2gS2></app-w2gS2> -->
      <app-word2guess>
       [mode]="'coin'"
      </app-word2guess>
     <app-mob class="mob"></app-mob>
     <app-coeurs></app-coeurs>
-    <app-toolbar-game></app-toolbar-game>
   </div>
   
 <div class="game-zone">
-    <app-map></app-map> 
+    <app-plateformes></app-plateformes>
 </div>
   
 <app-mini-game *ngIf="isActive$ | async"></app-mini-game>

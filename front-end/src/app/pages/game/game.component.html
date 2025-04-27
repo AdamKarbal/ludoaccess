@@ -1,0 +1,12 @@
+<app-map></app-map>
+<div class ="Step1" *ngIf="getStep() === 1">
+    <app-jeu_etape1></app-jeu_etape1>
+</div>
+
+<div class="Step2" *ngIf="getStep() === 2">
+    <app-jeu></app-jeu>
+</div>
+
+<div class="Step3" *ngIf="getStep() === 3">
+    <app-jeu_etape3></app-jeu_etape3>
+</div>

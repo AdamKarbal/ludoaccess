@@ -1,8 +1,3 @@
-<div class="fond"></div>
-<div>
-    <app-toolbar-game></app-toolbar-game>
-</div>
-<div class="sol"></div>
 <div>
     <app-word2guess [mode]="'typing'" [userInput]="userInput" (wordGuessed)="onWordCompleted($event)" (letterGuessed)="onLetterGuessed($event)"></app-word2guess>
 </div>

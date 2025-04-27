@@ -62,7 +62,7 @@ export class Word2GuessService {
         return this.guessedIndexes.length === this.word.length;
       }
     
-      reset(word: string = 'ArBRE') {
+      newWord(word: string) {
         this.word = word;
         this.guessedIndexes = [];
         this.currentIndex = 0;
@@ -79,6 +79,8 @@ export class Word2GuessService {
         }
         return display.trim();
       }      
+
+
 
 
 
