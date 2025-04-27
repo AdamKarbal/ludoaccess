@@ -135,7 +135,7 @@ export class GameService {
         
             this.w2gService.isWordComplete$.pipe(rxjsTake(1)).subscribe(isComplete => {
               if (isComplete) {
-                console.log(`Mot "${word}" complété.`);
+                console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
         
                 if (this.w2gService.badLetter == true) {
                   this._wordTarget.push(word);

@@ -11,11 +11,11 @@
       
       [ngClass]="{
     'correct': guessedIndexes.includes(i),
-    'incorrect': incorrectLetters.has(i)
+    'incorrect': word2GuessService.getIncorrectIndexes().has(i)
     }"
        
       [ngStyle]="{
-        'color': incorrectLetters.has(i) ? 'red' : guessedIndexes.includes(i) ? 'black' : 'grey', 
+        'color': word2GuessService.getIncorrectIndexes().has(i) ? 'red' : guessedIndexes.includes(i) ? 'black' : 'grey', 
         'border-bottom': guessedIndexes.includes(i) ? 'none' : '2px solid grey',
         'padding': '13px 2px'
       }"

@@ -18,10 +18,18 @@ export class Word2GuessService {
     public isPaused: boolean = false;
     public isCrossed: boolean = false;
     public isI: boolean = false;
-    private _badLetter : boolean = false; 
+    private _badLetter : boolean = false;
+    
+    private incorrectIndexes: Set<number> = new Set<number>();
 
     private wordCompleteSubject = new BehaviorSubject<boolean>(false);
     public isWordComplete$ = this.wordCompleteSubject.asObservable();
+
+    private letterGuessedSubject = new BehaviorSubject<boolean | null>(null);
+  public letterGuessed$ = this.letterGuessedSubject.asObservable();
+
+    private incorrectLetterSubject = new BehaviorSubject<number | null>(null);
+  public incorrectLetter$ = this.incorrectLetterSubject.asObservable();
 
     constructor(private freezeGameService: FreezeGameService,private LevelService:LevelService) {
       this.freezeGameService.isPaused$.subscribe(paused => {
@@ -54,6 +62,9 @@ export class Word2GuessService {
       getDisplay() : string{
         return this.display;
       }
+      getIncorrectIndexes(): Set<number> {
+        return this.incorrectIndexes;
+      }
     
       getGuessedIndexes(): number[] {
         return this.guessedIndexes;
@@ -62,6 +73,7 @@ export class Word2GuessService {
       guessLetter(letter: string): boolean {
         if (!letter.match(/^\p{L}$/u)){
           this._badLetter = true;   // A REPRENDRE POUR LES STATS
+          this.letterGuessedSubject.next(false);
           console.log("Wrong letter !");
           return false;
         }
@@ -70,11 +82,34 @@ export class Word2GuessService {
         if (letter === this.word[this.currentIndex]) {
           this.guessedIndexes.push(this.currentIndex);
           this.currentIndex++;
+          this.letterGuessedSubject.next(true);
           const isComplete = this.isWordComplete();
           this.wordCompleteSubject.next(isComplete);
           return true;
         }
+        this.incorrectIndexes.add(this.guessedIndexes.length);
+        setTimeout(() => {
+          this.incorrectIndexes.delete(this.currentIndex); // <= supprime après 500ms
+        }, 500);
+        this.letterGuessedSubject.next(false);
+       this.incorrectLetterSubject.next(this.guessedIndexes.length);
+
+        this._badLetter = true; // A REPRENDRE POUR LES STATS
         return false;
+      }
+
+      updateDisplayWordWithCoin(coin: Coin): void {
+        const displayWordArray = this.display.split(' ');
+        for (let i = 0; i < this.word.length; i++) {
+          if (coin.letter === this.word[i] && displayWordArray[i] === '_') {
+            displayWordArray[i] = coin.letter;
+            break;
+          }
+        }
+        this.display = displayWordArray.join(' ');
+        if (this.guessedIndexes.length === this.word.length) {
+          this.wordCompleteSubject.next(true);
+        }
       }
     
       isWordComplete(): boolean {
