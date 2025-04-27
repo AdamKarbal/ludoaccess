@@ -1,27 +1,35 @@
 import { Coin } from "src/models/coin.model";
-import { Word2GuessComponent } from "src/app/components/word2guess/word2guess.component";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
+import { GameService } from "./game.service";
+import { LevelService } from "./levels.service";
 
-@Injectable({providedIn : 'root'})
-export class CoinCollectionService{
-    private _existentCoins : Coin[] = [];
-    private _collectedCoins : Coin[] = [];
+@Injectable({ providedIn: 'root' })
+export class CoinCollectionService {
+    private _existentCoins: Coin[] = [];
+    private _collectedCoins: Coin[] = [];
 
-    constructor(){}
+    private collectedCoinSubject = new Subject<Coin>(); 
 
-    addCollected(coin : Coin) : void{
+    collectedCoin$ = this.collectedCoinSubject.asObservable();
+
+    constructor(private levelService: LevelService) {}
+
+    addCollected(coin: Coin): void {
         this._collectedCoins.push(coin);
+        this.collectedCoinSubject.next(coin); 
+        this.levelService.increaseProgress(20);
     }
 
-    addExistent(coin : Coin) : void{
+    addExistent(coin: Coin): void {
         this._existentCoins.push(coin);
     }
 
-    get existentCoins() : Coin[]{
+    get existentCoins(): Coin[] {
         return this._existentCoins;
     }
 
-    get collectedCoins() : Coin[]{
+    get collectedCoins(): Coin[] {
         return this._collectedCoins;
     }
 }

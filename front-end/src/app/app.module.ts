@@ -37,9 +37,14 @@ import { ListOfPeopleComponent } from './components/listofpeople/listofpeople.co
 import { PeopleComponent } from './components/people/people.component';
 import { literal } from '@angular/compiler';
 import { AuthService } from 'src/services/auth.service';
+import { PlayerComponent } from './components/player/player.component';
+import { GameComponent } from './pages/game/game.component';
+import { ChronoComponent } from './components/chrono/chrono.component';
 
 @NgModule({
   declarations: [
+    //PlayerComponent,
+    ChronoComponent,
     CoinComponent,
     PlatformComponent,
     GroundComponent,
@@ -71,7 +76,7 @@ import { AuthService } from 'src/services/auth.service';
     LoginComponent,
     ListOfPeopleComponent,
     PeopleComponent,
-    
+    GameComponent
   ],
   imports: [
     BrowserModule,

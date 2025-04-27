@@ -21,6 +21,7 @@ import { Collidable } from '../../../models/collidable.model';
     }
   `]
 })
+
 export class PlayerComponent implements OnInit, Collidable {
   position = { x: 10, y: 20 }; // position initiale du joueur
 
