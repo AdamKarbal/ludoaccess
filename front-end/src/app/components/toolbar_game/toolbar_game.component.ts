@@ -19,12 +19,15 @@ export class ToolbarGameComponent {
   constructor(private freezeGame: FreezeGameService, private router: Router, private gameService : GameService) {
     this.freezeGame.isPaused$.subscribe(paused => {
       this.isPaused = paused;
+      console.log(`Paused: ${this.isPaused}`);
     });
     this.freezeGame.isCrossed$.subscribe(crossed => {
       this.isCrossed = crossed;
+      console.log(`Crossed: ${this.isCrossed}`);
     });
     this.freezeGame.isInfo$.subscribe(info => {
       this.isInfo = info;
+      console.log(`Info: ${this.isInfo}`);
     });
   }
 

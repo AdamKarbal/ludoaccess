@@ -128,18 +128,22 @@ export class GameService {
             console.log('Tous les mots ont été joués.');
             return;
           }
-        
+        console.log("Taille sample: " + this._wordSample.length);
           const word = this._wordSample.pop();
           if (word) {
             this.w2gService.initializeWord(word);
+            console.log(`Mot "${word}" après initialisation.`);
         
             this.w2gService.isWordComplete$.pipe(rxjsTake(1)).subscribe(isComplete => {
+                console.log(`Mot "${word}" complété. isComplete: ${isComplete}`);
               if (isComplete) {
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
         
                 if (this.w2gService.badLetter == true) {
                   this._wordTarget.push(word);
+                  console.log("Taille sample: " + this._wordSample.length);
                   console.log("Ajout dans wordTarget");
+                  console.log(this._wordTarget);
                 }
         
                 this.playStep1();
