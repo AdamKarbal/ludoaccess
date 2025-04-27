@@ -98,8 +98,9 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
 
     if (this.word2GuessService.isWordComplete()) {
       this.wordGuessed.emit(true);
-      this.word2GuessService.onWordCompleted(); // Appel de la méthode onWordCompleted ici
-    }
+      console.log("Mot complet détecté !");
+      this.word2GuessService.onWordCompleted();
+    }    
   }
 
   get word(): string {

@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnChanges } from "@angular/core";
+import { GameService } from "src/services/game.service";
 
 @Component({
   selector: "app-game",
@@ -11,11 +12,17 @@ export class GameComponent{
     private _isEtape2 : boolean;
     private _isEtape3 : boolean;
 
-    constructor() {
+    constructor(private gameService : GameService) {
         this._isEtape1 = true;
         this._isEtape2 = false;
         this._isEtape3 = false;
     }
+
+    ngOnInit() : void{
+        this.gameService.fillSample();
+        this.gameService.playStep1();
+    }
+    
 
     getStep() : number {
         if(this._isEtape1 === true && this._isEtape2 === false && this._isEtape3 === false) return 1;

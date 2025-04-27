@@ -39,11 +39,12 @@ export class Word2GuessService {
       }
 
       initializeWord(word: string) {
+        this._badLetter = false;
         this.word = word;
+        console.log("Nom du initialize : "+ this.word);
         this.display = Array(this.word.length).fill('_').join(' ');
         this.guessedIndexes = [];
         this.currentIndex = 0;
-        this._badLetter = false;
       }
   
       getWord(): string {

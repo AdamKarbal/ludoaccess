@@ -6,7 +6,7 @@
   </ng-container>
   <!-- Si mode = typing => affichage avec lettres individuelles -->
   <ng-template #typingMode>
-      <span  *ngFor="let letter of word.split(''); let i = index"
+      <span  *ngFor="let letter of word2GuessService.getWord().split(''); let i = index"
 
       
       [ngClass]="{

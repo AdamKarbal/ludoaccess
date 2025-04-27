@@ -10,6 +10,7 @@ import { SettingsService } from "./setting.service";
 import { Router } from "@angular/router";
 import { ChildSettings } from "src/models/setting.model";
 import { Word2GuessService } from "./word2guess.services";
+import { take as rxjsTake } from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -20,7 +21,7 @@ export class GameService {
     private _wordSample : string[] = [];
     private _wordTarget : string[] = [];
     private _settings? : ChildSettings | null;
-
+    var : number = 1;
 
     constructor(
         private motService: MotService,
@@ -34,8 +35,6 @@ export class GameService {
         this.settingService.settings$.subscribe(settings => {
             this._settings=settings;
         })
-        this.fillSample();
-        this.playStep1();
     }
 
     fillSample() : void{
@@ -116,35 +115,42 @@ export class GameService {
             }   
         }
         console.log(this._settings?.wordDifficulty + ": difficulté et " + this._wordSample.length + ": sample");
+        for(let i = 0; i < this._wordSample.length; i++){
+            console.log(this._wordSample[i]);
+        }
     } 
 
-    async playStep1(): Promise<void> {
-        while (this._wordSample.length !== 0) {
+    playStep1(): void {
+        if(this.var === 1){
+            this.playStep2();
+        }
+        if (this._wordSample.length === 0) {
+            console.log('Tous les mots ont été joués.');
+            return;
+          }
+        
           const word = this._wordSample.pop();
           if (word) {
             this.w2gService.initializeWord(word);
-            
-            // Attendre que le mot soit complété ou qu'une mauvaise lettre soit entrée
-            await new Promise<void>(resolve => {
-              const subscription = this.w2gService.isWordComplete$.subscribe(isComplete => {
-                if (isComplete || this.w2gService.badLetter) {
-                  if (this.w2gService.badLetter) {
-                    this._wordTarget.push(word);
-                  }
-                  subscription.unsubscribe();
-                  resolve();
+        
+            this.w2gService.isWordComplete$.pipe(rxjsTake(1)).subscribe(isComplete => {
+              if (isComplete) {
+                console.log(`Mot "${word}" complété.`);
+        
+                if (this.w2gService.badLetter == true) {
+                  this._wordTarget.push(word);
+                  console.log("Ajout dans wordTarget");
                 }
-              });
+        
+                this.playStep1();
+              }
             });
           }
-        }
-        
-        if (this._wordTarget.length === 0) {
-          // Tous les mots ont été réussis
-          console.log("Tous les mots ont été réussis du premier coup!");
-        }
-      }
+    }
 
+    playStep2() : void {
+        console.log("YOUHOU");
+    }
 
 
     get w2g() : string {
@@ -179,3 +185,7 @@ export class GameService {
         }
       }
 }
+function take(arg0: number): import("rxjs").OperatorFunction<boolean, unknown> {
+    throw new Error("Function not implemented.");
+}
+
