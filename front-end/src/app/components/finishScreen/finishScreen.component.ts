@@ -1,6 +1,8 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 import { SettingsService } from 'src/services/setting.service'; 
 import { Subscription } from "rxjs";
+import { Word2GuessComponent } from '../word2guess/word2guess.component';
+import { Word2GuessService } from 'src/services/word2guess.services';
 
 
 @Component({
@@ -14,7 +16,9 @@ export class finishComponent implements OnInit,OnChanges{
 
   currentFont: string = 'initial';
   private settingsSub!: Subscription;
-    constructor(private settingsService : SettingsService){}
+  private wordCompletedSub!: Subscription;
+
+    constructor(private settingsService : SettingsService, private w2gService:Word2GuessService){}
     ngOnInit(): void {
       this.settingsSub = this.settingsService.settings$.subscribe(settings => {
         if (settings) {
@@ -22,11 +26,27 @@ export class finishComponent implements OnInit,OnChanges{
           console.log('Font mise à jour :', this.currentFont);
         }
       });
+      this.wordCompletedSub = this.w2gService.isWordComplete$.subscribe(isComplete => {
+        if(!this.hasInitializedMessage){
+          this.chooseMessage(3);
+          this.message=this.getFinishScreenText();
+          this.hasInitializedMessage = true;
+          setTimeout(() => {
+            this.fadeOut = true;
+          }, 4000);
+        }
+        this.reussite = isComplete;
+        if (isComplete) {
+          this.fadeOut = false;
+          this.chooseMessage(4);  // Mot complet, message de succès
+          this.message = this.getFinishScreenText();
+        }
+      });
     }
 
     currentStep: number = 3; // Étape du Niveau 3
-    @Input() reussite : boolean =false;
-    @Input() letterGuessed ?: boolean;
+    reussite : boolean =false;
+    letterGuessed ?: boolean;
 
     hasStarted : boolean = false ;
     fadeOut : boolean = false;
@@ -34,37 +54,6 @@ export class finishComponent implements OnInit,OnChanges{
 
 
     ngOnChanges(changes: SimpleChanges): void {
-      if(!this.hasInitializedMessage){
-        this.chooseMessage(3);
-        this.message=this.getFinishScreenText();
-        this.hasInitializedMessage = true;
-        setTimeout(() => {
-          this.fadeOut = true;
-        }, 4000);
-      }
-      if (changes['letterGuessed']) {
-        console.log("CHANGEMENT letterGuessed: ", changes['letterGuessed']);
-  
-        // Ignore les premiers changements tant que le joueur n'a pas commencé
-        if (!this.hasStarted && changes['letterGuessed'].currentValue !== undefined) {
-          this.hasStarted = true;
-        }
-  
-      //   if (this.hasStarted) {
-      //     if (this.letterGuessed === false) {
-      //       this.chooseMessage(2); // Mauvaise lettre
-      //     } else if (this.letterGuessed === true) {
-      //       this.chooseMessage(1); // Bonne lettre
-      //     }
-      //     this.message = this.getFinishScreenText();
-      //   }
-       }
-  
-      if (changes['reussite'] && this.reussite) {
-        this.fadeOut = false; // Réinitialiser fadeOut pour le nouvel écran de fin
-        this.chooseMessage(4);
-        this.message = this.getFinishScreenText();
-      }
     }
     
 
