@@ -11,9 +11,8 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
   })
 
 export class Word2GuessService {
-    private word: string;
-    private display: string;
-    private collectedCoins : Coin[];
+    private word: string="";
+    private display: string="";
     private guessedIndexes: number[] = [];
     public currentIndex = 0;
     public isPaused: boolean = false;
@@ -24,7 +23,7 @@ export class Word2GuessService {
     private wordCompleteSubject = new BehaviorSubject<boolean>(false);
     public isWordComplete$ = this.wordCompleteSubject.asObservable();
 
-    constructor(private gameService: GameService,private freezeGameService: FreezeGameService,private LevelService:LevelService) {
+    constructor(private freezeGameService: FreezeGameService,private LevelService:LevelService) {
       this.freezeGameService.isPaused$.subscribe(paused => {
         this.isPaused = paused;
       });
@@ -34,13 +33,17 @@ export class Word2GuessService {
       this.freezeGameService.isInfo$.subscribe(info => {
         this.isI = info;
       });
-
-      this.word = this.gameService.w2g;
-      this.display = Array(this.word.length).fill('_').join(' ');
-      this.collectedCoins = [];
     }
       get badLetter() : boolean{
         return this._badLetter;
+      }
+
+      initializeWord(word: string) {
+        this.word = word;
+        this.display = Array(this.word.length).fill('_').join(' ');
+        this.guessedIndexes = [];
+        this.currentIndex = 0;
+        this._badLetter = false;
       }
   
       getWord(): string {
@@ -64,10 +67,11 @@ export class Word2GuessService {
         console.log(`Comparing "${letter}" with "${this.word[this.currentIndex]}"`);
     // Comparer la lettre entrée avec celle du mot, en tenant compte de la casse
         if (letter === this.word[this.currentIndex]) {
-        this.guessedIndexes.push(this.currentIndex);
-        this.currentIndex++;
-        this.wordCompleteSubject.next(this.isWordComplete());
-        return true;
+          this.guessedIndexes.push(this.currentIndex);
+          this.currentIndex++;
+          const isComplete = this.isWordComplete();
+          this.wordCompleteSubject.next(isComplete);
+          return true;
         }
         return false;
       }
@@ -84,13 +88,6 @@ export class Word2GuessService {
       }
     }
     
-      newWord(word: string) {
-        this._badLetter = false;
-        this.word = word;
-        this.guessedIndexes = [];
-        this.currentIndex = 0;
-      }
-
       getCurrentDisplay(): string {
         let display = '';
         for (let i = 0; i < this.word.length; i++) {
@@ -108,4 +105,3 @@ export class Word2GuessService {
 
 
   }
-  

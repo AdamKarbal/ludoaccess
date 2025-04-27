@@ -70,7 +70,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['mode']) {
       console.log('Mode changed to:', this.mode);
-      // Tu peux mettre ici des comportements différents selon le mode
+      // Tu peux mettre ici des comportements différents selon le mode  
     }
     if (this.mode !== 'typing') return;
     if (this.word2GuessService.isPaused||this.word2GuessService.isCrossed||this.word2GuessService.isI) {
@@ -89,7 +89,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
       this.letterGuessed.emit(true);
     } else {
       this.letterGuessed.emit(false);
-      const incorrectIndex = this.word2GuessService.currentIndex; //POUR LES STATS RECUPERER ICI LA LETTRE PROBLEMATIQUE 
+      const incorrectIndex = this.word2GuessService.currentIndex; //POUR LES STATS RECUPERER ICI LA LETTRE PROBLEMATIQUE
       this.incorrectLetters.add(incorrectIndex);
       setTimeout(() => {
         this.incorrectLetters.delete(incorrectIndex);

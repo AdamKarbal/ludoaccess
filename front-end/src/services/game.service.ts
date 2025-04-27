@@ -118,21 +118,32 @@ export class GameService {
         console.log(this._settings?.wordDifficulty + ": difficulté et " + this._wordSample.length + ": sample");
     } 
 
-    playStep1() : void {
-        while(this._wordSample.length !== 0){
-            let word = this._wordSample.pop();
-            if (word) {
-                this.w2gService.newWord(word);
-                while(this.w2gService.isWordComplete() !== true);
-                if(this.w2gService.badLetter == true){
+    async playStep1(): Promise<void> {
+        while (this._wordSample.length !== 0) {
+          const word = this._wordSample.pop();
+          if (word) {
+            this.w2gService.initializeWord(word);
+            
+            // Attendre que le mot soit complété ou qu'une mauvaise lettre soit entrée
+            await new Promise<void>(resolve => {
+              const subscription = this.w2gService.isWordComplete$.subscribe(isComplete => {
+                if (isComplete || this.w2gService.badLetter) {
+                  if (this.w2gService.badLetter) {
                     this._wordTarget.push(word);
+                  }
+                  subscription.unsubscribe();
+                  resolve();
                 }
-            }
+              });
+            });
+          }
         }
-        /*if(this._wordTarget.length === 0){
-
-        }*/
-    }
+        
+        if (this._wordTarget.length === 0) {
+          // Tous les mots ont été réussis
+          console.log("Tous les mots ont été réussis du premier coup!");
+        }
+      }
 
 
 
