@@ -84,6 +84,7 @@ export class Word2GuessService {
           this.currentIndex++;
           this.letterGuessedSubject.next(true);
           const isComplete = this.isWordComplete();
+          console.log(`Is word complete? ${isComplete}`);
           this.wordCompleteSubject.next(isComplete);
           return true;
         }
@@ -119,7 +120,7 @@ export class Word2GuessService {
       onWordCompleted(): void {
         if (this.isWordComplete()) {
           console.log('Mot trouvé !');
-          this.LevelService.increaseProgress(this.word.length); // Augmente le niveau de progression de 20% lorsque le mot est trouvé
+          this.LevelService.increaseProgress(this.word.length); // Augmente le niveau de progression lorsque le mot est trouvé
           this.wordCompleteSubject.next(true); // Émet l'événement de mot complet
       }
     }

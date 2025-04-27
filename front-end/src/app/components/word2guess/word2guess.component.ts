@@ -54,17 +54,6 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  // updateDisplayWordWithCoin(coin: Coin): void {
-  //   const displayWordArray = this._displayWord.split(' ');
-  //   for (let i = 0; i < this._word.length; i++) {
-  //     if (coin.letter === this._word[i] && displayWordArray[i] === '_') {
-  //       displayWordArray[i] = coin.letter;
-  //       break;
-  //     }
-  //   }
-  //   this._displayWord = displayWordArray.join(' ');
-  // }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.mode !== 'typing' || !this.userInput) return;
