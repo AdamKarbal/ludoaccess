@@ -1,0 +1,35 @@
+.chrono {
+    position: fixed;
+    top: 10%;
+    left: 65%;
+    z-index: 1; /* super haut pour passer au-dessus de tout */
+    font-size: 1.5em;   
+    animation: pulse 2s infinite;
+  }
+  .chrono img {
+    width: 37%;
+    height: 37%;
+  }
+  .chrono-text{
+    position: fixed;
+    top: 12vh;
+    right: 24.8vw;
+    font-family: 'Nintendo', sans-serif; /* une police digitale, tu peux changer */
+    font-size: 1em;
+    text-align: center;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+  }
