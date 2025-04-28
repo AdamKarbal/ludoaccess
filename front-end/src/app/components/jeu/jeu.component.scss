@@ -7,7 +7,7 @@
 
 .mob{
   position : absolute;
-  bottom : 103vh;
+  bottom : 20vh;
 }
 
 body, :host {
@@ -15,18 +15,21 @@ body, :host {
     padding: 0;
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
   }
   
   .game-zone {
-    position: absolute;
+    position: fixed;
+    top:0;
+    left: 0;
     width: 100vw;
     height: 100vh;
+    z-index: 4;
     box-sizing: border-box;
   }  
   
   .game-ui {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;

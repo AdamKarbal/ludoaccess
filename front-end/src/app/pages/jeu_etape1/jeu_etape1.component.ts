@@ -27,16 +27,5 @@ export class JeuEtape1Component {
       }
     }
 
-    
-    onWordCompleted(isCompleted : boolean){
-      if(isCompleted){
-        this.wordCompleted=true;
-      }
-      else this.wordCompleted=false;
-    }
-
-    onLetterGuessed(isLetterGuessed: boolean){
-      this.letterGuessed = isLetterGuessed;
-    }
 }
 

@@ -37,6 +37,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
 
     if (this.mode === 'coin') {
       this.coinSub = this.coinCollectionService.collectedCoin$.subscribe(coin => {
+        console.log('hello from coin');
         this.word2GuessService.updateDisplayWordWithCoin(coin);
       });
     }

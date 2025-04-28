@@ -53,6 +53,11 @@ export class Word2GuessService {
       }
 
       initializeWord(word: string) {
+        if (this.word === word) {
+          console.warn('Le mot est déjà initialisé:', word);
+          return;
+        }
+        this.resetWord(); // Réinitialise l'état de mot complet
         this._badLetter = false;
         this.word = word;
         console.log("Nom du initialize : "+ this.word);
@@ -111,33 +116,40 @@ export class Word2GuessService {
       }
 
       updateDisplayWordWithCoin(coin: Coin): void {
+        console.log(`Coin collected: ${this.display}`);
         const displayWordArray = this.display.split(' ');
         for (let i = 0; i < this.word.length; i++) {
           if (coin.letter === this.word[i] && displayWordArray[i] === '_') {
+            this.guessedIndexes.push(i);
             displayWordArray[i] = coin.letter;
             break;
           }
         }
         this.display = displayWordArray.join(' ');
-        if (this.guessedIndexes.length === this.word.length) {
+        if (this.isWordComplete()) {
+          console.log('Mot trouvé avec le coin !');
           this.wordCompleteSubject.next(true);
         }
       }
     
       isWordComplete(): boolean {
         if (this.guessedIndexes.length === this.word.length){
-          this.wordCompleteSubject.next(true); // Émet l'événement de mot complet
           return true;
         }
         else return false;
       }
-      
+
+      resetWord(): void {
+        this.incorrectIndexes.clear(); // Réinitialise les index incorrects
+        this.wordCompleteSubject.next(false); // Réinitialise l'état de mot complet
+      }
       onWordCompleted(): void {
         if (this.isWordComplete()) {
           console.log('Mot trouvé !');
           this.LevelService.increaseProgress(this.word.length); // Augmente le niveau de progression lorsque le mot est trouvé
       }
     }
+    
     
       getCurrentDisplay(): string {
         let display = '';
