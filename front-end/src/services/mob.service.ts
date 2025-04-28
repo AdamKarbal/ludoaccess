@@ -22,6 +22,7 @@ export class MobService implements Collidable {
   constructor(private freezeGameService: FreezeGameService,  private playerService: PlayerService, private miniGameService: MiniGameService) {
     this.startMoving();
   }
+  action!: (cible: Collidable) => void;
 
   checkCollision(other: Collidable): boolean {
     return (
