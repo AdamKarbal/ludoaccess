@@ -8,13 +8,13 @@ export class Coin implements Collidable{
   private _height: number = 50;
   private _letter: string = '';
   private collected: boolean = false;
-  
+
     constructor(x: number, y: number, letter: string) {
       this._x = x;
       this._y = y;
       this._letter = letter;
     }
-  
+
     get imagePath(): string {
       return `assets/ressources/Coins/${this.letter}.png`;
     }
@@ -22,15 +22,15 @@ export class Coin implements Collidable{
     get x(): number {
       return this._x;
     }
-  
+
     get y(): number {
       return this._y;
     }
-  
+
     get width(): number {
       return this._width;
     }
-  
+
     get height(): number {
       return this._height;
     }
@@ -58,7 +58,10 @@ export class Coin implements Collidable{
           this.y < other.y + other.height &&
           this.y + this.height > other.y
       );
-    } 
+    }
+
+    action(other: Collidable): void {
+
+    }
 
   }
-  

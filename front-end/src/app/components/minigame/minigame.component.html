@@ -1,7 +1,4 @@
-<!-- Bouton pour démarrer le mini-jeu -->
-<button (click)="startGame()">Lancer le mini-jeu</button>
 
-<!-- Affichage du mini-jeu lorsque celui-ci est actif -->
 <div *ngIf="miniGameService.isActive$ | async" class="minigame-overlay">
   <div class="minigame-container">
     <div class="character-container">

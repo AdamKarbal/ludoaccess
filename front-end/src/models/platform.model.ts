@@ -86,4 +86,6 @@ export class Platform implements Collidable {
       this.y + this.height > other.y
     );
   }
+
+  action(other: Collidable): void {}
 }

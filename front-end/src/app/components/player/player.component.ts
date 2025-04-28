@@ -1,29 +1,17 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
 import { Collidable } from '../../../models/collidable.model';
+import {MobComponent} from "../mob/mob.component";
+import {PlatformComponent} from "../platform/platform.component";
 
 @Component({
   selector: 'app-player',
-  template: `
-    <div class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
-      <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
-    </div>
-  `,
-  styles: [`
-    .player {
-      position: absolute;
-      top: 0;
-      width: 3vw;
-      height: 3vh;
-    }
-    .player img {
-      width: 100%;
-    }
-  `]
+  templateUrl: './player.component.html',
+  styleUrls: ['./player.component.scss'],
 })
 
 export class PlayerComponent implements OnInit, Collidable {
-  position = { x: 10, y: 20 }; // position initiale du joueur
+  position = { x: 0, y: 20 }; // position initiale du joueur
 
   constructor(private playerService: PlayerService) {}
 
@@ -65,5 +53,12 @@ export class PlayerComponent implements OnInit, Collidable {
   }
 
 
-  action(): void {}
+  action(cible:Collidable): void {
+    if(cible instanceof MobComponent) {
+      console.log(cible+"touchée");
+    }
+    if(cible instanceof PlatformComponent) {
+      console.log("plateforme"+cible+"touchee");
+    }
+  }
 }

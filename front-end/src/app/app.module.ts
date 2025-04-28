@@ -30,7 +30,6 @@ import { PlatformComponent } from './components/platform/platform.component';
 import { CoinComponent } from './components/coin/coin.component';
 import {UserStatsChartComponent} from "./components/stats-chart/stats-chart";
 import {PlayerStatsComponent} from "./pages/player-stats/player-stats.component";
-//import {PlayerComponent} from "./components/player/player.component";
 import { BulleDialogueComponent } from './components/bulle_dialogue/bulle_dialogue';
 import { LoginComponent } from './pages/login/login.component';
 import { ListOfPeopleComponent } from './components/listofpeople/listofpeople.component';
@@ -40,10 +39,12 @@ import { AuthService } from 'src/services/auth.service';
 import { PlayerComponent } from './components/player/player.component';
 import { GameComponent } from './pages/game/game.component';
 import { ChronoComponent } from './components/chrono/chrono.component';
+import { GameoverComponent } from './components/gameover/gameover.component';
 
 @NgModule({
   declarations: [
-    //PlayerComponent,
+    GameoverComponent,
+    PlayerComponent,
     ChronoComponent,
     CoinComponent,
     PlatformComponent,

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CoeurService } from './coeurs.services';
+
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +16,8 @@ export class MiniGameService {
   private remainingLetters: number = 0;
   private letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  constructor() {}
+  constructor(  private coeurService : CoeurService,
+  ) {}
 
   start() {
     this.isActive$.next(true);
@@ -43,6 +46,7 @@ export class MiniGameService {
       }, 300);
     } else {
       this.isAnimatingError$.next(true);
+      this.coeurService.loseLife();
       this.currentText$.next("Oops ! Mauvaise touche ! Essaie encore !");
       setTimeout(() => {
         this.isAnimatingError$.next(false);
