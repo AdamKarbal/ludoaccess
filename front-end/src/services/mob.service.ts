@@ -11,7 +11,7 @@ import { MiniGameService } from './minigame.service';
 })
 
 export class MobService implements Collidable {
-  private position = { x: 100, y: window.innerHeight - 130, frame: 0, isFacingRight: true };
+  private position = { x: window.innerWidth-150, y: window.innerHeight - 150, frame: 0, isFacingRight: true };
   private speedX = 2;
   private totalFrames = 9;
   private frameSpeed = 10;
@@ -71,9 +71,7 @@ export class MobService implements Collidable {
       const player = this.playerService.getPlayer();
       if (player && this.checkCollision(player)) {
         console.log('Collision entre mob et joueur');
-        if (!this.miniGameService.isActive$.value) { 
-          this.miniGameService.start();
-        }
+        this.miniGameService.start();
       }
       this.mobPosition.next({ ...this.position });
     });
