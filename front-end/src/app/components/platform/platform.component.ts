@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {Collidable} from "../../../models/collidable.model";
 
 @Component({
   selector: 'app-platform',
   templateUrl: './platform.component.html',
   styleUrls: ['./platform.component.scss']
 })
-export class PlatformComponent implements OnInit {
+export class PlatformComponent implements OnInit,Collidable {
   @Input() x!: number;
   @Input() y!: number;
   @Input() width!: number;
@@ -23,5 +24,9 @@ export class PlatformComponent implements OnInit {
   }
   getY():number {
     return this.y;
+  }
+
+  action(cible: Collidable): void {
+    console.log(`Platform touched by:`, cible);
   }
 }
