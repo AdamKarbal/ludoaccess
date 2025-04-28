@@ -10,7 +10,7 @@ import { CoinCollectionService } from './coincollection.service';
   providedIn: 'root',
 })
 export class PlayerService {
-  private groundY = 85; // position du sol (en vh)
+  private groundY = 81;
 
   private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 0,
@@ -22,7 +22,7 @@ export class PlayerService {
   private gravity = 0.5;
   private velocityY = 0;
   private jumpForce = -8;
-  private onGround = false;
+  private onGround = true; // ✅ il commence sur le sol
   private player?: PlayerComponent;
 
   constructor(
@@ -77,22 +77,21 @@ export class PlayerService {
 
     y += this.velocityY;
 
-    // ⚠️ Convert player to pixels for platform collision
-    const plateforme = this.collisionService.getGroundPlatform(
+    const platform = this.collisionService.getGroundPlatform(
       this.player,
-      this.platformService.platforms
+      this.platformService.platforms,
+      this.velocityY
     );
 
-    if (plateforme) {
-      const platformTopPx = (plateforme.y / 100) * window.innerHeight;
-      const playerHeightPx = (this.player.height / 100) * window.innerHeight;
-      const yPixels = platformTopPx - playerHeightPx;
+    if (platform) {
+      const platformTop = platform.y;
+      const playerHeight = this.player.height;
 
-      // Convert back to vh for display
-      y = yPixels / window.innerHeight * 100;
-
-      this.velocityY = 0;
-      this.onGround = true;
+      if (this.velocityY >= 0 && (y + playerHeight) >= platformTop) {
+        y=platform.y-platform.height-3; // 3-> height du player
+        this.velocityY = 0;
+        this.onGround = true;
+      }
     } else if (y >= this.groundY) {
       y = this.groundY;
       this.velocityY = 0;
@@ -106,12 +105,12 @@ export class PlayerService {
 
   collectCoin(): void {
     if (!this.player) return;
-  
+
     this.gameService.existentCoins.forEach((coin, index) => {
       // Vérifier la collision entre le joueur et la pièce
       if (this.player?.checkCollision(coin)){
         console.log(`Pièce collectée : ${coin}`);
-        
+
         this.gameService.collectedCoins.push(coin);
         this.gameService.existentCoins.splice(index, 1);
         this.coinCollectionService.addCollected(coin);

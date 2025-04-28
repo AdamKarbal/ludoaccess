@@ -1,6 +1,7 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 import { SettingsService } from 'src/services/setting.service'; 
 import { Subscription } from "rxjs";
+import { Word2GuessService } from 'src/services/word2guess.services';
 
 
 @Component({
@@ -10,8 +11,16 @@ import { Subscription } from "rxjs";
 })
 
 export class BulleDialogueComponent implements OnInit,OnChanges{
+
   message = { text: '' };
-    constructor(private settingsService: SettingsService 
+  private letterGuessedSub!: Subscription;
+  private wordCompletedSub!: Subscription;
+  private settingsSub!: Subscription;
+
+  letterGuessed: boolean | null = null;
+  reussite: boolean = false;
+
+    constructor(private settingsService: SettingsService,private word2GuessService: Word2GuessService 
     ){
 
     }
@@ -24,12 +33,24 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
             console.log('Font mise à jour :', this.currentFont);
           }
         });
+         // Abonne-toi aux sujets du service pour écouter les changements
+    this.letterGuessedSub = this.word2GuessService.letterGuessed$.subscribe(isCorrect => {
+      if (isCorrect === null) return;  // Ignorer si pas encore de lettre devinée
+      this.letterGuessed = isCorrect;
+      this.chooseMessage(isCorrect ? 1 : 2);  // Message en fonction de la lettre devinée
+      this.message = this.getMessage();
+    });
+
+    this.wordCompletedSub = this.word2GuessService.isWordComplete$.subscribe(isComplete => {
+      this.reussite = isComplete;
+      if (isComplete) {
+        this.chooseMessage(4);  // Mot complet, message de succès
+        this.message = this.getMessage();
+      }
+    });
 }
   currentFont: string = 'initial';
-  private settingsSub!: Subscription;
     currentStep: number = 3; // Étape du Niveau 3
-    @Input() reussite : boolean =false;
-    @Input() letterGuessed ?: boolean;
 
     hasStarted : boolean = false ;
 
@@ -83,5 +104,7 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
       if (this.settingsSub) {
         this.settingsSub.unsubscribe(); 
       }
+      this.letterGuessedSub?.unsubscribe();
+    this.wordCompletedSub?.unsubscribe();
     }
 }

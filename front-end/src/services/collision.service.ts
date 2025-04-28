@@ -1,6 +1,8 @@
+
+import {PlayerComponent} from "../app/components/player/player.component";
+import {Collidable} from "../models/collidable.model";
 import { Injectable } from "@angular/core";
 import { GameService } from "./game.service";
-import { PlayerComponent } from "../app/components/player/player.component";
 import { Platform } from "src/models/platform.model";
 
 export interface CollisionObject {
@@ -21,7 +23,7 @@ export class CollisionService {
     this.platforms = this.gameService.platforms;
   }
 
-  getGroundPlatform(player: PlayerComponent, platforms: Platform[]): Platform | null {
+  getGroundPlatform(player: PlayerComponent, platforms: Platform[],playerVelocityY:number): Platform | null {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
@@ -44,22 +46,30 @@ export class CollisionService {
         player.x < platformRight && playerRight > platformPx.x;
 
       const verticallyTouching =
-        playerBottom >= platformTop &&
-        player.y < platformTop &&
-        (playerBottom - platformTop <= 10); // Small threshold
 
-      if (horizontallyAligned && verticallyTouching) {
-        console.log(`✅ Collision detected with platform '${platform}'`);
+
+        (playerBottom - platformTop <= 1);
+
+      if (horizontallyAligned && verticallyTouching && playerVelocityY >= 0) {
+        /*console.log("joueur bottom",playerBottom);
+        console.log("joueur right",playerRight);
+        console.log("plat top",platformTop);
+        console.log("plat right",platformRight);*/
+        console.log("✅ COLLISION with platform", platform.getCoinFirst());
         return platform;
       }
     }
 
     return null;
   }
-
-
+  areColliding(a: Collidable, b: Collidable): boolean {
+    return (
+      a.x < b.x + b.width &&
+      a.x + a.width > b.x &&
+      a.y < b.y + b.height &&
+      a.y + a.height > b.y
+    );}
 
 
 
 }
-
