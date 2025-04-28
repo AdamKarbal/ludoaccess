@@ -4,22 +4,8 @@ import { Collidable } from '../../../models/collidable.model';
 
 @Component({
   selector: 'app-player',
-  template: `
-    <div class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
-      <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
-    </div>
-  `,
-  styles: [`
-    .player {
-      position: absolute;
-      top: 0;
-      width: 3vw;
-      height: 3vh;
-    }
-    .player img {
-      width: 100%;
-    }
-  `]
+  templateUrl: './player.component.html',
+  styleUrls: ['./player.component.scss'],
 })
 
 export class PlayerComponent implements OnInit, Collidable {

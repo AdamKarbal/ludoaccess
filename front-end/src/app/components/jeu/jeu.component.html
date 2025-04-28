@@ -5,6 +5,7 @@
      </app-word2guess>
     <app-mob class="mob"></app-mob>
     <app-coeurs></app-coeurs>
+    <app-player></app-player>
   </div>
   
 <div class="game-zone">
@@ -12,4 +13,4 @@
 </div>
   
 <app-mini-game *ngIf="isActive$ | async"></app-mini-game>
-  
+<app-gameover *ngIf="isGameOver" (replay)="onReplay()"></app-gameover>
