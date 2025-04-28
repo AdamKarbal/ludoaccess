@@ -12,6 +12,7 @@ import { ChildSettings } from "src/models/setting.model";
 import { Word2GuessService } from "./word2guess.services";
 import { filter, take as rxjsTake, tap } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
+import { resetFakeAsyncZone } from "@angular/core/testing";
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -151,7 +152,6 @@ export class GameService {
         console.log("Taille sample: " + this._wordSample.length);
           const word = this._wordSample.pop();
           if (word) {
-            this.w2gService.resetWord();
             this.w2gService.initializeWord(word);
             console.log(`Mot "${word}" après initialisation.`);
         
@@ -183,19 +183,17 @@ export class GameService {
             return;
         }
         const word = this.w2g;
-        if (word) {
+        if (this._wordTarget.includes(word)) {
+            this.w2gService.resetWord();
             this.w2gService.initializeWord(word);
             console.log(`Mot "${word}" après initialisation.`);
     
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
             rxjsTake(1)).subscribe(() => {
                 console.log(`Mot "${word}" complété.`);
-                this._wordTarget.pop();
-                if (this._wordTarget.length > 0) {
-                    console.log("Coucou, on passe au mot suivant.");
-                    this.w2gService.resetWord(); 
-                    this.playStep2();  // Appelle playStep2() pour le mot suivant, seulement si la liste n'est pas vide
-                }
+                this.w2gService.resetWord();
+                this._wordSample.push(word);
+                setTimeout(() => {this.isStep2CompletedSubject.next(true);});
             });
         }
     }
@@ -203,11 +201,32 @@ export class GameService {
 
     playStep3() : void {
         console.log("On est dans l'étape 3.");
+        if (this._wordSample.length === 0) {
+            console.log('Tous les mots ont été joués.');
+            this.changeStep('/')
+                return;
+          }
+        console.log("Taille sample: " + this._wordSample.length);
+          const word = this._wordSample.pop();
+          if (word) {
+            this.w2gService.initializeWord(word);
+            console.log(`Mot "${word}" après initialisation.`);
+        
+            this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
+            rxjsTake(1)).subscribe(() => {
+
+                console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
+                this.w2gService.resetWord();
+                this.w2gService.onWordCompleted();
+                setTimeout(() => {this.isStep3CompletedSubject.next(true);});
+                
+            });
+          }
     }
 
 
     get w2g() : string {
-        return this._wordTarget[this._wordTarget.length - 1]!;
+        return this._wordTarget[this._wordTarget.length - 1];
     }
 
     get platforms() : Platform[] {

@@ -32,7 +32,7 @@ export class Word2GuessService {
     private incorrectLetterSubject = new BehaviorSubject<number | null>(null);
   public incorrectLetter$ = this.incorrectLetterSubject.asObservable();
 
-    constructor(private freezeGameService: FreezeGameService,private LevelService:LevelService) {
+    constructor(private freezeGameService: FreezeGameService, private LevelService: LevelService) {
       this.freezeGameService.isPaused$.subscribe(isPaused => {
         this.isPaused = isPaused;
         console.log(`isPaused updated: ${this.isPaused}`);
@@ -57,13 +57,12 @@ export class Word2GuessService {
           console.warn('Le mot est déjà initialisé:', word);
           return;
         }
-        this.resetWord(); // Réinitialise l'état de mot complet
         this._badLetter = false;
         this.word = word;
         console.log("Nom du initialize : "+ this.word);
         this.display = Array(this.word.length).fill('_').join(' ');
         this.guessedIndexes = [];
-        this.currentIndex = 0;
+      this.currentIndex = 0;
       }
   
       getWord(): string {
@@ -140,8 +139,13 @@ export class Word2GuessService {
       }
 
       resetWord(): void {
-        this.incorrectIndexes.clear(); // Réinitialise les index incorrects
-        this.wordCompleteSubject.next(false); // Réinitialise l'état de mot complet
+        this.word = "";
+      this.display = "";
+      this.guessedIndexes = [];
+      this.currentIndex = 0;
+      this.incorrectIndexes.clear();
+      this.wordCompleteSubject.next(false); // Réinitialisation explicite
+    console.log('🔄 Mot complètement réinitialisé');
       }
       onWordCompleted(): void {
         if (this.isWordComplete()) {

@@ -25,15 +25,20 @@ export class GameComponent{
         this.gameService.isStep1Completed$.pipe(filter(step1done => step1done),rxjsTake(1)).subscribe(() => {
                 console.log("Step 1 completed, moving to step 2.");
                 this.setStep(2);
-                    this.gameService.playStep2();
+                    setTimeout(()=>this.gameService.playStep2());
             });
     
         this.gameService.isStep2Completed$.pipe(filter(step2done => step2done),rxjsTake(1)).subscribe(() => {
                 console.log("Step 2 completed, moving to step 3.");
                 this.setStep(3);
-                    this.gameService.playStep3();
+                    setTimeout(()=>this.gameService.playStep3());
             });
-
+            this.gameService.isStep3Completed$.pipe(filter(step3done => step3done),rxjsTake(1)).subscribe(() => {
+                console.log("Step 3 completed, moving to step 2 again.");
+                this.setStep(2);
+                    setTimeout(()=>this.gameService.playStep2());
+            }
+            );
 
     }
     
