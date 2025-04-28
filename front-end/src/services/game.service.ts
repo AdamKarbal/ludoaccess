@@ -14,6 +14,10 @@ import { BehaviorSubject } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
+    private availablePaths = [
+        '/reglage', '/stats', '/jeu_etape1', '/jeu_etape2', '/jeu_etape3',
+        '/mob', '/jeuComponent', '/', '/acceuil'
+      ];
     private _wordSample: string[] = [];
     private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
@@ -225,5 +229,11 @@ export class GameService {
 
     get progress(): number {
         return this.levelService.progress;
-    }
+    }    changeStep(path: string): void {
+        if (this.availablePaths.includes(path)) {
+          this.router.navigate([path]);
+        } else {
+          console.error('Path invalide:', path);
+        }
+      }
 }
