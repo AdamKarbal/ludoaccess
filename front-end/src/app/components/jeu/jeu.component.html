@@ -1,9 +1,10 @@
-<app-levelbar></app-levelbar>
-<app-coeurs></app-coeurs>
 
-<ng-container *ngIf="isGameVisible">
-  <div class="game-ui">
-    <app-word2guess [mode]="'coin'"></app-word2guess>
+<div class="game-ui">
+    <app-levelbar></app-levelbar>
+     <app-word2guess>
+      [mode]="'coin'"
+      [userInput]="userInput"
+     </app-word2guess>
     <app-mob class="mob"></app-mob>
     <app-player></app-player>
     <app-ground></app-ground>
