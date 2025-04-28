@@ -1,17 +1,18 @@
-<div class="game-ui">
-    <app-levelbar></app-levelbar>
-     <app-word2guess>
-      [mode]="'coin'"
-     </app-word2guess>
+<app-levelbar></app-levelbar>
+<app-coeurs></app-coeurs>
+
+<ng-container *ngIf="isGameVisible">
+  <div class="game-ui">
+    <app-word2guess [mode]="'coin'"></app-word2guess>
     <app-mob class="mob"></app-mob>
-    <app-coeurs></app-coeurs>
     <app-player></app-player>
     <app-ground></app-ground>
-    </div>
+  </div>
   
-<div class="game-zone">
+  <div class="game-zone">
     <app-plateformes></app-plateformes>
-</div>
-  
+  </div>
+</ng-container>
+
 <app-mini-game *ngIf="isActive$ | async"></app-mini-game>
 <app-gameover *ngIf="isGameOver" (replay)="onReplay()"></app-gameover>
