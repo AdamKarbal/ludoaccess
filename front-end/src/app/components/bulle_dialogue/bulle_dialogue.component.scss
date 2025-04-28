@@ -1,25 +1,24 @@
-.bulle-dialogue {
-    position: relative;
-    top:60vh;
-    left: 43vw;
-    width: 20vw; /* adapte à la taille de ta bulle */
-  }
-  
-  #bulle {
-    width: 100%;
-    display: block;
-  }
-  
-  .texte-bulle {
+.texte-bulle {
     position: absolute;
-    top:13%; /* ajuste selon ta bulle */
-    left: 10%;
-    right: 10%;
-    font-size: 0.5em;
+    bottom:22vh;
+    left: 38vw;
+    width :25vw;
+    height: 25vh;
+    z-index: 10; 
+    font-size: 1em;
     font-family: 'Nintendo';
-    line-height: 1.4;
+    line-height: 1.5;
     white-space: normal;
     word-wrap: break-word;
-    color: black; /* ou ce qui rend bien sur la bulle */
+    color: black; 
   }
   
+  #bulle{
+    position: absolute;
+    bottom:22vh;
+    left: 37vw;
+    width :26.5vw;
+    height: 25vh;
+    z-index: 10;  
+}
+

@@ -23,10 +23,20 @@ import {PlatformComponent} from "../platform/platform.component";
     }
   `]
 })
+
 export class PlayerComponent implements OnInit, Collidable {
   position = { x: 0, y: 20 }; // position initiale du joueur
 
   constructor(private playerService: PlayerService) {}
+
+  checkCollision(other: Collidable): boolean {
+    return (
+      this.x < other.x + other.width &&
+      this.x + this.width > other.x &&
+      this.y < other.y + other.height &&
+      this.y + this.height > other.y
+    );
+  }
 
   ngOnInit(): void {
     this.playerService.setPlayer(this);

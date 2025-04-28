@@ -1,32 +1,5 @@
-
-.sol{
-    position: fixed;
-    background-image: url('../../../assets/ressources/texture_roche.jpg');    
-    filter: hue-rotate(180deg); 
-    height: var(--sol-height);
-    width: 100vw;
-    border-top: solid 0.8vh rgb(103, 61, 1);
-    background-color: var(--sol-bg-color);
-    bottom: 0;
-}
-
-.fond{
-    position: fixed;
-    background-image: url('../../../assets/ressources/back3.jpg');
-    background-size: cover;
-    height: calc(100vh - (var(--sol-height)));
-    width: 100vw;
-    z-index: -1;
-}
-
-
-.personnage{
-  height: 100vh; /* Prend toute la hauteur de l'écran */
-  z-index: 1;
-}
-    
 #megaman{
-    position: fixed;
+    position: absolute;
     bottom:10vh;
     left: 60vw;
     width :11vw;
@@ -34,22 +7,3 @@
     z-index: 20;
 }
 
-#bulle{
-    position: fixed;
-    bottom:22vh;
-    left: 38vw;
-    width :25vw;
-    height: 15vh;
-    z-index: 10;
-}
-
-.texte-bulle{
-    position: fixed;
-    bottom:29vh;
-    left: 39.5vw;
-    font-size: 1.2em;
-    font-family:  'Bangers', sans-serif;
-    text-align: center;
-    line-height: 1.3em;
-    z-index: 12;
-}

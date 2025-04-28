@@ -1,56 +1,81 @@
-import { Component, OnInit,Input,Output,EventEmitter,OnChanges,SimpleChanges} from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
 import { Word2GuessService } from "src/services/word2guess.services";
+import { SettingsService } from 'src/services/setting.service'; 
+import { Subscription } from "rxjs";
+import { Coin } from "src/models/coin.model";
+import { CoinCollectionService } from "src/services/coincollection.service"; // <<< importé ici
+
 
 @Component({
   selector: "app-word2guess",
-    templateUrl: "./word2guess.component.html",
-    styleUrls: ["./word2guess.component.scss"],
+  templateUrl: "./word2guess.component.html",
+  styleUrls: ["./word2guess.component.scss"],
 })
-export class Word2GuessComponent implements OnInit{
-  ngOnInit(): void {}
+export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() mode: 'coin' | 'typing' = 'coin';
   @Input() userInput: string = '';
   @Output() wordGuessed = new EventEmitter<boolean>();
   @Output() letterGuessed = new EventEmitter<boolean>();
 
-  hasStarted: boolean = false;
+  public currentFont: string = 'Arial'; // Default font
 
-  incorrectLetters: Set<number> = new Set(); // To track incorrect letters for the temporary red effect
+  private settingsSub?: Subscription;
+  private coinSub?: Subscription;
+  private wordCompletedSub?: Subscription;
+  private incorrectLetterSub?: Subscription;
 
-  constructor(public game: Word2GuessService) {} // rend le service accessible au template
+  constructor(
+    public word2GuessService: Word2GuessService,
+    private settingsService: SettingsService,
+    private coinCollectionService: CoinCollectionService // <<< importé ici
+  ) {}
+
+  ngOnInit(): void {
+    this.settingsSub = this.settingsService.settings$.subscribe(settings => {
+      // Handle font here if needed
+    });
+
+    if (this.mode === 'coin') {
+      this.coinSub = this.coinCollectionService.collectedCoin$.subscribe(coin => {
+        this.word2GuessService.updateDisplayWordWithCoin(coin);
+      });
+    }
+
+    this.wordCompletedSub = this.word2GuessService.isWordComplete$.subscribe(completed => {
+      if (completed) {
+        this.wordGuessed.emit(true);
+      }
+    });
+
+    this.incorrectLetterSub = this.word2GuessService.incorrectLetter$.subscribe(index => {
+      if (index !== null) {
+        console.log('Incorrect letter at index', index);
+      }
+    });
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!this.userInput) return;
-
-    const isCorrect = this.game.guessLetter(this.userInput);
-
-    if (!this.hasStarted) {
-      this.hasStarted = true;
-    }
-    if(isCorrect){
-      this.letterGuessed.emit(true); 
-    }
-    else{
-      this.letterGuessed.emit(false); // Emit false when the letter is incorrect
-      const incorrectIndex = this.game.currentIndex;
-      this.incorrectLetters.add(incorrectIndex); // Track the index of the incorrect letter
-      // Remove the incorrect letter color after a brief moment
-      setTimeout(() => {
-        this.incorrectLetters.delete(incorrectIndex); // Reset the incorrect letter state
-      }, 500); // Temporary red color for 500ms
-    }
-
-    
-
-    if (this.game.isWordComplete()) {
-      this.wordGuessed.emit(true);
-    }
+    if (this.mode !== 'typing' || !this.userInput) return;
+    this.word2GuessService.guessLetter(this.userInput);
   }
 
   get word(): string {
-    return this.game.getWord();
+    return this.word2GuessService.getWord();
   }
 
   get guessedIndexes(): number[] {
-    return this.game.getGuessedIndexes();
+    return this.word2GuessService.getGuessedIndexes();
+  }
+
+  get display(): string {
+    return this.word2GuessService.getDisplay();
+  }
+
+  ngOnDestroy(): void {
+    this.settingsSub?.unsubscribe();
+    this.coinSub?.unsubscribe();
+    this.wordCompletedSub?.unsubscribe();
+    this.incorrectLetterSub?.unsubscribe();
   }
 }

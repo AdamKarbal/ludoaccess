@@ -5,10 +5,9 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
+  public currentUser$ = this.currentUserSubject.asObservable(); 
 
   setUser(user: User): void {
     this.currentUserSubject.next(user);

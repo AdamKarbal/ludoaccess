@@ -8,11 +8,11 @@ import { User } from 'src/models/user.model';
 })
 export class PeopleComponent {
   @Input() person!: User;
-  @Input() isSelected: boolean = false;  // Ajoute cet input pour recevoir la valeur de isSelected
-  @Output() personSelected = new EventEmitter<User>();  // Émet l'utilisateur sélectionné
+  @Input() isSelected: boolean = false;  
+  @Output() personSelected = new EventEmitter<User>();  
 
   onClick() {
-    this.isSelected = !this.isSelected;  // Change l'état sélectionné/désélectionné
-    this.personSelected.emit(this.person);  // Émet l'utilisateur sélectionné
+    this.isSelected = !this.isSelected;  
+    this.personSelected.emit(this.person); 
   }
 }

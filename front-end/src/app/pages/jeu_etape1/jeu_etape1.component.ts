@@ -8,6 +8,7 @@ import { Component,OnInit,HostListener } from "@angular/core";
 export class JeuEtape1Component {
   constructor() {}
   ngOnInit(): void {}
+  
     userInput: string = ''; // Entrée de l'utilisateur
     wordCompleted: boolean = false;
     letterGuessed?: boolean = undefined;
@@ -25,12 +26,15 @@ export class JeuEtape1Component {
         }, 10);
       }
     }
+
+    
     onWordCompleted(isCompleted : boolean){
       if(isCompleted){
         this.wordCompleted=true;
       }
       else this.wordCompleted=false;
     }
+
     onLetterGuessed(isLetterGuessed: boolean){
       this.letterGuessed = isLetterGuessed;
     }

@@ -1,17 +1,7 @@
-<div class="sol">
-</div>
-<div class="fond"></div>
-<div><app-toolbar-game></app-toolbar-game></div>
-<div><app-coeurs></app-coeurs></div>>
-<div><app-word2guess [userInput]="userInput" (wordGuessed)="onWordCompleted($event)" (letterGuessed)="onLetterGuessed($event)"></app-word2guess></div>
-<div><app-finishScreen [reussite]="wordCompleted" [letterGuessed]="letterGuessed"></app-finishScreen></div>
-<div><app-levelbar [wordCompleted]="wordCompleted"></app-levelbar></div>
-<div class="plateformes">
-    <div id="plateforme1"></div>
-    <div id="plateforme2"></div>
-    <div id="plateforme3"></div>
-    <div id="plateforme4"></div>
-</div>
-
+<div><app-chrono></app-chrono></div>
+<div><app-coeurs></app-coeurs></div>
+<div><app-word2guess [mode]="'typing'" [userInput]="userInput" (wordGuessed)="onWordCompleted($event)" (letterGuessed)="onLetterGuessed($event)" ></app-word2guess></div>
+<div><app-finishScreen></app-finishScreen></div>
+<div><app-levelbar></app-levelbar></div>
 <div id="personnage"><img id="personnage" alt="perso" src="../../../assets/ressources/perso.png"/></div>
 <div id="mob"><img id="mob" alt="mob" src="../../../assets/ressources/mob.png"></div>  

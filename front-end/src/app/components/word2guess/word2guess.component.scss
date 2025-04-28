@@ -8,7 +8,6 @@
     left:50%;
     transform: translate(-50%, -8%);
     font-size: calc(var(--W2G-height) / 2);
-    font-family :  'Bangers', sans-serif;
     text-align: center;
     line-height: var(--W2G-height);
     height : var(--W2G-height);
@@ -16,7 +15,9 @@
     border-radius: 30px;
     border : solid black 3px;
     box-shadow : 50px;
-    width : 18vw;
+    padding-left: 2vw;
+padding-right: 2vw;
+    // width : 18vw;
     z-index: 4;
 }
 #mot {

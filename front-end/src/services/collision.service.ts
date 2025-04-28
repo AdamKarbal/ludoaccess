@@ -1,16 +1,29 @@
-import {Injectable} from "@angular/core";
-import {Platform} from "./platform.service";
+
 import {PlayerComponent} from "../app/components/player/player.component";
 import {Collidable} from "../models/collidable.model";
+import { Injectable } from "@angular/core";
+import { GameService } from "./game.service";
+import { Platform } from "src/models/platform.model";
 
+export interface CollisionObject {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class CollisionService {
 
-  getGroundPlatform(player: PlayerComponent, platforms: Platform[], playerVelocityY: number): Platform | null {
+  platforms: Platform[];
 
+  constructor(private gameService: GameService) {
+    this.platforms = this.gameService.platforms;
+  }
+
+  getGroundPlatform(player: PlayerComponent, platforms: Platform[]): Platform | null {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
@@ -45,7 +58,6 @@ export class CollisionService {
         console.log("✅ COLLISION with platform", platform.coinLetter);
         return platform;
       }
-
     }
 
     return null;

@@ -1,12 +1,7 @@
-<app-background></app-background>
-<app-ground></app-ground>
-<div class="platforms">
-    <app-platform
-      *ngFor="let platform of platforms"
-      [x]="platform.x"
-      [y]="platform.y"
-      [width]="platform.width"
-      [height]="platform.height"
-      [coinLetter]="platform.coinLetter"></app-platform>
-  </div>
-<app-player></app-player>
+<div class="map">
+    <app-toolbar-game></app-toolbar-game>
+    <app-background></app-background>
+    <app-ground></app-ground>
+    <!-- <app-player></app-player> si besoin -->
+</div>
+  

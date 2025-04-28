@@ -13,7 +13,7 @@ export interface ChildSettings {
     maxWordLength?: number;
     simplifyGameAfter?: number;
     displaymotsec: number;
-    choosefont: 'Lucky Boy' | 'Nintendo' | 'Arial' | 'Comic Sans MS' | 'Courier New' | 'Georgia' | 'Times New Roman' | 'Verdana';
-    chooseBackGround : 'Forest' | 'Blue earth' | 'Orange earth' | 'Aléatoire';
+    choosefont: 'Lucky Boy' | 'Nintendo' | 'Arial' | 'Comic Sans MS' | 'Courier New' | 'Georgia' | 'Times New Roman' | 'Verdana' | 'Calibri' | 'cursif ecriture A' | 'cursif ecriture B' | 'Minecraft';
+    chooseBackGround : 'Forest' | 'Blue_earth' | 'Orange_earth' | 'Aléatoire';
     lettersize: number;
   }

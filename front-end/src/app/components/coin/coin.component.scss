@@ -4,9 +4,46 @@
     height: 5vh;
     bottom: 130%;
     left: 20%; 
-    background-size: cover;
-    background-repeat: no-repeat; 
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
     z-index: 5;
     filter: hue-rotate(90deg);
 }
+
+.coin.collecting {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+
+
+/*.aura {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(0, 255, 0, 0.938); /* Vert semi-transparent */
+   // box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.938);
+    //pointer-events: none; /* Ne bloque pas les clics */
+    //animation: auraPop 0.5s ease-out forwards;
+   // z-index: 999; /* Devant tout */
+//}
+
+
+/*
+@keyframes auraPop {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+}
+*/

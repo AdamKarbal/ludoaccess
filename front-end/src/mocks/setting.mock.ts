@@ -53,7 +53,7 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     displaymotsec:8,
     choosefont:'Lucky Boy',
     lettersize:30,
-    chooseBackGround:'Orange earth',
+    chooseBackGround:'Orange_earth',
   },
   '4': {
     id: '4',
@@ -72,6 +72,6 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     displaymotsec:25,
     choosefont:'Times New Roman',
     lettersize:18,
-    chooseBackGround:'Blue earth',
+    chooseBackGround:'Blue_earth',
   }
 };

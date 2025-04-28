@@ -1,7 +1,4 @@
-
-<div class="bulle-dialogue">
-    <img id ="bulle" alt="bulle" src="../../../assets/ressources/bulle_dialogue.png"/>
-    <div class="texte-bulle">
-        <h1>{{ message.text }}</h1>
-    </div>
+<img id ="bulle" alt="bulle" src="../../../assets/ressources/bulle_dialogue.png"/>
+<div class="texte-bulle" [style.font-family]="currentFont">
+    <h1>{{ message.text }}</h1>
 </div>

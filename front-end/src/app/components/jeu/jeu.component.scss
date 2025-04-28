@@ -1,1 +1,35 @@
-        
+/*body{
+    position : relative;
+    width: 100vw;
+    height : 100vh;
+    overflow : hidden;
+}*/
+
+.mob{
+  position : absolute;
+  bottom : 103vh;
+}
+
+body, :host {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+  }
+  
+  .game-zone {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+  }  
+  
+  .game-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  

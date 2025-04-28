@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     background-color: #fff;
-    padding: 15px 100px 15px 15px;
+    padding: 15px 60px 15px 15px; 
     margin: 10px 0;
     border-radius: 30px;
     font-family: 'Luckiest Guy', cursive;
@@ -11,6 +11,9 @@
     border: 2px solid #90e0ef;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%; 
+    box-sizing: border-box; 
+    overflow: hidden; 
 }
 
 .child.active {
@@ -47,19 +50,20 @@
 
 .delete-btn {
     position: absolute;
-    right: 15px;
+    right: 10px; 
     top: 50%;
     transform: translateY(-50%);
     background-color: #ff4d4d;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 6px 12px; 
     border-radius: 20px;
     font-family: 'Luckiest Guy', cursive;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: background-color 0.3s;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .delete-btn:hover {
@@ -81,7 +85,8 @@
 }
 
 .child-settings {
-    width: calc(100% + 4px);
+    width: 100%;
+    box-sizing: border-box;
     background: #fff;
     border: 2px solid #0077b6;
     border-top: none;

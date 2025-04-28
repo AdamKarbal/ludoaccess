@@ -1,11 +1,16 @@
-<div class="platform" [ngStyle]="{
-  'left': x + 'vw', 
-  'top': y + 'vh', 
-  'width': width + 'vw', 
-  'height': height + 'vh'
-}">
-<app-coin *ngIf="coinLetter" [letter]="coinLetter"></app-coin>
+<div *ngFor="let platform of platforms" 
+     class="platform"
+     [ngStyle]="{'filter': currentFilter}"
+     [attr.style]="'position: absolute ; left: ' + platform.x + 'vw ; bottom: ' + platform.y + 'vh ; width: ' + platform.width + 'vw; height: ' + platform.height + 'vh;'" >
+     <app-coin
+     class="first"
+     *ngIf="platform.getCoinFirst()"
+     [coin]="platform.getCoinFirst()!">
+   </app-coin>
+   
+   <app-coin
+     class="second"
+     *ngIf="platform.getCoinSecond()"
+     [coin]="platform.getCoinSecond()!">
+   </app-coin>
 </div>
-
-  
-  
