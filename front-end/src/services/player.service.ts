@@ -79,7 +79,7 @@ export class PlayerService {
 
     const platform = this.collisionService.getGroundPlatform(
       this.player,
-      this.platformService.getPlatforms(),
+      this.platformService.platforms,
       this.velocityY
     );
 

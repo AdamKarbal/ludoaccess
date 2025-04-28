@@ -23,7 +23,7 @@ export class CollisionService {
     this.platforms = this.gameService.platforms;
   }
 
-  getGroundPlatform(player: PlayerComponent, platforms: Platform[]): Platform | null {
+  getGroundPlatform(player: PlayerComponent, platforms: Platform[],playerVelocityY:number): Platform | null {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
@@ -55,7 +55,7 @@ export class CollisionService {
         console.log("joueur right",playerRight);
         console.log("plat top",platformTop);
         console.log("plat right",platformRight);*/
-        console.log("✅ COLLISION with platform", platform.coinLetter);
+        console.log("✅ COLLISION with platform", platform.getCoinFirst());
         return platform;
       }
     }
