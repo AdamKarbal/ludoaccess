@@ -23,6 +23,7 @@ export class PlatformComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('Plateformes:', this.gameService.w2g);
     this.platforms = this.platformService.genererPlateformes(this.gameService.w2g);
     
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {

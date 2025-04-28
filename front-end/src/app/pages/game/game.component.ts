@@ -1,4 +1,5 @@
-import { Component, OnInit, OnChanges } from "@angular/core";
+import { Component, OnInit, OnChanges, ChangeDetectorRef } from "@angular/core";
+import { filter, take as rxjsTake, tap } from "rxjs/operators";
 import { GameService } from "src/services/game.service";
 
 @Component({
@@ -12,7 +13,7 @@ export class GameComponent{
     private _isEtape2 : boolean;
     private _isEtape3 : boolean;
 
-    constructor(private gameService : GameService) {
+    constructor(private gameService : GameService, private cdr: ChangeDetectorRef) {
         this._isEtape1 = true;
         this._isEtape2 = false;
         this._isEtape3 = false;
@@ -21,6 +22,19 @@ export class GameComponent{
     ngOnInit() : void{
         this.gameService.fillSample();
         this.gameService.playStep1();
+        this.gameService.isStep1Completed$.pipe(filter(step1done => step1done),rxjsTake(1)).subscribe(() => {
+                console.log("Step 1 completed, moving to step 2.");
+                this.setStep(2);
+                    this.gameService.playStep2();
+            });
+    
+        this.gameService.isStep2Completed$.pipe(filter(step2done => step2done),rxjsTake(1)).subscribe(() => {
+                console.log("Step 2 completed, moving to step 3.");
+                this.setStep(3);
+                    this.gameService.playStep3();
+            });
+
+
     }
     
 
@@ -58,4 +72,5 @@ export class GameComponent{
     }
 
 }
+
 

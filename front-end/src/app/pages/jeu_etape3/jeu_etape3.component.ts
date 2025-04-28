@@ -26,13 +26,4 @@ export class JeuEtape3Component implements OnInit{
       }, 10);
     }
   }
-  onWordCompleted(isCompleted : boolean){
-    if(isCompleted){
-      this.wordCompleted=true;
-    }
-    else this.wordCompleted=false;
-  }
-  onLetterGuessed(isLetterGuessed: boolean){
-    this.letterGuessed = isLetterGuessed;
-  }
 }
