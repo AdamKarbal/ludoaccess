@@ -1,4 +1,4 @@
-<div><app-chrono></app-chrono></div>
+<div><app-chrono *ngIf="showTimer"></app-chrono></div>
 <div><app-coeurs></app-coeurs></div>
 <div><app-word2guess [mode]="'typing'" [userInput]="userInput" ></app-word2guess></div>
 <div><app-finishScreen></app-finishScreen></div>
