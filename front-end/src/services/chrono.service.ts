@@ -2,18 +2,22 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, interval, combineLatest } from "rxjs";
 import { FreezeGameService } from "./freeze-game.services";
 import { Word2GuessService } from "./word2guess.services";  
+import { SettingsService } from "./setting.service";
+import { ChildSettings } from '../models/setting.model';
 
 @Injectable({
     providedIn: "root",
 })
 export class ChronoService {
-    private time: number = 10;
     private interval: any = null;
     private isRunning: boolean = false;
+    public settings: ChildSettings | null = null;
+    private time: number = this.settings?.displaymotsec || 10; // Temps par défaut de 10 secondes
     private chronoSubject = new BehaviorSubject(this.time);
     time$ = this.chronoSubject.asObservable();
 
-    constructor(private freezeGameService: FreezeGameService, private word2GuessService: Word2GuessService) {
+
+    constructor(private freezeGameService: FreezeGameService, private word2GuessService: Word2GuessService, private settingsService: SettingsService) { 
         this.word2GuessService.isWordComplete$.subscribe(isCompleted => {
             if (isCompleted) {
                 this.stopTimer();
@@ -21,9 +25,10 @@ export class ChronoService {
             } else {
                 this.startTimer();
             }
-        });
-        
-    
+        });  
+        this.settingsService.settings$.subscribe(settings => {
+        this.settings = settings;
+      });
         this.freezeGameService.isPaused$.subscribe(paused => {
             if (paused) this.stopTimer();
         });
@@ -33,11 +38,15 @@ export class ChronoService {
         this.freezeGameService.isInfo$.subscribe(info => {
             if (info) this.stopTimer();
         });
+        this.time=this.settings?.displaymotsec || 10;
     }
 
  
 
     public startTimer() {
+        if(this.settings?.showTimer === false) {
+            console.log('Timer is disabled in settings.');
+            return;}
         if (!this.isRunning) {
             this.isRunning = true;
             // Créer l'intervalle et l'assigner à this.interval
@@ -81,7 +90,7 @@ export class ChronoService {
         }
     }
     public resetTimer() {
-        this.time = 10;
+        this.time = this.settings?.displaymotsec || 10;  // Réinitialise le temps à la valeur par défaut
         this.chronoSubject.next(this.time);
     }
     public getTime(): number {

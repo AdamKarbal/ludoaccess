@@ -22,8 +22,12 @@ export class CoinComponent implements OnInit {
   }
 
   get imagePath(): string {
-    return this.coin.letter ? `assets/ressources/Coins/${this.coin.letter}.png` : '';
-  }
+    if (this.coin.letter && this.coin.letter >= 'a' && this.coin.letter <= 'z') {
+        return `assets/ressources/Coins/${this.coin.letter}Min.png`;
+    } else if (this.coin.letter && this.coin.letter >= 'A' && this.coin.letter <= 'Z') {
+        return `assets/ressources/Coins/${this.coin.letter}.png`;
+    }
+    return '';}
 
   onClickCollect(event : MouseEvent): void {
     if (!this.coin.isCollected) { // On veut cliquer seulement si PAS encore collecté

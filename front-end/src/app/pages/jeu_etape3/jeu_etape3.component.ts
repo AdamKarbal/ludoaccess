@@ -1,5 +1,7 @@
 import { Component,OnInit,HostListener } from "@angular/core";
 import { KeyboardInputService } from "src/services/keyboard-input-w2g.service";
+import { SettingsService } from "src/services/setting.service";
+import { ChildSettings } from "src/models/setting.model";
 
 @Component({
   selector: "app-jeu_etape3",
@@ -8,12 +10,37 @@ import { KeyboardInputService } from "src/services/keyboard-input-w2g.service";
 })
 export class JeuEtape3Component implements OnInit{
   userInput: string = '';
+  private audio: HTMLAudioElement | null = null;
+  showTimer: boolean = false; 
+  public settings: ChildSettings | null = null;
 
-  constructor(private keyboardInputService: KeyboardInputService) {}
+  constructor(private keyboardInputService: KeyboardInputService, private settingsService : SettingsService) {
+  }
 
   ngOnInit(): void {
-    this.keyboardInputService.userInput$.subscribe(input => {
+    this.audio = new Audio('assets/sons/Step3Audio.mp3');
+    this.audio.loop = true;
+    this.audio.play();
+
+
+    this.settingsService.settings$.subscribe((settings) => {
+      this.settings = settings;
+      this.showTimer = !!this.settings?.showTimer; 
+      console.log('showTimer:', this.showTimer); 
+    });
+  
+    this.keyboardInputService.userInput$.subscribe((input) => {
       this.userInput = input;
     });
+  
+  }
+
+  ngOnDestroy(): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.audio = null;
+    }
   }
 }
+    
