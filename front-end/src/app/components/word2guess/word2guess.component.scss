@@ -52,7 +52,7 @@ padding-right: 2vw;
 .correct {
     color: black ; /* Lettre correcte devient noire */
   }
-  
+
 .incorrect {
     color: red ; /* Lettre incorrecte devient rouge */
     animation: flashRed 0.5s ease-in-out; /* Animation rouge temporaire */
@@ -72,5 +72,23 @@ padding-right: 2vw;
   .letter {
     color: grey ;
     border-bottom: 2px solid grey;
-    padding: 13px 2px,
+    padding: 13px 2px;
   }
+
+.word-counter {
+  position: absolute;
+  top: 13%;
+  right: 3vw;
+  padding: 8px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 3px solid #333;
+  border-radius: 20px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 1.4em;
+  color: #444;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
