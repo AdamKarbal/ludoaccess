@@ -43,7 +43,7 @@ export class SettingsService {
   private getDefaultSettings(childId: string): ChildSettings {
     return {
       id: childId,
-      showTimer: false,
+      showTimer: false, // fait
       showRanking: false,
       enableLifeLoss: false,
       jumpDifficulty: false,
@@ -55,7 +55,7 @@ export class SettingsService {
       preferredWordLength: 8,
       minWordLength: 3,
       maxWordLength: 10,
-      displaymotsec: 10,
+      displaymotsec: 10, // fait 
       lettersize: 20,
       choosefont: 'Nintendo', 
       chooseBackGround: 'Aléatoire',  
