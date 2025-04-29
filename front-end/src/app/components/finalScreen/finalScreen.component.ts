@@ -14,7 +14,8 @@ export class FinalScreenComponent implements OnInit {
     public isGameFinished: boolean = false;
 
     ngOnInit(): void {
-        
+
+    
     }
 
     constructor(private freezeGame: FreezeGameService,  private gameService : GameService,public finalMessageService: FinalMessageService, private router: Router) {
@@ -29,6 +30,15 @@ export class FinalScreenComponent implements OnInit {
             this.isGameFinished = finished;
             console.log(`Game Finished: ${this.isGameFinished}`);
         });
+    }
+
+    OnContinueClick() {
+        this.finalMessageService.setWantToContinue();
+        console.log("Continue clicked, want to continue set to true.");
+    }
+    OnStopClick() {
+        this.finalMessageService.setWantToExit();
+        console.log("Stop clicked, want to exit set to true.");
     }
     
 } 
