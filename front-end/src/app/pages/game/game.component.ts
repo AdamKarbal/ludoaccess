@@ -90,9 +90,10 @@ export class GameComponent implements OnInit {
             rxjsTake(1)
           )
           .subscribe(() => {
-            console.log("Jeu terminé et utilisateur veut continuer !");
+            console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);
             this.gameService.changeStep("/acceuil"); // Redémarre le jeu
+            this.gameService.resetGame(); // Redémarre le jeu
           });
     }
 

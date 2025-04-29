@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FreezeGameService } from 'src/services/freeze-game.services';
-import { FinalMessageService } from 'src/services/final-message.service';
 
 @Component({
   selector: 'app-root',
@@ -15,16 +14,11 @@ export class AppComponent {
   isExited = false;
   isInfo = false;
 
-  isContinue = false;
-  isStop = false;
+  isGameFinished = false;
 
-  constructor(private freezeGame: FreezeGameService,private finalMessageService: FinalMessageService) {
-    this.finalMessageService.wantToContinue$.subscribe(continueGame => {
-      this.isContinue = continueGame;
-    });
-    this.finalMessageService.wantToExit$.subscribe(stopGame => {
-      this.isStop = stopGame;
-    });
+
+  constructor(private freezeGame: FreezeGameService) {
+  
     this.freezeGame.isPaused$.subscribe(paused => {
       this.isPaused = paused;
     });
