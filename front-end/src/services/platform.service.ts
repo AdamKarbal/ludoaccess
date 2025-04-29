@@ -17,16 +17,16 @@ export class PlatformService {
     let nbPt = 0;
     let lettresDisponibles = word.split('');
 
-    const hauteurs = [20, 30, 40, 50]; // On peut changer les hauteurs pour la difficulté
+    const hauteurs = [40,50,60,70]; // On peut changer les hauteurs pour la difficulté
     let hauteurIndex = 0;
 
     let dernierX = 0; // en vw
     console.log('Mot utilisé :', word);
-    
+
     for (let i = 0; i < MAX_PLATFORMS; i++) {
       const largeur = this.getRandom(10, 15);
       const x = this.getRandom(dernierX + 10, dernierX + 15);
-      const y = hauteurs[hauteurIndex];
+      const y = 100-hauteurs[hauteurIndex];
 
       const randomChoice = this.getRandom(0, 5);
       if (randomChoice <= 3) {
@@ -35,7 +35,7 @@ export class PlatformService {
         if (hauteurIndex == 0) hauteurIndex = (hauteurIndex + 1) % hauteurs.length;
         else hauteurIndex = (hauteurIndex - 1) % hauteurs.length;
       }
-      
+
       let p = new Platform(x, y, largeur, undefined);
       this._platforms.push(p);
       nbPt++;
@@ -72,6 +72,11 @@ export class PlatformService {
 
     // Afficher les plateformes après affectation des lettres
     console.log('Plateformes après affectation des lettres :', this._platforms);
+    /*this.platforms.push(new Platform(10,60,10));
+    this.platforms.push(new Platform(25,72,10));
+    this.platforms.push(new Platform(40,60,18));
+    this.platforms.push(new Platform(58.5,50,10));
+    this.platforms.push(new Platform(68.5,40,5));*/
 
     return this._platforms;
   }
