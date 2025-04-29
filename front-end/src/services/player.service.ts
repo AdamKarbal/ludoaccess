@@ -13,17 +13,17 @@ import { ChildSettings } from '../models/setting.model';
 })
 export class PlayerService {
   private groundY = 81;
-  private pressedKeys = new Set<string>();
+  private _pressedKeys = new Set<string>();
   private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 0,
     y: this.groundY,
   });
   position$ = this.positionSubject.asObservable();
 
-  private speed = 0.5;
-  private gravity = 1.1;
+  private speed = 0.3;
+  private gravity = 0.6;
   private velocityY = 0;
-  private jumpForce = -8;
+  private jumpForce = -5;
   private onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;
@@ -43,10 +43,13 @@ export class PlayerService {
       this._settings = settings;
     });
     if(this._settings?.jumpDifficulty==true){
-      this.gravity=1.3;
+      this.jumpForce=-5;
     }
   }
 
+  getPressedKeys(): Set<string> {
+    return this._pressedKeys;
+  }
   setPlayer(player: PlayerComponent): void {
     this.player = player;
   }
@@ -88,9 +91,9 @@ export class PlayerService {
   private updateMovement(): void {
     let { x, y } = this.positionSubject.getValue();
   
-    const leftPressed = this.pressedKeys.has('arrowleft') || this.pressedKeys.has('q');
-    const rightPressed = this.pressedKeys.has('arrowright') || this.pressedKeys.has('d');
-    const jumpPressed = this.pressedKeys.has('arrowup') || this.pressedKeys.has('z') || this.pressedKeys.has(' ') || this.pressedKeys.has('space');
+    const leftPressed = this._pressedKeys.has('arrowleft') || this._pressedKeys.has('q');
+    const rightPressed = this._pressedKeys.has('arrowright') || this._pressedKeys.has('d');
+    const jumpPressed = this._pressedKeys.has('arrowup') || this._pressedKeys.has('z') || this._pressedKeys.has(' ') || this._pressedKeys.has('space');
   
     if (leftPressed) {
       x = Math.max(0, x - this.speed);
@@ -147,11 +150,11 @@ export class PlayerService {
   }
 
   pressKey(key: string): void {
-    this.pressedKeys.add(key.toLowerCase());
+    this._pressedKeys.add(key.toLowerCase());
   }
   
   releaseKey(key: string): void {
-    this.pressedKeys.delete(key.toLowerCase());
+    this._pressedKeys.delete(key.toLowerCase());
   }  
 
   collectCoin(): void {

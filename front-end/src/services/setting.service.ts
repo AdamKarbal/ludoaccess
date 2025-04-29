@@ -46,7 +46,7 @@ export class SettingsService {
       showTimer: false, // fait
       showRanking: false,
       enableLifeLoss: false, // fait
-      jumpDifficulty: false,
+      jumpDifficulty: false,// fait
       clearWordAfterRecovery: false, // fait
       adaptDifficulty: false, // fait
       displaymotsec: 10,
