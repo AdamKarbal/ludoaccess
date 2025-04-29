@@ -10,8 +10,13 @@ import { CoinCollectionService } from './coincollection.service';
   providedIn: 'root',
 })
 export class PlayerService {
+<<<<<<< HEAD
   private groundY = 82.57;
 
+=======
+  private groundY = 81;
+  private pressedKeys = new Set<string>();
+>>>>>>> 7a8d0fd63e8394c63f35f21f4a41aa8147ede34b
   private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 0,
     y: this.groundY,
@@ -22,7 +27,7 @@ export class PlayerService {
   private gravity = 0.5;
   private velocityY = 0;
   private jumpForce = -8;
-  private onGround = true; // ✅ il commence sur le sol
+  private onGround = true;
   private player?: PlayerComponent;
 
   constructor(
@@ -32,8 +37,9 @@ export class PlayerService {
     private coinCollectionService : CoinCollectionService
   ) {
     setInterval(() => {
+      this.updateMovement();
       this.applyGravity();
-    }, 32);
+    }, 16); // ~60 FPS    
   }
 
   setPlayer(player: PlayerComponent): void {
@@ -48,23 +54,55 @@ export class PlayerService {
     const currentPosition = this.positionSubject.getValue();
     let { x, y } = currentPosition;
 
+    key = key.toLowerCase();
+
     switch (key) {
-      case 'ArrowUp':
+      case 'arrowUp':
+        case ' ':
+        case 'space':
         if (this.onGround) {
           this.velocityY = this.jumpForce;
           this.onGround = false;
         }
         break;
-      case 'ArrowLeft':
+
+      case 'arrowLeft':
+        case 'q':
         x = Math.max(0, x - this.speed);
         break;
-      case 'ArrowRight':
+
+      case 'arrowRight':
+        case 'd':
         x = Math.min(100, x + this.speed);
         break;
     }
 
     this.positionSubject.next({ x, y });
   }
+
+  private updateMovement(): void {
+    let { x, y } = this.positionSubject.getValue();
+  
+    const leftPressed = this.pressedKeys.has('arrowleft') || this.pressedKeys.has('q');
+    const rightPressed = this.pressedKeys.has('arrowright') || this.pressedKeys.has('d');
+    const jumpPressed = this.pressedKeys.has('arrowup') || this.pressedKeys.has('z') || this.pressedKeys.has(' ') || this.pressedKeys.has('space');
+  
+    if (leftPressed) {
+      x = Math.max(0, x - this.speed);
+    }
+  
+    if (rightPressed) {
+      x = Math.min(100, x + this.speed);
+    }
+  
+    if (jumpPressed && this.onGround) {
+      this.velocityY = this.jumpForce;
+      this.onGround = false;
+    }
+  
+    this.positionSubject.next({ x, y });
+  }
+  
 
   applyGravity(): void {
     if (!this.player) return;
@@ -102,6 +140,14 @@ export class PlayerService {
 
     this.positionSubject.next({ x, y });
   }
+
+  pressKey(key: string): void {
+    this.pressedKeys.add(key.toLowerCase());
+  }
+  
+  releaseKey(key: string): void {
+    this.pressedKeys.delete(key.toLowerCase());
+  }  
 
   collectCoin(): void {
     if (!this.player) return;

@@ -40,6 +40,7 @@ import { PlayerComponent } from './components/player/player.component';
 import { GameComponent } from './pages/game/game.component';
 import { ChronoComponent } from './components/chrono/chrono.component';
 import { GameoverComponent } from './components/gameover/gameover.component';
+import { FinalScreenComponent } from './components/finalScreen/finalScreen.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { GameoverComponent } from './components/gameover/gameover.component';
     LoginComponent,
     ListOfPeopleComponent,
     PeopleComponent,
-    GameComponent
+    GameComponent,
+    FinalScreenComponent
   ],
   imports: [
     BrowserModule,

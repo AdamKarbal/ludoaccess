@@ -32,9 +32,15 @@ export class PlayerComponent implements OnInit, Collidable {
   }
 
   @HostListener('document:keydown', ['$event'])
-  onKeyPress(event: KeyboardEvent): void {
-    this.playerService.movePlayer(event.key);
+  onKeyDown(event: KeyboardEvent): void {
+    this.playerService.pressKey(event.key);
   }
+
+  @HostListener('document:keyup', ['$event'])
+  onKeyUp(event: KeyboardEvent): void {
+    this.playerService.releaseKey(event.key);
+  }
+
 
   get x(): number {
     return (this.position.x / 100) * window.innerWidth;

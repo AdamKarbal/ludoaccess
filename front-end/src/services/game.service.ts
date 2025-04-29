@@ -12,6 +12,8 @@ import { Word2GuessService } from "./word2guess.services";
 import { filter, take as rxjsTake, take, tap, finalize } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
 import{ChronoService} from "./chrono.service";
+import { FinalMessageService } from "./final-message.service";
+
 @Injectable({ providedIn: 'root' })
 export class GameService {
     private availablePaths = [
@@ -31,6 +33,13 @@ export class GameService {
     private isStep3CompletedSubject = new BehaviorSubject<boolean>(false);
     public isStep3Completed$ = this.isStep3CompletedSubject.asObservable();
 
+    private isGameFinished = new BehaviorSubject<boolean>(false);
+    public isGameFinished$ = this.isGameFinished.asObservable();
+
+    private wantToContinue = new BehaviorSubject<boolean>(false);
+    public wantToContinue$ = this.wantToContinue.asObservable();
+
+
     constructor(
         private motService: MotService,
         private platformService: PlatformService,
@@ -39,7 +48,8 @@ export class GameService {
         private router: Router,
         private settingService: SettingsService,
         private w2gService: Word2GuessService,
-        private chronoService : ChronoService
+        private chronoService : ChronoService,
+        private finalMessageService: FinalMessageService
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -214,19 +224,29 @@ export class GameService {
     playStep3(): void {
         if (this._isProcessing) return;
         this._isProcessing = true;
+        this.chronoService.resetTimer();
         this.chronoService.startTimer();
+        // console.log('Début étape 3 - Chrono démarré');
     
         console.log('Début étape 3 - Mot courant:', this._currentWord);
         
-        if (!this._currentWord) {
-            console.log('Aucun mot courant, fin du jeu');
-            this._isProcessing = false;
-            this.changeStep('/');
-            return;
-        }
+        // if (this._currentWord === '') {
+        //     console.log('Aucun mot courant, fin du jeu');
+        //     this._isProcessing = false;
+        //     if(this.finalMessageService.getWantToContinue()){
+        //         this.finalMessageService.setWantToContinue(false);
+        //         this.wantToContinue.next(true);
+        //         return;
+        //     }
+        //     else {
+        //         this.router.navigate(['/accueil']);
+        //         return;
+        //     }
+        // }
     
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
+        this.chronoService.resetTimer();
         this.chronoService.startTimer();
         this.w2gService.isWordComplete$.pipe(
             filter(isComplete => isComplete),
@@ -235,6 +255,22 @@ export class GameService {
                 this._isProcessing = false;
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
+                if(this._wordTarget.length===0) {
+                    this._currentWord = '';
+                    console.log("Mot courant réinitialisé.");
+                    this.isGameFinished.next(true);
+                    this._isProcessing = false;
+
+                    if(this.finalMessageService.getWantToContinue()){
+                        this.finalMessageService.setWantToContinue(false);
+                        this.wantToContinue.next(true);
+                        return;
+                    }
+                    else {
+                        this.router.navigate(['/accueil']);
+                        return;
+                    }
+                }
                 this.isStep3CompletedSubject.next(true);
             })
         ).subscribe(() => {
@@ -290,6 +326,8 @@ export class GameService {
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
+        this.isGameFinished.next(false);
+        this.wantToContinue.next(false);
     }
 
     resetStep2(): void {
