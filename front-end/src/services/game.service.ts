@@ -39,6 +39,9 @@ export class GameService {
     private wantToContinue = new BehaviorSubject<boolean>(false);
     public wantToContinue$ = this.wantToContinue.asObservable();
 
+    private wantToExit = new BehaviorSubject<boolean>(false);
+    public wantToExit$ = this.wantToExit.asObservable();
+
 
     constructor(
         private motService: MotService,
@@ -163,7 +166,6 @@ export class GameService {
                 setTimeout(() => {this.isStep1CompletedSubject.next(true);});
                 return;
             }
-            return;
           }
         console.log("Taille sample: " + this._wordSample.length);
           const word = this._wordSample.pop();
@@ -237,20 +239,6 @@ export class GameService {
         // console.log('Début étape 3 - Chrono démarré');
     
         console.log('Début étape 3 - Mot courant:', this._currentWord);
-        
-        // if (this._currentWord === '') {
-        //     console.log('Aucun mot courant, fin du jeu');
-        //     this._isProcessing = false;
-        //     if(this.finalMessageService.getWantToContinue()){
-        //         this.finalMessageService.setWantToContinue(false);
-        //         this.wantToContinue.next(true);
-        //         return;
-        //     }
-        //     else {
-        //         this.router.navigate(['/accueil']);
-        //         return;
-        //     }
-        // }
     
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
@@ -264,20 +252,20 @@ export class GameService {
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
                 if(this._wordTarget.length===0) {
-                    this._currentWord = '';
                     console.log("Mot courant réinitialisé.");
                     this.isGameFinished.next(true);
                     this._isProcessing = false;
 
-                    if(this.finalMessageService.getWantToContinue()){
-                        this.finalMessageService.setWantToContinue(false);
+                    this.finalMessageService.wantToContinue$.pipe(filter(wantsToContinue => wantsToContinue),rxjsTake(1)).subscribe(wantsToContinue => {
+                        console.log("Je veux continuer!");
                         this.wantToContinue.next(true);
-                        return;
+                    });
+                   this.finalMessageService.wantToExit$.pipe(filter(wantsToExit => wantsToExit),rxjsTake(1)).subscribe(wantsToExit => {
+                        console.log("Je veux quitter!");
+                        this.wantToExit.next(true);
                     }
-                    else {
-                        this.router.navigate(['/accueil']);
-                        return;
-                    }
+                    );
+                    return;
                 }
                 this.isStep3CompletedSubject.next(true);
             })
@@ -330,6 +318,7 @@ export class GameService {
         this.platformService.resetPlatforms();
         this.w2gService.resetWord();
         this.chronoService.resetTimer();
+        this.fillSample();
         this.playStep1();
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
