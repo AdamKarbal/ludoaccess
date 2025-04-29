@@ -16,6 +16,7 @@ export class JeuComponent {
   isAnimatingError$ = this.miniGameService.isAnimatingError$;
   isAnimatingSuccess$ = this.miniGameService.isAnimatingSuccess$;
   isGameVisible = true;
+  private audio: HTMLAudioElement | null = null;
 
   constructor(
     private miniGameService: MiniGameService,
@@ -31,6 +32,9 @@ export class JeuComponent {
     this.coeurService.isGameOver$.subscribe(isGameOver => {
       this.isGameOver = isGameOver;
     });
+    this.audio = new Audio('assets/sons/Step2Audio.mp3');
+    this.audio.loop = true;
+    this.audio.play();
   }
 
   onReplay() {
@@ -53,6 +57,13 @@ resetStep2() {
   setTimeout(() => {
     this.isStep2Active = true;
   });
+}
+ngOnDestroy(): void {
+  if (this.audio) { 
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.audio = null;
+  }
 }
 
 }
