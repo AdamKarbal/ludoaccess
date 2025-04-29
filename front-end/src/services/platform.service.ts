@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'src/models/platform.model';
 import { Coin } from 'src/models/coin.model';
-import { CoinCollectionService } from './coincollection.service'; // Assurez-vous que Coin est bien importé
+import { CoinCollectionService } from './coincollection.service'; 
+import { SettingsService } from './setting.service';
+import { ChildSettings } from '../models/setting.model';
 
 @Injectable({ providedIn: 'root' })
 export class PlatformService {
   private _platforms: Platform[] = [];
+  private _settings: ChildSettings | null = null;
 
-  constructor(private coinCollectionService : CoinCollectionService){}
+  constructor(private coinCollectionService : CoinCollectionService, private settingsService : SettingsService){
+    this.settingsService.settings$.subscribe(settings => {
+      this._settings = settings;
+    });
+  }
 
   genererPlateformes(word: string): Platform[] {
     const MAX_PLATFORMS = 6;
@@ -16,8 +23,13 @@ export class PlatformService {
     this._platforms = [];
     let nbPt = 0;
     let lettresDisponibles = word.split('');
-
-    const hauteurs = [40,50,60,70]; // On peut changer les hauteurs pour la difficulté
+    let hauteurs: number[] = [];
+    if(this._settings?.jumpDifficulty==true){
+      hauteurs=[25,40,55,62];
+    }
+    else{
+      hauteurs=[30,40,50,60]
+    }
     let hauteurIndex = 0;
 
     let dernierX = 0; // en vw

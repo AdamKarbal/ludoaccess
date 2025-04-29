@@ -5,6 +5,8 @@ import { PlatformService } from './platform.service';
 import { PlayerComponent } from '../app/components/player/player.component';
 import { GameService } from './game.service';
 import { CoinCollectionService } from './coincollection.service';
+import { SettingsService } from './setting.service';
+import { ChildSettings } from '../models/setting.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,23 +20,31 @@ export class PlayerService {
   });
   position$ = this.positionSubject.asObservable();
 
-  private speed = 2;
-  private gravity = 0.5;
+  private speed = 0.5;
+  private gravity = 1.1;
   private velocityY = 0;
   private jumpForce = -8;
   private onGround = true;
   private player?: PlayerComponent;
+  private _settings: ChildSettings | null = null;
 
   constructor(
     private collisionService: CollisionService,
     private platformService: PlatformService,
     private gameService: GameService,
-    private coinCollectionService : CoinCollectionService
+    private coinCollectionService : CoinCollectionService,
+    private settingsService: SettingsService
   ) {
     setInterval(() => {
       this.updateMovement();
       this.applyGravity();
     }, 16); // ~60 FPS    
+    this.settingsService.settings$.subscribe(settings => {
+      this._settings = settings;
+    });
+    if(this._settings?.jumpDifficulty==true){
+      this.gravity=1.3;
+    }
   }
 
   setPlayer(player: PlayerComponent): void {
