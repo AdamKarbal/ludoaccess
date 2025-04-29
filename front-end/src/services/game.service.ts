@@ -13,7 +13,7 @@ import { filter, take as rxjsTake, take, tap, finalize } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
 import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
-
+import { AuthService } from "./auth.service";
 @Injectable({ providedIn: 'root' })
 export class GameService {
     private availablePaths = [
@@ -49,11 +49,13 @@ export class GameService {
         private settingService: SettingsService,
         private w2gService: Word2GuessService,
         private chronoService : ChronoService,
-        private finalMessageService: FinalMessageService
+        private finalMessageService: FinalMessageService,
+        private authService : AuthService
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
         });
+        this.authService.startDifficultyTimer(this._settings!);
     }
 
     fillSample(): void {
@@ -152,6 +154,12 @@ export class GameService {
             }
             else{
                 console.log("On passe à l'étape 2.");
+                if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
+                    this.settingService.lowerDifficulty(this._settings!);
+                }
+                if(this._settings?.adaptDifficulty===true && this._wordTarget.length < 2){
+                    this.settingService.upDifficulty(this._settings!);
+                }
                 setTimeout(() => {this.isStep1CompletedSubject.next(true);});
                 return;
             }

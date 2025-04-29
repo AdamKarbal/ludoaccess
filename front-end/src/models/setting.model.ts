@@ -6,6 +6,7 @@ export interface ChildSettings {
     jumpDifficulty: boolean;
     adaptDifficulty: boolean;
     clearWordAfterRecovery: boolean;
+    displaymotsec:number;
     wordWritingTime: number;
     wordDifficulty: 'Facile' | 'Moyen' | 'Difficile';
     simplifyGameAfter?: number;

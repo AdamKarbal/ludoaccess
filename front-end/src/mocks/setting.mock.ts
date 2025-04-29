@@ -14,6 +14,7 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     simplifyGameAfter: 10,
     wordDifficulty: 'Facile',
     choosefont:'Arial',
+    displaymotsec:10,
     lettersize:19,
     chooseBackGround:'Aléatoire',
   },
@@ -27,6 +28,7 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     clearWordAfterRecovery: false,
     wordWritingTime: 60,
     simplifyGameAfter: 20,
+    displaymotsec:10,
     wordDifficulty: 'Difficile',
     choosefont:'Nintendo',
     lettersize:17,
@@ -43,6 +45,8 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     wordWritingTime: 30,
     simplifyGameAfter: 15,
     wordDifficulty: 'Facile',
+    displaymotsec:10,
+
     choosefont:'Lucky Boy',
     lettersize:12,
     chooseBackGround:'Orange_earth',
@@ -58,6 +62,8 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     wordWritingTime: 50,
     simplifyGameAfter: 25,
     wordDifficulty: 'Moyen',
+    displaymotsec:10,
+
     choosefont:'Times New Roman',
     lettersize:18,
     chooseBackGround:'Blue_earth',

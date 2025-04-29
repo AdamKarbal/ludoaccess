@@ -11,12 +11,14 @@ import { MiniGameService } from './minigame.service';
 })
 
 export class MobService implements Collidable {
-  private position = { x: window.innerWidth-150, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
+  private position = { x: 100, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
   private speedX = 2;
   private initialPosition = {...this.position};
   private totalFrames = 9;
   private frameSpeed = 10;
   private frameCounter = 0;
+  private _width = 70; 
+  private _height = 70
   private mobPosition = new BehaviorSubject(this.position);
   position$ = this.mobPosition.asObservable();
 
@@ -46,10 +48,10 @@ export class MobService implements Collidable {
     return this.position.y;
   }
   get width(): number {
-    return 120; 
+    return this._width; 
   }
   get height(): number {
-    return 100;
+    return this._height;
   }
   
 
