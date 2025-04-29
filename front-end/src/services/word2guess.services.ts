@@ -120,7 +120,7 @@ export class Word2GuessService implements OnDestroy {
     this.incorrectIndexes.add(this.guessedIndexes.length);
     setTimeout(() => {
       this.incorrectIndexes.delete(this.currentIndex);
-    }, 500);
+    }, 400);
     this.letterGuessedSubject.next(false);
     this.incorrectLetterSubject.next(this.guessedIndexes.length);
     this._badLetter = true;
