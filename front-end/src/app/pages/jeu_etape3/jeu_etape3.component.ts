@@ -10,6 +10,7 @@ import { ChildSettings } from "src/models/setting.model";
 })
 export class JeuEtape3Component implements OnInit{
   userInput: string = '';
+  private audio: HTMLAudioElement | null = null;
   showTimer: boolean = false; 
   public settings: ChildSettings | null = null;
   showW2g: boolean = true; // Variable pour contrôler l'affichage de la div
@@ -18,6 +19,11 @@ export class JeuEtape3Component implements OnInit{
   }
 
   ngOnInit(): void {
+    this.audio = new Audio('assets/sons/Step3Audio.mp3');
+    this.audio.loop = true;
+    this.audio.play();
+
+
     this.settingsService.settings$.subscribe((settings) => {
       this.settings = settings;
       this.showTimer = !!this.settings?.showTimer;
@@ -28,5 +34,15 @@ export class JeuEtape3Component implements OnInit{
     this.keyboardInputService.userInput$.subscribe((input) => {
       this.userInput = input;
     });
+  
+  }
+
+  ngOnDestroy(): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.audio = null;
+    }
   }
 }
+    

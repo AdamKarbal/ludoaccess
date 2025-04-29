@@ -5,7 +5,15 @@ import { Component,OnInit } from "@angular/core";
     templateUrl: "./jeu_etape2.component.html",
     styleUrls: ["./jeu_etape2.component.scss"],
 })
+
 export class JeuEtape2Component {
+  
+
   constructor() {}
-  ngOnInit(): void {}
+
+
+  ngOnInit(): void {
+    
+  }
+
 }

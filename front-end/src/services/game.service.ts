@@ -155,7 +155,8 @@ export class GameService {
         
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
             rxjsTake(1)).subscribe(() => {
-
+                const audio = new Audio('assets/sons/correctAnswer.mp3');
+                audio.play();
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
                 if (this.w2gService.badLetter == true) {
                   this._wordTarget.push(word);
