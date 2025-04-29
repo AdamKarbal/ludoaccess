@@ -13,7 +13,7 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     wordWritingTime: 45,
     preferredWordLength: 6,
     simplifyGameAfter: 10,
-    wordDifficulty: 'Moyen',
+    wordDifficulty: 'Facile',
     displaymotsec:10,
     choosefont:'Arial',
     lettersize:20,

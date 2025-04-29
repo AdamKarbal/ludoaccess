@@ -83,4 +83,8 @@ export class PlatformService {
   get platforms(): Platform[] {
     return this._platforms;
   }
+
+  resetPlatforms(): void {
+    this._platforms = [];
+  }
 }

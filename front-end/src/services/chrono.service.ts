@@ -35,11 +35,9 @@ export class ChronoService {
         });
     }
 
-    ngOnInit(): void {
-        this.startTimer();
-    }
+ 
 
-    private startTimer() {
+    public startTimer() {
         if (!this.isRunning) {
             this.isRunning = true;
             // Créer l'intervalle et l'assigner à this.interval
@@ -85,7 +83,6 @@ export class ChronoService {
     public resetTimer() {
         this.time = 10;
         this.chronoSubject.next(this.time);
-        this.startTimer();
     }
     public getTime(): number {
         return this.time;
