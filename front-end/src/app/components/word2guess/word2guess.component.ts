@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
 import { Word2GuessService } from "src/services/word2guess.services";
-import { SettingsService } from 'src/services/setting.service'; 
+import { SettingsService } from 'src/services/setting.service';
 import { Subscription } from "rxjs";
 import { Coin } from "src/models/coin.model";
 import { CoinCollectionService } from "src/services/coincollection.service";
+import {GameService} from "../../../services/game.service";
 
 
 
@@ -17,10 +18,13 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   @Input() userInput: string = '';
   @Output() wordGuessed = new EventEmitter<boolean>();
   @Output() letterGuessed = new EventEmitter<boolean>();
-  @Input() showW2g: boolean = true; 
+  @Input() showW2g: boolean = true;
 
-  public currentFont: string = 'Arial'; 
-  public currentSize: number = 16; 
+  public currentFont: string = 'Arial';
+  public currentSize: number = 16;
+
+  wordIndex: number = 1;
+  totalWords: number = 15;
 
 
   private settingsSub?: Subscription;
@@ -31,7 +35,8 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     public word2GuessService: Word2GuessService,
     private settingsService: SettingsService,
-    private coinCollectionService: CoinCollectionService 
+    private coinCollectionService: CoinCollectionService ,
+    private gameService: GameService,
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +62,9 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
       if (index !== null) {
         console.log('Incorrect letter at index', index);
       }
+    });
+    this.gameService.currentWordIndex$.subscribe(index => {
+      this.wordIndex = index;
     });
   }
 
