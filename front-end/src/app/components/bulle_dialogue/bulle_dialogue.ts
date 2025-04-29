@@ -1,7 +1,7 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
 import { SettingsService } from 'src/services/setting.service'; 
-import { Subscription } from "rxjs";
 import { Word2GuessService } from 'src/services/word2guess.services';
+import { Subscription } from "rxjs";
 
 
 @Component({
@@ -25,15 +25,15 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
 
     }
     ngOnInit(): void {
-        this.currentStep = 3; // Étape du Niveau 3
+        this.currentStep = 3; 
         this.message=this.getMessage();
         this.settingsSub = this.settingsService.settings$.subscribe(settings => {
           if (settings) {
             this.currentFont = settings.choosefont;
+            this.currentSize = settings.lettersize;
             console.log('Font mise à jour :', this.currentFont);
           }
         });
-         // Abonne-toi aux sujets du service pour écouter les changements
     this.letterGuessedSub = this.word2GuessService.letterGuessed$.subscribe(isCorrect => {
       if (isCorrect === null) return;  // Ignorer si pas encore de lettre devinée
       this.letterGuessed = isCorrect;
@@ -49,8 +49,9 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
       }
     });
 }
-  currentFont: string = 'initial';
+    currentFont: string = 'initial';
     currentStep: number = 3; // Étape du Niveau 3
+    currentSize : number = 16;
 
     hasStarted : boolean = false ;
 

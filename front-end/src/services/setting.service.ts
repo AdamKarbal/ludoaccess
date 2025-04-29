@@ -46,19 +46,15 @@ export class SettingsService {
       showTimer: false, // fait
       showRanking: false,  // A faire plus tard
       enableLifeLoss: false, // fait
-      jumpDifficulty: false, // a faire quand ismail finis
-      clearWordAfterRecovery: false,
-      adaptDifficulty: false,
+      jumpDifficulty: false, 
+      clearWordAfterRecovery: false, // fait
+      adaptDifficulty: false, 
       simplifyGameAfter: 30,
-      wordWritingTime: 30,
-      wordDifficulty: 'Facile',
-      preferredWordLength: 8,
-      minWordLength: 3,
-      maxWordLength: 10,
-      displaymotsec: 10, // fait 
-      lettersize: 20,
-      choosefont: 'Nintendo', 
-      chooseBackGround: 'Aléatoire',  
+      wordWritingTime: 30, // fait
+      wordDifficulty: 'Facile', // fait,
+      lettersize: 18, // fait
+      choosefont: 'Nintendo', // fait
+      chooseBackGround: 'Aléatoire', // fait 
     };
   }
 

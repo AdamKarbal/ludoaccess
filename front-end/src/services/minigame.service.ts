@@ -8,6 +8,7 @@ import { CoeurService } from './coeurs.services';
 })
 export class MiniGameService {
   isActive$ = new BehaviorSubject<boolean>(false);
+  onMiniGameEnd$ = new BehaviorSubject<boolean>(false);
   targetLetter$ = new BehaviorSubject<string>('');
   currentText$ = new BehaviorSubject<string>("Tu as été touché par un monstre !\nTape vite sur les touches du clavier\nqui s'affichent pour ne pas perdre de vie !");
   isAnimatingError$ = new BehaviorSubject<boolean>(false);
@@ -65,6 +66,7 @@ export class MiniGameService {
 
   private end() {
     this.isActive$.next(false);
+    this.onMiniGameEnd$.next(true);
     window.removeEventListener('keydown', this.handleKeyPress);
   }
 }

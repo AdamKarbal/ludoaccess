@@ -10,7 +10,7 @@ import { CoinCollectionService } from './coincollection.service';
   providedIn: 'root',
 })
 export class PlayerService {
-  private groundY = 81;
+  private groundY = 82.57;
 
   private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 0,

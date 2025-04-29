@@ -3,7 +3,8 @@ import { Word2GuessService } from "src/services/word2guess.services";
 import { SettingsService } from 'src/services/setting.service'; 
 import { Subscription } from "rxjs";
 import { Coin } from "src/models/coin.model";
-import { CoinCollectionService } from "src/services/coincollection.service"; // <<< importé ici
+import { CoinCollectionService } from "src/services/coincollection.service";
+
 
 
 @Component({
@@ -18,7 +19,9 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   @Output() letterGuessed = new EventEmitter<boolean>();
   @Input() showW2g: boolean = true; 
 
-  public currentFont: string = 'Arial'; // Default font
+  public currentFont: string = 'Arial'; 
+  public currentSize: number = 16; 
+
 
   private settingsSub?: Subscription;
   private coinSub?: Subscription;
@@ -28,12 +31,13 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     public word2GuessService: Word2GuessService,
     private settingsService: SettingsService,
-    private coinCollectionService: CoinCollectionService // <<< importé ici
+    private coinCollectionService: CoinCollectionService 
   ) {}
 
   ngOnInit(): void {
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
-      // Handle font here if needed
+      this.currentFont=settings?.choosefont || 'Arial';
+      this.currentSize=settings?.lettersize || 16;
     });
 
     if (this.mode === 'coin') {

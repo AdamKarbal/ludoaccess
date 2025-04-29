@@ -12,7 +12,7 @@ export class ChronoService {
     private interval: any = null;
     private isRunning: boolean = false;
     public settings: ChildSettings | null = null;
-    private time: number = this.settings?.displaymotsec || 10; // Temps par défaut de 10 secondes
+    private time: number = this.settings?.wordWritingTime || 10; // Temps par défaut de 10 secondes
     private chronoSubject = new BehaviorSubject(this.time);
     time$ = this.chronoSubject.asObservable();
 
@@ -38,7 +38,7 @@ export class ChronoService {
         this.freezeGameService.isInfo$.subscribe(info => {
             if (info) this.stopTimer();
         });
-        this.time=this.settings?.displaymotsec || 10;
+        this.time=this.settings?.wordWritingTime || 10;
     }
 
  
@@ -90,7 +90,7 @@ export class ChronoService {
         }
     }
     public resetTimer() {
-        this.time = this.settings?.displaymotsec || 10;  // Réinitialise le temps à la valeur par défaut
+        this.time = this.settings?.wordWritingTime || 10;  // Réinitialise le temps à la valeur par défaut
         this.chronoSubject.next(this.time);
     }
     public getTime(): number {

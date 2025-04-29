@@ -11,13 +11,6 @@
         <span>Afficher le chronomètre</span>
       </label>
       <label class="setting">
-        <span>Temps pour afficher le mot (secondes):</span>
-        <input type="number" 
-               [(ngModel)]="currentSettings.displaymotsec"
-               name="displaymotsec"
-               min="1" max="60">
-      </label>
-      <label class="setting">
         <span>Taille des caractères :</span>
         <div class="range-inputs">
           <input type="number" 
@@ -106,22 +99,6 @@
                min="1" max="60">
       </label>
   
-      <label class="setting">
-        <span>Longueur des mots:</span>
-        <div class="range-inputs">
-          <input type="number" 
-                 [(ngModel)]="currentSettings.minWordLength"
-                 name="minWordLength"
-                 placeholder="Min"
-                 min="1" max="20">
-          <span>-</span>
-          <input type="number" 
-                 [(ngModel)]="currentSettings.maxWordLength"
-                 name="maxWordLength"
-                 placeholder="Max"
-                 min="1" max="20">
-        </div>
-      </label>
 
       <label class="setting">
         <span>Simplifier le jeu au bout de (en minutes):</span>

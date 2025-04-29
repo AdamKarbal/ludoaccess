@@ -13,7 +13,7 @@ export class JeuEtape3Component implements OnInit{
   private audio: HTMLAudioElement | null = null;
   showTimer: boolean = false; 
   public settings: ChildSettings | null = null;
-  showW2g: boolean = true; // Variable pour contrôler l'affichage de la div
+  showW2g: boolean = true; 
 
   constructor(private keyboardInputService: KeyboardInputService, private settingsService : SettingsService) {
   }
@@ -27,7 +27,7 @@ export class JeuEtape3Component implements OnInit{
     this.settingsService.settings$.subscribe((settings) => {
       this.settings = settings;
       this.showTimer = !!this.settings?.showTimer;
-      this.showW2g= !!this.settings?.clearWordAfterRecovery; 
+      this.showW2g= (!this.settings?.clearWordAfterRecovery); 
       console.log('showTimer:', this.showTimer); 
     });
   
