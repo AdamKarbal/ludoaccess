@@ -10,13 +10,8 @@ import { CoinCollectionService } from './coincollection.service';
   providedIn: 'root',
 })
 export class PlayerService {
-<<<<<<< HEAD
-  private groundY = 82.57;
-
-=======
   private groundY = 81;
   private pressedKeys = new Set<string>();
->>>>>>> 7a8d0fd63e8394c63f35f21f4a41aa8147ede34b
   private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 0,
     y: this.groundY,

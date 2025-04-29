@@ -46,17 +46,10 @@ export class MobService implements Collidable {
     return this.position.y;
   }
   get width(): number {
-<<<<<<< HEAD
     return 120; 
   }
   get height(): number {
     return 100;
-=======
-    return this.width; 
-  }
-  get height(): number {
-    return this.height;
->>>>>>> 7a8d0fd63e8394c63f35f21f4a41aa8147ede34b
   }
   
 
