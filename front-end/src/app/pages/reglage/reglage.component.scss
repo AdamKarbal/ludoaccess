@@ -1,8 +1,8 @@
 .page-ergotherapeute {
-    position: relative;
+    position: absolute;
     width: 100%; 
     height: 100vh;
-    overflow-x: hidden; 
+    overflow: hidden; 
 }
 
 .contenu {
@@ -34,7 +34,7 @@
     color: #fff;
     text-shadow: 4px 4px 0 #000;
     font-size: 2.5rem;
-    margin-bottom: 2rem;
+    margin-top : 5rem;
   }
   
 .arriere-plan {
