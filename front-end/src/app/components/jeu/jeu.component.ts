@@ -45,4 +45,14 @@ export class JeuComponent {
       this.isGameVisible = true;
     });
   }
+
+isStep2Active = true;
+
+resetStep2() {
+  this.isStep2Active = false;
+  setTimeout(() => {
+    this.isStep2Active = true;
+  });
+}
+
 }

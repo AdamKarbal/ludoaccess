@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, ChangeDetectorRef } from "@angular/core";
+import { Subscription } from "rxjs";
 import { filter, take as rxjsTake, tap } from "rxjs/operators";
 import { GameService } from "src/services/game.service";
 
@@ -8,74 +9,94 @@ import { GameService } from "src/services/game.service";
   styleUrls: ["./game.component.scss"],
 })
 
-export class GameComponent{
-    private _isEtape1 : boolean;
-    private _isEtape2 : boolean;
-    private _isEtape3 : boolean;
+export class GameComponent implements OnInit {
+    private _isEtape1: boolean;
+    private _isEtape2: boolean;
+    private _isEtape3: boolean;
+    private _stepSubscriptions: Subscription[] = [];
 
-    constructor(private gameService : GameService, private cdr: ChangeDetectorRef) {
+    constructor(private gameService: GameService, private cdr: ChangeDetectorRef) {
         this._isEtape1 = true;
         this._isEtape2 = false;
         this._isEtape3 = false;
     }
 
-    ngOnInit() : void{
+    ngOnInit(): void {
         this.gameService.fillSample();
         this.gameService.playStep1();
-        this.gameService.isStep1Completed$.pipe(filter(step1done => step1done),rxjsTake(1)).subscribe(() => {
+        this.setupStepTransitions();
+    }
+
+    ngOnDestroy(): void {
+        this._stepSubscriptions.forEach(sub => sub.unsubscribe());
+    }
+
+    private setupStepTransitions(): void {
+        this._stepSubscriptions.push(
+            this.gameService.isStep1Completed$.pipe(
+                filter(step1done => step1done),
+                rxjsTake(1)
+            ).subscribe(() => {
                 console.log("Step 1 completed, moving to step 2.");
                 this.setStep(2);
-                    setTimeout(()=>this.gameService.playStep2());
-            });
-    
-        this.gameService.isStep2Completed$.pipe(filter(step2done => step2done),rxjsTake(1)).subscribe(() => {
+                this.gameService.playStep2();
+            })
+        );
+        this._stepSubscriptions.push(
+            this.gameService.isStep2Completed$.pipe(
+                filter(step2done => step2done)
+            ).subscribe(() => {
                 console.log("Step 2 completed, moving to step 3.");
                 this.setStep(3);
-                    setTimeout(()=>this.gameService.playStep3());
-            });
-            this.gameService.isStep3Completed$.pipe(filter(step3done => step3done),rxjsTake(1)).subscribe(() => {
-                console.log("Step 3 completed, moving to step 2 again.");
-                this.setStep(2);
-                    setTimeout(()=>this.gameService.playStep2());
-            }
-            );
-
+                this.gameService.playStep3();
+            })
+        );
+        this._stepSubscriptions.push(
+            this.gameService.isStep3Completed$.pipe(
+                filter(step3done => step3done)
+            ).subscribe(() => {
+                console.log("Swaoeakazoeka");
+                
+                if (this.gameService.wordTarget.length > 0) {
+                    console.log("Travail plus.");
+                    this.setStep(2);
+                    this.gameService.playStep2();
+                } else {
+                    console.log("jeu fini ezzzz");
+                }
+            })
+        );
     }
-    
 
-    getStep() : number {
-        if(this._isEtape1 === true && this._isEtape2 === false && this._isEtape3 === false) return 1;
-        else if(this._isEtape1 === false && this._isEtape2 === true && this._isEtape3 === false) return 2;
-        else if(this._isEtape1 === false && this._isEtape2 === false && this._isEtape3 === true) return 3;
-        else{
-            console.error("Unexpected behavior of steps");
+    getStep(): number {
+        if (this._isEtape1 && !this._isEtape2 && !this._isEtape3) return 1;
+        else if (!this._isEtape1 && this._isEtape2 && !this._isEtape3) return 2;
+        else if (!this._isEtape1 && !this._isEtape2 && this._isEtape3) return 3;
+        else {
             return -1;
         }
     }
 
-    setStep(step : number) : void{
-        switch(step){
+    setStep(step: number): void {
+        this._isEtape1 = false;
+        this._isEtape2 = false;
+        this._isEtape3 = false;
+
+        switch (step) {
             case 1:
                 this._isEtape1 = true;
-                this._isEtape2 = false;
-                this._isEtape3 = false;
                 break;
             case 2:
-                this._isEtape1 = false;
                 this._isEtape2 = true;
-                this._isEtape3 = false;
-                break; 
+                break;
             case 3:
-                this._isEtape1 = false;
-                this._isEtape2 = false;
                 this._isEtape3 = true;
                 break;
             default:
                 console.error("Wrong step passed into setter.");
                 break;
         }
+        this.cdr.detectChanges();
     }
-
 }
-
 
