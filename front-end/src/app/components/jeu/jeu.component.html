@@ -13,7 +13,6 @@
   <div class="game-zone">
     <app-plateformes></app-plateformes>
   </div>
-</ng-container>
 
 <app-mini-game *ngIf="isActive$ | async"></app-mini-game>
 <app-gameover *ngIf="isGameOver" (replay)="onReplay()"></app-gameover>

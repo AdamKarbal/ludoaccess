@@ -1,31 +1,35 @@
 import { Component,OnInit,HostListener } from "@angular/core";
+import { KeyboardInputService } from "src/services/keyboard-input-w2g.service";
 
 @Component({
   selector: "app-jeu_etape1",
     templateUrl: "./jeu_etape1.component.html",
     styleUrls: ["./jeu_etape1.component.scss"],
 })
-export class JeuEtape1Component {
-  constructor() {}
-  ngOnInit(): void {}
+export class JeuEtape1Component implements OnInit{
+  constructor(private keyboardInputService: KeyboardInputService) {}
   
     userInput: string = ''; // Entrée de l'utilisateur
-    wordCompleted: boolean = false;
-    letterGuessed?: boolean = undefined;
-  
-    // Utilisation de HostListener pour capter la touche du clavier
-    @HostListener('document:keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-      const key = event.key;
-  
-      // Vérifie si la touche est une lettre et si elle est valide
-      if (key.length === 1 && /^\p{L}$/u.test(key)) {
-        this.userInput = key;  // Met à jour l'entrée de l'utilisateur
-        setTimeout(() => {
-          this.userInput = '';
-        }, 10);
-      }
+    
+    ngOnInit(): void {
+      this.keyboardInputService.userInput$.subscribe(input => {
+        this.userInput = input;
+      });
     }
+  
+    // // Utilisation de HostListener pour capter la touche du clavier
+    // @HostListener('document:keydown', ['$event'])
+    // onKeyDown(event: KeyboardEvent) {
+    //   const key = event.key;
+  
+    //   // Vérifie si la touche est une lettre et si elle est valide
+    //   if (key.length === 1 && /^\p{L}$/u.test(key)) {
+    //     this.userInput = key;  // Met à jour l'entrée de l'utilisateur
+    //     setTimeout(() => {
+    //       this.userInput = '';
+    //     }, 10);
+    //   }
+    // }
 
 }
 
