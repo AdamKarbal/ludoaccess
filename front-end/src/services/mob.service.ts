@@ -11,16 +11,25 @@ import { MiniGameService } from './minigame.service';
 })
 
 export class MobService implements Collidable {
-  private position = { x: window.innerWidth-150, y: window.innerHeight - 150, frame: 0, isFacingRight: true };
+  private position = { x: 100, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
   private speedX = 2;
+  private initialPosition = {...this.position};
   private totalFrames = 9;
   private frameSpeed = 10;
   private frameCounter = 0;
+  private _width = 70; 
+  private _height = 70
   private mobPosition = new BehaviorSubject(this.position);
   position$ = this.mobPosition.asObservable();
 
   constructor(private freezeGameService: FreezeGameService,  private playerService: PlayerService, private miniGameService: MiniGameService) {
     this.startMoving();
+    this.miniGameService.onMiniGameEnd$.subscribe((isEnded) => {
+      if (isEnded) {
+        this.miniGameService.onMiniGameEnd$.next(false); 
+        this.position.isFacingRight = false;
+      }
+    });
   }
   action!: (cible: Collidable) => void;
 
@@ -39,10 +48,10 @@ export class MobService implements Collidable {
     return this.position.y;
   }
   get width(): number {
-    return 150; 
+    return this._width; 
   }
   get height(): number {
-    return 130
+    return this._height;
   }
   
 
@@ -72,9 +81,15 @@ export class MobService implements Collidable {
       if (player && this.checkCollision(player)) {
         console.log('Collision entre mob et joueur');
         this.miniGameService.start();
+        this.respawn();
       }
       this.mobPosition.next({ ...this.position });
     });
   }
   
+  respawn() : void {
+    this.position= { ...this.initialPosition }; 
+    this.mobPosition.next({ ...this.position });
+
+  }
 }

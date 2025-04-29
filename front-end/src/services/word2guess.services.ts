@@ -96,17 +96,19 @@ export class Word2GuessService implements OnDestroy {
   }
 
   guessLetter(letter: string): boolean {
-    if (this.isPaused || this.isCrossed || this.isI) {
+    if (this.isPaused || this.isCrossed || this.isI) { //Jeu mis en pause
       console.log('Le jeu est en pause, impossible de deviner une lettre.');
       return false;
     }
-    if (!letter.match(/^\p{L}$/u)) {
+
+    if (!letter.match(/^\p{L}$/u)) { //Lettre non unicode => Caractère spécial non reconnu
       this._badLetter = true;
       this.letterGuessedSubject.next(false);
       console.log("Wrong letter !");
       return false;
     }
-    console.log(`Comparing "${letter}" with "${this.word[this.currentIndex]}"`);
+
+    console.log(`Comparing "${letter}" with "${this.word[this.currentIndex]}"`); //Lettre reconnue
     if (letter === this.word[this.currentIndex]) {
       this.guessedIndexes.push(this.currentIndex);
       this.currentIndex++;
@@ -117,10 +119,15 @@ export class Word2GuessService implements OnDestroy {
       return true;
     }
 
+    console.log("Lettre incorrecte !"); //Lettre reconnu mais pas la bonne lettre à entrer
+    const audio = new Audio('assets/sons/wrongLetter.mp3');
+    audio.play();
+
     this.incorrectIndexes.add(this.guessedIndexes.length);
+
     setTimeout(() => {
       this.incorrectIndexes.delete(this.currentIndex);
-    }, 500);
+    }, 400);
     this.letterGuessedSubject.next(false);
     this.incorrectLetterSubject.next(this.guessedIndexes.length);
     this._badLetter = true;

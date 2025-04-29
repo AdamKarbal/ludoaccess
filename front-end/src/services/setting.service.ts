@@ -10,15 +10,15 @@ export class SettingsService {
   private settings: { [key: string]: ChildSettings } = CHILD_SETTINGS;
   private currentSettings$ = new BehaviorSubject<ChildSettings | null>(null);
 
-  chooseFont: string = 'Nintendo'; 
-  currentBackground: string = 'Aléatoire'; 
+  chooseFont: string = 'Nintendo';
+  currentBackground: string = 'Aléatoire';
 
-  constructor() {}
+  constructor() { }
 
   loadSettings(childId: string): void {
     const settings = this.settings[childId] || this.getDefaultSettings(childId);
     this.currentSettings$.next(settings);
-    this.updateFont(settings.choosefont); 
+    this.updateFont(settings.choosefont);
     this.updateBackGround(settings.chooseBackGround);
     console.log('Paramètres chargés: font =', this.chooseFont, ', background =', this.currentBackground);
   }
@@ -30,7 +30,7 @@ export class SettingsService {
   saveSettings(settings: ChildSettings): void {
     this.settings[settings.id] = settings;
     this.currentSettings$.next(settings);
-    this.updateFont(settings.choosefont); 
+    this.updateFont(settings.choosefont);
     this.updateBackGround(settings.chooseBackGround);
     console.log('Paramètres sauvegardés:', settings);
   }
@@ -43,35 +43,32 @@ export class SettingsService {
   private getDefaultSettings(childId: string): ChildSettings {
     return {
       id: childId,
-      showTimer: false,
+      showTimer: false, // fait
       showRanking: false,
-      enableLifeLoss: false,
+      enableLifeLoss: false, // fait
       jumpDifficulty: false,
-      clearWordAfterRecovery: false,
-      adaptDifficulty: false,
-      simplifyGameAfter: 30,
-      wordWritingTime: 30,
-      wordDifficulty: 'Facile',
-      preferredWordLength: 8,
-      minWordLength: 3,
-      maxWordLength: 10,
+      clearWordAfterRecovery: false, // fait
+      adaptDifficulty: false, // fait
       displaymotsec: 10,
-      lettersize: 20,
-      choosefont: 'Nintendo', 
-      chooseBackGround: 'Aléatoire',  
+      simplifyGameAfter: 30,// fait 
+      wordWritingTime: 30, // fait
+      wordDifficulty: 'Facile', // fait,
+      lettersize: 18, // fait
+      choosefont: 'Nintendo', // fait
+      chooseBackGround: 'Aléatoire', // fait 
     };
   }
 
   private updateFont(fontName: string): void {
     const allowedFonts = [
-      'Lucky Boy', 'Nintendo', 'Arial', 'Comic Sans MS', 'Courier New', 
-      'Georgia', 'Times New Roman', 'Verdana', 'Calibri', 
+      'Lucky Boy', 'Nintendo', 'Arial', 'Comic Sans MS', 'Courier New',
+      'Georgia', 'Times New Roman', 'Verdana', 'Calibri',
       'cursif ecriture A', 'cursif ecriture B', 'Minecraft'
     ];
-        if (allowedFonts.includes(fontName)) {
+    if (allowedFonts.includes(fontName)) {
       this.chooseFont = fontName;
     } else {
-      this.chooseFont = 'Nintendo'; 
+      this.chooseFont = 'Nintendo';
     }
     console.log('Font mise à jour:', this.chooseFont);
   }
@@ -79,11 +76,12 @@ export class SettingsService {
   private updateBackGround(backgroundName: string): void {
     const allowedBackgrounds = ['Forest', 'Blue_earth', 'Orange_earth'];
     if (backgroundName === 'Aléatoire') {
-      this.currentBackground = this.getRandomBackground();  
+      this.currentBackground = this.getRandomBackground();
     } else {
-      this.currentBackground = backgroundName; 
-    console.log('Background mis à jour:', this.currentBackground);
-  }}
+      this.currentBackground = backgroundName;
+      console.log('Background mis à jour:', this.currentBackground);
+    }
+  }
 
   private getRandomBackground(): string {
     const backgrounds = ['Forest', 'Orange_earth', 'Blue_earth'];
@@ -93,4 +91,38 @@ export class SettingsService {
 
   public getCurrentBackground(): string {
     return this.currentBackground;
-}}
+  }
+  public lowerDifficulty(settings: ChildSettings): void {
+    if (settings.wordDifficulty === 'Facile') {
+      settings.wordDifficulty = 'Facile';
+      console.log('La difficulté a été changée à :', settings.wordDifficulty);
+    }
+    else if (settings.wordDifficulty === 'Moyen') {
+      settings.wordDifficulty = 'Facile'
+      console.log('La difficulté a été changée à :', settings.wordDifficulty);
+      ;
+    }
+    else {
+      settings.wordDifficulty = 'Moyen';
+      console.log('La difficulté a été changée à :', settings.wordDifficulty);
+
+    }
+  }
+
+  public upDifficulty(settings: ChildSettings): void {
+    if (settings.wordDifficulty === 'Facile') {
+      settings.wordDifficulty = 'Moyen';
+      console.log('La difficulté a été changée à :', settings.wordDifficulty);
+    }
+    else if (settings.wordDifficulty === 'Moyen') {
+      settings.wordDifficulty = 'Difficile'
+      console.log('La difficulté a été changée à :', settings.wordDifficulty);
+      ;
+    }
+    else {
+      settings.wordDifficulty = 'Difficile';
+      console.log('La difficulté a été changée à :', settings.wordDifficulty);
+
+    }
+  }
+}

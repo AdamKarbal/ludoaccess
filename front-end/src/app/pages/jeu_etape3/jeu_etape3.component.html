@@ -1,7 +1,7 @@
-<div><app-chrono></app-chrono></div>
+<div><app-chrono *ngIf="showTimer"></app-chrono></div>
 <div><app-coeurs></app-coeurs></div>
-<div><app-word2guess [mode]="'typing'" [userInput]="userInput" ></app-word2guess></div>
-<div><app-finishScreen></app-finishScreen></div>
+<div><app-word2guess [mode]="'typing'" [userInput]="userInput" [showW2g]="showW2g"></app-word2guess></div><div><app-finishScreen></app-finishScreen></div>
 <div><app-levelbar></app-levelbar></div>
 <div><app-plateformes></app-plateformes></div>
-<div><app-mob></app-mob></div>
+<div><app-mob></app-mob></div> 
+<div><app-final-screen></app-final-screen></div>

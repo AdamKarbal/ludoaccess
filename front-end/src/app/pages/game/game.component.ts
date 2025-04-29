@@ -63,9 +63,17 @@ export class GameComponent implements OnInit {
                     this.gameService.playStep2();
                 } else {
                     console.log("jeu fini ezzzz");
+                    
                 }
             })
         );
+        this._stepSubscriptions.push(
+            this.gameService.wantToContinue$.pipe(
+                filter(continueGood => continueGood)
+            ).subscribe(() => {
+                console.log("On continue !");
+                this.continue();
+            }));
     }
 
     getStep(): number {
@@ -97,6 +105,10 @@ export class GameComponent implements OnInit {
                 break;
         }
         this.cdr.detectChanges();
+    }
+    continue(): void {
+        this.setStep(1); // Réinitialiser l'état local de step
+        this.gameService.resetGame(); // Réinitialise tout dans le service
     }
 }
 
