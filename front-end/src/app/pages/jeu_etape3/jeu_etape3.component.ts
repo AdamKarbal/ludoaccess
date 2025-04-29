@@ -12,6 +12,7 @@ export class JeuEtape3Component implements OnInit{
   userInput: string = '';
   showTimer: boolean = false; 
   public settings: ChildSettings | null = null;
+  showW2g: boolean = true; // Variable pour contrôler l'affichage de la div
 
   constructor(private keyboardInputService: KeyboardInputService, private settingsService : SettingsService) {
   }
@@ -19,7 +20,8 @@ export class JeuEtape3Component implements OnInit{
   ngOnInit(): void {
     this.settingsService.settings$.subscribe((settings) => {
       this.settings = settings;
-      this.showTimer = !!this.settings?.showTimer; 
+      this.showTimer = !!this.settings?.showTimer;
+      this.showW2g= !!this.settings?.clearWordAfterRecovery; 
       console.log('showTimer:', this.showTimer); 
     });
   

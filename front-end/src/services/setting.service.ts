@@ -44,9 +44,9 @@ export class SettingsService {
     return {
       id: childId,
       showTimer: false, // fait
-      showRanking: false,
-      enableLifeLoss: false,
-      jumpDifficulty: false,
+      showRanking: false,  // A faire plus tard
+      enableLifeLoss: false, // fait
+      jumpDifficulty: false, // a faire quand ismail finis
       clearWordAfterRecovery: false,
       adaptDifficulty: false,
       simplifyGameAfter: 30,

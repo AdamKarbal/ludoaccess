@@ -16,6 +16,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   @Input() userInput: string = '';
   @Output() wordGuessed = new EventEmitter<boolean>();
   @Output() letterGuessed = new EventEmitter<boolean>();
+  @Input() showW2g: boolean = true; 
 
   public currentFont: string = 'Arial'; // Default font
 
