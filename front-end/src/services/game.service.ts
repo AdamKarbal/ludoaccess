@@ -319,6 +319,13 @@ export class GameService {
       }
 
     resetGame(): void {
+        this.isStep1CompletedSubject.next(false);
+        this.isStep2CompletedSubject.next(false);
+        this.isStep3CompletedSubject.next(false);
+        this.isGameFinished.next(false);
+        this.wantToContinue.next(false);
+        this.wantToExit.next(false);
+        this.currentWordIndex.next(1);
         this._wordSample = [];
         this._wordTarget = [];
         this._currentWord = '';
@@ -327,11 +334,7 @@ export class GameService {
         this.chronoService.resetTimer();
         this.fillSample();
         this.playStep1();
-        this.isStep1CompletedSubject.next(false);
-        this.isStep2CompletedSubject.next(false);
-        this.isStep3CompletedSubject.next(false);
-        this.isGameFinished.next(false);
-        this.wantToContinue.next(false);
+        
     }
 
     resetStep2(): void {
@@ -346,5 +349,21 @@ export class GameService {
   getCurrentWordIndex(): number {
     return this.currentWordIndex.getValue();
   }
+
+  continue(){
+    this.isStep1CompletedSubject.next(false);
+    this.isStep2CompletedSubject.next(false);
+    this.isStep3CompletedSubject.next(false);
+    this.isGameFinished.next(false);
+    this.wantToContinue.next(false);
+    this.wantToExit.next(false);
+    this.currentWordIndex.next(1);
+    this._wordSample = [];
+    this._wordTarget = [];
+    this._currentWord = '';
+    this.platformService.resetPlatforms();
+    this.w2gService.resetWord();
+    this.chronoService.resetTimer();
+}
 
 }
