@@ -150,6 +150,8 @@ export class GameService {
     }
 
     playStep1(): void {
+        /*this._wordTarget.push("Hey");
+        this.isStep1CompletedSubject.next(true);*/
         // if(this.var === 1){
         //     this.playStep2();
         // }
@@ -334,7 +336,7 @@ export class GameService {
         this.chronoService.resetTimer();
         this.fillSample();
         this.playStep1();
-        
+
     }
 
     resetStep2(): void {
