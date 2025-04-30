@@ -58,4 +58,8 @@ export class ToolbarGameComponent {
     this.freezeGame.resume(); // Resume the game before navigating
     this.gameService.changeStep('/');;  // Redirige vers la page des paramètres
   }
+  navigateToStats() {
+    this.freezeGame.resume(); // Resume the game before navigating
+    this.gameService.changeStep('/stats');  // Redirige vers la page des paramètres
+  }
 }

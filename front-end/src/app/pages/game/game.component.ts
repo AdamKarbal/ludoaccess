@@ -78,8 +78,11 @@ export class GameComponent implements OnInit {
           )
           .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut continuer !");
+            this.gameService.continue();
             this.setStep(1);
-            this.gameService.resetGame(); // Redémarre le jeu
+            this.gameService.fillSample();
+            this.gameService.playStep1();
+            this.setupStepTransitions(); // Redémarre les transitions d'étape
           });
           combineLatest([
             this.gameService.isGameFinished$,
@@ -93,6 +96,7 @@ export class GameComponent implements OnInit {
             console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);
             this.gameService.changeStep("/acceuil"); // Redémarre le jeu
+            
             this.gameService.resetGame(); // Redémarre le jeu
           });
     }
@@ -127,6 +131,8 @@ export class GameComponent implements OnInit {
         }
         this.cdr.detectChanges();
     }
+
+    
     
 }
 
