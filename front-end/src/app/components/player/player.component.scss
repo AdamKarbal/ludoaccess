@@ -1,10 +1,9 @@
 .player {
   position: absolute;
-  width: 51px;
-  height: 51px; 
-  background-size: 510px 128px; 
+  top: 0;
+  width: 3vw;
+  height: 3vh;
 }
-
-.reverse {
-  transform: scaleX(-1); 
+.player img {
+  width: 100%;
 }

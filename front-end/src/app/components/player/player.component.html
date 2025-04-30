@@ -1,15 +1,3 @@
-<div
-  class="player"
-  [ngClass]="{ 'reverse': !isFacingRight }"
-  [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'"
-  [style.background-image]="
-    isMoving
-    ? (isFacingRight
-    ? 'url(assets/ressources/megamanspritesheet.png)'
-    : 'url(assets/ressources/megamanspritesheetreverse.png)')
-    : 'url(assets/ressources/megaman_de_face.png)'
-    "
-  [style.background-position]="isMoving ? '-' + frame * frameWidth + 'px 0' : '0 0'"
-  [style.background-size]="isMoving ? totalFrames * frameWidth + 'px auto' : '100% 100%'"
->
+<div class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
+  <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
 </div>

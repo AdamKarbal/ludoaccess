@@ -20,10 +20,10 @@ export class PlayerService {
   });
   position$ = this.positionSubject.asObservable();
 
-  private speed = 0.3;
-  private gravity = 0.6;
+  private speed = 2;
+  private gravity = 0.5;
   private velocityY = 0;
-  private jumpForce = -5;
+  private jumpForce = -8;
   private onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;
@@ -38,7 +38,7 @@ export class PlayerService {
     setInterval(() => {
       this.updateMovement();
       this.applyGravity();
-    }, 16); // ~60 FPS    
+    }, 32); // ~60 FPS
     this.settingsService.settings$.subscribe(settings => {
       this._settings = settings;
     });
@@ -65,22 +65,22 @@ export class PlayerService {
     key = key.toLowerCase();
 
     switch (key) {
-      case 'arrowUp':
-        case ' ':
-        case 'space':
+      case 'arrowup':
+      case ' ':
+      case 'space':
         if (this.onGround) {
           this.velocityY = this.jumpForce;
-          this.onGround = false;
+          //this.onGround = false;
         }
         break;
 
-      case 'arrowLeft':
-        case 'q':
+      case 'arrowleft':
+      case 'q':
         x = Math.max(0, x - this.speed);
         break;
 
-      case 'arrowRight':
-        case 'd':
+      case 'arrowright':
+      case 'd':
         x = Math.min(100, x + this.speed);
         break;
     }
@@ -88,29 +88,30 @@ export class PlayerService {
     this.positionSubject.next({ x, y });
   }
 
+
   private updateMovement(): void {
     let { x, y } = this.positionSubject.getValue();
-  
+
     const leftPressed = this._pressedKeys.has('arrowleft') || this._pressedKeys.has('q');
     const rightPressed = this._pressedKeys.has('arrowright') || this._pressedKeys.has('d');
     const jumpPressed = this._pressedKeys.has('arrowup') || this._pressedKeys.has('z') || this._pressedKeys.has(' ') || this._pressedKeys.has('space');
-  
+
     if (leftPressed) {
       x = Math.max(0, x - this.speed);
     }
-  
+
     if (rightPressed) {
       x = Math.min(100, x + this.speed);
     }
-  
+
     if (jumpPressed && this.onGround) {
       this.velocityY = this.jumpForce;
-      this.onGround = false;
+      //this.onGround = false;
     }
-  
+
     this.positionSubject.next({ x, y });
   }
-  
+
 
   applyGravity(): void {
     if (!this.player) return;
@@ -152,10 +153,10 @@ export class PlayerService {
   pressKey(key: string): void {
     this._pressedKeys.add(key.toLowerCase());
   }
-  
+
   releaseKey(key: string): void {
     this._pressedKeys.delete(key.toLowerCase());
-  }  
+  }
 
   collectCoin(): void {
     if (!this.player) return;
