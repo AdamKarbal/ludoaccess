@@ -19,6 +19,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   @Output() wordGuessed = new EventEmitter<boolean>();
   @Output() letterGuessed = new EventEmitter<boolean>();
   @Input() showW2g: boolean = true;
+  showCount:boolean = true;
 
   public currentFont: string = 'Arial';
   public currentSize: number = 16;
@@ -66,6 +67,9 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
     this.gameService.currentWordIndex$.subscribe(index => {
       this.wordIndex = index;
     });
+    this.gameService.isStep1Completed$.subscribe(isStep1Completed => {
+      this.showCount=!isStep1Completed;
+    })
   }
 
 
