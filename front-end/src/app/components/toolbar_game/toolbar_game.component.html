@@ -9,8 +9,8 @@
 <div *ngIf="isPaused" class="pause-message" (click)="OnPauseClick()">
         <p>⏸ Petite pause...</p>
         <button id="button_pause"(click)="navigateToSettings()">PARAMÈTRES</button>
+        <button id="button_pause"(click)="navigateToStats()">STATISTIQUES</button>
         <button id="button_pause"(click)="OnResumeClick()">REPRENDRE</button>
-        <button id="button_pause"(click)="OnResumeClick()">RECOMMENCER</button>
 </div>
 <div *ngIf="isCrossed" class="exit-message" (click)="OnExitClick()">
         <p id="question-exit">Voulez-vous quitter la partie ?</p>
