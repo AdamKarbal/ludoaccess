@@ -14,7 +14,11 @@ export class AppComponent {
   isExited = false;
   isInfo = false;
 
+  isGameFinished = false;
+
+
   constructor(private freezeGame: FreezeGameService) {
+  
     this.freezeGame.isPaused$.subscribe(paused => {
       this.isPaused = paused;
     });

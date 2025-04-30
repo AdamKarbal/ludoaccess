@@ -35,12 +35,12 @@ export class finishComponent implements OnInit,OnChanges{
             this.fadeOut = true;
           }, 4000);
         }
-        this.reussite = isComplete;
-        if (isComplete) {
-          this.fadeOut = false;
-          this.chooseMessage(4);  // Mot complet, message de succès
-          this.message = this.getFinishScreenText();
-        }
+        // this.reussite = isComplete;
+        // if (isComplete) {
+        //   this.fadeOut = false;
+        //   this.chooseMessage(4);  // Mot complet, message de succès
+        //   this.message = this.getFinishScreenText();
+        // }
       });
     }
 

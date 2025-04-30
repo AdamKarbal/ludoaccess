@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, ChangeDetectorRef } from "@angular/core";
 import { Subscription } from "rxjs";
-import { filter, take as rxjsTake, tap } from "rxjs/operators";
+import { filter, take as rxjsTake, tap} from "rxjs/operators";
+import { combineLatest } from "rxjs";
 import { GameService } from "src/services/game.service";
 
 @Component({
@@ -67,13 +68,33 @@ export class GameComponent implements OnInit {
                 }
             })
         );
-        this._stepSubscriptions.push(
-            this.gameService.wantToContinue$.pipe(
-                filter(continueGood => continueGood)
-            ).subscribe(() => {
-                console.log("On continue !");
-                this.continue();
-            }));
+        combineLatest([
+            this.gameService.isGameFinished$,
+            this.gameService.wantToContinue$
+          ])
+          .pipe(
+            filter(([isFinished, wantToContinue]) => isFinished && wantToContinue),
+            rxjsTake(1)
+          )
+          .subscribe(() => {
+            console.log("Jeu terminé et utilisateur veut continuer !");
+            this.setStep(1);
+            this.gameService.resetGame(); // Redémarre le jeu
+          });
+          combineLatest([
+            this.gameService.isGameFinished$,
+            this.gameService.wantToExit$
+          ])
+          .pipe(
+            filter(([isFinished, wantToExit]) => isFinished && wantToExit),
+            rxjsTake(1)
+          )
+          .subscribe(() => {
+            console.log("Jeu terminé et utilisateur veut quitter !");
+            this.setStep(1);
+            this.gameService.changeStep("/acceuil"); // Redémarre le jeu
+            this.gameService.resetGame(); // Redémarre le jeu
+          });
     }
 
     getStep(): number {
@@ -106,9 +127,6 @@ export class GameComponent implements OnInit {
         }
         this.cdr.detectChanges();
     }
-    continue(): void {
-        this.setStep(1); // Réinitialiser l'état local de step
-        this.gameService.resetGame(); // Réinitialise tout dans le service
-    }
+    
 }
 
