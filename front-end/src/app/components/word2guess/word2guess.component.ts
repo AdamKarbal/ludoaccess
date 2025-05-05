@@ -43,7 +43,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       this.currentFont=settings?.choosefont || 'Arial';
-      this.currentSize=settings?.lettersize || 16;
+      this.currentSize=this.settingsService?.getLetterSizePx() || 20;
     });
 
     if (this.mode === 'coin') {

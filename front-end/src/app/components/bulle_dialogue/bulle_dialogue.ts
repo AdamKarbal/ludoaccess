@@ -16,6 +16,8 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
   private letterGuessedSub!: Subscription;
   private wordCompletedSub!: Subscription;
   private settingsSub!: Subscription;
+  currentSize : number = 16;
+
 
   letterGuessed: boolean | null = null;
   reussite: boolean = false;
@@ -30,7 +32,7 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
         this.settingsSub = this.settingsService.settings$.subscribe(settings => {
           if (settings) {
             this.currentFont = settings.choosefont;
-            this.currentSize = settings.lettersize;
+            this.currentSize = this.settingsService.getLetterSizePx();
             console.log('Font mise à jour :', this.currentFont);
           }
         });
@@ -51,7 +53,6 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
 }
     currentFont: string = 'initial';
     currentStep: number = 3; // Étape du Niveau 3
-    currentSize : number = 16;
 
     hasStarted : boolean = false ;
 
