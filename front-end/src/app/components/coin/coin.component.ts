@@ -1,20 +1,59 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Coin } from 'src/models/coin.model';
+import { CoinCollectionService } from 'src/services/coincollection.service';
 
 @Component({
-    selector: 'app-coin',
-    templateUrl: './coin.component.html',
-    styleUrls: ['./coin.component.scss'],
+  selector: 'app-coin',
+  templateUrl: './coin.component.html',
+  styleUrls: ['./coin.component.scss'],
 })
-
 export class CoinComponent implements OnInit {
-    constructor(){}
-    ngOnInit(): void {
-        //console.log('Image path:', this.imagePath);
-    }
+  collecting: boolean = false;
+  showAura: boolean = false;
+  auraX : number = 0;
+  auraY : number = 0;
 
-    @Input() letter!: string;
+  @Input() coin!: Coin; 
 
-    get imagePath(): string {
-        return `assets/ressources/Coins/${this.letter}.png`;
+  constructor(private coinCollectionService : CoinCollectionService) {}
+
+  ngOnInit(): void {
+    console.log('Image path:', this.imagePath);
+  }
+
+  get imagePath(): string {
+    if (this.coin.letter && this.coin.letter.match(/^[a-zàâçéèêëîïôûùüÿñæœ]$/i)) {
+        if (this.coin.letter.match(/^[a-zàâçéèêëîïôûùüÿñæœ]$/)) {
+            return `assets/ressources/Coins/${this.coin.letter}Min.png`;
+        }
+        if (this.coin.letter.match(/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒ]$/)) {
+            return `assets/ressources/Coins/${this.coin.letter}.png`;
+        }
     }
+    return ''; 
+}
+
+  onClickCollect(event : MouseEvent): void {
+    if (!this.coin.isCollected) { // On veut cliquer seulement si PAS encore collecté
+      console.log('Coin clicked !');
+      this.collecting = true;
+      //this.showAura = true;
+      //this.auraX = event.clientX;
+      //this.auraY = event.clientY;
+
+      const audio = new Audio('assets/sons/coin_received.mp3');
+      audio.play();
+
+      //simplement pour laisser l'animation se faire les petits coquinous
+      setTimeout(() => {
+        this.coin.collect();
+        this.coinCollectionService.addCollected(this.coin);
+      }, 300)
+
+      /*setTimeout(() => {
+        this.showAura = false;
+      }, 500);*/
+    }
+  }
+  
 }

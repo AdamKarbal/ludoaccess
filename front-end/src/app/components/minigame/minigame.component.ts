@@ -11,8 +11,4 @@ export class MiniGameComponent implements OnInit {
 
   ngOnInit() {}
 
-  // Méthode pour lancer le mini-jeu via le bouton
-  startGame() {
-    this.miniGameService.start();
-  }
 }

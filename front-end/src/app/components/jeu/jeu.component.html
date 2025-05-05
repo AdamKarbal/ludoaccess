@@ -1,13 +1,21 @@
-<head>
-    <app-mini-game *ngIf="isActive$ | async"></app-mini-game>
-</head>
 
-<body>
-    <app-map></app-map>
+<ng-container *ngIf="isStep2Active">
+<div class="game-ui">
     <app-levelbar></app-levelbar>
-    <app-word2guess></app-word2guess>
-    <app-mob></app-mob>
+     <app-word2guess>
+      [mode]="'coin'"
+      [userInput]="userInput"
+     </app-word2guess>
+    <app-player></app-player>
+    <app-ground></app-ground>
     <app-coeurs></app-coeurs>
-    <app-toolbar-game></app-toolbar-game>
-    <app-coin></app-coin>
-</body>
+  </div>
+  
+  <div class="game-zone">
+    <app-mob class="mob"></app-mob>
+
+    <app-plateformes></app-plateformes>
+  </div>
+
+<app-mini-game *ngIf="isActive$ | async"></app-mini-game>
+<app-gameover *ngIf="isGameOver" (replay)="onReplay()"></app-gameover>

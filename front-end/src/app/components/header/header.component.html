@@ -1,9 +1,11 @@
 <div class="headerreglage">
-        <div class="user">
-            <img src="../../../assets/ressources/ergo.jpg" alt="Avatar Ergothérapeute">
-            <div>Adamo Stark</div>
-        </div>
-        <div class="logout">
-            <button>Déconnexion</button>
-        </div>
+    <div class="user" *ngIf="currentUser">
+      <img [src]="currentUser.imageUrl || ' ../../../assets/ressources/ergo.jpg'" alt="Avatar Ergothérapeute">
+      <div class="username">{{ currentUser.firstName }} {{ currentUser.lastName }}</div>
     </div>
+    <div class="logout">
+      <button (click)="logout()" routerLink="/">Déconnexion</button>
+    </div>
+  </div>
+  
+ 

@@ -1,4 +1,5 @@
 import {Component, Input} from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "stats-menu",
@@ -9,4 +10,13 @@ export class StatsMenuModule {
   @Input() titre: String = "Stats";
   type:String = "Users";
 
+  constructor(private router: Router) {}
+
+  onGoBack(): void {
+    this.router.navigate(['/']);
+  }
+
 }
+
+
+

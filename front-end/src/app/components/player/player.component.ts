@@ -1,42 +1,104 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
+import { Collidable } from 'src/models/collidable.model';
+import { MobComponent } from '../mob/mob.component';
+import { PlatformComponent } from '../platform/platform.component';
 
 @Component({
   selector: 'app-player',
-  template: `
-    <div #player class="player" [style.transform]="'translate(' + position.x + 'vw, ' + position.y + 'vh)'">
-      <img src="../../../assets/ressources/megaman_de_face.png" alt="Player">
-    </div>
-
-  `,
-  styles: [`
-    .player {
-      position: absolute;
-      bottom: 14vh;
-      width:3.5vw;
-      height:3.5vh;
-    }
-    .player img {
-      width: 100%;
-    }
-  `]
+  templateUrl: './player.component.html',
+  styleUrls: ['./player.component.scss'],
 })
-export class PlayerComponent implements OnInit {
-  position = { x: 0, y: window.innerHeight * 0.1 };
+export class PlayerComponent implements OnInit, Collidable {
+  position = { x: 0, y: 20 }; 
+  frame: number = 0; 
+  isFacingRight: boolean = true; 
+  totalFrames = 10; 
+  frameWidth = 51; 
+  private frameHeight = 51; 
+  private frameSpeed = 3; 
+  private frameCounter = 0; 
+  isMoving: boolean = false; 
 
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
+    this.playerService.setPlayer(this);
     this.playerService.position$.subscribe((pos) => {
       this.position = pos;
     });
+    setInterval(() => {
+      this.updateAnimation();
+    }, 16); // ~60 FPS
   }
+
   @HostListener('document:keydown', ['$event'])
-  onKeyPress(event: KeyboardEvent): void {
-    const key = event.key;
-    this.playerService.movePlayer(key);  // Pass key to the PlayerService
+  onKeyDown(event: KeyboardEvent): void {
+    this.playerService.pressKey(event.key);
+    if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
+      this.isFacingRight = true; 
+      this.isMoving = true; 
+    } else if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'q') {
+      this.isFacingRight = false; 
+      this.isMoving = true; 
+    }
   }
-  public getY():number {
-    return this.position.y;
+
+  @HostListener('document:keyup', ['$event'])
+  onKeyUp(event: KeyboardEvent): void {
+    this.playerService.releaseKey(event.key);
+    const leftPressed = this.playerService.getPressedKeys().has('arrowleft') || this.playerService.getPressedKeys().has('q');
+    const rightPressed = this.playerService.getPressedKeys().has('arrowright') || this.playerService.getPressedKeys().has('d');
+    if (!leftPressed && !rightPressed) {
+      this.isMoving = false; 
+    }
+  }
+
+  private updateAnimation(): void {
+    const leftPressed = this.playerService.getPressedKeys().has('arrowleft') || this.playerService.getPressedKeys().has('q');
+    const rightPressed = this.playerService.getPressedKeys().has('arrowright') || this.playerService.getPressedKeys().has('d');
+    if (leftPressed || rightPressed) {
+      this.frameCounter++;
+      if (this.frameCounter >= this.frameSpeed) {
+        this.frameCounter = 0;
+        this.frame = (this.frame + 1) % this.totalFrames;
+      }
+    } else {
+      this.frame = 0;
+    }
+  }
+
+  get x(): number {
+    return (this.position.x / 100) * window.innerWidth;
+  }
+
+  get y(): number {
+    return (this.position.y / 100) * window.innerHeight;
+  }
+
+  get width(): number {
+    return this.frameWidth;
+  }
+
+  get height(): number {
+    return this.frameHeight;
+  }
+
+  action(cible: Collidable): void {
+    if (cible instanceof MobComponent) {
+      console.log(cible + ' touchée');
+    }
+    if (cible instanceof PlatformComponent) {
+      console.log('plateforme ' + cible + ' touchée');
+    }
+  }
+
+  checkCollision(other: Collidable): boolean {
+    return (
+      this.x < other.x + other.width &&
+      this.x + this.width > other.x &&
+      this.y < other.y + other.height &&
+      this.y + this.height > other.y
+    );
   }
 }

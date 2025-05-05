@@ -1,19 +1,52 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #e0f7ff; 
-    margin: 0;
-    padding: 0;
-    color: #333;
+.page-ergotherapeute {
+    position: absolute;
+    width: 100%; 
+    height: 100vh;
+    overflow: hidden; 
 }
 
-.espacereglage {
-    text-align: center;
-    font-size: 24px;
-    font-family: 'Luckiest Guy', cursive;
-    color: #0077b6;
-    margin: 5px 0;
+.contenu {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100px;
+    justify-content: flex-start;
+    padding-top: 20px;
+    height: calc(100% - 80px);
+    overflow-y: auto;
+    overflow-x: hidden; 
+    width: 100%; }
+
+.liste-enfants {
+    width: 90%;
+    max-width: 1000px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    overflow-x: hidden; 
+    max-height: 70vh;
+    box-sizing: border-box;
 }
+  
+.titre {
+    font-family: 'Nintendo', sans-serif;
+    color: #fff;
+    text-shadow: 4px 4px 0 #000;
+    font-size: 2.5rem;
+    margin-top : 5rem;
+  }
+  
+.arriere-plan {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../assets/ressources/Blue_earth.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+  
+  

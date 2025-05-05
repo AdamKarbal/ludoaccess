@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CoeurService } from './coeurs.services';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class MiniGameService {
   isActive$ = new BehaviorSubject<boolean>(false);
+  onMiniGameEnd$ = new BehaviorSubject<boolean>(false);
   targetLetter$ = new BehaviorSubject<string>('');
   currentText$ = new BehaviorSubject<string>("Tu as été touché par un monstre !\nTape vite sur les touches du clavier\nqui s'affichent pour ne pas perdre de vie !");
   isAnimatingError$ = new BehaviorSubject<boolean>(false);
@@ -14,7 +17,8 @@ export class MiniGameService {
   private remainingLetters: number = 0;
   private letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  constructor() {}
+  constructor(  private coeurService : CoeurService,
+  ) {}
 
   start() {
     this.isActive$.next(true);
@@ -43,6 +47,7 @@ export class MiniGameService {
       }, 300);
     } else {
       this.isAnimatingError$.next(true);
+      this.coeurService.loseLife();
       this.currentText$.next("Oops ! Mauvaise touche ! Essaie encore !");
       setTimeout(() => {
         this.isAnimatingError$.next(false);
@@ -61,6 +66,7 @@ export class MiniGameService {
 
   private end() {
     this.isActive$.next(false);
+    this.onMiniGameEnd$.next(true);
     window.removeEventListener('keydown', this.handleKeyPress);
   }
 }

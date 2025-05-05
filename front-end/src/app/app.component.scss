@@ -1,1 +1,44 @@
 
+@font-face {
+    font-family: 'Nintendo';
+    src: url('../assets/fonts/NintendoLabo.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Minecraft';
+    src: url('../assets/fonts/Minecraft.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'cursif ecriture A';
+    src: url('../assets/fonts/EcritureA-Romain.otf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'cursif ecriture B';
+    src: url('../assets/fonts/EcritureB-Romain.otf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Lucky Boy';
+    src: url('../assets/fonts/LuckiestGuy-Regular.ttf') format('truetype');
+  }
+  
+.global-pause-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* fond noir semi-transparent */
+    z-index: 99; /* super haut pour passer au-dessus de tout */
+  }
+* {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+  
+  html, body {
+    width: 100%;
+    overflow-x: hidden; 
+  }

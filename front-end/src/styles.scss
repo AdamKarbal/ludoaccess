@@ -38,3 +38,7 @@ app-setting {
   font-weight: normal;
   font-style: normal;
 }
+.paused *{
+  pointer-events: none; /* bloque les clics */
+  animation-play-state: paused; /* gèle les animations CSS */
+}

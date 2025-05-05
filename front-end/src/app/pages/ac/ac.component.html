@@ -1,27 +1,12 @@
-<div class="minecraft-home">
-    <div class="background"></div>
-        <div class="content">
-      <h1 class="title">Ludo Access
-      </h1>
-            <div class="main-buttons">
-        <button class="minecraft-btn" routerLink="/jeuComponent">Jouer</button>
-        <button class="minecraft-btn" routerLink="/reglage">Réglages</button>
-        <button class="minecraft-btn" routerLink="/stats">Statistiques</button>
-
-      </div>
-            <div class="burger-menu" (click)="toggleMenu()">
-        <div class="burger-line"></div>
-        <div class="burger-line"></div>
-        <div class="burger-line"></div>
-      </div>
-
-      <div class="dropdown-menu" *ngIf="menuOpen">
-        <button class="minecraft-btn" routerLink="/jeu_etape1">Étape 1</button>
-        <button class="minecraft-btn" routerLink="/jeu_etape2">Étape 2</button>
-        <button class="minecraft-btn" routerLink="/jeu_etape3">Étape 3</button>
-        <button class="minecraft-btn" routerLink="/game">Game</button>
-        <button class="minecraft-btn" routerLink="/mob">Mobs</button>
-        <button class="minecraft-btn" routerLink="/stats" >Stats</button>
-      </div>
+<div class="page-accueil">
+  <div class="arriere-plan"></div>
+  <div class="contenu">
+    <h1 class="titre">Ludo Access</h1>
+  </div>
+  <div class="groupe-boutons">
+    <div class="boutons">
+      <button class="btn-principal" routerLink="/jeu">Jouer</button>
+      <button class="btn-principal" routerLink="/">Déconnexion</button>
     </div>
   </div>
+</div>

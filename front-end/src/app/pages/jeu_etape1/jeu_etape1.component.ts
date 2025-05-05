@@ -1,35 +1,34 @@
 import { Component,OnInit,HostListener } from "@angular/core";
+import { KeyboardInputService } from "src/services/keyboard-input-w2g.service";
 
 @Component({
   selector: "app-jeu_etape1",
     templateUrl: "./jeu_etape1.component.html",
     styleUrls: ["./jeu_etape1.component.scss"],
 })
-export class JeuEtape1Component {
-  constructor() {}
-  ngOnInit(): void {}
+export class JeuEtape1Component implements OnInit{
+  private audio: HTMLAudioElement | null = null;
+
+  constructor(private keyboardInputService: KeyboardInputService) {}
+  
     userInput: string = ''; // Entrée de l'utilisateur
-    wordCompleted: boolean = false;
-    letterGuessed?: boolean = undefined;
-  
-    // Utilisation de HostListener pour capter la touche du clavier
-    @HostListener('document:keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-      const key = event.key.toUpperCase();
-  
-      // Vérifie si la touche est une lettre et si elle est valide
-      if (key.length === 1 && /[A-Z]/.test(key)) {
-        this.userInput = key;  // Met à jour l'entrée de l'utilisateur
+    
+    ngOnInit(): void {
+      this.audio = new Audio('assets/sons/Step2Audio.mp3');
+      this.audio.loop = true;
+      this.audio.play();
+      this.keyboardInputService.userInput$.subscribe(input => {
+        this.userInput = input;
+      });
+    }
+
+    ngOnDestroy(): void {
+      if (this.audio) {
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.audio = null;
       }
     }
-    onWordCompleted(isCompleted : boolean){
-      if(isCompleted){
-        this.wordCompleted=true;
-      }
-      else this.wordCompleted=false;
-    }
-    onLetterGuessed(isLetterGuessed: boolean){
-      this.letterGuessed = isLetterGuessed;
-    }
+  
 }
 

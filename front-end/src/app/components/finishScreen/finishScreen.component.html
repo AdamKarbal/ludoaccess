@@ -1,4 +1,7 @@
-<div class="finish-screen">
+<div class="finish-screen"
+*ngIf="chooseMessage"
+  [class.fade-out]="fadeOut"
+  [style.font-family]="currentFont">
     <h1>{{ message.title }}</h1>
     <h2>{{ message.subtitle }}</h2>
     <h3>{{ message.instruction }}</h3>

@@ -11,8 +11,10 @@ export class MobComponent implements OnInit {
   y: number = 0;
   frame: number = 0;
   isFacingRight: boolean = true;
-
-  constructor(private mobService: MobService) {}    
+  
+  constructor(private mobService: MobService) {
+    
+  }    
 
   ngOnInit(): void {
     this.mobService.position$.subscribe(position => {

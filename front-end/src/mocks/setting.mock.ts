@@ -11,9 +11,12 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     adaptDifficulty:false,
     clearWordAfterRecovery: true,
     wordWritingTime: 45,
-    preferredWordLength: 6,
     simplifyGameAfter: 10,
-    wordDifficulty: 'Moyen'
+    wordDifficulty: 'Facile',
+    choosefont:'Arial',
+    displaymotsec:10,
+    lettersize:19,
+    chooseBackGround:'Aléatoire',
   },
   '2': {
     id: '2',
@@ -24,11 +27,12 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     adaptDifficulty:true,
     clearWordAfterRecovery: false,
     wordWritingTime: 60,
-    minWordLength: 4,
-    maxWordLength: 8,
-    preferredWordLength: 10,
     simplifyGameAfter: 20,
-    wordDifficulty: 'Difficile'
+    displaymotsec:10,
+    wordDifficulty: 'Difficile',
+    choosefont:'Nintendo',
+    lettersize:17,
+    chooseBackGround:'Forest',
   },
   '3': {
     id: '3',
@@ -39,9 +43,13 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     adaptDifficulty:true,
     clearWordAfterRecovery: true,
     wordWritingTime: 30,
-    preferredWordLength: 5,
     simplifyGameAfter: 15,
-    wordDifficulty: 'Facile'
+    wordDifficulty: 'Facile',
+    displaymotsec:10,
+
+    choosefont:'Lucky Boy',
+    lettersize:12,
+    chooseBackGround:'Orange_earth',
   },
   '4': {
     id: '4',
@@ -52,10 +60,12 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     jumpDifficulty: true,
     clearWordAfterRecovery: false,
     wordWritingTime: 50,
-    minWordLength: 5,
-    maxWordLength: 10,
-    preferredWordLength: 8,
     simplifyGameAfter: 25,
-    wordDifficulty: 'Moyen'
+    wordDifficulty: 'Moyen',
+    displaymotsec:10,
+
+    choosefont:'Times New Roman',
+    lettersize:18,
+    chooseBackGround:'Blue_earth',
   }
 };

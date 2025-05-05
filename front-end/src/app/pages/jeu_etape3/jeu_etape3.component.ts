@@ -1,4 +1,7 @@
 import { Component,OnInit,HostListener } from "@angular/core";
+import { KeyboardInputService } from "src/services/keyboard-input-w2g.service";
+import { SettingsService } from "src/services/setting.service";
+import { ChildSettings } from "src/models/setting.model";
 
 @Component({
   selector: "app-jeu_etape3",
@@ -6,30 +9,40 @@ import { Component,OnInit,HostListener } from "@angular/core";
     styleUrls: ["./jeu_etape3.component.scss"],
 })
 export class JeuEtape3Component implements OnInit{
-  constructor() {}
-  ngOnInit(): void {}
-  currentLevelStep: number = 1; // Étape du Niveau 3
-  userInput: string = ''; // Entrée de l'utilisateur
-  wordCompleted: boolean = false;
-  letterGuessed?: boolean = undefined;
+  userInput: string = '';
+  private audio: HTMLAudioElement | null = null;
+  showTimer: boolean = false; 
+  public settings: ChildSettings | null = null;
+  showW2g: boolean = true; 
 
-  // Utilisation de HostListener pour capter la touche du clavier
-  @HostListener('document:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    const key = event.key.toUpperCase();
+  constructor(private keyboardInputService: KeyboardInputService, private settingsService : SettingsService) {
+  }
 
-    // Vérifie si la touche est une lettre et si elle est valide
-    if (key.length === 1 && /[A-Z]/.test(key)) {
-      this.userInput = key;  // Met à jour l'entrée de l'utilisateur
-    }
+  ngOnInit(): void {
+    this.audio = new Audio('assets/sons/Step3Audio.mp3');
+    this.audio.loop = true;
+    this.audio.play();
+
+
+    this.settingsService.settings$.subscribe((settings) => {
+      this.settings = settings;
+      this.showTimer = !!this.settings?.showTimer;
+      this.showW2g= (!this.settings?.clearWordAfterRecovery); 
+      console.log('showTimer:', this.showTimer); 
+    });
+  
+    this.keyboardInputService.userInput$.subscribe((input) => {
+      this.userInput = input;
+    });
+  
   }
-  onWordCompleted(isCompleted : boolean){
-    if(isCompleted){
-      this.wordCompleted=true;
+
+  ngOnDestroy(): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.audio = null;
     }
-    else this.wordCompleted=false;
-  }
-  onLetterGuessed(isLetterGuessed: boolean){
-    this.letterGuessed = isLetterGuessed;
   }
 }
+    

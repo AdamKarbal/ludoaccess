@@ -1,11 +1,27 @@
+<div *ngIf="showW2g">
+  <div class="word-counter" *ngIf="showCount">
+    Mot {{ wordIndex }} / {{ totalWords }}
+  </div>
 <div class="word2Guess">
-    <div id="mot">
+  <div id="mot" [style.font-family]="currentFont">
+    <!-- Si mode = coin => affichage simple avec display -->
+    <ng-container *ngIf="mode === 'coin'; else typingMode">
+      {{ display }}
+    </ng-container>
+    <!-- Si mode = typing => affichage avec lettres individuelles -->
+    <ng-template #typingMode>
 
-        <span *ngFor="let letter of word.split(''); let i = index" [ngStyle]="{'color': guessedIndexes.includes(i) ? 'black' : 'grey',
-        'padding': '10px 2px'}">
+      <span *ngFor="let letter of word2GuessService.getWord().split(''); let i = index" [ngClass]="{
+    'correct': guessedIndexes.includes(i),
+    'incorrect': word2GuessService.getIncorrectIndexes().has(i)
+    }" [ngStyle]="{
+        'color': word2GuessService.getIncorrectIndexes().has(i) ? 'red' : guessedIndexes.includes(i) ? 'black' : 'grey',
+        'border-bottom': guessedIndexes.includes(i) ? 'none' : '2px solid grey',
+        'padding': '13px 2px'
+      }" class="letter">
         {{letter}}
       </span>
-    </div>
-    <div id="tirets">{{hiddenWord}}</div>
-    <!-- <input type="text" (input)="checkLetter($letter)" maxlength="1" placeholder="Tape une lettre" /> -->
+    </ng-template>
+  </div>
+</div>
 </div>

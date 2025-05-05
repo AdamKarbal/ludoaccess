@@ -4,14 +4,17 @@
     left:50%;
     transform: translate(-50%, -50%);
     padding: 5vh 5vw 2vh 5vw;
-    font-family : 'Nintendo';
     color : white;
     font-size : 1.5em;
     text-align: center;
     background-color: black;
-    opacity: 0.7; /* Caché par défaut */
-    z-index: 3;
+    opacity: 1; 
+    transition: opacity 2s ease;
+    z-index: 99;
     border-radius: 15px;
     border: 3px solid white;
     
 }
+.fade-out {
+    opacity: 0;
+  }
