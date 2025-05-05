@@ -34,5 +34,9 @@ export class SettingComponent implements OnInit {
     });
 
   }
-  
+
+  goToPage():void{
+
+  }
+
 }
