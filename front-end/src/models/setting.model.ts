@@ -12,5 +12,5 @@ export interface ChildSettings {
     simplifyGameAfter?: number;
     choosefont: 'Lucky Boy' | 'Nintendo' | 'Arial' | 'Comic Sans MS' | 'Courier New' | 'Georgia' | 'Times New Roman' | 'Verdana' | 'Calibri' | 'cursif ecriture A' | 'cursif ecriture B' | 'Minecraft';
     chooseBackGround : 'Forest' | 'Blue_earth' | 'Orange_earth' | 'Aléatoire';
-    lettersize: number;
+    lettersize: 'Petit' | 'Moyen' | 'Grand';
   }

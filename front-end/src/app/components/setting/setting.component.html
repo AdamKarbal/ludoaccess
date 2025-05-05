@@ -14,7 +14,11 @@
     <label class="setting">
       <span>Taille des caractères :</span>
       <div class="range-inputs">
-        <input type="number" [(ngModel)]="currentSettings.lettersize" name="lettersize" placeholder="sp" min="1" max="60">
+        <select [(ngModel)]="currentSettings.lettersize" name="lettersize">
+          <option value="Petit">Petit</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Grand">Grand</option>
+        </select>
       </div>
     </label>
 
@@ -111,6 +115,6 @@
   <!-- Actions -->
   <div class="form-actions">
     <button type="button" (click)="onResetSettings()" class="reset-btn">Réinitialiser</button>
-    <button type="button" (click)="goToPage()" class="nav-btn" routerLink="/stats">Statistiques</button>
+    <button type="button" class="nav-btn" routerLink="/stats">Statistiques</button>
   </div>
 </form>

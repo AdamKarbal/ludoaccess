@@ -22,7 +22,7 @@ export class MiniGameService {
 
   start() {
     this.isActive$.next(true);
-    this.totalLetters = Math.floor(Math.random() * 6) + 5;
+    this.totalLetters = Math.floor(Math.random() * 6) + 1;
     this.remainingLetters = this.totalLetters;
     this.currentText$.next("Tu as été touché par un monstre !\nTape vite sur les touches du clavier\nqui s'affichent pour ne pas perdre de vie !");
     this.generateRandomLetter();
