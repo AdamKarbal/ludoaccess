@@ -14,6 +14,8 @@ import { BehaviorSubject } from "rxjs";
 import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
 import { AuthService } from "./auth.service";
+
+
 @Injectable({ providedIn: 'root' })
 export class GameService {
     private availablePaths = [
@@ -21,7 +23,7 @@ export class GameService {
         '/mob', '/jeuComponent', '/', '/acceuil'
       ];
     private _wordSample: string[] = [];
-    private _wordTarget: string[] = [];
+    private _wordTarget: string[] = ["Animal", "Nico"];
     private _settings?: ChildSettings | null;
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
@@ -43,8 +45,8 @@ export class GameService {
     private wantToExit = new BehaviorSubject<boolean>(false);
     public wantToExit$ = this.wantToExit.asObservable();
 
-  private currentWordIndex = new BehaviorSubject<number>(1);
-  public currentWordIndex$ = this.currentWordIndex.asObservable();
+    private currentWordIndex = new BehaviorSubject<number>(1);
+    public currentWordIndex$ = this.currentWordIndex.asObservable();
 
 
 
@@ -58,7 +60,7 @@ export class GameService {
         private w2gService: Word2GuessService,
         private chronoService : ChronoService,
         private finalMessageService: FinalMessageService,
-        private authService : AuthService
+        private authService : AuthService,
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -150,12 +152,12 @@ export class GameService {
     }
 
     playStep1(): void {
-        /*this._wordTarget.push("Hey");
-        this.isStep1CompletedSubject.next(true);*/
+        this._wordTarget.push("Hey");
+        this.isStep1CompletedSubject.next(true);
         // if(this.var === 1){
         //     this.playStep2();
         // }
-        if (this._wordSample.length === 0) {
+        /*if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
             if(this._wordTarget.length === 0){
@@ -199,11 +201,10 @@ export class GameService {
                 }
 
             });
-          }
+          }*/
     }
 
     private _currentWord: string = '';
-
 
     private _isProcessing: boolean = false;
 
