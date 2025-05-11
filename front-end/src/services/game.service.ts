@@ -160,8 +160,8 @@ export class GameService {
     }
 
     playStep1(): void {
-        this._wordTarget.push("Hey");
-        this.isStep1CompletedSubject.next(true);
+        // this._wordTarget.push("Hey");
+        // this.isStep1CompletedSubject.next(true);
         // if(this.var === 1){
         //     this.playStep2();
         // }
