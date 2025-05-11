@@ -3,6 +3,8 @@ import { PlayerService } from '../../../services/player.service';
 import { Collidable } from 'src/models/collidable.model';
 import { MobComponent } from '../mob/mob.component';
 import { PlatformComponent } from '../platform/platform.component';
+import { CollisionService } from 'src/services/collision.service';
+import { CoinCollectionService } from 'src/services/coincollection.service';
 
 @Component({
   selector: 'app-player',
@@ -20,7 +22,7 @@ export class PlayerComponent implements OnInit, Collidable {
   private frameCounter = 0; 
   isMoving: boolean = false; 
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService, private collisionService : CollisionService, private coinCollectionService : CoinCollectionService) {}
 
   ngOnInit(): void {
     this.playerService.setPlayer(this);
@@ -29,8 +31,9 @@ export class PlayerComponent implements OnInit, Collidable {
     });
     setInterval(() => {
       this.updateAnimation();
-    }, 16); // ~60 FPS
-  }
+    }, 16); 
+    console.log("Affichage des coins depuis le service coinCollection :", this.coinCollectionService.existentCoins);
+    this.collisionService.startCollisionCheck(this, this.coinCollectionService.existentCoins); }
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {

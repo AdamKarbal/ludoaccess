@@ -12,6 +12,7 @@ export class SettingsService {
 
   chooseFont: string = 'Nintendo';
   currentBackground: string = 'Aléatoire';
+  private letterSizePx : number = 20;
 
   constructor() { }
 
@@ -20,6 +21,7 @@ export class SettingsService {
     this.currentSettings$.next(settings);
     this.updateFont(settings.choosefont);
     this.updateBackGround(settings.chooseBackGround);
+    this.getFontSize(settings.lettersize);
     console.log('Paramètres chargés: font =', this.chooseFont, ', background =', this.currentBackground);
   }
 
@@ -53,7 +55,7 @@ export class SettingsService {
       simplifyGameAfter: 30,// fait 
       wordWritingTime: 30, // fait
       wordDifficulty: 'Facile', // fait,
-      lettersize: 18, // fait
+      lettersize: 'Moyen', // fait
       choosefont: 'Nintendo', // fait
       chooseBackGround: 'Aléatoire', // fait 
     };
@@ -124,5 +126,22 @@ export class SettingsService {
       console.log('La difficulté a été changée à :', settings.wordDifficulty);
 
     }
+  }
+
+  private getFontSize(size: string): void {
+    if (size === 'Petit') {
+      this.letterSizePx = 12;
+    } else if (size === 'Moyen') {
+      this.letterSizePx = 16;
+    } else if (size === 'Grand') {
+      this.letterSizePx = 20;
+    } else {
+      this.letterSizePx = 16; 
+    }
+    console.log('Taille de la lettre mise à jour:', this.letterSizePx);
+  }
+
+  getLetterSizePx(): number {
+    return this.letterSizePx;
   }
 }
