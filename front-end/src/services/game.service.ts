@@ -46,6 +46,9 @@ export class GameService {
   private currentWordIndex = new BehaviorSubject<number>(1);
   public currentWordIndex$ = this.currentWordIndex.asObservable();
 
+  private currentWordLength=new BehaviorSubject<number>(0);
+  public currentWordLength$=this.currentWordLength.asObservable();
+
 
 
     constructor(
@@ -221,7 +224,7 @@ export class GameService {
 
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
-
+        this.currentWordLength.next(this._currentWord.length);
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
 
