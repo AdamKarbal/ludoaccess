@@ -13,6 +13,7 @@ import { filter, take as rxjsTake, take, tap, finalize } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
 import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
+import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -23,6 +24,9 @@ export class GameService {
     private _wordSample: string[] = [];
     private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
+
+    private isCrossed: boolean = false;
+
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
     public isStep1Completed$ = this.isStep1CompletedSubject.asObservable();
@@ -58,7 +62,8 @@ export class GameService {
         private w2gService: Word2GuessService,
         private chronoService : ChronoService,
         private finalMessageService: FinalMessageService,
-        private authService : AuthService
+        private authService : AuthService,
+        private freezeGameService: FreezeGameService
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -320,10 +325,21 @@ export class GameService {
         }
       }
 
+      get isExitedToolbar(): boolean {
+        this.freezeGameService.isCrossed$.pipe(
+          rxjsTake(1)
+          ).subscribe(isCrossed => {
+            this.isCrossed = isCrossed;
+        });
+        return this.isCrossed;
+    }
+
     resetGame(): void {
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
+        this.isCrossed = false;
+        this.finalMessageService.reset();
         this.isGameFinished.next(false);
         this.wantToContinue.next(false);
         this.wantToExit.next(false);
@@ -337,6 +353,18 @@ export class GameService {
         this.fillSample();
         this.playStep1();
 
+    }
+    restartIfExiting(): void {
+        this.freezeGameService.isCrossed$.pipe(
+        rxjsTake(1), filter(isCrossed => isCrossed), tap(() => {
+                console.log("Je suis dans le tap de isCrossed");
+                this.isCrossed = true;
+            })
+        ).subscribe(isCrossed => {
+            if (isCrossed) {
+                this.resetGame();
+            }
+        });
     }
 
     resetStep2(): void {
@@ -357,6 +385,8 @@ export class GameService {
     this.isStep2CompletedSubject.next(false);
     this.isStep3CompletedSubject.next(false);
     this.isGameFinished.next(false);
+    this.isCrossed = false;
+    this.finalMessageService.reset();
     this.wantToContinue.next(false);
     this.wantToExit.next(false);
     this.currentWordIndex.next(1);
@@ -366,6 +396,7 @@ export class GameService {
     this.platformService.resetPlatforms();
     this.w2gService.resetWord();
     this.chronoService.resetTimer();
+    
 }
 
 }

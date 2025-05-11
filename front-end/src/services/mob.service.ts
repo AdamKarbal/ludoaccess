@@ -11,7 +11,7 @@ import { MiniGameService } from './minigame.service';
 })
 
 export class MobService implements Collidable {
-  private position = { x: 100, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
+  private position = { x: window.innerWidth-200, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
   private speedX = 2;
   private initialPosition = {...this.position};
   private totalFrames = 9;

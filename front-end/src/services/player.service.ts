@@ -172,4 +172,10 @@ export class PlayerService {
       }
     });
   }
+  resetPlayer(): void {
+    this.positionSubject.next({ x: 0, y: this.groundY });
+    this.velocityY = 0;
+    this.onGround = true;
+    this._pressedKeys.clear();
+  }
 }

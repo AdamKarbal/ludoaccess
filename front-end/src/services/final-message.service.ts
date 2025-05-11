@@ -25,4 +25,10 @@ export class FinalMessageService {
         console.log("getWantToContinue", this.wantToContinue);
         return this.wantToContinue.getValue();
     }
+    
+    reset() {
+        this.wantToContinue.next(false);
+        this.wantToExit.next(false);
+      }
+      
     }
