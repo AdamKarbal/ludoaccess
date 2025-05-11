@@ -1,7 +1,7 @@
 import { Collidable } from "./collidable.model";
-import { CoinCollectionService } from "src/services/coincollection.service";
 
 export class Coin implements Collidable{
+  collecting: boolean = false;
   private _x: number;
   private _y: number;
   private _width: number = 50;
@@ -51,17 +51,8 @@ export class Coin implements Collidable{
       this._letter = letter;
     }
 
-    checkCollision(other: Collidable): boolean {
-      return (
-          this.x < other.x + other.width &&
-          this.x + this.width > other.x &&
-          this.y < other.y + other.height &&
-          this.y + this.height > other.y
-      );
-    }
 
     action(other: Collidable): void {
-
     }
 
   }

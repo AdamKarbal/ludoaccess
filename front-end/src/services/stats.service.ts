@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { mockUserStats } from '../mocks/stats.mock';
+import {GameService} from "./game.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,17 @@ export class UserStatsService {
   private statsSubject = new BehaviorSubject<{ name: string; errors: number }[]>([]);
   stats$ = this.statsSubject.asObservable();
   private id: number;
+  private lengths:number[];
 
-  constructor() {
+  constructor(private gameService: GameService) {
     this.id = 1;
+    this.lengths=[];
+  }
+
+  ngOnInit() :void{
+    this.gameService.currentWordLength$.subscribe(currentWordLength => {
+      this.lengths.push(currentWordLength);
+    })
   }
 
   setId(id: number): void {

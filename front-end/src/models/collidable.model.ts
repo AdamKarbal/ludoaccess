@@ -4,5 +4,4 @@ export interface Collidable {
   width:number;
   height:number;
   action:(cible:Collidable) => void;
-  checkCollision?(other:Collidable):boolean;
 }

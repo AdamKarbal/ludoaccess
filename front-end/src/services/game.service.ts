@@ -15,6 +15,8 @@ import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
 import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
+
+
 @Injectable({ providedIn: 'root' })
 export class GameService {
     private availablePaths = [
@@ -22,7 +24,7 @@ export class GameService {
         '/mob', '/jeuComponent', '/', '/acceuil'
       ];
     private _wordSample: string[] = [];
-    private _wordTarget: string[] = [];
+    private _wordTarget: string[] = ["Animal", "Nico"];
     private _settings?: ChildSettings | null;
 
     private isCrossed: boolean = false;
@@ -47,8 +49,11 @@ export class GameService {
     private wantToExit = new BehaviorSubject<boolean>(false);
     public wantToExit$ = this.wantToExit.asObservable();
 
-  private currentWordIndex = new BehaviorSubject<number>(1);
-  public currentWordIndex$ = this.currentWordIndex.asObservable();
+    private currentWordIndex = new BehaviorSubject<number>(1);
+    public currentWordIndex$ = this.currentWordIndex.asObservable();
+
+  private currentWordLength=new BehaviorSubject<number>(0);
+  public currentWordLength$=this.currentWordLength.asObservable();
 
 
 
@@ -155,8 +160,8 @@ export class GameService {
     }
 
     playStep1(): void {
-        /*this._wordTarget.push("Hey");
-        this.isStep1CompletedSubject.next(true);*/
+        this._wordTarget.push("Hey");
+        this.isStep1CompletedSubject.next(true);
         // if(this.var === 1){
         //     this.playStep2();
         // }
@@ -209,7 +214,6 @@ export class GameService {
 
     private _currentWord: string = '';
 
-
     private _isProcessing: boolean = false;
 
     playStep2(): void {
@@ -226,7 +230,7 @@ export class GameService {
 
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
-
+        this.currentWordLength.next(this._currentWord.length);
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
 

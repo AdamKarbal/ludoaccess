@@ -7,6 +7,7 @@ import { Router, NavigationEnd } from "@angular/router";
 import { FreezeGameService } from "src/services/freeze-game.services";
 import { PlayerService } from "src/services/player.service";
 
+
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.html",
