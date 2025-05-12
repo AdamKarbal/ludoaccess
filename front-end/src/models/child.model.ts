@@ -1,7 +1,7 @@
 import { User } from './user.model';
 
 export interface Child extends User {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   imageUrl?: string;

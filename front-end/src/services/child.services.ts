@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Child } from 'src/models/child.model';
 import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
-import { CHILD_LIST } from 'src/mocks/child.mock';
+import { SettingsService } from './setting.service';
+import { ChildSettings } from 'src/models/setting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,11 @@ export class ChildService {
   public childSelected$: Subject<Child> = new Subject();
 
   private childUrl = serverUrl + '/childs';
+  private settingsUrl = serverUrl + '/settings';
 
   private httpOptions = httpOptionsBase;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private settingsService: SettingsService) {
     this.retrieveChilds();
   }
 
@@ -32,12 +34,15 @@ export class ChildService {
      });
   }
 
-  addChilds(child: Child): void {
-    this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe(() => this.retrieveChilds());
-    console.log('Enfant ajouté dans le service :', child);
-  }
+addChilds(child: Child): void {
+  this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe((newChild) => {
+    console.log('Enfant ajouté dans le service :', newChild);
+    this.retrieveChilds();
+  });
+}
 
-  setSelectedChild(childId: string): void {
+
+  setSelectedChild(childId: number): void {
     const urlWithId = this.childUrl + '/' + childId;
     this.http.get<Child>(urlWithId).subscribe((child) => {
       this.childSelected$.next(child);

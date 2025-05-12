@@ -2,8 +2,8 @@
 import { ChildSettings } from '../models/setting.model';
 
 export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
-  '1': {
-    id: '1',
+  1: {
+    id: 1,
     showTimer: true,
     showRanking: true,
     enableLifeLoss: false,
@@ -18,8 +18,8 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     lettersize:'Petit',
     chooseBackGround:'Aléatoire',
   },
-  '2': {
-    id: '2',
+  2: {
+    id: 2,
     showTimer: false,
     showRanking: false,
     enableLifeLoss: true,
@@ -34,8 +34,8 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     lettersize:'Moyen',
     chooseBackGround:'Forest',
   },
-  '3': {
-    id: '3',
+  3: {
+    id: 3,
     showTimer: true,
     showRanking: true,
     enableLifeLoss: false,
@@ -51,8 +51,8 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     lettersize:'Grand',
     chooseBackGround:'Orange_earth',
   },
-  '4': {
-    id: '4',
+4: {
+    id: 4,
     showTimer: true,
     showRanking: true,
     enableLifeLoss: true,

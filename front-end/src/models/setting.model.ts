@@ -1,5 +1,5 @@
 export interface ChildSettings {
-    id: string; 
+    id: number; 
     showTimer: boolean;
     showRanking: boolean;
     enableLifeLoss: boolean;

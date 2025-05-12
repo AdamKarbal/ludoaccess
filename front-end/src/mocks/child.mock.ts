@@ -2,7 +2,7 @@ import { Child } from '../models/child.model';
 
 export const CHILD_LIST: Child[] = [
   {
-    id: '1',
+    id: 1,
     firstName: 'Olivier',
     lastName: 'Boulet',
     imageUrl: '../assets/ressources/e4.jpg',
@@ -11,7 +11,7 @@ export const CHILD_LIST: Child[] = [
     role: 'child'
   },
   {
-    id: '2',
+    id: 2,
     firstName: 'Ali',
     lastName: 'Madandar Arari',
     imageUrl: '../assets/ressources/e2.jpg',
@@ -21,7 +21,7 @@ export const CHILD_LIST: Child[] = [
 
   },
   {
-    id: '3',
+    id: 3,
     firstName: 'Raphaël',
     lastName: 'Laborie',
     level: 2,
@@ -30,7 +30,7 @@ export const CHILD_LIST: Child[] = [
 
   },
   {
-    id: '4',
+    id: 4,
     firstName: 'Clément',
     lastName: 'Menou',
     imageUrl: '../assets/ressources/e3.jpg',
@@ -38,7 +38,7 @@ export const CHILD_LIST: Child[] = [
     role: 'child'
   },
   {
-    id: '5',
+    id: 5,
     firstName: 'azeaze',
     lastName: 'Madzkoa',
     level: 1,
