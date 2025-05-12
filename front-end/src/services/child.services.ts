@@ -10,10 +10,10 @@ import { CHILD_LIST } from 'src/mocks/child.mock';
 })
 export class ChildService {
 
-  private childs: Child[] = CHILD_LIST
+  private childs: Child[] = []
 
   public childs$: BehaviorSubject<Child[]>
-    = new BehaviorSubject<Child[]>(CHILD_LIST);
+    = new BehaviorSubject<Child[]>([]);
 
   public childSelected$: Subject<Child> = new Subject();
 
@@ -26,14 +26,15 @@ export class ChildService {
   }
 
   retrieveChilds(): void {
-    // this.http.get<Child[]>('').subscribe((childList) => {
-    //   this.childs = childList;
-    //   this.childs$.next(this.childs);
-    // });
+     this.http.get<Child[]>(this.childUrl).subscribe((childList) => {
+       this.childs = childList;
+       this.childs$.next(this.childs);
+     });
   }
 
   addChilds(child: Child): void {
     this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe(() => this.retrieveChilds());
+    console.log('Enfant ajouté dans le service :', child);
   }
 
   setSelectedChild(childId: string): void {
@@ -43,15 +44,15 @@ export class ChildService {
     });
   }
 
-  // deleteChild(child: Child): void {
-  //   const urlWithId = this.childUrl + '/' + child.id;
-  //   this.http.delete<Child>(urlWithId, this.httpOptions).subscribe(() => this.retrieveChilds());
-  // }
+   deleteChild(child: Child): void {
+     const urlWithId = this.childUrl + '/' + child.id;
+     this.http.delete<Child>(urlWithId, this.httpOptions).subscribe(() => this.retrieveChilds());
+   }
 
-  deleteChild(child: Child): void {
-    this.childs = this.childs.filter(c => c.id !== child.id);
-    this.childs$.next([...this.childs]);
-  }
+  // deleteChild(child: Child): void {
+  //   this.childs = this.childs.filter(c => c.id !== child.id);
+  //   this.childs$.next([...this.childs]);
+  // }
   
 
 }

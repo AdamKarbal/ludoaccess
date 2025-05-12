@@ -4,6 +4,13 @@
   <div class="arriere-plan"></div>
   <div class="contenu">
     <h1 class="titre">Page Ergothérapeute</h1>
+    <button class="btn-ajouter" (click)="toggleForm()">Ajouter un enfant</button>
+    <div class="form-ajout" *ngIf="formVisible">
+      <input [(ngModel)]="newChild.firstName" placeholder="Prénom" />
+      <input [(ngModel)]="newChild.lastName" placeholder="Nom" />
+      <input [(ngModel)]="newChild.age" type="number" placeholder="Âge" />
+      <button class="btn-valider" (click)="onAddChild()">Valider</button>
+    </div>
     <div class="liste-enfants">
       <app-child-list></app-child-list>
     </div>
