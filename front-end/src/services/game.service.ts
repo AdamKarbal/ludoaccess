@@ -160,11 +160,7 @@ export class GameService {
     }
 
     playStep1(): void {
-        // this._wordTarget.push("Hey");
-        // this.isStep1CompletedSubject.next(true);
-        // if(this.var === 1){
-        //     this.playStep2();
-        // }
+        
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
@@ -356,20 +352,8 @@ export class GameService {
         this.w2gService.resetWord();
         this.chronoService.resetTimer();
         this.fillSample();
-        this.playStep1();
+        // this.playStep1();
 
-    }
-    restartIfExiting(): void {
-        this.freezeGameService.isCrossed$.pipe(
-        rxjsTake(1), filter(isCrossed => isCrossed), tap(() => {
-                console.log("Je suis dans le tap de isCrossed");
-                this.isCrossed = true;
-            })
-        ).subscribe(isCrossed => {
-            if (isCrossed) {
-                this.resetGame();
-            }
-        });
     }
 
     resetStep2(): void {
