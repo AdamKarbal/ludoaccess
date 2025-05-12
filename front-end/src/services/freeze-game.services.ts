@@ -9,6 +9,9 @@ export class FreezeGameService {
   private isCrossedSubject = new BehaviorSubject<boolean>(false);
   private isInfoSubject = new BehaviorSubject<boolean>(false);
 
+private isNewEventSubject = new BehaviorSubject<boolean>(false);
+  isNewEvent$ = this.isNewEventSubject.asObservable();
+
   isPaused$ = this.isPausedSubject.asObservable();
   isCrossed$ = this.isCrossedSubject.asObservable();
   isInfo$ = this.isInfoSubject.asObservable();
@@ -20,8 +23,10 @@ export class FreezeGameService {
   }
 
   resume() {
+    this.isNewEventSubject.next(true);
     this.isPausedSubject.next(false);
     this.isCrossedSubject.next(false); // Reset the crossed state when resuming
+    this.isNewEventSubject.next(false);
   }
   exit() {
     this.isCrossedSubject.next(true);

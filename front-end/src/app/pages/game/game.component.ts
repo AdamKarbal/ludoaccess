@@ -3,6 +3,10 @@ import { Subscription } from "rxjs";
 import { filter, take as rxjsTake, tap} from "rxjs/operators";
 import { combineLatest } from "rxjs";
 import { GameService } from "src/services/game.service";
+import { Router, NavigationEnd } from "@angular/router";
+import { FreezeGameService } from "src/services/freeze-game.services";
+import { PlayerService } from "src/services/player.service";
+
 
 @Component({
   selector: "app-game",
@@ -16,7 +20,7 @@ export class GameComponent implements OnInit {
     private _isEtape3: boolean;
     private _stepSubscriptions: Subscription[] = [];
 
-    constructor(private gameService: GameService, private cdr: ChangeDetectorRef) {
+    constructor(private gameService: GameService, private cdr: ChangeDetectorRef,private router: Router,private freezeGameService: FreezeGameService,private playerService: PlayerService) {
         this._isEtape1 = true;
         this._isEtape2 = false;
         this._isEtape3 = false;
@@ -34,11 +38,21 @@ export class GameComponent implements OnInit {
 
     private setupStepTransitions(): void {
         this._stepSubscriptions.push(
+            this.freezeGameService.isNewEvent$.pipe(filter(newEvent => newEvent))
+            .subscribe(() => {
+                console.log("User exited the game.");
+                this.setStep(1);
+                this.gameService.resetGame();
+                this.playerService.resetPlayer();
+            })
+        );
+        this._stepSubscriptions.push(
             this.gameService.isStep1Completed$.pipe(
                 filter(step1done => step1done),
                 rxjsTake(1)
             ).subscribe(() => {
                 console.log("Step 1 completed, moving to step 2.");
+                this.playerService.resetPlayer();
                 this.setStep(2);
                 this.gameService.playStep2();
             })
@@ -60,6 +74,7 @@ export class GameComponent implements OnInit {
                 
                 if (this.gameService.wordTarget.length > 0) {
                     console.log("Travail plus.");
+                    this.playerService.resetPlayer();
                     this.setStep(2);
                     this.gameService.playStep2();
                 } else {
@@ -96,10 +111,11 @@ export class GameComponent implements OnInit {
             console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);
             this.gameService.changeStep("/acceuil"); // Redémarre le jeu
-            
             this.gameService.resetGame(); // Redémarre le jeu
           });
     }
+
+    
 
     getStep(): number {
         if (this._isEtape1 && !this._isEtape2 && !this._isEtape3) return 1;
@@ -132,7 +148,6 @@ export class GameComponent implements OnInit {
         this.cdr.detectChanges();
     }
 
-    
     
 }
 

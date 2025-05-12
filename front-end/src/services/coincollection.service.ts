@@ -1,7 +1,6 @@
 import { Coin } from "src/models/coin.model";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { GameService } from "./game.service";
 import { LevelService } from "./levels.service";
 
 @Injectable({ providedIn: 'root' })

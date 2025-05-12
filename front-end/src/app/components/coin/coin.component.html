@@ -1,12 +1,7 @@
 <div 
   class="coin" 
-  [ngClass]="{ 'collecting': collecting }"
+  [ngClass]="{ 'collecting': coin.collecting }"
   *ngIf="(coin.letter !== '') && !coin.isCollected" 
   [style.background-image]="'url(' + imagePath + ')'"
   (click)="onClickCollect($event)">
-</div>
-
-<div *ngIf="showAura" 
-  class="aura" 
-  [ngStyle]="{'top.px': auraY, 'left.px': auraX}">
 </div>
