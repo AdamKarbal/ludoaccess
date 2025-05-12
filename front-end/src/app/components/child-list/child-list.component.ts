@@ -11,7 +11,7 @@ import {Child} from 'src/models/child.model';
 export class ChildListComponent implements OnInit {
 
   public childList: Child[] = [];
-  public selectedChildId: string | null = null; 
+  public selectedChildId: number | null = null; 
 
   constructor(private childService: ChildService) {
     this.childService.childs$.subscribe((childs: Child[]) => {
@@ -21,7 +21,7 @@ export class ChildListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onChildClicked(childId: string): void {
+  onChildClicked(childId: number): void {
     this.selectedChildId = this.selectedChildId === childId ? null : childId;
   }
 

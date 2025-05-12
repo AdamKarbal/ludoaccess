@@ -2,7 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ChildService } from 'src/services/child.services';
 import { ErgoService } from 'src/services/ergo.service';
 import { User } from 'src/models/user.model'; 
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-listofpeople',
@@ -14,7 +15,7 @@ export class ListOfPeopleComponent implements OnInit {
 
   @Output() userSelected = new EventEmitter<User>();  
 
-  selectedId: string | null = null;
+  selectedId: number | null = null;
 
   constructor(
     private childService: ChildService,
@@ -32,14 +33,9 @@ export class ListOfPeopleComponent implements OnInit {
 
   private combinePeopleLists(): Observable<User[]> {
     const children$ = this.childService.childs$;
-    const ergotherapists$ = this.ergotherapistService.ergotherapists$;
-
-    return new Observable<User[]>((observer) => {
-      children$.subscribe((children) => {
-        ergotherapists$.subscribe((ergotherapists) => {
-          observer.next([...children, ...ergotherapists]);
-        });
-      });
-    });
+    const ergotherapists$ = this.ergotherapistService.ergos$;
+    return combineLatest([children$, ergotherapists$]).pipe(
+      map(([children, ergotherapists]) => [...children, ...ergotherapists]) 
+    );
   }
 }

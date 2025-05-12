@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Ergo } from 'src/models/ergo.model';
 import { ERGOTHERAPIST_LIST } from 'src/mocks/ergo.mock';
+import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +12,29 @@ import { ERGOTHERAPIST_LIST } from 'src/mocks/ergo.mock';
 
 export class ErgoService {
 
-  private ergotherapists: Ergo[] = ERGOTHERAPIST_LIST;
+  private ergos: Ergo[] = [];
 
-  public ergotherapists$: BehaviorSubject<Ergo[]>
-    = new BehaviorSubject<Ergo[]>(ERGOTHERAPIST_LIST); 
+  public ergos$: BehaviorSubject<Ergo[]>
+    = new BehaviorSubject<Ergo[]>([]);
 
   public ergotherapistSelected$: BehaviorSubject<Ergo | null> = new BehaviorSubject<Ergo | null>(null);
 
-  constructor() {}
-  retrieveErgotherapists(): void {
-    this.ergotherapists$.next(this.ergotherapists);
+  private ergoUrl = serverUrl + '/ergos';
+  private httpOptions = httpOptionsBase;
+
+  constructor(private http: HttpClient) {
+    this.retrieveErgotherapists();
   }
 
-  setSelectedErgotherapist(ergoId: string): void {
-    const selectedErgo = this.ergotherapists.find(e => e.id === ergoId) || null;
+  retrieveErgotherapists(): void {
+    this.http.get<Ergo[]>(this.ergoUrl).subscribe((ergoList) => {
+      this.ergos = ergoList;
+      this.ergos$.next(this.ergos);
+    });
+  }
+
+  setSelectedErgotherapist(ergoId: number): void {
+    const selectedErgo = this.ergos.find(e => e.id === ergoId) || null;
     this.ergotherapistSelected$.next(selectedErgo);
   }
 }
