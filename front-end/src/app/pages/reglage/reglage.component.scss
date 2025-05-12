@@ -50,3 +50,55 @@
   }
   
   
+.btn-ajouter {
+  background-color: #4a79cf;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ajouter:hover {
+  background-color: #4d73ef;
+  transform: scale(1.05);
+}
+
+.form-ajout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  margin: 20px 0;
+}
+
+.form-ajout input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.btn-valider {
+  background-color: #2196F3;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-valider:hover {
+  background-color: #1976D2;
+}
