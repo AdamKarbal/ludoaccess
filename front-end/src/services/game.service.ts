@@ -24,7 +24,7 @@ export class GameService {
         '/mob', '/jeuComponent', '/', '/acceuil'
       ];
     private _wordSample: string[] = [];
-    private _wordTarget: string[] = ["Animal", "Nico"];
+    private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
 
     private isCrossed: boolean = false;
@@ -230,6 +230,7 @@ export class GameService {
 
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
+        console.log(this._currentWord.length+"length envoyée");
         this.currentWordLength.next(this._currentWord.length);
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
@@ -400,7 +401,7 @@ export class GameService {
     this.platformService.resetPlatforms();
     this.w2gService.resetWord();
     this.chronoService.resetTimer();
-    
+
 }
 
 }
