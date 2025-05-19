@@ -21,6 +21,7 @@ export class MobService implements Collidable {
   private _height = 70
   private mobPosition = new BehaviorSubject(this.position);
   position$ = this.mobPosition.asObservable();
+  isAlive = new BehaviorSubject<boolean>(true);
 
   constructor(private freezeGameService: FreezeGameService,  private playerService: PlayerService, private miniGameService: MiniGameService) {
     this.startMoving();
@@ -87,9 +88,14 @@ export class MobService implements Collidable {
     });
   }
   
-  respawn() : void {
-    this.position= { ...this.initialPosition }; 
+  respawn(): void {
+    this.position = { ...this.initialPosition };
     this.mobPosition.next({ ...this.position });
-
+    this.isAlive.next(true); // Notifie que le mob est de retour
   }
+
+destroy() {
+  this.isAlive.next(false); // Notifie que le mob n'est plus actif
+}
+
 }
