@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MiniGameService } from '../../../services/minigame.service';
 import { CoeurService } from '../../../services/coeurs.services';
 import { GameService } from '../../../services/game.service';
+import { MobService } from 'src/services/mob.service';
 
 @Component({
   selector: 'app-jeu',
@@ -17,11 +18,13 @@ export class JeuComponent {
   isAnimatingSuccess$ = this.miniGameService.isAnimatingSuccess$;
   isGameVisible = true;
   private audio: HTMLAudioElement | null = null;
+  isAlive$ = this.mobService.isAlive.asObservable();
 
   constructor(
     private miniGameService: MiniGameService,
     private coeurService: CoeurService,
-    private gameService: GameService
+    private gameService: GameService,
+    private mobService: MobService
   ) {}
 
   startMiniGame() {

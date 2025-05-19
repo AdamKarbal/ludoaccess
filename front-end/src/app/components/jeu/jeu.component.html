@@ -12,7 +12,9 @@
   </div>
   
   <div class="game-zone">
+    <div *ngIf="isAlive$ | async">
     <app-mob class="mob"></app-mob>
+</div>
 
     <app-plateformes></app-plateformes>
   </div>
