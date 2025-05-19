@@ -15,6 +15,8 @@ import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
 import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
+import { Subject} from "rxjs";
+import { takeUntil } from 'rxjs/operators';
 
 
 @Injectable({ providedIn: 'root' })
@@ -49,7 +51,7 @@ export class GameService {
     private wantToExit = new BehaviorSubject<boolean>(false);
     public wantToExit$ = this.wantToExit.asObservable();
 
-    private currentWordIndex = new BehaviorSubject<number>(1);
+    private currentWordIndex = new BehaviorSubject<number>(0);
     public currentWordIndex$ = this.currentWordIndex.asObservable();
 
   private currentWordLength=new BehaviorSubject<number>(0);
@@ -158,15 +160,27 @@ export class GameService {
             console.log(this._wordSample[i]);
         }
     }
+    public destroyStep$ = new Subject<void>();
+
 
     playStep1(): void {
+        
+        this.freezeGameService.isNewEvent$.pipe(
+    filter(val => val),
+    rxjsTake(1),
+  ).subscribe(() => {
+    console.log('Interruption de playStep1 à cause de newEvent');
+    this.destroyStep$.next(); // Annule tous les abonnements en cours
+    this.destroyStep$.complete(); // Évite les fuites mémoire
+  });
         
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
             if(this._wordTarget.length === 0){
                 console.log("Pas encore fini.");
-                return;
+                this.fillSample();
+                this.currentWordIndex.next(0);
             }
             else{
                 console.log("On passe à l'étape 2.");
@@ -176,7 +190,8 @@ export class GameService {
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length < 2){
                     this.settingService.upDifficulty(this._settings!);
                 }
-                setTimeout(() => {this.isStep1CompletedSubject.next(true);});
+                setTimeout(() => {
+                    this.isStep1CompletedSubject.next(true);});
                 return;
             }
           }
@@ -187,7 +202,8 @@ export class GameService {
             console.log(`Mot "${word}" après initialisation.`);
 
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
-            rxjsTake(1)).subscribe(() => {
+            rxjsTake(1),takeUntil(this.destroyStep$)).subscribe(() => {
+    
                 const audio = new Audio('assets/sons/correctAnswer.mp3');
                 audio.play();
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
@@ -205,6 +221,7 @@ export class GameService {
                 }
 
             });
+            
           }
     }
 
@@ -239,7 +256,7 @@ export class GameService {
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
                 this.resetStep2();
                 this.isStep2CompletedSubject.next(true);
-            })
+            }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
             console.log('Mot complété dans étape 2');
             this.w2gService.resetWord();
@@ -283,7 +300,7 @@ export class GameService {
                     return;
                 }
                 this.isStep3CompletedSubject.next(true);
-            })
+            }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
             console.log('Mot complété dans étape 3');
             this.w2gService.resetWord();
@@ -344,14 +361,14 @@ export class GameService {
         this.isGameFinished.next(false);
         this.wantToContinue.next(false);
         this.wantToExit.next(false);
-        this.currentWordIndex.next(1);
+        this.currentWordIndex.next(0);
         this._wordSample = [];
         this._wordTarget = [];
         this._currentWord = '';
         this.platformService.resetPlatforms();
-        this.w2gService.resetWord();
+        // this.w2gService.resetWord();
         this.chronoService.resetTimer();
-        this.fillSample();
+        // this.fillSample();
         // this.playStep1();
 
     }

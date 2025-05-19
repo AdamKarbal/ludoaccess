@@ -55,7 +55,7 @@ export class ToolbarGameComponent {
     this.gameService.changeStep('/reglage');  // Redirige vers la page des paramètres
   }
   navigateToHome() {
-    this.freezeGame.resume(); // Resume the game before navigating
+    this.freezeGame.quit(); // Resume the game before navigating
     this.gameService.changeStep('/');;  // Redirige vers la page des paramètres
   }
   navigateToStats() {
