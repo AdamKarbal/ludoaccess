@@ -3,6 +3,7 @@ const { Router } = require('express')
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
+const number = require('joi/lib/types/number')
 
 const router = new Router()
 
@@ -40,6 +41,7 @@ router.post('/', (req, res) => {
       lettersize: 'Moyen',
       choosefont: 'Nintendo',
       chooseBackGround: 'Aléatoire',
+      numberOfWords: 15,
     };
     
     const settings = Settings.create(defaultSettings);

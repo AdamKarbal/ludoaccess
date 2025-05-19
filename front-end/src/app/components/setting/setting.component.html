@@ -103,6 +103,11 @@
     </label>
 
     <label class="setting">
+      <span>Nombre de mot:</span>
+      <input type="number" [(ngModel)]="currentSettings.numberOfWords" name="numberOfWords" min="1" max="60" (change)="onSettingChange()">
+    </label>
+
+    <label class="setting">
       <span>Difficulté des mots:</span>
       <select [(ngModel)]="currentSettings.wordDifficulty" name="wordDifficulty" (change)="onSettingChange()">
         <option value="Facile">Facile</option>
