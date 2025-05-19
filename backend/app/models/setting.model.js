@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const BaseModel = require('../utils/base-model.js');
+const number = require('joi/lib/types/number/index.js');
 
 module.exports = new BaseModel('Settings', {
   id: Joi.number().required(),
@@ -21,5 +22,6 @@ module.exports = new BaseModel('Settings', {
   chooseBackGround: Joi.string().valid(
     'Forest', 'Blue_earth', 'Orange_earth', 'Aléatoire'
   ).required(),
-  lettersize: Joi.string().valid('Petit', 'Moyen', 'Grand').required()
+  lettersize: Joi.string().valid('Petit', 'Moyen', 'Grand').required(),
+  numberOfWords: Joi.number().required(),
 });

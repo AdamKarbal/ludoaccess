@@ -80,7 +80,13 @@ export class GameService {
 
     fillSample(): void {
         if (this._settings?.wordDifficulty === "Facile") {
-            for (let i = 0; i < 8; i++) {
+            let nb1=Math.floor(this._settings?.numberOfWords/2);
+            let nb2=Math.floor(this._settings?.numberOfWords/2);
+            if(this._settings?.numberOfWords%2!=0){
+                nb1++;
+            }
+
+            for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(1);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -90,7 +96,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < nb2; i++) {
                 let word = this.motService.getMotParNiveau(2);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -102,7 +108,17 @@ export class GameService {
             }
         }
         if (this._settings?.wordDifficulty === "Moyen") {
-            for (let i = 0; i < 5; i++) {
+            let nb1=Math.floor(this._settings?.numberOfWords/3);
+            let nb2=Math.floor(this._settings?.numberOfWords/3);
+            let nb3=Math.floor(this._settings?.numberOfWords/3);
+            if(this._settings?.numberOfWords%3==1){
+                nb1++;
+            }
+            if(this._settings?.numberOfWords%3==2){
+                nb1++;
+                nb2++;
+            }
+            for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(1);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -112,7 +128,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < nb2; i++) {
                 let word = this.motService.getMotParNiveau(2);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -122,7 +138,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < nb3; i++) {
                 let word = this.motService.getMotParNiveau(3);
                 if (this._wordSample.includes(word)) {
                     i--;
@@ -134,7 +150,12 @@ export class GameService {
             }
         }
         if (this._settings?.wordDifficulty === "Difficile") {
-            for (let i = 0; i < 7; i++) {
+            let nb1=Math.floor(this._settings?.numberOfWords/2);
+            let nb2=Math.floor(this._settings?.numberOfWords/2);
+            if(this._settings?.numberOfWords%2!=0){
+                nb1++;
+            }
+            for (let i = 0; i < nb2; i++) {
                 let word = this.motService.getMotParNiveau(2);
                 if (this._wordSample.includes(word)) {
                     i--;
@@ -144,7 +165,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(3);
                 if (this._wordSample.includes(word)) {
                     i--;
@@ -379,6 +400,7 @@ export class GameService {
     }
 
     resetStep3(): void {
+        this.coinCollectionService.reset();
         this.chronoService.resetTimer();
     }
 
