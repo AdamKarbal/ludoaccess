@@ -20,10 +20,10 @@ export class PlayerService {
   });
   position$ = this.positionSubject.asObservable();
 
-  private speed = 2;
+  private speed = 1;
   private gravity = 0.5;
   private velocityY = 0;
-  private jumpForce = -8;
+  private jumpForce = -5;
   private onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;
@@ -42,9 +42,6 @@ export class PlayerService {
     this.settingsService.settings$.subscribe(settings => {
       this._settings = settings;
     });
-    if(this._settings?.jumpDifficulty==true){
-      this.jumpForce=-5;
-    }
   }
 
   getPressedKeys(): Set<string> {
@@ -158,20 +155,6 @@ export class PlayerService {
     this._pressedKeys.delete(key.toLowerCase());
   }
 
-  collectCoin(): void {
-    if (!this.player) return;
-
-    this.gameService.existentCoins.forEach((coin, index) => {
-      // Vérifier la collision entre le joueur et la pièce
-      if (this.player?.checkCollision(coin)){
-        console.log(`Pièce collectée : ${coin}`);
-
-        this.gameService.collectedCoins.push(coin);
-        this.gameService.existentCoins.splice(index, 1);
-        this.coinCollectionService.addCollected(coin);
-      }
-    });
-  }
   resetPlayer(): void {
     this.positionSubject.next({ x: 0, y: this.groundY });
     this.velocityY = 0;

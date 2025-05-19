@@ -17,8 +17,7 @@ import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
 import { Subject} from "rxjs";
 import { takeUntil } from 'rxjs/operators';
-import { Injector } from '@angular/core';
-import { MobService } from './mob.service'; // adapte le chemin si besoin
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -30,7 +29,6 @@ export class GameService {
     private _wordSample: string[] = [];
     private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
-
     private isCrossed: boolean = false;
 
 
@@ -73,7 +71,6 @@ export class GameService {
         private finalMessageService: FinalMessageService,
         private authService : AuthService,
         private freezeGameService: FreezeGameService,
-        private injector: Injector,
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -261,7 +258,6 @@ export class GameService {
             this.isStep2CompletedSubject.next(true);
             return;
         }
-
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
         this.w2gService.resetWord();
