@@ -189,14 +189,7 @@ export class GameService {
 
     playStep1(): void {
         
-        this.freezeGameService.isNewEvent$.pipe(
-    filter(val => val),
-    rxjsTake(1),
-  ).subscribe(() => {
-    console.log('Interruption de playStep1 à cause de newEvent');
-    this.destroyStep$.next(); // Annule tous les abonnements en cours
-    this.destroyStep$.complete(); // Évite les fuites mémoire
-  });
+        this.stopStep();
         
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
@@ -254,6 +247,7 @@ export class GameService {
     private _isProcessing: boolean = false;
 
     playStep2(): void {
+        this.stopStep();
         if (this._isProcessing) return;
         this._isProcessing = true;
         console.log('Début étape 2 - WordTarget:', this._wordTarget);
@@ -288,6 +282,8 @@ export class GameService {
     }
 
     playStep3(): void {
+
+        this.stopStep();
         if (this._isProcessing) return;
         this._isProcessing = true;
         this.chronoService.resetTimer();
@@ -307,7 +303,26 @@ export class GameService {
                 this._isProcessing = false;
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
-                if(this._wordTarget.length===0) {
+                // if(this._wordTarget.length===0) {
+                //     console.log("Mot courant réinitialisé.");
+                //     this.isGameFinished.next(true);
+                //     this._isProcessing = false;
+
+                //     this.finalMessageService.wantToContinue$.pipe(filter(wantsToContinue => wantsToContinue),rxjsTake(1)).subscribe(wantsToContinue => {
+                //         console.log("Je veux continuer!");
+                //         this.wantToContinue.next(true);
+                //     });
+                //    this.finalMessageService.wantToExit$.pipe(filter(wantsToExit => wantsToExit),rxjsTake(1)).subscribe(wantsToExit => {
+                //         console.log("Je veux quitter!");
+                //         this.wantToExit.next(true);
+                //     }
+                //     );
+                //     return;
+                // }
+                this.isStep3CompletedSubject.next(true);
+            }),takeUntil(this.destroyStep$)
+        ).subscribe(() => {
+            if(this._wordTarget.length===0) {
                     console.log("Mot courant réinitialisé.");
                     this.isGameFinished.next(true);
                     this._isProcessing = false;
@@ -323,16 +338,22 @@ export class GameService {
                     );
                     return;
                 }
-                this.isStep3CompletedSubject.next(true);
-            }),takeUntil(this.destroyStep$)
-        ).subscribe(() => {
             console.log('Mot complété dans étape 3');
             this.w2gService.resetWord();
             this.w2gService.onWordCompleted();
         });
     }
 
-
+    stopStep(): void{
+        this.freezeGameService.isNewEvent$.pipe(
+    filter(val => val),
+    rxjsTake(1),
+  ).subscribe(() => {
+    console.log('Interruption d\'une step à cause de newEvent');
+    this.destroyStep$.next(); // Annule tous les abonnements en cours
+    this.destroyStep$.complete(); // Évite les fuites mémoire
+  });
+    }
 
     // Getters
     get w2g(): string {
@@ -377,6 +398,7 @@ export class GameService {
     }
 
     resetGame(): void {
+        console.warn("Hé ho");
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
