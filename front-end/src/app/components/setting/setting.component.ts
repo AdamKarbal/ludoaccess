@@ -10,7 +10,7 @@ import { ChildSettings } from '../../../models/setting.model';
 
 export class SettingComponent implements OnInit {
 
-  @Input() childId!: string;
+  @Input() childId!: number;
   currentSettings!: ChildSettings;
 
   constructor(private settingsService: SettingsService) {}
@@ -21,6 +21,7 @@ export class SettingComponent implements OnInit {
       if (settings) this.currentSettings = settings;
     });
   }
+
 
   onSettingChange(): void {
     this.settingsService.saveSettings(this.currentSettings);

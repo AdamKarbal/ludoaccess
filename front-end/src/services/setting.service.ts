@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { ChildSettings } from '../models/setting.model';
-import { CHILD_SETTINGS } from '../mocks/setting.mock';
+import { serverUrl } from '../configs/server.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private settings: { [key: string]: ChildSettings } = CHILD_SETTINGS;
   private currentSettings$ = new BehaviorSubject<ChildSettings | null>(null);
 
   chooseFont: string = 'Nintendo';
   currentBackground: string = 'Aléatoire';
-  private letterSizePx : number = 20;
+  private letterSizePx: number = 20;
 
-  constructor() { }
+  private settingsUrl = serverUrl + '/settings';
 
-  loadSettings(childId: string): void {
-    const settings = this.settings[childId] || this.getDefaultSettings(childId);
-    this.currentSettings$.next(settings);
-    this.updateFont(settings.choosefont);
-    this.updateBackGround(settings.chooseBackGround);
-    this.getFontSize(settings.lettersize);
-    console.log('Paramètres chargés: font =', this.chooseFont, ', background =', this.currentBackground);
+  constructor(private http: HttpClient) { }
+
+  loadSettings(childId: number): void {
+    this.http.get<ChildSettings>(`${this.settingsUrl}/${childId}`).subscribe(
+      (settings) => {
+        this.currentSettings$.next(settings);
+        this.updateFont(settings.choosefont);
+        this.updateBackGround(settings.chooseBackGround);
+        this.getFontSize(settings.lettersize);
+        console.log('Paramètres chargés depuis le backend:', settings);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des paramètres:', error);
+      }
+    );
   }
 
   get settings$(): Observable<ChildSettings | null> {
@@ -30,42 +38,46 @@ export class SettingsService {
   }
 
   saveSettings(settings: ChildSettings): void {
-    this.settings[settings.id] = settings;
-    this.currentSettings$.next(settings);
-    this.updateFont(settings.choosefont);
-    this.updateBackGround(settings.chooseBackGround);
-    console.log('Paramètres sauvegardés:', settings);
+    this.http.put(`${this.settingsUrl}/${settings.id}`, settings).subscribe(
+      () => {
+        this.currentSettings$.next(settings);
+        this.updateFont(settings.choosefont);
+        this.updateBackGround(settings.chooseBackGround);
+        console.log('Paramètres sauvegardés dans le backend:', settings);
+      },
+      (error) => {
+        console.error('Erreur lors de la sauvegarde des paramètres:', error);
+      }
+    );
   }
 
-  resetSettings(childId: string): void {
+  resetSettings(childId: number): void {
     const defaultSettings = this.getDefaultSettings(childId);
     this.saveSettings(defaultSettings);
   }
 
-  private getDefaultSettings(childId: string): ChildSettings {
+  public getDefaultSettings(childId: number): ChildSettings {
     return {
       id: childId,
-      showTimer: false, // fait
+      showTimer: true,
       showRanking: false,
-      enableLifeLoss: false, // fait
-      jumpDifficulty: false,// fait
-      clearWordAfterRecovery: false, // fait
-      adaptDifficulty: false, // fait
+      enableLifeLoss: false,
+      jumpDifficulty: false,
+      clearWordAfterRecovery: false,
+      adaptDifficulty: false,
       displaymotsec: 10,
-      simplifyGameAfter: 30,// fait 
-      wordWritingTime: 30, // fait
-      wordDifficulty: 'Facile', // fait,
-      lettersize: 'Moyen', // fait
-      choosefont: 'Nintendo', // fait
-      chooseBackGround: 'Aléatoire', // fait 
+      simplifyGameAfter: 30,
+      wordWritingTime: 30,
+      wordDifficulty: 'Facile',
+      lettersize: 'Moyen',
+      choosefont: 'Nintendo',
+      chooseBackGround: 'Aléatoire',
+      numberOfWords: 15,
     };
   }
 
   private updateFont(fontName: string): void {
-    const allowedFonts = [
-      'Lucky Boy', 'Nintendo', 'Arial', 'Comic Sans MS', 'Courier New',
-      'Georgia', 'Times New Roman', 'Verdana', 'Calibri',
-      'cursif ecriture A', 'cursif ecriture B', 'Minecraft'
+    const allowedFonts = ['Lucky Boy', 'Nintendo', 'Arial', 'Comic Sans MS', 'Courier New','Georgia', 'Times New Roman', 'Verdana', 'Calibri','cursif ecriture A', 'cursif ecriture B', 'Minecraft'
     ];
     if (allowedFonts.includes(fontName)) {
       this.chooseFont = fontName;
@@ -94,38 +106,27 @@ export class SettingsService {
   public getCurrentBackground(): string {
     return this.currentBackground;
   }
+
   public lowerDifficulty(settings: ChildSettings): void {
     if (settings.wordDifficulty === 'Facile') {
       settings.wordDifficulty = 'Facile';
-      console.log('La difficulté a été changée à :', settings.wordDifficulty);
-    }
-    else if (settings.wordDifficulty === 'Moyen') {
-      settings.wordDifficulty = 'Facile'
-      console.log('La difficulté a été changée à :', settings.wordDifficulty);
-      ;
-    }
-    else {
+    } else if (settings.wordDifficulty === 'Moyen') {
+      settings.wordDifficulty = 'Facile';
+    } else {
       settings.wordDifficulty = 'Moyen';
-      console.log('La difficulté a été changée à :', settings.wordDifficulty);
-
     }
+    console.log('La difficulté a été réduite à :', settings.wordDifficulty);
   }
 
   public upDifficulty(settings: ChildSettings): void {
     if (settings.wordDifficulty === 'Facile') {
       settings.wordDifficulty = 'Moyen';
-      console.log('La difficulté a été changée à :', settings.wordDifficulty);
-    }
-    else if (settings.wordDifficulty === 'Moyen') {
-      settings.wordDifficulty = 'Difficile'
-      console.log('La difficulté a été changée à :', settings.wordDifficulty);
-      ;
-    }
-    else {
+    } else if (settings.wordDifficulty === 'Moyen') {
       settings.wordDifficulty = 'Difficile';
-      console.log('La difficulté a été changée à :', settings.wordDifficulty);
-
+    } else {
+      settings.wordDifficulty = 'Difficile';
     }
+    console.log('La difficulté a été augmentée à :', settings.wordDifficulty);
   }
 
   private getFontSize(size: string): void {
@@ -136,7 +137,7 @@ export class SettingsService {
     } else if (size === 'Grand') {
       this.letterSizePx = 20;
     } else {
-      this.letterSizePx = 16; 
+      this.letterSizePx = 16;
     }
     console.log('Taille de la lettre mise à jour:', this.letterSizePx);
   }

@@ -7,14 +7,14 @@
     <h4 class="group-title">Affichage</h4>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.showTimer" name="showTimer">
+      <input type="checkbox" [(ngModel)]="currentSettings.showTimer" name="showTimer" (change)="onSettingChange()">
       <span>Afficher le chronomètre</span>
     </label>
 
     <label class="setting">
       <span>Taille des caractères :</span>
       <div class="range-inputs">
-        <select [(ngModel)]="currentSettings.lettersize" name="lettersize">
+        <select [(ngModel)]="currentSettings.lettersize" name="lettersize" (change)="onSettingChange()">
           <option value="Petit">Petit</option>
           <option value="Moyen">Moyen</option>
           <option value="Grand">Grand</option>
@@ -24,7 +24,7 @@
 
     <label class="setting">
       <span>Police d'écriture:</span>
-      <select [(ngModel)]="currentSettings.choosefont" name="choosefont">
+      <select [(ngModel)]="currentSettings.choosefont" name="choosefont" (change)="onSettingChange()">
         <option value="Lucky Boy">Lucky Boy</option>
         <option value="Nintendo">Nintendo</option>
         <option value="Arial">Arial</option>
@@ -42,7 +42,7 @@
 
     <label class="setting">
       <span>Fond du niveau: </span>
-      <select [(ngModel)]="currentSettings.chooseBackGround" name="chooseBackGround">
+      <select [(ngModel)]="currentSettings.chooseBackGround" name="chooseBackGround" (change)="onSettingChange()">
         <option value="Aléatoire">Aléatoire</option>
         <option value="Forest">Forest</option>
         <option value="Blue_earth">Blue earth</option>
@@ -51,7 +51,7 @@
     </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.showRanking" name="showRanking">
+      <input type="checkbox" [(ngModel)]="currentSettings.showRanking" name="showRanking" (change)="onSettingChange()">
       <span>Afficher le classement</span>
     </label>
   </div>
@@ -61,22 +61,22 @@
     <h4 class="group-title">Difficulté</h4>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.enableLifeLoss" name="enableLifeLoss">
+      <input type="checkbox" [(ngModel)]="currentSettings.enableLifeLoss" name="enableLifeLoss" (change)="onSettingChange()">
       <span>Activer la perte de vie</span>
     </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.jumpDifficulty" name="jumpDifficulty">
+      <input type="checkbox" [(ngModel)]="currentSettings.jumpDifficulty" name="jumpDifficulty" (change)="onSettingChange()">
       <span>Sauts plus compliqués</span>
     </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.adaptDifficulty" name="adaptDifficulty">
+      <input type="checkbox" [(ngModel)]="currentSettings.adaptDifficulty" name="adaptDifficulty" (change)="onSettingChange()">
       <span>Adapter la difficulté</span>
     </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.clearWordAfterRecovery" name="clearWordAfterRecovery">
+      <input type="checkbox" [(ngModel)]="currentSettings.clearWordAfterRecovery" name="clearWordAfterRecovery" (change)="onSettingChange()">
       <span>Effacer le mot après récupération</span>
     </label>
   </div>
@@ -87,24 +87,29 @@
 
     <label class="setting">
       <span>Temps pour écrire le mot (secondes):</span>
-      <input type="number" [(ngModel)]="currentSettings.wordWritingTime" name="wordWritingTime" min="1" max="60">
+      <input type="number" [(ngModel)]="currentSettings.wordWritingTime" name="wordWritingTime" min="1" max="60" (change)="onSettingChange()">
     </label>
 
     <label class="setting">
       <span>Temps pour afficher le mot (secondes):</span>
-      <input type="number" [(ngModel)]="currentSettings.displaymotsec" name="displaymotsec" min="1" max="60">
+      <input type="number" [(ngModel)]="currentSettings.displaymotsec" name="displaymotsec" min="1" max="60" (change)="onSettingChange()">
     </label>
 
     <label class="setting">
       <span>Simplifier le jeu au bout de (en minutes):</span>
       <div class="range-inputs">
-        <input type="number" [(ngModel)]="currentSettings.simplifyGameAfter" name="simplifyGameAfter" placeholder="minutes" min="1" max="60">
+        <input type="number" [(ngModel)]="currentSettings.simplifyGameAfter" name="simplifyGameAfter" placeholder="minutes" min="1" max="60" (change)="onSettingChange()">
       </div>
     </label>
 
     <label class="setting">
+      <span>Nombre de mot:</span>
+      <input type="number" [(ngModel)]="currentSettings.numberOfWords" name="numberOfWords" min="1" max="60" (change)="onSettingChange()">
+    </label>
+
+    <label class="setting">
       <span>Difficulté des mots:</span>
-      <select [(ngModel)]="currentSettings.wordDifficulty" name="wordDifficulty">
+      <select [(ngModel)]="currentSettings.wordDifficulty" name="wordDifficulty" (change)="onSettingChange()">
         <option value="Facile">Facile</option>
         <option value="Moyen">Moyen</option>
         <option value="Difficile">Difficile</option>
@@ -114,7 +119,7 @@
 
   <!-- Actions -->
   <div class="form-actions">
-    <button type="button" (click)="onResetSettings()" class="reset-btn">Réinitialiser</button>
+    <button type="button" (click)="onResetSettings()" class="reset-btn" >Réinitialiser</button>
     <button type="button" class="nav-btn" routerLink="/stats">Statistiques</button>
   </div>
 </form>

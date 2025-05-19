@@ -9,11 +9,11 @@ import { Child } from 'src/models/child.model';
 
 export class ChildComponent {
 
-  @Input() child!: { id: string } & Child;
+  @Input() child!: { id: number } & Child;
   @Input() isSelected: boolean = false; 
 
   @Output() deleteChild: EventEmitter<Child> = new EventEmitter<Child>();
-  @Output() childClicked = new EventEmitter<string>();
+  @Output() childClicked = new EventEmitter<number>();
 
   constructor() {}
 

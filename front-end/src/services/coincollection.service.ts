@@ -31,4 +31,10 @@ export class CoinCollectionService {
     get collectedCoins(): Coin[] {
         return this._collectedCoins;
     }
+
+    reset(): void {
+        this._collectedCoins = [];
+        this._existentCoins = [];
+    }
+    
 }

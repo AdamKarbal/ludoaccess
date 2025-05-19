@@ -15,6 +15,8 @@ import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
 import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
+import { Subject} from "rxjs";
+import { takeUntil } from 'rxjs/operators';
 
 
 @Injectable({ providedIn: 'root' })
@@ -49,7 +51,7 @@ export class GameService {
     private wantToExit = new BehaviorSubject<boolean>(false);
     public wantToExit$ = this.wantToExit.asObservable();
 
-    private currentWordIndex = new BehaviorSubject<number>(1);
+    private currentWordIndex = new BehaviorSubject<number>(0);
     public currentWordIndex$ = this.currentWordIndex.asObservable();
 
   private currentWordLength=new BehaviorSubject<number>(0);
@@ -78,7 +80,13 @@ export class GameService {
 
     fillSample(): void {
         if (this._settings?.wordDifficulty === "Facile") {
-            for (let i = 0; i < 8; i++) {
+            let nb1=Math.floor(this._settings?.numberOfWords/2);
+            let nb2=Math.floor(this._settings?.numberOfWords/2);
+            if(this._settings?.numberOfWords%2!=0){
+                nb1++;
+            }
+
+            for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(1);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -88,7 +96,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < nb2; i++) {
                 let word = this.motService.getMotParNiveau(2);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -100,7 +108,17 @@ export class GameService {
             }
         }
         if (this._settings?.wordDifficulty === "Moyen") {
-            for (let i = 0; i < 5; i++) {
+            let nb1=Math.floor(this._settings?.numberOfWords/3);
+            let nb2=Math.floor(this._settings?.numberOfWords/3);
+            let nb3=Math.floor(this._settings?.numberOfWords/3);
+            if(this._settings?.numberOfWords%3==1){
+                nb1++;
+            }
+            if(this._settings?.numberOfWords%3==2){
+                nb1++;
+                nb2++;
+            }
+            for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(1);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -110,7 +128,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < nb2; i++) {
                 let word = this.motService.getMotParNiveau(2);
                 if (this._wordSample.includes(word)) {
                     i--; // Décrémenter l'index pour répéter cette itération
@@ -120,7 +138,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < nb3; i++) {
                 let word = this.motService.getMotParNiveau(3);
                 if (this._wordSample.includes(word)) {
                     i--;
@@ -132,7 +150,12 @@ export class GameService {
             }
         }
         if (this._settings?.wordDifficulty === "Difficile") {
-            for (let i = 0; i < 7; i++) {
+            let nb1=Math.floor(this._settings?.numberOfWords/2);
+            let nb2=Math.floor(this._settings?.numberOfWords/2);
+            if(this._settings?.numberOfWords%2!=0){
+                nb1++;
+            }
+            for (let i = 0; i < nb2; i++) {
                 let word = this.motService.getMotParNiveau(2);
                 if (this._wordSample.includes(word)) {
                     i--;
@@ -142,7 +165,7 @@ export class GameService {
                     this._wordSample.push(word);
                 }
             }
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(3);
                 if (this._wordSample.includes(word)) {
                     i--;
@@ -158,19 +181,27 @@ export class GameService {
             console.log(this._wordSample[i]);
         }
     }
+    public destroyStep$ = new Subject<void>();
+
 
     playStep1(): void {
-        // this._wordTarget.push("Hey");
-        // this.isStep1CompletedSubject.next(true);
-        // if(this.var === 1){
-        //     this.playStep2();
-        // }
+        
+        this.freezeGameService.isNewEvent$.pipe(
+    filter(val => val),
+    rxjsTake(1),
+  ).subscribe(() => {
+    console.log('Interruption de playStep1 à cause de newEvent');
+    this.destroyStep$.next(); // Annule tous les abonnements en cours
+    this.destroyStep$.complete(); // Évite les fuites mémoire
+  });
+        
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
             if(this._wordTarget.length === 0){
                 console.log("Pas encore fini.");
-                return;
+                this.fillSample();
+                this.currentWordIndex.next(0);
             }
             else{
                 console.log("On passe à l'étape 2.");
@@ -180,7 +211,8 @@ export class GameService {
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length < 2){
                     this.settingService.upDifficulty(this._settings!);
                 }
-                setTimeout(() => {this.isStep1CompletedSubject.next(true);});
+                setTimeout(() => {
+                    this.isStep1CompletedSubject.next(true);});
                 return;
             }
           }
@@ -191,7 +223,8 @@ export class GameService {
             console.log(`Mot "${word}" après initialisation.`);
 
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
-            rxjsTake(1)).subscribe(() => {
+            rxjsTake(1),takeUntil(this.destroyStep$)).subscribe(() => {
+    
                 const audio = new Audio('assets/sons/correctAnswer.mp3');
                 audio.play();
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
@@ -209,6 +242,7 @@ export class GameService {
                 }
 
             });
+            
           }
     }
 
@@ -243,7 +277,7 @@ export class GameService {
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
                 this.resetStep2();
                 this.isStep2CompletedSubject.next(true);
-            })
+            }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
             console.log('Mot complété dans étape 2');
             this.w2gService.resetWord();
@@ -287,7 +321,7 @@ export class GameService {
                     return;
                 }
                 this.isStep3CompletedSubject.next(true);
-            })
+            }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
             console.log('Mot complété dans étape 3');
             this.w2gService.resetWord();
@@ -348,28 +382,16 @@ export class GameService {
         this.isGameFinished.next(false);
         this.wantToContinue.next(false);
         this.wantToExit.next(false);
-        this.currentWordIndex.next(1);
+        this.currentWordIndex.next(0);
         this._wordSample = [];
         this._wordTarget = [];
         this._currentWord = '';
         this.platformService.resetPlatforms();
-        this.w2gService.resetWord();
+        // this.w2gService.resetWord();
         this.chronoService.resetTimer();
-        this.fillSample();
-        this.playStep1();
+        // this.fillSample();
+        // this.playStep1();
 
-    }
-    restartIfExiting(): void {
-        this.freezeGameService.isCrossed$.pipe(
-        rxjsTake(1), filter(isCrossed => isCrossed), tap(() => {
-                console.log("Je suis dans le tap de isCrossed");
-                this.isCrossed = true;
-            })
-        ).subscribe(isCrossed => {
-            if (isCrossed) {
-                this.resetGame();
-            }
-        });
     }
 
     resetStep2(): void {
@@ -378,6 +400,7 @@ export class GameService {
     }
 
     resetStep3(): void {
+        this.coinCollectionService.reset();
         this.chronoService.resetTimer();
     }
 

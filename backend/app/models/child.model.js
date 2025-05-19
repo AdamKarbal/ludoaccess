@@ -4,7 +4,7 @@ const BaseModel = require('../utils/base-model.js')
 module.exports = new BaseModel('Child', {
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
-  id: Joi.string().required(),
+  id: Joi.number().required(),
   imageUrl: Joi.string().optional(),
   level: Joi.number().optional(),
   lastPlayed: Joi.date().optional(),
