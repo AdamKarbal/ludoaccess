@@ -54,8 +54,9 @@ export class GameService {
     private currentWordIndex = new BehaviorSubject<number>(0);
     public currentWordIndex$ = this.currentWordIndex.asObservable();
 
-  private currentWordLength=new BehaviorSubject<number>(0);
-  public currentWordLength$=this.currentWordLength.asObservable();
+    private dataToSend={}
+
+
 
 
 
@@ -185,7 +186,7 @@ export class GameService {
 
 
     playStep1(): void {
-        
+
         this.freezeGameService.isNewEvent$.pipe(
     filter(val => val),
     rxjsTake(1),
@@ -194,7 +195,7 @@ export class GameService {
     this.destroyStep$.next(); // Annule tous les abonnements en cours
     this.destroyStep$.complete(); // Évite les fuites mémoire
   });
-        
+
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
@@ -224,7 +225,7 @@ export class GameService {
 
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
             rxjsTake(1),takeUntil(this.destroyStep$)).subscribe(() => {
-    
+
                 const audio = new Audio('assets/sons/correctAnswer.mp3');
                 audio.play();
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
@@ -242,7 +243,7 @@ export class GameService {
                 }
 
             });
-            
+
           }
     }
 
@@ -264,8 +265,6 @@ export class GameService {
 
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
-        console.log(this._currentWord.length+"length envoyée");
-        this.currentWordLength.next(this._currentWord.length);
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
 
