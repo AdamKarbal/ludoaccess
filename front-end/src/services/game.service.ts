@@ -257,8 +257,7 @@ export class GameService {
         if (this._isProcessing) return;
         this._isProcessing = true;
         console.log('Début étape 2 - WordTarget:', this._wordTarget);
-        const mobService = this.injector.get(MobService);
-        mobService.respawn();
+
 
         if (this._wordTarget.length === 0) {
             console.log("Aucun mot dans wordTarget, passage à l'étape 3");
@@ -401,9 +400,7 @@ export class GameService {
     resetStep2(): void {
         this.platformService.resetPlatforms();
         this.w2gService.resetWord();
-        const mobService = this.injector.get(MobService);
-
-        mobService.destroy();
+;
     }
 
     resetStep3(): void {
