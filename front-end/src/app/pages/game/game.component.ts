@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, ChangeDetectorRef } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { filter, take as rxjsTake, tap} from "rxjs/operators";
 import { combineLatest } from "rxjs";
 import { GameService } from "src/services/game.service";
@@ -27,8 +27,10 @@ export class GameComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.gameService.destroyStep$ = new Subject<void>();
         this.gameService.fillSample();
-        this.gameService.playStep1();
+        this.gameService.playStep1(); 
+
         this.setupStepTransitions();
     }
 
@@ -37,12 +39,15 @@ export class GameComponent implements OnInit {
     }
 
     private setupStepTransitions(): void {
+
+        this._stepSubscriptions = [];
+
         this._stepSubscriptions.push(
-            this.freezeGameService.isNewEvent$.pipe(filter(newEvent => newEvent))
+            this.freezeGameService.isNewEvent$.pipe(filter(newEvent => newEvent),rxjsTake(1))
             .subscribe(() => {
                 console.log("User exited the game.");
-                this.setStep(1);
                 this.gameService.resetGame();
+                this.setStep(1);
                 this.playerService.resetPlayer();
             })
         );
@@ -110,8 +115,9 @@ export class GameComponent implements OnInit {
           .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);
-            this.gameService.changeStep("/acceuil"); // Redémarre le jeu
+            this.gameService.changeStep("/acceuil"); 
             this.gameService.resetGame(); // Redémarre le jeu
+            this.setupStepTransitions();
           });
     }
 
