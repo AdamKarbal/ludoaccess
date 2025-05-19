@@ -72,6 +72,7 @@ export class SettingsService {
       lettersize: 'Moyen',
       choosefont: 'Nintendo',
       chooseBackGround: 'Aléatoire',
+      numberOfWords: 15,
     };
   }
 
