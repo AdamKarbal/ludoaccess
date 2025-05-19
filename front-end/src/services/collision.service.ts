@@ -109,10 +109,11 @@ export class CollisionService {
             if (horizontallyAligned && verticallyTouching) {
               if(!coin.isCollected){
                 console.log("Collision with: " , coin.letter);
+                console.log("Liste de coins depuis collisionService: ", coins);
                 coin.collecting = true;
                 const audio = new Audio('assets/sons/coin_received.mp3');
                 audio.play();
-          
+                if(this.coinCollectionService.existentCoins.length === 0){}
                 setTimeout(() => {
                   coin.collect();
                   this.coinCollectionService.addCollected(coin);
