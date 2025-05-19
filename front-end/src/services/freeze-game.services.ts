@@ -23,13 +23,19 @@ private isNewEventSubject = new BehaviorSubject<boolean>(false);
   }
 
   resume() {
-    this.isNewEventSubject.next(true);
+    // this.isNewEventSubject.next(true);
     this.isPausedSubject.next(false);
     this.isCrossedSubject.next(false); // Reset the crossed state when resuming
-    this.isNewEventSubject.next(false);
+    // this.isNewEventSubject.next(false);
   }
   exit() {
     this.isCrossedSubject.next(true);
+    
+  }
+  quit(){
+    this.isNewEventSubject.next(true);
+    this.isCrossedSubject.next(false);
+    this.isNewEventSubject.next(false);
   }
 
   setInfoState(isInfo: boolean) {

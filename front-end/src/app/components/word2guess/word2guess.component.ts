@@ -24,7 +24,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   public currentFont: string = 'Arial';
   public currentSize: number = 16;
 
-  wordIndex: number = 1;
+  wordIndex: number = 0;
   totalWords: number = 15;
 
 
