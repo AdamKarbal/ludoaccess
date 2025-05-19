@@ -33,8 +33,7 @@ export class PlayerComponent implements OnInit, Collidable {
       this.updateAnimation();
     }, 16); 
     console.log("Affichage des coins depuis le service coinCollection :", this.coinCollectionService.existentCoins);
-    this.collisionService.startCollisionCheck(this, this.coinCollectionService.existentCoins); }
-
+  }
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     this.playerService.pressKey(event.key);
@@ -82,6 +81,11 @@ export class PlayerComponent implements OnInit, Collidable {
   get width(): number {
     return this.frameWidth;
   }
+
+  public restartCollisionCheck() {
+  this.collisionService.stopCollisionCheck();
+  this.collisionService.startCollisionCheck(this, this.coinCollectionService.existentCoins);
+}
 
   get height(): number {
     return this.frameHeight;
