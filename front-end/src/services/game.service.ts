@@ -18,7 +18,7 @@ import { AuthService } from "./auth.service";
 import { Subject} from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { Injector } from '@angular/core';
-import { MobService } from './mob.service'; // adapte le chemin si besoin
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -319,7 +319,7 @@ export class GameService {
                 //     );
                 //     return;
                 // }
-                this.isStep3CompletedSubject.next(true);
+                 this.isStep3CompletedSubject.next(true);
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
             if(this._wordTarget.length===0) {
@@ -422,10 +422,10 @@ export class GameService {
     resetStep2(): void {
         this.platformService.resetPlatforms();
         this.w2gService.resetWord();
-;
     }
 
     resetStep3(): void {
+        console.warn("reset step3");
         this.coinCollectionService.reset();
         this.chronoService.resetTimer();
     }
