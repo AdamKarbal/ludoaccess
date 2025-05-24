@@ -9,7 +9,7 @@ export class FreezeGameService {
   private isCrossedSubject = new BehaviorSubject<boolean>(false);
   private isInfoSubject = new BehaviorSubject<boolean>(false);
 
-private isNewEventSubject = new BehaviorSubject<boolean>(false);
+public isNewEventSubject = new BehaviorSubject<boolean>(false);
   isNewEvent$ = this.isNewEventSubject.asObservable();
 
   isPaused$ = this.isPausedSubject.asObservable();
@@ -35,7 +35,6 @@ private isNewEventSubject = new BehaviorSubject<boolean>(false);
   quit(){
     this.isNewEventSubject.next(true);
     this.isCrossedSubject.next(false);
-    this.isNewEventSubject.next(false);
   }
 
   setInfoState(isInfo: boolean) {

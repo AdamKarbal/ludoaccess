@@ -303,22 +303,6 @@ export class GameService {
                 this._isProcessing = false;
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
-                // if(this._wordTarget.length===0) {
-                //     console.log("Mot courant réinitialisé.");
-                //     this.isGameFinished.next(true);
-                //     this._isProcessing = false;
-
-                //     this.finalMessageService.wantToContinue$.pipe(filter(wantsToContinue => wantsToContinue),rxjsTake(1)).subscribe(wantsToContinue => {
-                //         console.log("Je veux continuer!");
-                //         this.wantToContinue.next(true);
-                //     });
-                //    this.finalMessageService.wantToExit$.pipe(filter(wantsToExit => wantsToExit),rxjsTake(1)).subscribe(wantsToExit => {
-                //         console.log("Je veux quitter!");
-                //         this.wantToExit.next(true);
-                //     }
-                //     );
-                //     return;
-                // }
                  this.isStep3CompletedSubject.next(true);
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
@@ -402,6 +386,7 @@ export class GameService {
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
+        this.freezeGameService.isNewEventSubject.next(false);
         this.isCrossed = false;
         this.finalMessageService.reset();
         this.isGameFinished.next(false);
@@ -438,12 +423,13 @@ export class GameService {
     this.isStep1CompletedSubject.next(false);
     this.isStep2CompletedSubject.next(false);
     this.isStep3CompletedSubject.next(false);
+    this.freezeGameService.isNewEventSubject.next(false);
     this.isGameFinished.next(false);
     this.isCrossed = false;
     this.finalMessageService.reset();
     this.wantToContinue.next(false);
     this.wantToExit.next(false);
-    this.currentWordIndex.next(1);
+    this.currentWordIndex.next(0);
     this._wordSample = [];
     this._wordTarget = [];
     this._currentWord = '';

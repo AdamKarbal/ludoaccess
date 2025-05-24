@@ -114,8 +114,8 @@ export class GameComponent implements OnInit {
           )
           .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut quitter !");
-            this.setStep(1);
             this.gameService.resetGame(); // Redémarre le jeu
+            this.setStep(1);
             this.gameService.changeStep("/acceuil"); 
             this.setupStepTransitions();
           });
