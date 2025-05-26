@@ -186,9 +186,6 @@ export class GameService {
 
     playStep1(): void {
 
-
-
-
         this.stopStep();
 
         if (this._wordSample.length === 0) {
@@ -238,7 +235,6 @@ export class GameService {
                 }
 
             });
-
           }
     }
 
@@ -260,6 +256,7 @@ export class GameService {
         }
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
+        this.currentWordLength.next(this._currentWord.length);
         this.w2gService.resetWord();
         this.w2gService.initializeWord(this._currentWord);
 
@@ -300,26 +297,7 @@ export class GameService {
                 this._isProcessing = false;
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
-                // if(this._wordTarget.length===0) {
-                //     console.log("Mot courant réinitialisé.");
-                //     this.isGameFinished.next(true);
-                //     this._isProcessing = false;
-
-                //     this.finalMessageService.wantToContinue$.pipe(filter(wantsToContinue => wantsToContinue),rxjsTake(1)).subscribe(wantsToContinue => {
-                //         console.log("Je veux continuer!");
-                //         this.wantToContinue.next(true);
-                //     });
-                //    this.finalMessageService.wantToExit$.pipe(filter(wantsToExit => wantsToExit),rxjsTake(1)).subscribe(wantsToExit => {
-                //         console.log("Je veux quitter!");
-                //         this.wantToExit.next(true);
-                //     }
-                //     );
-                //     return;
-                // }
-                this.isStep3CompletedSubject.next(true);
-            }),takeUntil(this.destroyStep$)
-        ).subscribe(() => {
-            if(this._wordTarget.length===0) {
+                if(this._wordTarget.length===0) {
                     console.log("Mot courant réinitialisé.");
                     this.isGameFinished.next(true);
                     this._isProcessing = false;
@@ -417,6 +395,18 @@ export class GameService {
         // this.fillSample();
         // this.playStep1();
 
+    }
+    restartIfExiting(): void {
+        this.freezeGameService.isCrossed$.pipe(
+        rxjsTake(1), filter(isCrossed => isCrossed), tap(() => {
+                console.log("Je suis dans le tap de isCrossed");
+                this.isCrossed = true;
+            })
+        ).subscribe(isCrossed => {
+            if (isCrossed) {
+                this.resetGame();
+            }
+        });
     }
 
     resetStep2(): void {

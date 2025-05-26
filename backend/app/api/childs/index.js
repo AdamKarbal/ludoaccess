@@ -6,8 +6,6 @@ const { Settings } = require('../../models')
 const {UserStats}= require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
 
-const router = new Router()
-
 router.get('/', (req, res) => {
   try {
     res.status(200).json(Child.get())
