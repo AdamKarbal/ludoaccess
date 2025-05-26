@@ -34,13 +34,20 @@ export class FinalScreenComponent implements OnInit {
     }
 
     OnContinueClick() {
+        
         this.finalMessageService.setWantToContinue();
         console.log("Continue clicked, want to continue set to true.");
+        this.setGameFinished(false);
     }
     OnStopClick() {
-        this.isGameFinished=false;
+
         this.finalMessageService.setWantToExit();
         console.log("Stop clicked, want to exit set to true.");
+        this.setGameFinished(false);
+    }
+
+    setGameFinished(bool : boolean){
+        this.isGameFinished=bool;
     }
     
 } 

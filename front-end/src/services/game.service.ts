@@ -79,6 +79,12 @@ export class GameService {
             this._settings = settings;
         });
         this.authService.startDifficultyTimer(this._settings!);
+        this.freezeGameService.isNewEvent$.pipe(
+        filter(val => val),
+    ).subscribe(() => {
+        console.log('Interruption d\'une step à cause de newEvent');
+        this.stopStep();
+    });
     }
 
     fillSample(): void {
@@ -188,18 +194,21 @@ export class GameService {
 
 
     playStep1(): void {
-        
-        this.stopStep();
+        if (this._isProcessing) return;
+        this._isProcessing = true;
+        this.destroyStep$ = new Subject<void>();
         
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
             if(this._wordTarget.length === 0){
                 console.log("Pas encore fini.");
+                this._isProcessing = false;
                 this.fillSample();
                 this.currentWordIndex.next(0);
             }
             else{
+                this._isProcessing=false;
                 console.log("On passe à l'étape 2.");
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
                     this.settingService.lowerDifficulty(this._settings!);
@@ -220,7 +229,7 @@ export class GameService {
 
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
             rxjsTake(1),takeUntil(this.destroyStep$)).subscribe(() => {
-    
+                this._isProcessing = false;
                 const audio = new Audio('assets/sons/correctAnswer.mp3');
                 audio.play();
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
@@ -233,9 +242,7 @@ export class GameService {
                   console.log(this._wordTarget);
                 }
                 this.w2gService.resetWord();
-                if (this._wordSample.length >= 0) {
                     this.playStep1();
-                }
 
             });
             
@@ -247,7 +254,8 @@ export class GameService {
     private _isProcessing: boolean = false;
 
     playStep2(): void {
-        this.stopStep();
+        
+        this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
         console.log('Début étape 2 - WordTarget:', this._wordTarget);
@@ -268,7 +276,7 @@ export class GameService {
 
         this.w2gService.isWordComplete$.pipe(
             filter(isComplete => isComplete),
-            take(1),
+            rxjsTake(1),
             finalize(() => {
                 this._isProcessing = false;
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
@@ -276,19 +284,18 @@ export class GameService {
                 this.isStep2CompletedSubject.next(true);
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
-            console.log('Mot complété dans étape 2');
+            console.log('Mot complété dans étape 2 [subscribe]');
             this.w2gService.resetWord();
+            
         });
     }
 
     playStep3(): void {
 
-        this.stopStep();
+        
+        this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
-        this.chronoService.resetTimer();
-        this.chronoService.startTimer();
-        // console.log('Début étape 3 - Chrono démarré');
 
         console.log('Début étape 3 - Mot courant:', this._currentWord);
 
@@ -298,15 +305,16 @@ export class GameService {
         this.chronoService.startTimer();
         this.w2gService.isWordComplete$.pipe(
             filter(isComplete => isComplete),
-            take(1),
+            rxjsTake(1),
             finalize(() => {
                 this._isProcessing = false;
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
-                 this.isStep3CompletedSubject.next(true);
+                this.isStep3CompletedSubject.next(true);
+                
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
-            if(this._wordTarget.length===0) {
+             if(this._wordTarget.length===0) {
                     console.log("Mot courant réinitialisé.");
                     this.isGameFinished.next(true);
                     this._isProcessing = false;
@@ -320,23 +328,20 @@ export class GameService {
                         this.wantToExit.next(true);
                     }
                     );
-                    return;
-                }
             console.log('Mot complété dans étape 3');
             this.w2gService.resetWord();
             this.w2gService.onWordCompleted();
+                }
         });
     }
 
     stopStep(): void{
-        this.freezeGameService.isNewEvent$.pipe(
-    filter(val => val),
-    rxjsTake(1),
-  ).subscribe(() => {
+    
     console.log('Interruption d\'une step à cause de newEvent');
-    this.destroyStep$.next(); // Annule tous les abonnements en cours
-    this.destroyStep$.complete(); // Évite les fuites mémoire
-  });
+     this.destroyStep$.next(); // Annule tous les abonnements en cours
+    this._isProcessing = false; // IMPORTANT : libère le flag pour relancer playStepX
+    this.destroyStep$.complete(); // Termine le subject actuel pour éviter fuite mémoire
+    this.destroyStep$ = new Subject<void>(); // Recréé un nouveau Subject prêt à être utilisé
     }
 
     // Getters
@@ -372,14 +377,6 @@ export class GameService {
         }
       }
 
-      get isExitedToolbar(): boolean {
-        this.freezeGameService.isCrossed$.pipe(
-          rxjsTake(1)
-          ).subscribe(isCrossed => {
-            this.isCrossed = isCrossed;
-        });
-        return this.isCrossed;
-    }
 
     resetGame(): void {
         console.warn("Hé ho");
@@ -387,6 +384,7 @@ export class GameService {
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
         this.freezeGameService.isNewEventSubject.next(false);
+        this.w2gService.resetWord();
         this.isCrossed = false;
         this.finalMessageService.reset();
         this.isGameFinished.next(false);
@@ -427,6 +425,7 @@ export class GameService {
     this.isGameFinished.next(false);
     this.isCrossed = false;
     this.finalMessageService.reset();
+    this.w2gService.resetWord();
     this.wantToContinue.next(false);
     this.wantToExit.next(false);
     this.currentWordIndex.next(0);
@@ -434,7 +433,6 @@ export class GameService {
     this._wordTarget = [];
     this._currentWord = '';
     this.platformService.resetPlatforms();
-    this.w2gService.resetWord();
     this.chronoService.resetTimer();
     
 }
