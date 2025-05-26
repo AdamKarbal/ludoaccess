@@ -25,13 +25,13 @@ export class PlatformComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('Plateformes:', this.gameService.w2g);
-    this.platforms = this.platformService.genererPlateformes(this.gameService.w2g);
+    this.platforms = this.platformService.genererPlateformes(this.gameService.currentWord);
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       if (settings) {
         this.currentBackground = this.settingsService.getCurrentBackground();
         this.setFilterBasedOnBackground(this.currentBackground);
         console.log('Background mis à jour dans platform :', this.currentBackground);
-      }
+      } 
     });
   }
 

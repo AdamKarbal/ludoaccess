@@ -44,8 +44,7 @@ export class MotService {
     }
 
   getMotParNiveau(level: 1 | 2 | 3): string {
-    // Filtrer les mots du niveau demandé
-    const motsNiveau = this.words.filter(word => word.level === level);
+    const motsNiveau = this.words.filter(word => Number(word.level) === level); //Cast essentiel car sinon level est de type strin
     if (motsNiveau.length === 0) {
       return ''; // Ou gérer le cas où il n'y a pas de mot pour ce niveau
     }

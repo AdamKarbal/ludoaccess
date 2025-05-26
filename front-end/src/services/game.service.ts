@@ -60,7 +60,7 @@ export class GameService {
 
 
     constructor(
-        private motService: MotService,
+        public motService: MotService,
         private platformService: PlatformService,
         private coinCollectionService: CoinCollectionService,
         private levelService: LevelService,
@@ -75,11 +75,15 @@ export class GameService {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
         });
+
         this.authService.startDifficultyTimer(this._settings!);
     }
 
     fillSample(): void {
+        console.log("Entrée dans fillSample");
+        console.log("Settings avant fillSample:", this._settings);
         if (this._settings?.wordDifficulty === "Facile") {
+            console.log("Settings avant fillSample: facile", this._settings);
             let nb1=Math.floor(this._settings?.numberOfWords/2);
             let nb2=Math.floor(this._settings?.numberOfWords/2);
             if(this._settings?.numberOfWords%2!=0){
@@ -88,12 +92,15 @@ export class GameService {
 
             for (let i = 0; i < nb1; i++) {
                 let word = this.motService.getMotParNiveau(1);
+                console.log("Mot récupéré pour niveau 1: " + word);
                 if (this._wordSample.includes(word)) {
+                    console.log("Mot déjà présent dans le sample, on recommence.");
                     i--; // Décrémenter l'index pour répéter cette itération
                     continue;
                 }
                 else {
                     this._wordSample.push(word);
+                    console.log("Mot ajouté au sample: " + word);
                 }
             }
             for (let i = 0; i < nb2; i++) {
@@ -104,10 +111,14 @@ export class GameService {
                 }
                 else {
                     this._wordSample.push(word);
+                    
                 }
             }
+            console.log("sample: " + this._wordSample);
         }
         if (this._settings?.wordDifficulty === "Moyen") {
+                                console.log("Settings avant fillSample: moyen", this._settings);
+
             let nb1=Math.floor(this._settings?.numberOfWords/3);
             let nb2=Math.floor(this._settings?.numberOfWords/3);
             let nb3=Math.floor(this._settings?.numberOfWords/3);
@@ -150,6 +161,8 @@ export class GameService {
             }
         }
         if (this._settings?.wordDifficulty === "Difficile") {
+                                console.log("Settings avant fillSample: difficle", this._settings);
+
             let nb1=Math.floor(this._settings?.numberOfWords/2);
             let nb2=Math.floor(this._settings?.numberOfWords/2);
             if(this._settings?.numberOfWords%2!=0){
@@ -181,6 +194,7 @@ export class GameService {
             console.log(this._wordSample[i]);
         }
     }
+
     public destroyStep$ = new Subject<void>();
 
 
@@ -256,6 +270,7 @@ export class GameService {
             this.isStep2CompletedSubject.next(true);
             return;
         }
+        
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
         this.currentWordLength.next(this._currentWord.length);
@@ -373,6 +388,10 @@ export class GameService {
     }
     get wordTarget(): string[] {
         return this._wordTarget;
+    }
+    
+    get currentWord(): string {
+        return this._currentWord;
     }
     get progress(): number {
         return this.levelService.progress;
