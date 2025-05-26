@@ -24,7 +24,6 @@ export class JeuComponent {
   @ViewChild('player') playerComponent!: PlayerComponent;
 
   ngAfterViewInit() {
-    // Quand tu veux démarrer l'étape 2 ou après un reset :
     this.playerComponent.restartCollisionCheck();
   }
 

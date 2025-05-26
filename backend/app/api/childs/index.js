@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
       wordWritingTime: 30,
       wordDifficulty: 'Facile',
       lettersize: 'Moyen',
-      choosefont: 'Nintendo',
+      choosefont: 'cursif ecriture A',
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
     };
