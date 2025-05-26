@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const api = require('./api')
 
+const ap = express()
 module.exports = (cb) => {
   const app = express()
   app.disable('x-powered-by')
