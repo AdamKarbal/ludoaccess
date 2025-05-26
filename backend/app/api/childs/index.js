@@ -95,7 +95,14 @@ router.put('/:childId', (req, res) => {
 })
 router.delete('/:childId', (req, res) => {
   try {
+    const childId = parseInt(req.params.childId, 10);
     Child.delete(req.params.childId)
+    Settings.delete(childId);
+    const userStatsList = UserStats.get();
+    const stat = userStatsList.find(stat => stat.child.id === childId);
+    if (stat) {
+      UserStats.delete(stat.id);
+    }
     res.status(204).end()
   } catch (err) {
     manageAllErrors(res, err)
