@@ -41,6 +41,8 @@ import { GameComponent } from './pages/game/game.component';
 import { ChronoComponent } from './components/chrono/chrono.component';
 import { GameoverComponent } from './components/gameover/gameover.component';
 import { FinalScreenComponent } from './components/finalScreen/finalScreen.component';
+import { WordLengthButtonComponent} from "./components/word-length-button/word-length-button.component";
+import {WordLengthListComponent} from "./components/word-length-button-list/word-length-list.component";
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { FinalScreenComponent } from './components/finalScreen/finalScreen.compo
     ListOfPeopleComponent,
     PeopleComponent,
     GameComponent,
-    FinalScreenComponent
+    FinalScreenComponent,
+    WordLengthButtonComponent,
+    WordLengthListComponent,
   ],
   imports: [
     BrowserModule,
