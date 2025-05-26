@@ -8,6 +8,8 @@ import {GameService} from "../../../services/game.service";
 
 
 
+
+
 @Component({
   selector: "app-word2guess",
   templateUrl: "./word2guess.component.html",
