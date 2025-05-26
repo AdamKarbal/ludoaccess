@@ -1,0 +1,192 @@
+[33m508108b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/finishStep1[m[33m, [m[1;31morigin/feature/finishStep1[m[33m)[m HEAD@{0}: commit (merge): Merge branch 'feature/finishStep1' of https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess into feature/finishStep1
+[33m17494aa[m HEAD@{1}: reset: moving to HEAD
+[33m17494aa[m HEAD@{2}: commit: some stuff
+[33m5765638[m HEAD@{3}: pull: Fast-forward
+[33md168781[m HEAD@{4}: commit: Debug step3
+[33m2b4fe24[m HEAD@{5}: commit: Not finish
+[33m3a14fcf[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{6}: checkout: moving from master to feature/finishStep1
+[33m3a14fcf[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{7}: pull: Fast-forward
+[33m8afdda8[m HEAD@{8}: pull: Merge made by the 'ort' strategy.
+[33ma695da6[m HEAD@{9}: commit: jsp
+[33m6bef668[m HEAD@{10}: commit: Etapes remises
+[33m5001aec[m HEAD@{11}: commit (merge): Merge branch 'master' of https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess
+[33m275af70[m HEAD@{12}: commit: Exit marche bien
+[33m0c6e5f0[m HEAD@{13}: pull: Fast-forward
+[33m2f73e68[m HEAD@{14}: pull: Fast-forward
+[33mc920035[m HEAD@{15}: checkout: moving from feature/recommencer-statistiques to master
+[33m0d811fa[m[33m ([m[1;31morigin/feature/recommencer-statistiques[m[33m, [m[1;32mfeature/recommencer-statistiques[m[33m)[m HEAD@{16}: commit: Recommencer presque done et modif stats
+[33mc920035[m HEAD@{17}: checkout: moving from master to feature/recommencer-statistiques
+[33mc920035[m HEAD@{18}: pull: Fast-forward
+[33mc410f43[m HEAD@{19}: commit: Dodo
+[33m1c093d1[m HEAD@{20}: pull: Fast-forward
+[33m77f2f9f[m HEAD@{21}: checkout: moving from feature/finalScreen to master
+[33me61e6be[m[33m ([m[1;32mfeature/finalScreen[m[33m)[m HEAD@{22}: commit: Recommencer Partie presque done
+[33m77f2f9f[m HEAD@{23}: checkout: moving from master to feature/finalScreen
+[33m77f2f9f[m HEAD@{24}: pull: Fast-forward
+[33m7a8d0fd[m HEAD@{25}: pull: Merge made by the 'ort' strategy.
+[33mfb5c4d5[m HEAD@{26}: reset: moving to HEAD
+[33mfb5c4d5[m HEAD@{27}: commit: FINSIH SCREEN not done yet
+[33m403f762[m HEAD@{28}: pull: updating HEAD
+[33m403f762[m HEAD@{29}: commit (merge): Merge branch 'master' of https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess
+[33m3285874[m HEAD@{30}: commit: Finish Screen presque fini
+[33m44df6cb[m HEAD@{31}: commit (merge): Merge branch 'master' of https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess
+[33m25aacff[m HEAD@{32}: commit: Modif jeu étape1 et étape3 entrée avec service
+[33m85dc469[m HEAD@{33}: reset: moving to HEAD
+[33m85dc469[m HEAD@{34}: reset: moving to HEAD
+[33m85dc469[m HEAD@{35}: commit: Modif jeu étape1 et étape3 entrée avec service
+[33m0ec1388[m HEAD@{36}: pull: Fast-forward
+[33m6076e5e[m HEAD@{37}: checkout: moving from feature/nicolas to master
+[33md1c61fd[m[33m ([m[1;32mfeature/nicolas[m[33m)[m HEAD@{38}: commit: STEP 1,2,3.part2
+[33md7e4544[m HEAD@{39}: commit: STEP 1,2,3.part2
+[33m3e1561c[m HEAD@{40}: commit: STEP 1,2,3
+[33m4e2ac77[m HEAD@{41}: checkout: moving from feature/nicolas to feature/nicolas
+[33m4e2ac77[m HEAD@{42}: checkout: moving from master to feature/nicolas
+[33m6076e5e[m HEAD@{43}: checkout: moving from feature/nicolas to master
+[33m4e2ac77[m HEAD@{44}: commit: Là W2G marchent avec toolbar donc good
+[33m4d7849b[m HEAD@{45}: commit: W2G done
+[33m137cfd0[m HEAD@{46}: commit: W2G propre
+[33m1d26faa[m HEAD@{47}: pull: Fast-forward
+[33m644c323[m HEAD@{48}: reset: moving to HEAD
+[33m644c323[m HEAD@{49}: checkout: moving from master to feature/nicolas
+[33m6076e5e[m HEAD@{50}: reset: moving to HEAD
+[33m6076e5e[m HEAD@{51}: pull: Fast-forward
+[33m830d7bc[m HEAD@{52}: commit: Chrono Done
+[33m9363c1d[m HEAD@{53}: commit: LevelService on W2G Completed
+[33m87270a1[m HEAD@{54}: pull: Fast-forward
+[33mbdd8de7[m HEAD@{55}: commit: Fusion Vegeto entre les deux W2G
+[33m5c15207[m HEAD@{56}: pull: Fast-forward
+[33m7743c61[m HEAD@{57}: pull: Fast-forward
+[33mb44eef3[m HEAD@{58}: checkout: moving from feature/nicolas to master
+[33m644c323[m HEAD@{59}: commit (merge): Merge branch 'feature/nicolas' of https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess into feature/nicolas
+[33m74e41a7[m HEAD@{60}: commit: Fin toolbar(manque juste recommencer)
+[33mfbd5ea5[m HEAD@{61}: checkout: moving from master to feature/nicolas
+[33mb44eef3[m HEAD@{62}: pull: Fast-forward
+[33md4e5752[m HEAD@{63}: checkout: moving from feature/nicolas to master
+[33mfbd5ea5[m HEAD@{64}: commit: Avancement toolbar
+[33mc6d412d[m HEAD@{65}: pull: Fast-forward
+[33me0ac1b3[m HEAD@{66}: checkout: moving from master to feature/nicolas
+[33md4e5752[m HEAD@{67}: commit: Petit changement de routage
+[33m80b2efa[m HEAD@{68}: pull: Fast-forward
+[33m1b4b49c[m HEAD@{69}: checkout: moving from feature/nicolas to master
+[33me0ac1b3[m HEAD@{70}: commit: NOT done
+[33m20ee10c[m HEAD@{71}: commit: Travail en cours
+[33mcb6d1be[m HEAD@{72}: checkout: moving from master to feature/nicolas
+[33m1b4b49c[m HEAD@{73}: reset: moving to HEAD~1
+[33m1c27ff4[m HEAD@{74}: checkout: moving from feature/nicolas to master
+[33mcb6d1be[m HEAD@{75}: checkout: moving from master to feature/nicolas
+[33m1c27ff4[m HEAD@{76}: commit: Travail en cours
+[33m1b4b49c[m HEAD@{77}: commit: Rajout accent et ç
+[33mb1c3cdd[m HEAD@{78}: reset: moving to origin/master
+[33m00e6da3[m HEAD@{79}: reset: moving to HEAD
+[33m00e6da3[m HEAD@{80}: checkout: moving from feature/nicolas to master
+[33mcb6d1be[m HEAD@{81}: commit: Word2guess modif ergo.2
+[33m0ef2a91[m HEAD@{82}: commit: Word2guess modif ergo
+[33mcc2d173[m HEAD@{83}: checkout: moving from master to feature/nicolas
+[33m00e6da3[m HEAD@{84}: commit (merge): Merge
+[33mc96bba5[m HEAD@{85}: commit: Fix submodule Matrio to latest valid commit
+[33m29dc1f8[m HEAD@{86}: pull: Fast-forward
+[33m9f6b96c[m HEAD@{87}: pull: Fast-forward
+[33m33b5f3d[m HEAD@{88}: commit: Etape 1 done
+[33m9ab2cdf[m HEAD@{89}: pull: Fast-forward
+[33m926a1d5[m HEAD@{90}: commit: Uniformisation police menu
+[33m2566b57[m HEAD@{91}: pull: Fast-forward
+[33m8947da9[m HEAD@{92}: pull: Fast-forward
+[33m6408815[m HEAD@{93}: commit: Ismail problème de statplayer path pas bon, j'ai mis en com
+[33m3b946c9[m HEAD@{94}: pull --rebase (finish): returning to refs/heads/master
+[33m3b946c9[m HEAD@{95}: pull --rebase (pick): Etape 3 complètement donegit add .git add .git add .git add .git add .git add .!
+[33me505bbb[m HEAD@{96}: pull --rebase (start): checkout e505bbbbffbbf86f8c10fc34aedec0b3c30d2347
+[33ma4aacbf[m HEAD@{97}: reset: moving to HEAD
+[33ma4aacbf[m HEAD@{98}: reset: moving to HEAD
+[33ma4aacbf[m HEAD@{99}: commit: Etape 3 complètement donegit add .git add .git add .git add .git add .git add .!
+[33m2c6832b[m HEAD@{100}: commit: Ajout comentaire pour que ça fonctionne
+[33m92ca8e0[m HEAD@{101}: pull: Fast-forward
+[33m3265fc8[m HEAD@{102}: checkout: moving from feature/angular_jeu_etape3 to master
+[33m998f38e[m[33m ([m[1;31morigin/feature/angular_jeu_etape3[m[33m, [m[1;32mfeature/angular_jeu_etape3[m[33m)[m HEAD@{103}: commit: Jeu_etape 3 done
+[33m3265fc8[m HEAD@{104}: checkout: moving from master to feature/angular_jeu_etape3
+[33m3265fc8[m HEAD@{105}: commit: Word2guess done
+[33m00d6d59[m HEAD@{106}: commit (merge): Merge branch 'master' of https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess
+[33m91c7e07[m HEAD@{107}: commit: Word2Guess presque done
+[33mdad750e[m HEAD@{108}: commit: Level vrm done
+[33m7a09bff[m HEAD@{109}: commit: Dynamisme levelbar done
+[33m3451ddc[m HEAD@{110}: pull: Fast-forward
+[33m0fb3aae[m HEAD@{111}: commit: Modif jeu_etape1
+[33m146a78e[m HEAD@{112}: commit: fix angular
+[33m6d67fe2[m HEAD@{113}: pull: Fast-forward
+[33m7e6d1ee[m[33m ([m[1;33mtag: [m[1;33mMilestone2[m[33m)[m HEAD@{114}: commit: Ajout chemin jeu différentes étapes
+[33me2bbd36[m HEAD@{115}: pull: Fast-forward
+[33m55f236c[m HEAD@{116}: checkout: moving from feature/angular_jeu to master
+[33mc575f7a[m[33m ([m[1;32mfeature/angular_jeu[m[33m)[m HEAD@{117}: commit: re
+[33m4c12db3[m HEAD@{118}: commit: Modif
+[33mccce983[m HEAD@{119}: pull: Fast-forward
+[33m9c17ab6[m HEAD@{120}: commit: Etape 3 done
+[33m72f3682[m HEAD@{121}: pull: Fast-forward
+[33mafc245a[m HEAD@{122}: pull: Fast-forward
+[33mc9e1925[m HEAD@{123}: commit: Modif style.css
+[33m2c4f2a7[m HEAD@{124}: commit: Modif
+[33m778ac30[m HEAD@{125}: commit: Etape 2 du jeu done
+[33mb11eb2c[m HEAD@{126}: commit: Modif jeu.html
+[33me13d2be[m HEAD@{127}: commit: Démarrage phase 2 en angular
+[33m9b0d600[m HEAD@{128}: commit: 1ère étape done
+[33m18d3268[m HEAD@{129}: commit: Ajout etape1 jeu pas encore fonctionnel
+[33m9d4bcaa[m HEAD@{130}: commit: Ajout composants Angular mais pas encore fonctionnel
+[33mea5dea4[m HEAD@{131}: checkout: moving from master to feature/angular_jeu
+[33m55f236c[m HEAD@{132}: commit: matrio bug
+[33mea5dea4[m HEAD@{133}: reset: moving to HEAD
+[33mea5dea4[m HEAD@{134}: checkout: moving from feature/angular_jeu to master
+[33mea5dea4[m HEAD@{135}: checkout: moving from master to feature/angular_jeu
+[33mea5dea4[m HEAD@{136}: pull: Fast-forward
+[33m570cecb[m[33m ([m[1;33mtag: [m[1;33mMilestone1[m[33m)[m HEAD@{137}: pull: Fast-forward
+[33m020e637[m HEAD@{138}: checkout: moving from feature/maquetteJeuPourJeune to master
+[33m1d20439[m[33m ([m[1;32mfeature/maquetteJeuPourJeune[m[33m)[m HEAD@{139}: pull: Fast-forward
+[33m01150cb[m HEAD@{140}: commit: Matrio
+[33mf203d77[m HEAD@{141}: commit: Modif
+[33m85ce49f[m HEAD@{142}: commit: Chemin corrigé
+[33m2f97e5e[m HEAD@{143}: commit: Finalisation step1
+[33m5d52398[m HEAD@{144}: commit: Finalisation maquette1 + ajout composant
+[33m8d7c9ce[m HEAD@{145}: commit: Fist step done
+[33mf102c0f[m HEAD@{146}: commit: Suppression trou
+[33mfede98e[m HEAD@{147}: commit: Ajout composant + début Etape 1
+[33m72bd9f1[m HEAD@{148}: commit: Travail sur Matrio
+[33m3a11920[m HEAD@{149}: checkout: moving from feature/maquetteReglage to feature/maquetteJeuPourJeune
+[33m7a790bc[m[33m ([m[1;32mfeature/maquetteReglage[m[33m)[m HEAD@{150}: reset: moving to HEAD
+[33m7a790bc[m[33m ([m[1;32mfeature/maquetteReglage[m[33m)[m HEAD@{151}: checkout: moving from feature/maquetteJeuPourJeune to feature/maquetteReglage
+[33m3a11920[m HEAD@{152}: reset: moving to HEAD
+[33m3a11920[m HEAD@{153}: commit: Ajout composants
+[33m2d37559[m HEAD@{154}: commit: Matrio good, manque encore composant
+[33m15fe685[m HEAD@{155}: checkout: moving from feature/maquetteReglage to feature/maquetteJeuPourJeune
+[33m7a790bc[m[33m ([m[1;32mfeature/maquetteReglage[m[33m)[m HEAD@{156}: checkout: moving from feature/maquetteJeuPourJeune to feature/maquetteReglage
+[33m15fe685[m HEAD@{157}: commit: Good
+[33m6a3ef50[m HEAD@{158}: checkout: moving from feature/maquetteReglage to feature/maquetteJeuPourJeune
+[33m7a790bc[m[33m ([m[1;32mfeature/maquetteReglage[m[33m)[m HEAD@{159}: checkout: moving from feature/maquetteJeuPourJeune to feature/maquetteReglage
+[33m6a3ef50[m HEAD@{160}: commit: Rename
+[33m8f795b8[m HEAD@{161}: checkout: moving from feature/maquetteJeuPourJeune to feature/maquetteJeuPourJeune
+[33m8f795b8[m HEAD@{162}: checkout: moving from feature/maquetteReglage to feature/maquetteJeuPourJeune
+[33m7a790bc[m[33m ([m[1;32mfeature/maquetteReglage[m[33m)[m HEAD@{163}: checkout: moving from feature/maquetteJeuPourJeune to feature/maquetteReglage
+[33m8f795b8[m HEAD@{164}: commit: Matrio
+[33mae25363[m HEAD@{165}: pull: Fast-forward
+[33m36b9fb4[m HEAD@{166}: pull: Fast-forward
+[33m37185d1[m HEAD@{167}: pull: Fast-forward
+[33mc775fa6[m HEAD@{168}: reset: moving to HEAD
+[33mc775fa6[m HEAD@{169}: pull: Fast-forward
+[33mf6da696[m HEAD@{170}: pull: Fast-forward
+[33med6f619[m HEAD@{171}: reset: moving to HEAD
+[33med6f619[m HEAD@{172}: commit: Ajout Mob
+[33mff4e0f0[m HEAD@{173}: commit: Modif px into vh et vw
+[33m0878a24[m HEAD@{174}: pull: Fast-forward
+[33m512fcc4[m HEAD@{175}: commit: passage de px à vw hw
+[33ma764459[m HEAD@{176}: pull: Fast-forward
+[33mebc4c55[m HEAD@{177}: pull: Fast-forward
+[33m844f9e2[m HEAD@{178}: commit: Ajout perso+plateformes
+[33m74136b0[m HEAD@{179}: pull: Fast-forward
+[33m32ad4e7[m HEAD@{180}: commit: Modif trou
+[33m2015421[m HEAD@{181}: commit: stylisation du sol + nuage
+[33m5199950[m HEAD@{182}: pull: Fast-forward
+[33m0695508[m HEAD@{183}: pull: Fast-forward
+[33m11bec00[m HEAD@{184}: commit: Ajout trou
+[33m94537e4[m HEAD@{185}: commit: Ajout style.css et début de fond
+[33m7c3a2a7[m HEAD@{186}: commit: Ajout style.css et début de fond
+[33meb71c2e[m HEAD@{187}: commit: Nouveau Dossier src
+[33m020e637[m HEAD@{188}: checkout: moving from master to feature/maquetteJeuPourJeune
+[33m020e637[m HEAD@{189}: pull: Fast-forward
+[33m4f74802[m HEAD@{190}: pull: Fast-forward
+[33m3e9eb2f[m HEAD@{191}: clone: from https://github.com/2019-2020-ps6/2024-2025-ps6-si3-ps6-ludoaccess

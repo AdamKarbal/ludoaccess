@@ -6,6 +6,7 @@ import { GameService } from "src/services/game.service";
 import { Router } from "@angular/router";
 import { FreezeGameService } from "src/services/freeze-game.services";
 import { PlayerService } from "src/services/player.service";
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: "app-game",
@@ -18,10 +19,18 @@ export class GameComponent implements OnInit, OnDestroy {
     private _isEtape3: boolean = false;
     private _stepSubscriptions: Subscription[] = [];
 
-    constructor(private gameService: GameService, private cdr: ChangeDetectorRef, private router: Router, private freezeGameService: FreezeGameService, private playerService: PlayerService) {}
+    constructor(private gameService: GameService, private cdr: ChangeDetectorRef,private router: Router,private freezeGameService: FreezeGameService,private playerService: PlayerService, private ngZone: NgZone) {
+        this._isEtape1 = true;
+        this._isEtape2 = false;
+        this._isEtape3 = false;
+    }
+
 
     ngOnInit(): void {
+        console.warn("C'est parti");
+        this.gameService.resetGame();
         this.gameService.destroyStep$ = new Subject<void>();
+
         this.gameService.motService.words$.subscribe(words => { //Ne remplit le sample que si des mots sont disponibles
             if (words.length > 0) {
                 console.log("Les mots sont prêts !");
@@ -37,6 +46,8 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     private setupStepTransitions(): void {
+        this._stepSubscriptions.forEach(sub => sub.unsubscribe());
+
         this._stepSubscriptions = [];
 
         this._stepSubscriptions.push(
@@ -82,22 +93,34 @@ export class GameComponent implements OnInit, OnDestroy {
                 }
             })
         );
+        
+      
+      this._stepSubscriptions.push(combineLatest([
 
-        combineLatest([
             this.gameService.isGameFinished$,
             this.gameService.wantToContinue$
         ])
         .pipe(filter(([isFinished, wantToContinue]) => isFinished && wantToContinue), rxjsTake(1))
         .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut continuer !");
-            this.gameService.continue();
-            this.setStep(1);
-            this.gameService.fillSample();
-            this.gameService.playStep1();
-            this.setupStepTransitions();
-        });
 
-        combineLatest([
+            // 1. Masquer d’abord toutes les étapes
+            this.setStep(-1);
+
+            // ✅ Empêche les déclenchements parasites
+            this.ngZone.runOutsideAngular(() => {
+                    requestAnimationFrame(() => {
+                        this.ngZone.run(() => {
+                        this.gameService.resetGame();
+                        this.setStep(1);
+                        this.gameService.fillSample();
+                        this.gameService.playStep1();
+                        this.setupStepTransitions();
+                        });
+                    });
+                    });
+          }));
+          this._stepSubscriptions.push(combineLatest([
             this.gameService.isGameFinished$,
             this.gameService.wantToExit$
         ])
@@ -105,10 +128,10 @@ export class GameComponent implements OnInit, OnDestroy {
         .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);
+            // this.gameService.resetGame(); // Redémarre le jeu
             this.gameService.changeStep("/acceuil"); 
-            this.gameService.resetGame();
-            this.setupStepTransitions();
-        });
+          }));
+
     }
 
     getStep(): number {
@@ -119,10 +142,25 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     setStep(step: number): void {
-        this._isEtape1 = step === 1;
-        this._isEtape2 = step === 2;
-        this._isEtape3 = step === 3;
+     console.log("setStep called with: ", step);
+        this._isEtape1 = false;
+        this._isEtape2 = false;
+        this._isEtape3 = false;
 
-        setTimeout(() => this.cdr.detectChanges(), 0); // Évite le gel de l'UI
+        switch (step) {
+            case 1:
+                this._isEtape1 = true;
+                break;
+            case 2:
+                this._isEtape2 = true;
+                break;
+            case 3:
+                this._isEtape3 = true;
+                break;
+            default:
+                console.error("Wrong step passed into setter.");
+                break;
+        }
+        this.cdr.detectChanges();
     }
 }
