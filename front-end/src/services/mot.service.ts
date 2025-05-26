@@ -56,4 +56,8 @@ export class MotService {
        const urlWithValue = this.wordUrl + '/' + word.value;
        this.http.delete<Word>(urlWithValue, this.httpOptions).subscribe(() => this.retrieveWords());
   }
+
+  get wordsList(): Word[] {
+    return this.words;
+  }
 }

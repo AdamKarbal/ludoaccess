@@ -12,6 +12,4 @@ module.exports = new BaseModel('Child', {
   frequency: Joi.number().optional(),
   age: Joi.number().optional(),
   role: Joi.string().valid('child').required(),
-
-
 })
