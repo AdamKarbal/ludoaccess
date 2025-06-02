@@ -10,8 +10,11 @@ import { Child } from 'src/models/child.model';
     styleUrls: ['./reglage.component.scss']
 })
 export class ReglagePageComponent {
+    allWords: Word[] = this.wordService.wordsList;
     formVisible = false;
+    formVisibleDel = false;
     formVisibleMot = false;
+    filtrerClicked = false;
 
     newChild: Partial<Child> = {
         firstName: '',
@@ -24,7 +27,15 @@ export class ReglagePageComponent {
         level: 0
     };
 
-    constructor(private childService: ChildService, private wordService: MotService) { }
+    toDelWord: Word ={
+        value: '',
+        level: 0
+    }
+
+    constructor(private childService: ChildService, private wordService: MotService) {
+        this.wordService.words$.subscribe(words => {
+        this.allWords = words;});
+     }
 
     toggleForm(): void {
         this.formVisible = !this.formVisible;
@@ -64,13 +75,39 @@ export class ReglagePageComponent {
         }
         const word: Word = {
             value: this.newWord.value,
-            level: this.newWord.level,
+            level: Number(this.newWord.level),
         };
 
         this.wordService.addWord(word as Word);
         console.log('Mot ajouté à la base de données :', word);
         this.formVisibleMot = false;
-        this.newWord = { value: '', level: 0};
+        this.newWord = { value: '', level: 1};
+    }
+
+    toggleFormDel(): void {
+        console.log(this.allWords);
+        this.formVisibleDel = !this.formVisibleDel;
+    }
+
+    onFiltrer(): void {
+        this.filtrerClicked = true;
+    }
+
+    onDeleteWord(word: Word): void {
+        this.wordService.deleteWord(word);
+        console.log('Mot supprimé :', word);
+    }
+
+    get easyWords() {
+    return this.allWords.filter(w => Number(w.level) === 1);
+    }
+
+    get mediumWords() {
+    return this.allWords.filter(w => Number(w.level) === 2);
+    }
+
+    get hardWords() {
+    return this.allWords.filter(w => Number(w.level) === 3);
     }
 
 }

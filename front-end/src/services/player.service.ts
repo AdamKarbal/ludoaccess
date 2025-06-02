@@ -7,6 +7,7 @@ import { GameService } from './game.service';
 import { CoinCollectionService } from './coincollection.service';
 import { SettingsService } from './setting.service';
 import { ChildSettings } from '../models/setting.model';
+import { MiniGameService } from './minigame.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,26 +21,36 @@ export class PlayerService {
   });
   position$ = this.positionSubject.asObservable();
 
-  private speed = 1;
+  private speed = 0.4;
   private gravity = 0.5;
   private velocityY = 0;
-  private jumpForce = -5;
+  private jumpForce = -4;
   private onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;
+  private isMiniGameActive = false; 
 
-  constructor(
+
+constructor(
     private collisionService: CollisionService,
     private platformService: PlatformService,
     private gameService: GameService,
-    private coinCollectionService : CoinCollectionService,
-    private settingsService: SettingsService
+    private coinCollectionService: CoinCollectionService,
+    private settingsService: SettingsService,
+    private miniGameService: MiniGameService
   ) {
+    this.miniGameService.isActive$.subscribe((active) => {
+      this.isMiniGameActive = active;
+    });
+
     setInterval(() => {
-      this.updateMovement();
-      this.applyGravity();
-    }, 32); // ~60 FPS
-    this.settingsService.settings$.subscribe(settings => {
+      if (!this.isMiniGameActive) {
+        this.updateMovement();
+        this.applyGravity();
+      }
+    }, 32);
+
+    this.settingsService.settings$.subscribe((settings) => {
       this._settings = settings;
     });
   }

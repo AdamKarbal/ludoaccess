@@ -18,7 +18,6 @@
 
 .liste-enfants {
     width: 90%;
-    max-width: 1000px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 16px;
     padding: 20px;
@@ -121,4 +120,40 @@
 
 .btn-valider:hover {
   background-color: #1976D2;
+}
+
+.SupprimerMot{
+  background-color: #f83030;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Luckiest Guy', cursive;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.SupprimerMot:hover {
+  background-color: #ff0909;
+  transform: scale(1.05);
+}
+
+.scrollable-words {
+  max-height: 200px; /* ajuste la hauteur selon ton besoin */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+li {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+li:hover {
+  background: #ffeaea;
 }

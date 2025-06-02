@@ -125,3 +125,47 @@ select {
 input[type="number"], select {
   max-width: 100px;
 }
+.setting-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.help-icon {
+  background-color: #90e0ef;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.help-icon .tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; 
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+  width: max-content;
+  max-width: 350px;
+  font-size: 0.8em;
+  white-space: normal;
+}
+
+.help-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

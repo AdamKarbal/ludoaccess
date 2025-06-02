@@ -3,7 +3,6 @@ const morgan = require('morgan')
 const express = require('express')
 const bodyParser = require('body-parser')
 const api = require('./api')
-
 module.exports = (cb) => {
   const app = express()
   app.disable('x-powered-by')
