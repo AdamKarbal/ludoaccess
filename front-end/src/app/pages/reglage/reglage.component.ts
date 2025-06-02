@@ -14,6 +14,7 @@ export class ReglagePageComponent {
     formVisible = false;
     formVisibleDel = false;
     formVisibleMot = false;
+    filtrerClicked = false;
 
     newChild: Partial<Child> = {
         firstName: '',
@@ -31,7 +32,10 @@ export class ReglagePageComponent {
         level: 0
     }
 
-    constructor(private childService: ChildService, private wordService: MotService) { }
+    constructor(private childService: ChildService, private wordService: MotService) {
+        this.wordService.words$.subscribe(words => {
+        this.allWords = words;});
+     }
 
     toggleForm(): void {
         this.formVisible = !this.formVisible;
@@ -81,7 +85,12 @@ export class ReglagePageComponent {
     }
 
     toggleFormDel(): void {
+        console.log(this.allWords);
         this.formVisibleDel = !this.formVisibleDel;
+    }
+
+    onFiltrer(): void {
+        this.filtrerClicked = true;
     }
 
     onDeleteWord(word: Word): void {

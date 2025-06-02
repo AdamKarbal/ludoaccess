@@ -140,3 +140,20 @@
   background-color: #ff0909;
   transform: scale(1.05);
 }
+
+.scrollable-words {
+  max-height: 200px; /* ajuste la hauteur selon ton besoin */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+li {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+li:hover {
+  background: #ffeaea;
+}
