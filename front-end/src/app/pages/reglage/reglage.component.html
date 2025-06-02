@@ -14,6 +14,39 @@
       </select>
       <button class="btn-valider" (click)="onAddWord()">Valider</button>
     </div>
+
+    <button class="SupprimerMot" (click)="toggleFormDel()">Supprimer un mot</button>
+    <ng-container *ngIf="formVisibleDel">
+      <div class="form-suppression">
+        <select [(ngModel)]="toDelWord.level">
+          <option value="1">Facile</option>
+          <option value="2">Moyen</option>
+          <option value="3">Difficile</option>
+        </select>
+
+        <div *ngIf="toDelWord.level === 1">
+          <h3>Mots faciles :</h3>
+          <ul>
+            <li *ngFor="let word of easyWords">{{ word.value }}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="toDelWord.level === 2">
+          <h3>Mots moyens :</h3>
+          <ul>
+            <li *ngFor="let word of mediumWords">{{ word.value }}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="toDelWord.level === 3">
+          <h3>Mots difficiles :</h3>
+          <ul>
+            <li *ngFor="let word of hardWords">{{ word.value }}</li>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+
     <button class="btn-ajouter" (click)="toggleForm()">Ajouter un enfant</button>
     <div class="form-ajout" *ngIf="formVisible">
       <input [(ngModel)]="newChild.firstName" placeholder="Prénom" />
