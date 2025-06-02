@@ -34,6 +34,8 @@ export class GameService {
     private _settings?: ChildSettings | null;
     private isCrossed: boolean = false;
 
+    
+
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
     public isStep1Completed$ = this.isStep1CompletedSubject.asObservable();
@@ -414,6 +416,7 @@ export class GameService {
         this._currentWord = '';
         this.platformService.resetPlatforms();
         // this.w2gService.resetWord();
+        this.coinCollectionService.reset();
         this.chronoService.resetTimer();
         // this.fillSample();
         // this.playStep1();
@@ -423,6 +426,7 @@ export class GameService {
     resetStep2(): void {
         this.platformService.resetPlatforms();
         this.w2gService.resetWord();
+        this.coinCollectionService.reset();
     }
 
     resetStep3(): void {

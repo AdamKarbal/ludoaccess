@@ -21,10 +21,10 @@ export class PlayerService {
   });
   position$ = this.positionSubject.asObservable();
 
-  private speed = 1;
+  private speed = 0.4;
   private gravity = 0.5;
   private velocityY = 0;
-  private jumpForce = -5;
+  private jumpForce = -4;
   private onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;

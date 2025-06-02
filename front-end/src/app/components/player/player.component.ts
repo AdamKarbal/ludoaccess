@@ -1,17 +1,18 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
 import { Collidable } from 'src/models/collidable.model';
 import { MobComponent } from '../mob/mob.component';
 import { PlatformComponent } from '../platform/platform.component';
 import { CollisionService } from 'src/services/collision.service';
 import { CoinCollectionService } from 'src/services/coincollection.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
-export class PlayerComponent implements OnInit, Collidable {
+export class PlayerComponent implements OnInit, OnDestroy, Collidable {
   position = { x: 0, y: 20 }; 
   frame: number = 0; 
   isFacingRight: boolean = true; 
@@ -22,7 +23,13 @@ export class PlayerComponent implements OnInit, Collidable {
   private frameCounter = 0; 
   isMoving: boolean = false; 
 
-  constructor(private playerService: PlayerService, private collisionService : CollisionService, private coinCollectionService : CoinCollectionService) {}
+  private coinsSub?: Subscription;
+
+  constructor(
+    private playerService: PlayerService,
+    private collisionService: CollisionService,
+    private coinCollectionService: CoinCollectionService
+  ) {}
 
   ngOnInit(): void {
     this.playerService.setPlayer(this);
@@ -31,9 +38,21 @@ export class PlayerComponent implements OnInit, Collidable {
     });
     setInterval(() => {
       this.updateAnimation();
-    }, 16); 
-    console.log("Affichage des coins depuis le service coinCollection :", this.coinCollectionService.existentCoins);
+    }, 16);
+
+    // Abonnement à la liste observable des coins pour relancer la collision à chaque changement
+    this.coinsSub = this.coinCollectionService.existentCoins$.subscribe(() => {
+      this.restartCollisionCheck();
+    });
   }
+
+  ngOnDestroy(): void {
+    if (this.coinsSub) {
+      this.coinsSub.unsubscribe();
+    }
+    this.collisionService.stopCollisionCheck();
+  }
+
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     this.playerService.pressKey(event.key);
@@ -82,13 +101,13 @@ export class PlayerComponent implements OnInit, Collidable {
     return this.frameWidth;
   }
 
-  public restartCollisionCheck() {
-  this.collisionService.stopCollisionCheck();
-  this.collisionService.startCollisionCheck(this, this.coinCollectionService.existentCoins);
-}
-
   get height(): number {
     return this.frameHeight;
+  }
+
+  public restartCollisionCheck() {
+    this.collisionService.stopCollisionCheck();
+    this.collisionService.startCollisionCheck(this);
   }
 
   action(cible: Collidable): void {
