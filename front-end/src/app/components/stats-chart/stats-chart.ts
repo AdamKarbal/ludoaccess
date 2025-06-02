@@ -65,7 +65,7 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
       data: {
         labels: filteredStats.map(stat => stat.name),
         datasets: [{
-          label: `Nb d'erreurs${this.selectedLength != null ? ' (L=' + this.selectedLength + ')' : ''}`,
+          label: `Nb d'erreurs${this.selectedLength != null ? ' (Longueur=' + this.selectedLength + ')' : ''}`,
           data: filteredStats.map(stat => stat.errors),
           borderColor: "#0077cc",
           backgroundColor: "rgba(0, 119, 204, 0.2)"

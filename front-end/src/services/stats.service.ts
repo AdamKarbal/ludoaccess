@@ -52,7 +52,6 @@ export class UserStatsService {
         }
 
         this.statsSubject.next(data);
-        console.log('processMockData(2) appelé');
         this.lengthsSubject.next(this.lengths);
         break;
       }

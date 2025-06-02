@@ -63,6 +63,7 @@ export const mockUserStats :UserStats= {
     { action: "1ère lettre", success: 10, failures: 200},
     { action: "Mots avec lettres similaires", success: 200 , failures: 400},
     {action: "Saut",success:100,failures:400},
+    {action:"Collision avec le monstre",success:100,failures:400},
   ],
 };
 

@@ -10,7 +10,7 @@ import { Child } from 'src/models/child.model';
 export class ChildComponent {
 
   @Input() child!: { id: number } & Child;
-  @Input() isSelected: boolean = false; 
+  @Input() isSelected: boolean = false;
 
   @Output() deleteChild: EventEmitter<Child> = new EventEmitter<Child>();
   @Output() childClicked = new EventEmitter<number>();
@@ -20,7 +20,7 @@ export class ChildComponent {
   onClick(): void {
     this.childClicked.emit(this.child.id);
   }
-  
+
 
   delete(event: MouseEvent): void {
     event.stopPropagation();
@@ -28,4 +28,6 @@ export class ChildComponent {
       this.deleteChild.emit(this.child);
     }
   }
+
+
 }
