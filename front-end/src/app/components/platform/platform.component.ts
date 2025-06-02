@@ -5,6 +5,7 @@ import { Platform } from 'src/models/platform.model';
 import { PlatformService } from 'src/services/platform.service';
 import { GameService } from 'src/services/game.service';
 import {Collidable} from "../../../models/collidable.model";
+import { CoinCollectionService } from 'src/services/coincollection.service';
 
 @Component({
   selector: 'app-plateformes',
@@ -20,12 +21,12 @@ export class PlatformComponent implements OnInit, OnDestroy {
   constructor(
     private platformService: PlatformService,
     private gameService: GameService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private coinCollectionService: CoinCollectionService
   ) {}
 
   ngOnInit(): void {
     console.log('Plateformes:', this.gameService.w2g);
-    this.platforms = this.platformService.genererPlateformes(this.gameService.currentWord);
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       if (settings) {
         this.currentBackground = this.settingsService.getCurrentBackground();
@@ -33,6 +34,12 @@ export class PlatformComponent implements OnInit, OnDestroy {
         console.log('Background mis à jour dans platform :', this.currentBackground);
       } 
     });
+    this.gameService.currentWordLength$.subscribe(len => {
+    if (len > 0) {
+      this.coinCollectionService.reset();
+      this.platforms = this.platformService.genererPlateformes(this.gameService.currentWord);
+    }
+  });
   }
 
   ngOnDestroy(): void {
