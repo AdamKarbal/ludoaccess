@@ -1,0 +1,36 @@
+.container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.button-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+app-word-length-button {
+  button.length-button {
+    background-color: #e0f7fa;
+    color: #006064;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #b2ebf2;
+    }
+
+    &.selected {
+      background-color: #4dd0e1;
+      color: white;
+      font-weight: 600;
+    }
+  }
+}
