@@ -1,4 +1,3 @@
-
 <form *ngIf="currentSettings" class="settings-form" (ngSubmit)="onSettingChange()">
   <h3 class="settings-title">Paramètres</h3>
 
@@ -55,18 +54,26 @@
       </select>
     </label>
 
-    <label class="setting">
-    <span class="setting-label">
-      Fond du niveau :
-      <span class="help-icon">?
-        <span class="tooltip">Modifie le fond du jeu, l'option aléatoire prend aléatoirement un fond à chaque lancement du jeu</span>
+    <label class="setting fond-setting">
+      <span class="setting-label">
+        Fond du niveau :
+        <span class="help-icon">?
+          <span class="tooltip">Modifie le fond du jeu, l'option aléatoire prend aléatoirement un fond à chaque lancement du jeu</span>
+        </span>
       </span>
-    </span>      <select [(ngModel)]="currentSettings.chooseBackGround" name="chooseBackGround" (change)="onSettingChange()">
-        <option value="Aléatoire">Aléatoire</option>
-        <option value="Forest">Forest</option>
-        <option value="Blue_earth">Blue earth</option>
-        <option value="Orange_earth">Orange earth</option>
-      </select>
+      <div class="fond-select-wrapper">
+        <img
+          class="fond-preview"
+          [src]="getBackgroundImage(currentSettings.chooseBackGround)"
+          alt="aperçu fond"
+        />
+        <select [(ngModel)]="currentSettings.chooseBackGround" name="chooseBackGround" (change)="onSettingChange()">
+          <option value="Aléatoire">Aléatoire</option>
+          <option value="Forest">Forest</option>
+          <option value="Blue_earth">Blue earth</option>
+          <option value="Orange_earth">Orange earth</option>
+        </select>
+      </div>
     </label>
 
     <label class="setting">
@@ -125,23 +132,23 @@
   <div class="settings-group">
     <h4 class="group-title">Temps et mots</h4>
 
-    <label class="setting">
-<span class="setting-label">
-  Temps pour écrire le mot (secondes) :
-  <span class="help-icon">?
-    <span class="tooltip">Dans la dernière étape, on peut choisir combien de temps on à pour écrire le mot si le chronomètre est activer.</span>
-  </span>
-</span>
+    <label class="setting" *ngIf="currentSettings.showTimer">
+      <span class="setting-label">
+        Temps pour écrire le mot (secondes) :
+        <span class="help-icon">?
+          <span class="tooltip">Dans la dernière étape, on peut choisir combien de temps on à pour écrire le mot si le chronomètre est activer.</span>
+        </span>
+      </span>
       <input type="number" [(ngModel)]="currentSettings.wordWritingTime" name="wordWritingTime" min="1" max="60" (change)="onSettingChange()">
     </label>
 
-    <label class="setting">
-<span class="setting-label">
-  Temps pour afficher le mot (secondes) :
-  <span class="help-icon">?
-    <span class="tooltip">Dans la denière étape, on peut choisir combien de temps on à le mot afficher si Effacer le mot après la récupération est activer.</span>
-  </span>
-</span>
+    <label class="setting" *ngIf="currentSettings.clearWordAfterRecovery">
+      <span class="setting-label">
+        Temps pour afficher le mot (secondes) :
+        <span class="help-icon">?
+          <span class="tooltip">Dans la denière étape, on peut choisir combien de temps on à le mot afficher si Effacer le mot après la récupération est activer.</span>
+        </span>
+      </span>
       <input type="number" [(ngModel)]="currentSettings.displaymotsec" name="displaymotsec" min="1" max="60" (change)="onSettingChange()">
     </label>
 
