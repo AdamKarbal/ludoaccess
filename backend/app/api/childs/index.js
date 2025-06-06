@@ -1,9 +1,10 @@
 const { Router } = require('express')
 
+const number = require('joi/lib/types/number')
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
+const {UserStats}= require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
-const number = require('joi/lib/types/number')
 
 const router = new Router()
 
@@ -42,9 +43,18 @@ router.post('/', (req, res) => {
       choosefont: 'cursif ecriture A',
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
-    };
-    
-    const settings = Settings.create(defaultSettings);
+    }
+    const defaultUserStats = {
+      child: child,
+      nbError: 0,
+      listLetterErrors: {},
+      errorOcurrencesByPosition: {},
+      nbFailed: [],
+      progression: [],
+      interaction: []
+    }
+    UserStats.create(defaultUserStats)
+    const settings = Settings.create(defaultSettings)
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {

@@ -83,6 +83,8 @@ export class Platform implements Collidable {
       this.setCoinFirst(coin);
       return true;
     } else if (!this.coinSecond) {
+      coin.x = this.coinFirst.x + 8; // Position second coin next to first
+      coin.y = this.coinFirst.y; // Align vertically with first coin
       this.setCoinSecond(coin);
       return true;
     }

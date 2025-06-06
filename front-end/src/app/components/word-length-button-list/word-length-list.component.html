@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="button-list">
+    <app-word-length-button
+      *ngFor="let length of lengths"
+      [length]="length"
+      (lengthSelected)="handleLengthSelected($event)">
+    </app-word-length-button>
+  </div>
+  <p *ngIf="lengths.length > 0">
+    Longueurs détectées : {{ lengths }}
+  </p>
+
+</div>

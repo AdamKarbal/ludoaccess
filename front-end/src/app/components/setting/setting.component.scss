@@ -169,3 +169,17 @@ input[type="number"], select {
   visibility: visible;
   opacity: 1;
 }
+.fond-setting .fond-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fond-setting .fond-preview {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  background: #fff;
+}

@@ -26,10 +26,15 @@ export class ListOfPeopleComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onPersonSelected(user: User) {
-    this.userSelected.emit(user); 
+onPersonSelected(user: User) {
+  if (this.selectedId === user.id) {
+    this.userSelected.emit(undefined);
+    this.selectedId = null;
+  } else {
+    this.userSelected.emit(user);
     this.selectedId = user.id;
   }
+}
 
   private combinePeopleLists(): Observable<User[]> {
     const children$ = this.childService.childs$;

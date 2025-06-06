@@ -35,6 +35,13 @@ export class Coin implements Collidable{
       return this._height;
     }
 
+    set x(value: number) {
+      this._x = value;
+    }
+    set y(value: number) {
+      this._y = value;
+    }
+
     get letter(): string {
       return this._letter;
     }

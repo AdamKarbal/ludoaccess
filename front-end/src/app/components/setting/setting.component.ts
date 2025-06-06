@@ -39,5 +39,18 @@ export class SettingComponent implements OnInit {
   goToPage():void{
 
   }
+  
+  getBackgroundImage(bg: string): string {
+  switch (bg) {
+    case 'Forest':
+      return 'assets/ressources/Forest.jpg';
+    case 'Blue_earth':
+      return 'assets/ressources/Blue_earth.jpg';
+    case 'Orange_earth':
+      return 'assets/ressources/Orange_earth.jpg';
+    default:
+      return 'assets/ressources/random-bg.jpg';
+  }
+}
 
 }
