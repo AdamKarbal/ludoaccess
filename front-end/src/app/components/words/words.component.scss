@@ -1,0 +1,227 @@
+.page-ergotherapeute {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.contenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 20px;
+  height: calc(100% - 80px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%; }
+
+.liste-enfants {
+  width: 90%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 70vh;
+  box-sizing: border-box;
+}
+
+.titre {
+  font-family: 'Nintendo', sans-serif;
+  color: #fff;
+  text-shadow: 4px 4px 0 #000;
+  font-size: 2.5rem;
+  margin-top : 5rem;
+}
+
+.arriere-plan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../assets/ressources/Blue_earth.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+
+.btn-ajouter {
+  background-color: #4a79cf;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Luckiest Guy', cursive;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ajouterMot {
+  background-color: #fa1e9b;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Luckiest Guy', cursive;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ajouterMot:hover {
+  background-color: #ff0994;
+  transform: scale(1.05);
+}
+
+.btn-ajouter:hover {
+  background-color: #4d73ef;
+  transform: scale(1.05);
+}
+
+.form-ajout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  margin: 20px 0;
+}
+
+.form-ajout input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.btn-valider {
+  background-color: #2196F3;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Luckiest Guy', cursive;
+  transition: background-color 0.2s;
+}
+
+.btn-valider:hover {
+  background-color: #1976D2;
+}
+
+.scrollable-words {
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;            /* Permet le retour à la ligne */
+  gap: 12px;                  /* Espacement entre les éléments */
+  max-height: 40vh;           /* Hauteur max avec scroll si trop d’éléments */
+  overflow-y: auto;           /* Scroll vertical uniquement si nécessaire */
+  overflow-x: hidden;         /* Pas de scroll horizontal */
+  background: #fff;
+  border: 2px solid #90e0ef;
+  border-radius: 20px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+li {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+li:hover {
+  background: #ffeaea;
+}
+
+.title-diff{
+  font-size: 2.2rem;
+  color: white;
+  text-shadow:
+    -2px -2px 0 black,
+    2px -2px 0 black,
+    -2px 2px 0 black,
+    2px 2px 0 black;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.form-words {
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  width: fit-content;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-words select {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+.word-text {
+  flex-grow: 1;
+}
+
+.word-container {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border: 2px solid #90e0ef;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-family: 'Luckiest Guy', cursive;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.word-container:hover{
+  transform: scale(1.05);
+  background-color: #efefef;
+}
+
+.delete-btn {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.selector{
+  font-size: 1.2rem;
+}
+
+.selector2{
+  padding: 10px;
+  border: solid 2px #b3b3b3;
+  border-radius: 10px;
+  background: white;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}

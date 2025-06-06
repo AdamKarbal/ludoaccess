@@ -41,6 +41,9 @@ import { GameComponent } from './pages/game/game.component';
 import { ChronoComponent } from './components/chrono/chrono.component';
 import { GameoverComponent } from './components/gameover/gameover.component';
 import { FinalScreenComponent } from './components/finalScreen/finalScreen.component';
+import { XpBooster } from './components/xp-booster/xpbooster.component';
+import { HealthGainer } from './components/healthgainer/healthgainer.component';
+import {WordsComponent} from "./components/words/words.component";
 
 @NgModule({
   declarations: [
@@ -79,7 +82,10 @@ import { FinalScreenComponent } from './components/finalScreen/finalScreen.compo
     ListOfPeopleComponent,
     PeopleComponent,
     GameComponent,
-    FinalScreenComponent
+    FinalScreenComponent,
+    XpBooster,
+    HealthGainer,
+    WordsComponent
   ],
   imports: [
     BrowserModule,

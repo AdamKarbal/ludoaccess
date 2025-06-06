@@ -4,61 +4,6 @@
   <div class="arriere-plan"></div>
   <div class="contenu">
     <h1 class="titre">Page Ergothérapeute</h1>
-    <button class="btn-ajouterMot" (click)="toggleFormMot()">Ajouter un mot</button>
-    <div class="form-ajout" *ngIf="formVisibleMot">
-      <input [(ngModel)]="newWord.value" placeholder="Mot" />
-      <select [(ngModel)]="newWord.level">
-        <option value="1">Facile</option>
-        <option value="2">Moyen</option>
-        <option value="3">Difficile</option>
-      </select>
-      <button class="btn-valider" (click)="onAddWord()">Valider</button>
-    </div>
-
-    <button class="SupprimerMot" (click)="toggleFormDel()">Supprimer un mot</button>
-    <ng-container *ngIf="formVisibleDel">
-      <div class="form-suppression">
-        <select [(ngModel)]="toDelWord.level">
-          <option value="1">Facile</option>
-          <option value="2">Moyen</option>
-          <option value="3">Difficile</option>
-        </select>
-
-        <button (click)="onFiltrer()">Filtrer</button>
-        <div *ngIf="filtrerClicked">
-          <div *ngIf="toDelWord.level == 1">
-            <h3>Mots faciles :</h3>
-            <div class="scrollable-words">
-              <ul>
-                <li *ngFor="let word of easyWords" (click)="onDeleteWord(word)" style="cursor:pointer;">
-                  {{ word.value }}
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div *ngIf="toDelWord.level == 2">
-            <h3>Mots moyens :</h3>
-            <div class="scrollable-words">
-              <ul>
-                <li *ngFor="let word of mediumWords" (click)="onDeleteWord(word)" style="cursor:pointer;">
-                  {{ word.value }}
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div *ngIf="toDelWord.level == 3">
-            <h3>Mots difficiles :</h3>
-            <div class="scrollable-words">
-              <ul>
-                <li *ngFor="let word of hardWords" (click)="onDeleteWord(word)" style="cursor:pointer;">
-                  {{ word.value }}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-container>
 
     <button class="btn-ajouter" (click)="toggleForm()">Ajouter un enfant</button>
     <div class="form-ajout" *ngIf="formVisible">
