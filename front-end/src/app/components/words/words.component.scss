@@ -158,11 +158,13 @@ li:hover {
 }
 
 .form-words {
+  position: absolute;
   border-radius: 20px;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 10px;
+  margin-top: 12vh;
   width: fit-content;
-  align-items: center;
+  top: 30%;
+  left: 33%;
   gap: 10px;
 }
 
@@ -214,6 +216,8 @@ li:hover {
 }
 
 .selector{
+  position: absolute;
+  left:22%;
   font-size: 1.2rem;
 }
 
