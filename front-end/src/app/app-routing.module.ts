@@ -13,6 +13,7 @@ import { GameComponent } from './pages/game/game.component';
 import { WordsComponent } from './components/words/words.component';
 
 
+
 const routes: Routes = [
   {path : 'reglage', component : ReglagePageComponent},
   {path: 'stats', component: PlayerStatsComponent},

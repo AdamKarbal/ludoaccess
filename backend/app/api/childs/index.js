@@ -1,13 +1,10 @@
 const { Router } = require('express')
 
 
-
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
-const {UserStats}= require('../../models')
+const { UserStats } = require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
-
-
 
 
 const router = new Router()
@@ -27,29 +24,29 @@ router.get('/:childId', (req, res) => {
 })
 router.get('/:childId/stats', (req, res) => {
   try {
-    const childId = req.params.childId;
-    const child = Child.getById(childId);
+    const { childId } = req.params
+    const child = Child.getById(childId)
 
     if (!child) {
-      return res.status(404).json({ error: 'Child not found' });
+      return res.status(404).json({ error: 'Child not found' })
     }
 
-    const userStat = UserStats.get().find(stat => stat.child.id === childId);
+    const userStat = UserStats.get().find((stat) => stat.child.id === childId)
 
     if (!userStat) {
-      return res.status(404).json({ error: 'UserStats not found for this child' });
+      return res.status(404).json({ error: 'UserStats not found for this child' })
     }
 
-    res.status(200).json(userStat);
+    res.status(200).json(userStat)
   } catch (err) {
-    manageAllErrors(res, err);
+    manageAllErrors(res, err)
   }
-});
+})
 
 router.post('/', (req, res) => {
   try {
     const child = Child.create({ ...req.body })
-  
+
 
     const defaultSettings = {
       id: child.id,
@@ -70,11 +67,11 @@ router.post('/', (req, res) => {
     }
 
     const settings = Settings.create(defaultSettings)
-    const newChild={
-      id:child.id,
+    const newChild = {
+      id: child.id,
       firstName: child.firstName,
       lastName: child.lastName,
-      role:child.role
+      role: child.role,
     }
     const defaultUserStats = {
       child: newChild,
@@ -100,13 +97,13 @@ router.put('/:childId', (req, res) => {
 })
 router.delete('/:childId', (req, res) => {
   try {
-    const childId = parseInt(req.params.childId, 10);
-    Child.delete(childId);
-    Settings.delete(childId);
-    const userStatsList = UserStats.get();
-    const stat = userStatsList.find(stat => stat.child.id === childId);
+    const childId = parseInt(req.params.childId, 10)
+    Child.delete(childId)
+    Settings.delete(childId)
+    const userStatsList = UserStats.get()
+    const stat = userStatsList.find((stat) => stat.child.id === childId)
     if (stat) {
-      UserStats.delete(stat.id);
+      UserStats.delete(stat.id)
     }
     res.status(204).end()
   } catch (err) {

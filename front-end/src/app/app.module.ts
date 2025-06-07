@@ -94,7 +94,7 @@ import {WordsComponent} from "./components/words/words.component";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    //StatsMenuModule
+    StatsMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

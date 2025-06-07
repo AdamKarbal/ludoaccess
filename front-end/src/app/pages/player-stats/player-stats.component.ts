@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { mockUserStats } from '../../../mocks/stats.mock';
 import {UserStatsService} from "../../../services/stats.service";
-import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-player-stats',
