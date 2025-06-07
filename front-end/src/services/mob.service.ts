@@ -29,6 +29,8 @@ export class MobService implements Collidable {
       if (isEnded) {
         this.miniGameService.onMiniGameEnd$.next(false); 
         this.position.isFacingRight = false;
+
+        this.reset();
       }
     });
   }
@@ -67,7 +69,6 @@ export class MobService implements Collidable {
       this.miniGameService.isActive$ 
     ]).subscribe(([_, isPaused, isCrossed, isInfo, isMiniGameActive]) => {
       if (isPaused || isCrossed || isInfo || isMiniGameActive) return; 
-  
       this.position.x += this.speedX;
       if (this.position.x + 150 > window.innerWidth || this.position.x < 0) {
         this.speedX *= -1;
@@ -81,9 +82,9 @@ export class MobService implements Collidable {
       const player = this.playerService.getPlayer();
       if (player && this.checkCollision(player)) {
         console.log('Collision entre mob et joueur');
-        this.miniGameService.start();
-        this.respawn();
+        this.miniGameService.start();      
       }
+
       this.mobPosition.next({ ...this.position });
     });
   }
@@ -97,5 +98,16 @@ export class MobService implements Collidable {
 destroy() {
   this.isAlive.next(false); // Notifie que le mob n'est plus actif
 }
+reset(): void {
+  this.respawn();
+  this.position.frame = 0;
+  this.position.isFacingRight = true;
+  this.speedX = 2;
+  this.frameCounter = 0;
+  this.miniGameService.reset(); // Réinitialise le mini-jeu
+  
+}
+
+
 
 }

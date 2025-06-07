@@ -21,7 +21,10 @@ export class MiniGameService {
   ) {}
 
   start() {
+    console.log('start minigame');
+    window.removeEventListener('keydown', this.handleKeyPress);
     this.isActive$.next(true);
+    this.onMiniGameEnd$.next(false);
     this.totalLetters = Math.floor(Math.random() * 6) + 1;
     this.remainingLetters = this.totalLetters;
     this.currentText$.next("Tu as été touché par un monstre !\nTape vite sur les touches du clavier\nqui s'affichent pour ne pas perdre de vie !");
@@ -69,4 +72,16 @@ export class MiniGameService {
     this.onMiniGameEnd$.next(true);
     window.removeEventListener('keydown', this.handleKeyPress);
   }
+  reset(): void {
+    console.warn('reset minigame');
+  this.isActive$.next(false);
+  this.onMiniGameEnd$.next(false);
+  this.targetLetter$.next('');
+  this.currentText$.next("Tu as été touché par un monstre !\nTape vite sur les touches du clavier\nqui s'affichent pour ne pas perdre de vie !");
+  this.isAnimatingError$.next(false);
+  this.isAnimatingSuccess$.next(false);
+  this.totalLetters = 0;
+  this.remainingLetters = 0;
+  window.removeEventListener('keydown', this.handleKeyPress);
+}
 }

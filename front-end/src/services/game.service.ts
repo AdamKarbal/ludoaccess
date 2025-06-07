@@ -17,7 +17,7 @@ import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
 import { Subject} from "rxjs";
 import { takeUntil } from 'rxjs/operators';
-
+import { MiniGameService } from "./minigame.service";
 import { Injector } from '@angular/core';
 
 
@@ -76,6 +76,7 @@ export class GameService {
         private finalMessageService: FinalMessageService,
         private authService : AuthService,
         private freezeGameService: FreezeGameService,
+        private miniGameService: MiniGameService
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -274,6 +275,8 @@ export class GameService {
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
+        this.miniGameService.reset();
+
         console.log('Début étape 2 - WordTarget:', this._wordTarget);
 
 
@@ -312,7 +315,6 @@ export class GameService {
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
-
         console.log('Début étape 3 - Mot courant:', this._currentWord);
 
         this.w2gService.resetWord();
