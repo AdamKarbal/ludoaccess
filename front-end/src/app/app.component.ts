@@ -15,6 +15,7 @@ export class AppComponent {
   isInfo = false;
 
   isGameFinished = false;
+  
 
 
   constructor(private freezeGame: FreezeGameService) {

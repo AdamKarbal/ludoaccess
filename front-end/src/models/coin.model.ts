@@ -1,11 +1,11 @@
 import { Collidable } from "./collidable.model";
-import { CoinCollectionService } from "src/services/coincollection.service";
 
 export class Coin implements Collidable{
+  collecting: boolean = false;
   private _x: number;
   private _y: number;
-  private _width: number = 50;
-  private _height: number = 50;
+  private _width: number = 36;
+  private _height: number = 36;
   private _letter: string = '';
   private collected: boolean = false;
 
@@ -35,6 +35,13 @@ export class Coin implements Collidable{
       return this._height;
     }
 
+    set x(value: number) {
+      this._x = value;
+    }
+    set y(value: number) {
+      this._y = value;
+    }
+
     get letter(): string {
       return this._letter;
     }
@@ -51,17 +58,8 @@ export class Coin implements Collidable{
       this._letter = letter;
     }
 
-    checkCollision(other: Collidable): boolean {
-      return (
-          this.x < other.x + other.width &&
-          this.x + this.width > other.x &&
-          this.y < other.y + other.height &&
-          this.y + this.height > other.y
-      );
-    }
 
     action(other: Collidable): void {
-
     }
 
   }

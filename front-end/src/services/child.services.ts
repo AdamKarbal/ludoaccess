@@ -3,55 +3,61 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Child } from 'src/models/child.model';
 import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
-import { CHILD_LIST } from 'src/mocks/child.mock';
+import { SettingsService } from './setting.service';
+import { ChildSettings } from 'src/models/setting.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChildService {
 
-  private childs: Child[] = CHILD_LIST
+  private childs: Child[] = []
 
   public childs$: BehaviorSubject<Child[]>
-    = new BehaviorSubject<Child[]>(CHILD_LIST);
+    = new BehaviorSubject<Child[]>([]);
 
   public childSelected$: Subject<Child> = new Subject();
 
   private childUrl = serverUrl + '/childs';
+  private settingsUrl = serverUrl + '/settings';
 
   private httpOptions = httpOptionsBase;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private settingsService: SettingsService) {
     this.retrieveChilds();
   }
 
   retrieveChilds(): void {
-    // this.http.get<Child[]>('').subscribe((childList) => {
-    //   this.childs = childList;
-    //   this.childs$.next(this.childs);
-    // });
+     this.http.get<Child[]>(this.childUrl).subscribe((childList) => {
+       this.childs = childList;
+       this.childs$.next(this.childs);
+     });
   }
 
-  addChilds(child: Child): void {
-    this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe(() => this.retrieveChilds());
-  }
+addChilds(child: Child): void {
+  this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe((newChild) => {
+    console.log('Enfant ajouté dans le service :', newChild);
+    this.retrieveChilds();
+  });
+}
 
-  setSelectedChild(childId: string): void {
+
+  setSelectedChild(childId: number): void {
     const urlWithId = this.childUrl + '/' + childId;
     this.http.get<Child>(urlWithId).subscribe((child) => {
       this.childSelected$.next(child);
     });
   }
 
-  // deleteChild(child: Child): void {
-  //   const urlWithId = this.childUrl + '/' + child.id;
-  //   this.http.delete<Child>(urlWithId, this.httpOptions).subscribe(() => this.retrieveChilds());
-  // }
+   deleteChild(child: Child): void {
+     const urlWithId = this.childUrl + '/' + child.id;
+     this.http.delete<Child>(urlWithId, this.httpOptions).subscribe(() => this.retrieveChilds());
+   }
 
-  deleteChild(child: Child): void {
-    this.childs = this.childs.filter(c => c.id !== child.id);
-    this.childs$.next([...this.childs]);
-  }
+  // deleteChild(child: Child): void {
+  //   this.childs = this.childs.filter(c => c.id !== child.id);
+  //   this.childs$.next([...this.childs]);
+  // }
   
 
 }

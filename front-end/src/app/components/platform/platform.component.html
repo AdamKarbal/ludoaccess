@@ -2,15 +2,28 @@
      class="platform"
      [ngStyle]="{'filter': currentFilter}"
      [attr.style]="'position: absolute ; left: ' + platform.x + 'vw ; top: ' + platform.y + 'vh ; width: ' + platform.width + 'vw; height: ' + platform.height + 'vh;'" >
-     <app-coin
+    
+   <app-coin
      class="first"
      *ngIf="platform.getCoinFirst()"
      [coin]="platform.getCoinFirst()!">
    </app-coin>
+   
 
    <app-coin
      class="second"
      *ngIf="platform.getCoinSecond()"
      [coin]="platform.getCoinSecond()!">
    </app-coin>
+
+   <app-healthgainer
+     class="healthgainer"
+     *ngIf="platform.HealthGainer"
+    ></app-healthgainer>
+
+    <app-xpbooster
+     class="xp-booster"
+     *ngIf="platform.XpBooster"
+    ></app-xpbooster>
+
 </div>

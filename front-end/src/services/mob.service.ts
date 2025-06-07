@@ -11,7 +11,7 @@ import { MiniGameService } from './minigame.service';
 })
 
 export class MobService implements Collidable {
-  private position = { x: 100, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
+  private position = { x: window.innerWidth-200, y: window.innerHeight - 120, frame: 0, isFacingRight: true };
   private speedX = 2;
   private initialPosition = {...this.position};
   private totalFrames = 9;
@@ -21,6 +21,7 @@ export class MobService implements Collidable {
   private _height = 70
   private mobPosition = new BehaviorSubject(this.position);
   position$ = this.mobPosition.asObservable();
+  isAlive = new BehaviorSubject<boolean>(true);
 
   constructor(private freezeGameService: FreezeGameService,  private playerService: PlayerService, private miniGameService: MiniGameService) {
     this.startMoving();
@@ -87,9 +88,14 @@ export class MobService implements Collidable {
     });
   }
   
-  respawn() : void {
-    this.position= { ...this.initialPosition }; 
+  respawn(): void {
+    this.position = { ...this.initialPosition };
     this.mobPosition.next({ ...this.position });
-
+    this.isAlive.next(true); // Notifie que le mob est de retour
   }
+
+destroy() {
+  this.isAlive.next(false); // Notifie que le mob n'est plus actif
+}
+
 }

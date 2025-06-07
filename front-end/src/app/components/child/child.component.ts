@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Child } from 'src/models/child.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-child',
@@ -9,18 +10,18 @@ import { Child } from 'src/models/child.model';
 
 export class ChildComponent {
 
-  @Input() child!: { id: string } & Child;
-  @Input() isSelected: boolean = false; 
+  @Input() child!: { id: number } & Child;
+  @Input() isSelected: boolean = false;
 
   @Output() deleteChild: EventEmitter<Child> = new EventEmitter<Child>();
-  @Output() childClicked = new EventEmitter<string>();
+  @Output() childClicked = new EventEmitter<number>();
 
-  constructor() {}
+  constructor(private router : Router) {}
 
   onClick(): void {
     this.childClicked.emit(this.child.id);
   }
-  
+
 
   delete(event: MouseEvent): void {
     event.stopPropagation();
@@ -28,4 +29,9 @@ export class ChildComponent {
       this.deleteChild.emit(this.child);
     }
   }
+
+  goToWords() : void {
+    this.router.navigate(['/mots']);
+  }
+
 }

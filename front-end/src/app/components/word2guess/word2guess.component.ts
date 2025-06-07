@@ -8,6 +8,8 @@ import {GameService} from "../../../services/game.service";
 
 
 
+
+
 @Component({
   selector: "app-word2guess",
   templateUrl: "./word2guess.component.html",
@@ -24,7 +26,7 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   public currentFont: string = 'Arial';
   public currentSize: number = 16;
 
-  wordIndex: number = 1;
+  wordIndex: number = 0;
   totalWords: number = 15;
 
 
@@ -43,7 +45,8 @@ export class Word2GuessComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       this.currentFont=settings?.choosefont || 'Arial';
-      this.currentSize=settings?.lettersize || 16;
+      this.currentSize=this.settingsService?.getLetterSizePx() || 20;
+      this.totalWords = settings?.numberOfWords || 15;
     });
 
     if (this.mode === 'coin') {

@@ -127,7 +127,7 @@ export class Word2GuessService implements OnDestroy {
 
     setTimeout(() => {
       this.incorrectIndexes.delete(this.currentIndex);
-    }, 400);
+    }, 200);
     this.letterGuessedSubject.next(false);
     this.incorrectLetterSubject.next(this.guessedIndexes.length);
     this._badLetter = true;
@@ -167,8 +167,8 @@ export class Word2GuessService implements OnDestroy {
 
   onWordCompleted(): void {
     if (this.isWordComplete()) {
-      console.log('Mot trouvé !');
-      this.LevelService.increaseProgress(this.word.length);
+      console.warn('Mot trouvé !');
+      this.LevelService.increaseProgress(3*this.word.length);
     }
   }
 

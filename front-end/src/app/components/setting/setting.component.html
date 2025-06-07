@@ -1,4 +1,3 @@
-
 <form *ngIf="currentSettings" class="settings-form" (ngSubmit)="onSettingChange()">
   <h3 class="settings-title">Paramètres</h3>
 
@@ -7,20 +6,39 @@
     <h4 class="group-title">Affichage</h4>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.showTimer" name="showTimer">
-      <span>Afficher le chronomètre</span>
-    </label>
+      <input type="checkbox" [(ngModel)]="currentSettings.showTimer" name="showTimer" (change)="onSettingChange()">
+<span class="setting-label">
+  Afficher le chronomètre :
+  <span class="help-icon">?
+    <span class="tooltip">Permet d'afficher ou non, le chronomètre lors de la dernière étape.</span>
+  </span>
+</span>    </label>
 
     <label class="setting">
-      <span>Taille des caractères :</span>
+    <span class="setting-label">
+      Taille des caractères :
+      <span class="help-icon">?
+        <span class="tooltip">Modifie la taille des lettres dans le jeu, au niveau des bulles de dialogue et des lettres à écrire.</span>
+      </span>
+    </span>
+
+
       <div class="range-inputs">
-        <input type="number" [(ngModel)]="currentSettings.lettersize" name="lettersize" placeholder="sp" min="1" max="60">
+        <select [(ngModel)]="currentSettings.lettersize" name="lettersize" (change)="onSettingChange()">
+          <option value="Petit">Petit</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Grand">Grand</option>
+        </select>
       </div>
     </label>
 
     <label class="setting">
-      <span>Police d'écriture:</span>
-      <select [(ngModel)]="currentSettings.choosefont" name="choosefont">
+    <span class="setting-label">
+    Police d'écriture :
+      <span class="help-icon">?
+        <span class="tooltip">Changer la police d'écriture, la police d'écriture est changer dans les lettres à écrire et les bulles de dialogue</span>
+      </span>
+    </span>      <select [(ngModel)]="currentSettings.choosefont" name="choosefont" (change)="onSettingChange()">
         <option value="Lucky Boy">Lucky Boy</option>
         <option value="Nintendo">Nintendo</option>
         <option value="Arial">Arial</option>
@@ -36,20 +54,36 @@
       </select>
     </label>
 
-    <label class="setting">
-      <span>Fond du niveau: </span>
-      <select [(ngModel)]="currentSettings.chooseBackGround" name="chooseBackGround">
-        <option value="Aléatoire">Aléatoire</option>
-        <option value="Forest">Forest</option>
-        <option value="Blue_earth">Blue earth</option>
-        <option value="Orange_earth">Orange earth</option>
-      </select>
+    <label class="setting fond-setting">
+      <span class="setting-label">
+        Fond du niveau :
+        <span class="help-icon">?
+          <span class="tooltip">Modifie le fond du jeu, l'option aléatoire prend aléatoirement un fond à chaque lancement du jeu</span>
+        </span>
+      </span>
+      <div class="fond-select-wrapper">
+        <img
+          class="fond-preview"
+          [src]="getBackgroundImage(currentSettings.chooseBackGround)"
+          alt="aperçu fond"
+        />
+        <select [(ngModel)]="currentSettings.chooseBackGround" name="chooseBackGround" (change)="onSettingChange()">
+          <option value="Aléatoire">Aléatoire</option>
+          <option value="Forest">Forest</option>
+          <option value="Blue_earth">Blue earth</option>
+          <option value="Orange_earth">Orange earth</option>
+        </select>
+      </div>
     </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.showRanking" name="showRanking">
-      <span>Afficher le classement</span>
-    </label>
+      <input type="checkbox" [(ngModel)]="currentSettings.showRanking" name="showRanking" (change)="onSettingChange()">
+    <span class="setting-label">
+      Afficher le classement :
+      <span class="help-icon">?
+        <span class="tooltip">???.</span>
+      </span>
+    </span>    </label>
   </div>
 
   <!-- Groupe : Difficulté -->
@@ -57,23 +91,40 @@
     <h4 class="group-title">Difficulté</h4>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.enableLifeLoss" name="enableLifeLoss">
-      <span>Activer la perte de vie</span>
-    </label>
+      <input type="checkbox" [(ngModel)]="currentSettings.enableLifeLoss" name="enableLifeLoss" (change)="onSettingChange()">
+    <span class="setting-label">
+      Activer la perte de vie :
+      <span class="help-icon">?
+        <span class="tooltip">Activer la perte de vie, s'il est activer lors du mini jeu à chaque fois qu'ont se trompe dans une lettre il perd 1/2 coeur.</span>
+      </span>
+    </span>    </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.jumpDifficulty" name="jumpDifficulty">
-      <span>Sauts plus compliqués</span>
-    </label>
+      <input type="checkbox" [(ngModel)]="currentSettings.jumpDifficulty" name="jumpDifficulty" (change)="onSettingChange()">
+    <span class="setting-label">
+      Saut plus compliqué :
+      <span class="help-icon">?
+        <span class="tooltip">Rend les sauts plus compliqué, en baissant la hauteur des sauts (demande plus de motricité).</span>
+      </span>
+    </span>    </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.adaptDifficulty" name="adaptDifficulty">
-      <span>Adapter la difficulté</span>
-    </label>
+      <input type="checkbox" [(ngModel)]="currentSettings.adaptDifficulty" name="adaptDifficulty" (change)="onSettingChange()">
+    <span class="setting-label">
+      Adapter la difficulté :
+      <span class="help-icon">?
+        <span class="tooltip">Si l'enfant fait plus qu'un certain nombre d'erreur, alors la difficulté est baisser (Moyen->Facile), s'il fait moin qu'un certain nombre d'erreur la difficulté augmente (Moyen->Difficile)</span>
+      </span>
+    </span>    </label>
 
     <label class="setting">
-      <input type="checkbox" [(ngModel)]="currentSettings.clearWordAfterRecovery" name="clearWordAfterRecovery">
-      <span>Effacer le mot après récupération</span>
+      <input type="checkbox" [(ngModel)]="currentSettings.clearWordAfterRecovery" name="clearWordAfterRecovery" (change)="onSettingChange()">
+<span class="setting-label">
+  Effacer le mot après la récupération :
+  <span class="help-icon">?
+    <span class="tooltip">Une fois toutes les lettres récupérés, à la prochaine étape afficher ou pas le mot en haut de l'écran</span>
+  </span>
+</span>
     </label>
   </div>
 
@@ -81,26 +132,56 @@
   <div class="settings-group">
     <h4 class="group-title">Temps et mots</h4>
 
-    <label class="setting">
-      <span>Temps pour écrire le mot (secondes):</span>
-      <input type="number" [(ngModel)]="currentSettings.wordWritingTime" name="wordWritingTime" min="1" max="60">
+    <label class="setting" *ngIf="currentSettings.showTimer">
+      <span class="setting-label">
+        Temps pour écrire le mot (secondes) :
+        <span class="help-icon">?
+          <span class="tooltip">Dans la dernière étape, on peut choisir combien de temps on à pour écrire le mot si le chronomètre est activer.</span>
+        </span>
+      </span>
+      <input type="number" [(ngModel)]="currentSettings.wordWritingTime" name="wordWritingTime" min="1" max="60" (change)="onSettingChange()">
+    </label>
+
+    <label class="setting" *ngIf="currentSettings.clearWordAfterRecovery">
+      <span class="setting-label">
+        Temps pour afficher le mot (secondes) :
+        <span class="help-icon">?
+          <span class="tooltip">Dans la denière étape, on peut choisir combien de temps on à le mot afficher si Effacer le mot après la récupération est activer.</span>
+        </span>
+      </span>
+      <input type="number" [(ngModel)]="currentSettings.displaymotsec" name="displaymotsec" min="1" max="60" (change)="onSettingChange()">
     </label>
 
     <label class="setting">
-      <span>Temps pour afficher le mot (secondes):</span>
-      <input type="number" [(ngModel)]="currentSettings.displaymotsec" name="displaymotsec" min="1" max="60">
-    </label>
-
-    <label class="setting">
-      <span>Simplifier le jeu au bout de (en minutes):</span>
+<span class="setting-label">
+  Simplifier le jeu après (minutes) :
+  <span class="help-icon">?
+    <span class="tooltip">Baisse la difficulté des mots au bout d'un certain de temp (Moyen -> Facile).</span>
+  </span>
+</span>
       <div class="range-inputs">
-        <input type="number" [(ngModel)]="currentSettings.simplifyGameAfter" name="simplifyGameAfter" placeholder="minutes" min="1" max="60">
+        <input type="number" [(ngModel)]="currentSettings.simplifyGameAfter" name="simplifyGameAfter" placeholder="minutes" min="1" max="60" (change)="onSettingChange()">
       </div>
     </label>
 
     <label class="setting">
-      <span>Difficulté des mots:</span>
-      <select [(ngModel)]="currentSettings.wordDifficulty" name="wordDifficulty">
+<span class="setting-label">
+  Nombre de mot :
+  <span class="help-icon">?
+    <span class="tooltip">Nombre de mot à l'étape 1.</span>
+  </span>
+</span>
+      <input type="number" [(ngModel)]="currentSettings.numberOfWords" name="numberOfWords" min="1" max="60" (change)="onSettingChange()">
+    </label>
+
+    <label class="setting">
+<span class="setting-label">
+  Difficulté des mots :
+  <span class="help-icon">?
+    <span class="tooltip">Les mots sont segmenter en trois difficulté (Facile,Moyen,Difficile), et en fonction de la difficulté on choisit un certain nombre de mot facile,moyen ou difficile.</span>
+  </span>
+</span>
+      <select [(ngModel)]="currentSettings.wordDifficulty" name="wordDifficulty" (change)="onSettingChange()">
         <option value="Facile">Facile</option>
         <option value="Moyen">Moyen</option>
         <option value="Difficile">Difficile</option>
@@ -110,7 +191,7 @@
 
   <!-- Actions -->
   <div class="form-actions">
-    <button type="button" (click)="onResetSettings()" class="reset-btn">Réinitialiser</button>
-    <button type="button" (click)="goToPage()" class="nav-btn" routerLink="/stats">Statistiques</button>
+    <button type="button" (click)="onResetSettings()" class="reset-btn" >Réinitialiser</button>
+    <button type="button" class="nav-btn" routerLink="/stats">Statistiques</button>
   </div>
 </form>

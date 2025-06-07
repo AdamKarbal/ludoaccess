@@ -10,7 +10,7 @@ import { ChildSettings } from '../../../models/setting.model';
 
 export class SettingComponent implements OnInit {
 
-  @Input() childId!: string;
+  @Input() childId!: number;
   currentSettings!: ChildSettings;
 
   constructor(private settingsService: SettingsService) {}
@@ -21,6 +21,7 @@ export class SettingComponent implements OnInit {
       if (settings) this.currentSettings = settings;
     });
   }
+
 
   onSettingChange(): void {
     this.settingsService.saveSettings(this.currentSettings);
@@ -38,5 +39,18 @@ export class SettingComponent implements OnInit {
   goToPage():void{
 
   }
+  
+  getBackgroundImage(bg: string): string {
+  switch (bg) {
+    case 'Forest':
+      return 'assets/ressources/Forest.jpg';
+    case 'Blue_earth':
+      return 'assets/ressources/Blue_earth.jpg';
+    case 'Orange_earth':
+      return 'assets/ressources/Orange_earth.jpg';
+    default:
+      return 'assets/ressources/random-bg.jpg';
+  }
+}
 
 }

@@ -3,9 +3,17 @@
     <div class="child-info">
         <h2>{{child.firstName}} {{child.lastName}}</h2>
     </div>
+    <button type="button" class="nav-btn" routerLink="/stats">
+      📊 Stats
+    </button>
     <button class="delete-btn" (click)="delete($event)">
         <i class="fas fa-trash"></i> Supprimer
     </button>
+
+  <button class="words-btn" (click)="goToWords()">
+    <i class="wordsdisplay"></i> Mots
+  </button>
+
 </div>
 <div class="child-settings" *ngIf="isSelected">
     <app-setting [childId]="child.id"></app-setting>

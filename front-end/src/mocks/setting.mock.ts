@@ -2,24 +2,26 @@
 import { ChildSettings } from '../models/setting.model';
 
 export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
-  '1': {
-    id: '1',
+  1: {
+    id: 1,
     showTimer: true,
     showRanking: true,
     enableLifeLoss: false,
     jumpDifficulty: true,
     adaptDifficulty:false,
-    clearWordAfterRecovery: true,
+    clearWordAfterRecovery: false,
     wordWritingTime: 45,
     simplifyGameAfter: 10,
     wordDifficulty: 'Facile',
     choosefont:'Arial',
     displaymotsec:10,
-    lettersize:19,
+    lettersize:'Petit',
     chooseBackGround:'Aléatoire',
+    numberOfWords: 15,
+
   },
-  '2': {
-    id: '2',
+  2: {
+    id: 2,
     showTimer: false,
     showRanking: false,
     enableLifeLoss: true,
@@ -31,11 +33,13 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     displaymotsec:10,
     wordDifficulty: 'Difficile',
     choosefont:'Nintendo',
-    lettersize:17,
+    lettersize:'Moyen',
     chooseBackGround:'Forest',
+    numberOfWords: 15,
+
   },
-  '3': {
-    id: '3',
+  3: {
+    id: 3,
     showTimer: true,
     showRanking: true,
     enableLifeLoss: false,
@@ -46,13 +50,13 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     simplifyGameAfter: 15,
     wordDifficulty: 'Facile',
     displaymotsec:10,
-
+    numberOfWords: 15,
     choosefont:'Lucky Boy',
-    lettersize:12,
+    lettersize:'Grand',
     chooseBackGround:'Orange_earth',
   },
-  '4': {
-    id: '4',
+4: {
+    id: 4,
     showTimer: true,
     showRanking: true,
     enableLifeLoss: true,
@@ -63,9 +67,9 @@ export const CHILD_SETTINGS: { [key: string]: ChildSettings } = {
     simplifyGameAfter: 25,
     wordDifficulty: 'Moyen',
     displaymotsec:10,
-
+    numberOfWords: 15,
     choosefont:'Times New Roman',
-    lettersize:18,
+    lettersize:'Moyen',
     chooseBackGround:'Blue_earth',
   }
 };

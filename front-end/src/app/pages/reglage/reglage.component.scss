@@ -1,8 +1,8 @@
 .page-ergotherapeute {
     position: absolute;
-    width: 100%; 
+    width: 100%;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .contenu {
@@ -13,22 +13,27 @@
     padding-top: 20px;
     height: calc(100% - 80px);
     overflow-y: auto;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     width: 100%; }
 
 .liste-enfants {
     width: 90%;
-    max-width: 1000px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 16px;
     padding: 20px;
+    height: 90%;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     max-height: 70vh;
     box-sizing: border-box;
+    min-height: 250px; 
+    flex-shrink: 0;    
+    display: flex;   
+    flex-direction: column;
+    justify-content: flex-start;
 }
-  
+
 .titre {
     font-family: 'Nintendo', sans-serif;
     color: #fff;
@@ -36,7 +41,7 @@
     font-size: 2.5rem;
     margin-top : 5rem;
   }
-  
+
 .arriere-plan {
     position: absolute;
     top: 0;
@@ -48,5 +53,93 @@
     background-position: center;
     z-index: -1;
   }
-  
-  
+
+.btn-ajouter {
+  background-color: #4a79cf;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Luckiest Guy', cursive;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ajouter:hover {
+  background-color: #4d73ef;
+  transform: scale(1.05);
+}
+
+.form-ajout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  margin: 20px 0;
+}
+
+.form-ajout input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.btn-valider {
+  background-color: #2196F3;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Luckiest Guy', cursive;
+  transition: background-color 0.2s;
+}
+
+.btn-valider:hover {
+  background-color: #1976D2;
+}
+
+.SupprimerMot{
+  background-color: #f83030;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Luckiest Guy', cursive;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.SupprimerMot:hover {
+  background-color: #ff0909;
+  transform: scale(1.05);
+}
+
+.scrollable-words {
+  max-height: 200px; /* ajuste la hauteur selon ton besoin */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+li {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+li:hover {
+  background: #ffeaea;
+}

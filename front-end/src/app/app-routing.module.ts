@@ -10,6 +10,7 @@ import { JeuComponent } from './components/jeu/jeu.component';
 import { HomeComponent } from './pages/ac/ac.component';
 import { LoginComponent } from './pages/login/login.component';
 import { GameComponent } from './pages/game/game.component';
+import { WordsComponent } from './components/words/words.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path : 'jeuComponent', component : JeuComponent},
   {path: '', component: LoginComponent },
   {path: 'acceuil', component: HomeComponent },
-  {path: 'jeu', component: GameComponent}
+  {path: 'jeu', component: GameComponent},
+  { path: 'mots', component: WordsComponent }
 ];
 
 

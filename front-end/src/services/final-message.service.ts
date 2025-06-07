@@ -16,13 +16,21 @@ export class FinalMessageService {
     
     setWantToContinue():void{
         this.wantToContinue.next(true);
+        this.reset();
     }
 
     setWantToExit():void{
         this.wantToExit.next(true);
+        this.reset();
     }
     getWantToContinue():boolean{
         console.log("getWantToContinue", this.wantToContinue);
         return this.wantToContinue.getValue();
     }
+    
+    reset() {
+        this.wantToContinue.next(false);
+        this.wantToExit.next(false);
+      }
+      
     }
