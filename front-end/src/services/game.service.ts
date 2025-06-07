@@ -214,6 +214,7 @@ export class GameService {
         this._isProcessing = true;
         this.destroyStep$ = new Subject<void>();
 
+
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
@@ -246,6 +247,7 @@ export class GameService {
             this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
             rxjsTake(1),takeUntil(this.destroyStep$)).subscribe(() => {
                 this._isProcessing = false;
+
                 const audio = new Audio('assets/sons/correctAnswer.mp3');
                 audio.play();
                 console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
@@ -261,7 +263,6 @@ export class GameService {
                     this.playStep1();
 
             });
-
           }
     }
 
@@ -275,7 +276,6 @@ export class GameService {
         if (this._isProcessing) return;
         this._isProcessing = true;
         console.log('Début étape 2 - WordTarget:', this._wordTarget);
-
 
         if (this._wordTarget.length === 0) {
             console.log("Aucun mot dans wordTarget, passage à l'étape 3");
@@ -331,6 +331,7 @@ export class GameService {
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
              if(this._wordTarget.length===0) {
+
                     console.log("Mot courant réinitialisé.");
                     this.isGameFinished.next(true);
                     this._isProcessing = false;
@@ -344,10 +345,12 @@ export class GameService {
                         this.wantToExit.next(true);
                     }
                     );
+
             console.log('Mot complété dans étape 3');
             this.w2gService.resetWord();
             this.w2gService.onWordCompleted();
                 }
+
         });
     }
 
@@ -422,11 +425,24 @@ export class GameService {
         // this.playStep1();
 
     }
+    restartIfExiting(): void {
+        this.freezeGameService.isCrossed$.pipe(
+        rxjsTake(1), filter(isCrossed => isCrossed), tap(() => {
+                console.log("Je suis dans le tap de isCrossed");
+                this.isCrossed = true;
+            })
+        ).subscribe(isCrossed => {
+            if (isCrossed) {
+                this.resetGame();
+            }
+        });
+    }
 
     resetStep2(): void {
         this.platformService.resetPlatforms();
         this.w2gService.resetWord();
         this.coinCollectionService.reset();
+
     }
 
     resetStep3(): void {

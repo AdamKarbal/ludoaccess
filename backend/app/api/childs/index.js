@@ -1,13 +1,16 @@
 const { Router } = require('express')
 
+
 const number = require('joi/lib/types/number')
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
 const {UserStats}= require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
 
-const router = new Router()
 
+app.use(express.json())
+
+const router = new Router()
 router.get('/', (req, res) => {
   try {
     res.status(200).json(Child.get())
@@ -15,7 +18,6 @@ router.get('/', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.get('/:childId', (req, res) => {
   try {
     res.status(200).json(Child.getById(req.params.childId))
@@ -23,10 +25,32 @@ router.get('/:childId', (req, res) => {
     manageAllErrors(res, err)
   }
 })
+router.get('/:childId/stats', (req, res) => {
+  try {
+    const childId = req.params.childId;
+    const child = Child.getById(childId);
+
+    if (!child) {
+      return res.status(404).json({ error: 'Child not found' });
+    }
+
+    const userStat = UserStats.get().find(stat => stat.child.id === childId);
+
+    if (!userStat) {
+      return res.status(404).json({ error: 'UserStats not found for this child' });
+    }
+
+    res.status(200).json(userStat);
+  } catch (err) {
+    manageAllErrors(res, err);
+  }
+});
 
 router.post('/', (req, res) => {
   try {
     const child = Child.create({ ...req.body })
+  
+
     const defaultSettings = {
       id: child.id,
       showTimer: true,
@@ -44,24 +68,29 @@ router.post('/', (req, res) => {
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
     }
+
+    const settings = Settings.create(defaultSettings)
+    const newChild={
+      id:child.id,
+      firstName: child.firstName,
+      lastName: child.lastName,
+      role:child.role
+    }
     const defaultUserStats = {
-      child: child,
+      child: newChild,
       nbError: 0,
       listLetterErrors: {},
       errorOcurrencesByPosition: {},
-      nbFailed: [],
       progression: [],
-      interaction: []
+      interaction: [],
     }
     UserStats.create(defaultUserStats)
-    const settings = Settings.create(defaultSettings)
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
     manageAllErrors(res, err)
   }
 })
-
 router.put('/:childId', (req, res) => {
   try {
     res.status(200).json(Child.update(req.params.childId, req.body))
@@ -69,14 +98,19 @@ router.put('/:childId', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.delete('/:childId', (req, res) => {
   try {
+    const childId = parseInt(req.params.childId, 10);
     Child.delete(req.params.childId)
+    Settings.delete(childId);
+    const userStatsList = UserStats.get();
+    const stat = userStatsList.find(stat => stat.child.id === childId);
+    if (stat) {
+      UserStats.delete(stat.id);
+    }
     res.status(204).end()
   } catch (err) {
     manageAllErrors(res, err)
   }
 })
-
 module.exports = router

@@ -8,6 +8,7 @@ import {take} from "rxjs/operators";
   templateUrl: './player-stats.component.html',
   styleUrls: ['./player-stats.component.scss']
 })
+
 export class PlayerStatsComponent implements OnInit {
   progression = mockUserStats.progression;
   interactions = mockUserStats.interaction;
@@ -15,6 +16,7 @@ export class PlayerStatsComponent implements OnInit {
   lengths: number[] = [];
   selectedLength: number | null = null;
   constructor(private userStatsService: UserStatsService) {}
+
   ngOnInit(): void {
     // D’abord on s’abonne
     this.userStatsService.lengths$
@@ -33,6 +35,7 @@ export class PlayerStatsComponent implements OnInit {
 
   setId(id: number): void {
     this.userStatsService.setId(id);
+
     this.id = id;
 
     if (id !== 2) {
@@ -43,7 +46,6 @@ export class PlayerStatsComponent implements OnInit {
   handleLengthSelected(length: number): void {
     this.selectedLength = length;
   }
-
 
 
   fetchStatsById(): void {

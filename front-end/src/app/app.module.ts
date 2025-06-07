@@ -47,6 +47,7 @@ import { XpBooster } from './components/xp-booster/xpbooster.component';
 import { HealthGainer } from './components/healthgainer/healthgainer.component';
 import {WordsComponent} from "./components/words/words.component";
 
+
 @NgModule({
   declarations: [
     GameoverComponent,
@@ -88,7 +89,6 @@ import {WordsComponent} from "./components/words/words.component";
     XpBooster,
     HealthGainer,
     WordsComponent,
-    FinalScreenComponent,
     WordLengthButtonComponent,
     WordLengthListComponent,
   ],
