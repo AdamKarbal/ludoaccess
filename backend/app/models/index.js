@@ -10,6 +10,6 @@ module.exports = {
   Settings,
   Child,
   Ergo,
-  Word
+  Word,
   UserStats
 }

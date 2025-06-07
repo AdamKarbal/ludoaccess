@@ -34,8 +34,6 @@ import { BulleDialogueComponent } from './components/bulle_dialogue/bulle_dialog
 import { LoginComponent } from './pages/login/login.component';
 import { ListOfPeopleComponent } from './components/listofpeople/listofpeople.component';
 import { PeopleComponent } from './components/people/people.component';
-import { literal } from '@angular/compiler';
-import { AuthService } from 'src/services/auth.service';
 import { PlayerComponent } from './components/player/player.component';
 import { GameComponent } from './pages/game/game.component';
 import { ChronoComponent } from './components/chrono/chrono.component';
@@ -72,7 +70,6 @@ import {WordsComponent} from "./components/words/words.component";
     JeuEtape3Component,
     InfosComponent,
     CoeursComponent,
-    StatsMenuModule,
     finishComponent,
     JeuComponent,
     MobComponent,
@@ -96,8 +93,8 @@ import {WordsComponent} from "./components/words/words.component";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-    // StatsMenuModule
+    HttpClientModule,
+    //StatsMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

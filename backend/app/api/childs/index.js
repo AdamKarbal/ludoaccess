@@ -1,14 +1,14 @@
 const { Router } = require('express')
 
 
-const number = require('joi/lib/types/number')
+
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
 const {UserStats}= require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
 
 
-app.use(express.json())
+
 
 const router = new Router()
 router.get('/', (req, res) => {
@@ -101,7 +101,7 @@ router.put('/:childId', (req, res) => {
 router.delete('/:childId', (req, res) => {
   try {
     const childId = parseInt(req.params.childId, 10);
-    Child.delete(req.params.childId)
+    Child.delete(childId);
     Settings.delete(childId);
     const userStatsList = UserStats.get();
     const stat = userStatsList.find(stat => stat.child.id === childId);
