@@ -24,12 +24,8 @@ export class PlatformService {
     let nbPt = 0;
     let lettresDisponibles = word.split('');
     let hauteurs: number[] = [];
-    if(this._settings?.jumpDifficulty==true){
-      hauteurs=[25,40,55,62];
-    }
-    else{
-      hauteurs=[30,40,50,60]
-    }
+    hauteurs=[27,45,63];
+
     let hauteurIndex = 0;
 
     let dernierX = 0; // en vw

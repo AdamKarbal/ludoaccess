@@ -4,8 +4,8 @@ export class Coin implements Collidable{
   collecting: boolean = false;
   private _x: number;
   private _y: number;
-  private _width: number = 50;
-  private _height: number = 50;
+  private _width: number = 36;
+  private _height: number = 36;
   private _letter: string = '';
   private collected: boolean = false;
 

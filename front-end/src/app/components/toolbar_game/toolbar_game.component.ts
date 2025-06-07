@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FreezeGameService } from "src/services/freeze-game.services"; 
 import { Router } from "@angular/router";
 import { GameService } from "src/services/game.service";
+import { AudioService } from 'src/services/audio.service';
+
 
 @Component({
   selector: "app-toolbar-game",
@@ -10,13 +12,18 @@ import { GameService } from "src/services/game.service";
 })
 export class ToolbarGameComponent {
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   isPaused = false;
   isCrossed = false;
   isInfo=false;
+  showSettings = false;
+  volume: number = 50;
 
-  constructor(private freezeGame: FreezeGameService, private router: Router, private gameService : GameService) {
+
+  constructor(private freezeGame: FreezeGameService, private router: Router, private gameService : GameService,    private audioService: AudioService) {
     this.freezeGame.isPaused$.subscribe(paused => {
       this.isPaused = paused;
       console.log(`Paused: ${this.isPaused}`);
@@ -51,8 +58,7 @@ export class ToolbarGameComponent {
   }
 
   navigateToSettings() {
-    this.freezeGame.resume(); // Resume the game before navigating
-    this.gameService.changeStep('/reglage');  // Redirige vers la page des paramètres
+    this.showSettings = true;
   }
   navigateToHome() {
     this.freezeGame.quit(); // Resume the game before navigating
@@ -61,5 +67,13 @@ export class ToolbarGameComponent {
   navigateToStats() {
     this.freezeGame.resume(); // Resume the game before navigating
     this.gameService.changeStep('/stats');  // Redirige vers la page des paramètres
+  }
+    closeSettings() {
+    this.showSettings = false;
+  }
+
+  onVolumeChange(event: any) {
+    this.volume = event.target.value;
+    this.audioService.setVolume(this.volume / 100); 
   }
 }

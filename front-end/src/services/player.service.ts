@@ -13,7 +13,7 @@ import { MiniGameService } from './minigame.service';
   providedIn: 'root',
 })
 export class PlayerService {
-  private groundY = 81;
+  private groundY = 83.3;
   private _pressedKeys = new Set<string>();
   private positionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 0,
@@ -22,10 +22,10 @@ export class PlayerService {
   position$ = this.positionSubject.asObservable();
 
   private speed = 0.4;
-  private gravity = 0.5;
   private velocityY = 0;
-  private jumpForce = -4;
-  private onGround = true;
+  private gravity = 1.2;
+  private jumpForce = -18;  
+  onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;
   private isMiniGameActive = false; 
@@ -52,6 +52,12 @@ constructor(
 
     this.settingsService.settings$.subscribe((settings) => {
       this._settings = settings;
+        if(this._settings?.jumpDifficulty==true){
+          this.jumpForce = -20; 
+        }
+        else {
+          this.jumpForce = -18; // Valeur par défaut
+        }
     });
   }
 
@@ -105,11 +111,15 @@ constructor(
     const jumpPressed = this._pressedKeys.has('arrowup') || this._pressedKeys.has('z') || this._pressedKeys.has(' ') || this._pressedKeys.has('space');
 
     if (leftPressed) {
-      x = Math.max(0, x - this.speed);
+      if (!this.collisionService.isTouchingPlatformSide(this.player!, this.platformService.platforms, 'left')) {
+        x = Math.max(0, x - this.speed);
+      }
     }
 
     if (rightPressed) {
-      x = Math.min(100, x + this.speed);
+      if (!this.collisionService.isTouchingPlatformSide(this.player!, this.platformService.platforms, 'right')) {
+        x = Math.min(100, x + this.speed);
+      }
     }
 
     if (jumpPressed && this.onGround) {
@@ -123,15 +133,17 @@ constructor(
 
   applyGravity(): void {
     if (!this.player) return;
-
     let { x, y } = this.positionSubject.getValue();
-
     if (!this.onGround) {
       this.velocityY += this.gravity;
     }
-
-    y += this.velocityY;
-
+    const screenHeight = window.innerHeight;
+    let yPx = (y / 100) * screenHeight;
+    yPx += this.velocityY;
+    const playerTop = yPx;
+    const playerBottom = yPx + this.player.height;
+    const playerLeft = (x / 100) * window.innerWidth;
+    const playerRight = playerLeft + this.player.width;
     const platform = this.collisionService.getGroundPlatform(
       this.player,
       this.platformService.platforms,
@@ -139,22 +151,47 @@ constructor(
     );
 
     if (platform) {
-      const platformTop = platform.y;
+      const platformTop = platform.y / 100 * screenHeight;
       const playerHeight = this.player.height;
 
-      if (this.velocityY >= 0 && (y + playerHeight) >= platformTop) {
-        y=platform.y-platform.height-3; // 3-> height du player
+      if (this.velocityY >= 0 && (yPx + playerHeight) >= platformTop) {
+        yPx = platformTop - playerHeight;
         this.velocityY = 0;
         this.onGround = true;
       }
-    } else if (y >= this.groundY) {
-      y = this.groundY;
+    } else if (yPx >= this.groundY / 100 * screenHeight) {
+      yPx = this.groundY / 100 * screenHeight;
       this.velocityY = 0;
       this.onGround = true;
     } else {
       this.onGround = false;
     }
-
+    for (const plat of this.platformService.platforms) {
+      const platPx = {
+        x: plat.x / 100 * window.innerWidth,
+        y: plat.y / 100 * screenHeight,
+        width: plat.width / 100 * window.innerWidth,
+        height: plat.height / 100 * screenHeight
+      };
+      const platLeft = platPx.x;
+      const platRight = platPx.x + platPx.width;
+      const platTop = platPx.y;
+      const platBottom = platPx.y + platPx.height;
+      const horizontallyAligned =
+        playerRight > platLeft + 2 &&
+        playerLeft < platRight - 2;
+      if (
+        horizontallyAligned &&
+        this.velocityY < 0 &&
+        playerTop <= platBottom &&
+        playerTop >= platTop
+      ) {
+        yPx = platBottom;
+        this.velocityY = 0;
+        break;
+      }
+    }
+    y = (yPx / screenHeight) * 100;
     this.positionSubject.next({ x, y });
   }
 
