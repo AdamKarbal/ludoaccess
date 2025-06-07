@@ -5,6 +5,8 @@ import { GameService } from '../../../services/game.service';
 import { MobService } from 'src/services/mob.service';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
+import { AudioService } from 'src/services/audio.service';
+
 
 @Component({
   selector: 'app-jeu',
@@ -24,7 +26,6 @@ export class JeuComponent {
   @ViewChild('player') playerComponent!: PlayerComponent;
 
   ngAfterViewInit() {
-    // Quand tu veux démarrer l'étape 2 ou après un reset :
     this.playerComponent.restartCollisionCheck();
   }
 
@@ -32,7 +33,8 @@ export class JeuComponent {
     private miniGameService: MiniGameService,
     private coeurService: CoeurService,
     private gameService: GameService,
-    private mobService: MobService
+    private mobService: MobService,
+    private audioService: AudioService
   ) {}
 
   startMiniGame() {
@@ -43,9 +45,12 @@ export class JeuComponent {
     this.coeurService.isGameOver$.subscribe(isGameOver => {
       this.isGameOver = isGameOver;
     });
-    this.audio = new Audio('assets/sons/Step2Audio.mp3');
+ this.audio = new Audio('assets/sons/Step2Audio.mp3');
     this.audio.loop = true;
+    this.audio.volume = this.audioService.getVolume(); 
     this.audio.play();
+    this.audioService.setAudio(this.audio); 
+
   }
 
   onReplay() {
@@ -69,12 +74,13 @@ resetStep2() {
     this.isStep2Active = true;
   });
 }
-ngOnDestroy(): void {
-  if (this.audio) { 
-    this.audio.pause();
-    this.audio.currentTime = 0;
-    this.audio = null;
+  ngOnDestroy(): void {
+    if (this.audio) { 
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.audio = null;
+      this.audioService.setAudio(null as any);
+    }
   }
-}
 
 }

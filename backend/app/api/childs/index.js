@@ -1,8 +1,12 @@
 const { Router } = require('express')
-const { Child, Settings, UserStats } = require('../../models')
+
+
+const number = require('joi/lib/types/number')
+const { Child } = require('../../models')
+const { Settings } = require('../../models')
+const {UserStats}= require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
-const express = require('express');
-const app = express();
+
 
 app.use(express.json())
 
@@ -64,7 +68,8 @@ router.post('/', (req, res) => {
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
     }
-    Settings.create(defaultSettings);
+
+    const settings = Settings.create(defaultSettings)
     const newChild={
       id:child.id,
       firstName: child.firstName,

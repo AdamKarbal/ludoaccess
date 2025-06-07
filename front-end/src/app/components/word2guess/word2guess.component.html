@@ -4,19 +4,17 @@
   </div>
 <div class="word2Guess">
   <div id="mot" [style.font-family]="currentFont">
-    <!-- Si mode = coin => affichage simple avec display -->
     <ng-container *ngIf="mode === 'coin'; else typingMode">
       {{ display }}
     </ng-container>
-    <!-- Si mode = typing => affichage avec lettres individuelles -->
     <ng-template #typingMode>
 
       <span *ngFor="let letter of word2GuessService.getWord().split(''); let i = index" [ngClass]="{
     'correct': guessedIndexes.includes(i),
     'incorrect': word2GuessService.getIncorrectIndexes().has(i)
     }" [ngStyle]="{
-        'color': word2GuessService.getIncorrectIndexes().has(i) ? 'red' : guessedIndexes.includes(i) ? 'black' : 'grey',
-        'border-bottom': guessedIndexes.includes(i) ? 'none' : '2px solid grey',
+        'color': word2GuessService.getIncorrectIndexes().has(i) ? 'red' : guessedIndexes.includes(i) ? 'black' : '#555',
+        'border-bottom': guessedIndexes.includes(i) ? 'none' : '2px solid #555',
         'padding': '13px 2px'
       }" class="letter">
         {{letter}}

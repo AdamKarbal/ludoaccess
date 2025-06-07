@@ -6,11 +6,22 @@
         
 </div>
 <!-- <div *ngIf="isPaused" class="pause-overlay"></div> -->
-<div *ngIf="isPaused" class="pause-message" (click)="OnPauseClick()">
-        <p>⏸ Petite pause...</p>
-        <button id="button_pause"(click)="navigateToSettings()">PARAMÈTRES</button>
-        <button id="button_pause"(click)="navigateToStats()">STATISTIQUES</button>
-        <button id="button_pause"(click)="OnResumeClick()">REPRENDRE</button>
+<div *ngIf="isPaused" class="pause-message">
+  <ng-container *ngIf="!showSettings">
+    <p>⏸ Petite pause...</p>
+    <button id="button_pause" (click)="showSettings = true">PARAMÈTRES</button>
+    <button id="button_pause" (click)="OnResumeClick()">REPRENDRE</button>
+  </ng-container>
+  <ng-container *ngIf="showSettings">
+    <h2>Paramètres du jeu</h2>
+    <div class="setting-row">
+      <label for="volume">🔊 Volume :</label>
+      <input type="range" id="volume" min="0" max="100" [(ngModel)]="volume" (input)="onVolumeChange($event)">
+      <span>{{ volume }}%</span>
+    </div>
+    <!-- Ajoute d'autres paramètres ici si besoin -->
+    <button id="button_pause" (click)="showSettings = false">Retour</button>
+  </ng-container>
 </div>
 <div *ngIf="isCrossed" class="exit-message" (click)="OnExitClick()">
         <p id="question-exit">Voulez-vous quitter la partie ?</p>

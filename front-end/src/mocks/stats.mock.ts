@@ -60,8 +60,10 @@ export const mockUserStats :UserStats= {
     { word:"Arbre", completed: false, nbError:3,timeSpent: 400 },
   ],
   interaction: [
-    { action: "1ère lettre", success: 10, failures: 200 , timeSpent: 300 },
-    { action: "Mots avec lettres similaires", success: 200 , failures: 400,timeSpent: 300 },
+    { action: "1ère lettre", success: 10, failures: 200},
+    { action: "Mots avec lettres similaires", success: 200 , failures: 400},
+    {action: "Saut",success:100,failures:400},
+    {action:"Collision avec le monstre",success:100,failures:400},
   ],
 };
 

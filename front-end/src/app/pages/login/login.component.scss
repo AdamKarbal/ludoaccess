@@ -66,3 +66,8 @@
     box-shadow: inset 4px 4px 0 rgba(0, 0, 0, 0.3);
   }
   
+  .btn-principal:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

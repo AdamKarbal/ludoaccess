@@ -3,6 +3,7 @@ import { FreezeGameService } from "src/services/freeze-game.services";
 import { Router } from "@angular/router";
 import { GameService } from "src/services/game.service";
 import { FinalMessageService } from "src/services/final-message.service";
+import { filter, take } from "rxjs";
 
 @Component({
   selector: "app-final-screen",
@@ -26,19 +27,27 @@ export class FinalScreenComponent implements OnInit {
         this.freezeGame.isCrossed$.subscribe(crossed => {
             console.log(`Crossed: ${crossed}`);
         });
-        this.gameService.isGameFinished$.subscribe(finished => {
+        this.gameService.isGameFinished$.pipe(filter(finished=>finished),take(1)).subscribe(finished => {
             this.isGameFinished = finished;
             console.log(`Game Finished: ${this.isGameFinished}`);
         });
     }
 
     OnContinueClick() {
+        
         this.finalMessageService.setWantToContinue();
         console.log("Continue clicked, want to continue set to true.");
+        this.setGameFinished(false);
     }
     OnStopClick() {
+
         this.finalMessageService.setWantToExit();
         console.log("Stop clicked, want to exit set to true.");
+        this.setGameFinished(false);
+    }
+
+    setGameFinished(bool : boolean){
+        this.isGameFinished=bool;
     }
     
 } 

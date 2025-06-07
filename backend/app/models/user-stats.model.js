@@ -4,15 +4,16 @@ const { schema: progressionSchema } = require('./progression.model')
 const { schema: interactionSchema } = require('./interaction.model')
 
 const childSchema = Joi.object({
-  id: Joi.number().required(),
+  id: Joi.string().required(),
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
+  imageUrl: Joi.string().optional(),
   level: Joi.number().optional(),
   lastPlayed: Joi.date().optional(),
   playDuration: Joi.number().optional(),
   frequency: Joi.number().optional(),
   age: Joi.number().optional(),
-  role: Joi.string().valid('child').required(),
+  role: 'child',
 })
 
 module.exports = new BaseModel('UserStats', {

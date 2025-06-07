@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "chart.js": "^4.4.8"
+    "axios": "^1.9.0",
+    "chart.js": "^4.4.8",
+    "dotenv": "^16.5.0",
+    "node-fetch": "^3.3.2",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.41"

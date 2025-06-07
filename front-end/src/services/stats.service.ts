@@ -45,18 +45,16 @@ export class UserStatsService {
 
         for (const [length, positions] of Object.entries(mockUserStats.errorOcurrencesByPosition)) {
           const posMap = positions as Record<string, number>;
+          this.lengths.push(Number(length));
           for (const [position, count] of Object.entries(posMap)) {
             data.push({name: `L${length}-P${position}`, errors: count});
           }
         }
 
         this.statsSubject.next(data);
+        this.lengthsSubject.next(this.lengths);
         break;
       }
-
-      default:
-        console.error("Unknown id", id);
-        break;
     }
   }
 }

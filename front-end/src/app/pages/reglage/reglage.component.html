@@ -4,6 +4,7 @@
   <div class="arriere-plan"></div>
   <div class="contenu">
     <h1 class="titre">Page Ergothérapeute</h1>
+
     <button class="btn-ajouter" (click)="toggleForm()">Ajouter un enfant</button>
     <div class="form-ajout" *ngIf="formVisible">
       <input [(ngModel)]="newChild.firstName" placeholder="Prénom" />

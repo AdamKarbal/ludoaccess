@@ -17,7 +17,7 @@ export class MiniGameService {
   private remainingLetters: number = 0;
   private letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  constructor(  private coeurService : CoeurService,
+  constructor(  private coeurService : CoeurService, 
   ) {}
 
   start() {

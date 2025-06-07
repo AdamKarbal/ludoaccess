@@ -15,6 +15,14 @@
   background-size: cover;
   background-position: center;
   z-index: -1;
+  transition: opacity 1s;
+  pointer-events: none;
+}
+
+.fade-bg {
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s;
 }
 
 .contenu {

@@ -24,12 +24,8 @@ export class PlatformService {
     let nbPt = 0;
     let lettresDisponibles = word.split('');
     let hauteurs: number[] = [];
-    if(this._settings?.jumpDifficulty==true){
-      hauteurs=[25,40,55,62];
-    }
-    else{
-      hauteurs=[30,40,50,60]
-    }
+    hauteurs=[27,45,63];
+
     let hauteurIndex = 0;
 
     let dernierX = 0; // en vw
@@ -82,13 +78,14 @@ export class PlatformService {
       }
     }
 
+    const healthPlatform = this._platforms[Math.floor(Math.random() * this.platforms.length)];
+    healthPlatform.addHealthGainer();
+
+    let xpPlatform = this._platforms.filter(p => !p.HealthGainer)[0];
+    xpPlatform.addXpBooster();
+
     // Afficher les plateformes après affectation des lettres
-    console.log('Plateformes après affectation des lettres :', this._platforms);
-    /*this.platforms.push(new Platform(10,60,10));
-    this.platforms.push(new Platform(25,72,10));
-    this.platforms.push(new Platform(40,60,18));
-    this.platforms.push(new Platform(58.5,50,10));
-    this.platforms.push(new Platform(68.5,40,5));*/
+    console.log('Plateformes après affectation des lettres et des bonus :', this._platforms);
 
     return this._platforms;
   }

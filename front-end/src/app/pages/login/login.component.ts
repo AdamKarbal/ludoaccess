@@ -12,24 +12,20 @@ import { SettingsService } from '../../../services/setting.service';
 })
 export class LoginComponent {
   selectedRole: string = '';
-  selectedUser!: User;  
-
+  selectedUser: User | null = null;
   constructor(private router: Router, private authService: AuthService,private setting: SettingsService
   ) {}
 
-  onUserSelected(user: User) {
-    this.selectedUser = user;
-    this.selectedRole = user.role;
+onUserSelected(user: User | null) {
+  this.selectedUser = user;
+  this.selectedRole = user ? user.role : '';
+  if (user) {
     this.authService.setUser(user);
-    console.log('Selected user:', this.selectedUser);
-    this.authService.currentUser$.subscribe(user => {
-      console.log('Current user from AuthService:', user);
-    });
     if (user.role === 'child') {
       this.setting.loadSettings(user.id); 
-      console.log(`Settings chargés pour l'enfant ${user.id}`);
     }
   }
+}
 
   pageSuivante() {
     if (this.selectedRole === 'ergo') {
