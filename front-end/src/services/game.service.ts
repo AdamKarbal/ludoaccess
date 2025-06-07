@@ -34,7 +34,7 @@ export class GameService {
     private _settings?: ChildSettings | null;
     private isCrossed: boolean = false;
 
-    
+
 
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
@@ -123,7 +123,7 @@ export class GameService {
                 }
                 else {
                     this._wordSample.push(word);
-                    
+
                 }
             }
             console.log("sample: " + this._wordSample);
@@ -214,7 +214,7 @@ export class GameService {
         if (this._isProcessing) return;
         this._isProcessing = true;
         this.destroyStep$ = new Subject<void>();
-        
+
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
             console.log("Taille target: " + this._wordTarget.length);
@@ -262,7 +262,7 @@ export class GameService {
                     this.playStep1();
 
             });
-            
+
           }
     }
 
@@ -271,7 +271,7 @@ export class GameService {
     private _isProcessing: boolean = false;
 
     playStep2(): void {
-        
+
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
@@ -286,7 +286,7 @@ export class GameService {
             this.isStep2CompletedSubject.next(true);
             return;
         }
-        
+
         this._currentWord = this._wordTarget.pop() || '';
         console.log(`Mot courant pour l'étape 2: "${this._currentWord}"`);
         this.currentWordLength.next(this._currentWord.length);
@@ -305,13 +305,13 @@ export class GameService {
         ).subscribe(() => {
             console.log('Mot complété dans étape 2 [subscribe]');
             this.w2gService.resetWord();
-            
+
         });
     }
 
     playStep3(): void {
 
-        
+
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
@@ -329,7 +329,7 @@ export class GameService {
                 this.resetStep3();
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
                 this.isStep3CompletedSubject.next(true);
-                
+
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
              if(this._wordTarget.length===0) {
@@ -354,7 +354,7 @@ export class GameService {
     }
 
     stopStep(): void{
-    
+
     console.log('Interruption d\'une step à cause de newEvent');
      this.destroyStep$.next(); // Annule tous les abonnements en cours
     this._isProcessing = false; // IMPORTANT : libère le flag pour relancer playStepX
@@ -385,7 +385,7 @@ export class GameService {
     get wordTarget(): string[] {
         return this._wordTarget;
     }
-    
+
     get currentWord(): string {
         return this._currentWord;
     }
@@ -458,7 +458,7 @@ export class GameService {
     this._currentWord = '';
     this.platformService.resetPlatforms();
     this.chronoService.resetTimer();
-    
+
 }
 
 }

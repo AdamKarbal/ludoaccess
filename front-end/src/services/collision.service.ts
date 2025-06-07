@@ -35,11 +35,16 @@ export class CollisionService {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
-    const playerBottom = player.y + player.height;
+    const playerLeft = player.x;
     const playerRight = player.x + player.width;
+    const playerBottom = player.y + player.height;
+    const prevPlayerBottom = playerBottom - playerVelocityY;
+
+    const tolerance = 2;
+    let closestPlatform: Platform | null = null;
+    let minDeltaY = Number.POSITIVE_INFINITY;
 
     for (const platform of platforms) {
-      // Convert percentage-based platform values into pixels
       const platformPx = {
         x: platform.x / 100 * screenWidth,
         y: platform.y / 100 * screenHeight,
@@ -47,21 +52,30 @@ export class CollisionService {
         height: platform.height / 100 * screenHeight
       };
 
-      const platformRight = platformPx.x + platformPx.width;
-      const platformTop = platformPx.y;
+      const platLeft = platformPx.x;
+      const platRight = platformPx.x + platformPx.width;
+      const platTop = platformPx.y;
 
       const horizontallyAligned =
-        player.x < platformRight && playerRight > platformPx.x;
+        playerRight > platLeft + tolerance &&
+        playerLeft < platRight - tolerance;
+      if (playerVelocityY < 0) continue;
+      const playerTop = player.y;
+      const prevPlayerBottom = playerBottom - playerVelocityY;
+      const wasAbove = prevPlayerBottom <= platTop + tolerance;
+      const isNowBelow = playerBottom >= platTop - tolerance;
+      if (playerTop > platTop) continue;
 
-      const verticallyTouching =
-        (playerBottom - platformTop <= 1);
-
-      if (horizontallyAligned && verticallyTouching && playerVelocityY >= 0) {
-        return platform;
+      if (horizontallyAligned && wasAbove && isNowBelow) {
+        const deltaY = Math.abs(playerBottom - platTop);
+        if (deltaY < minDeltaY) {
+          minDeltaY = deltaY;
+          closestPlatform = platform;
+        }
       }
     }
 
-    return null;
+    return closestPlatform;
   }
 
   areColliding(a: Collidable, b: Collidable): boolean {
@@ -136,5 +150,36 @@ export class CollisionService {
       this.coinsSub.unsubscribe();
       this.coinsSub = undefined;
     }
+  }
+
+  isTouchingPlatformSide(player: PlayerComponent,platforms: Platform[],direction: 'left' | 'right'): boolean {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const playerTop = player.y;
+    const playerBottom = player.y + player.height;
+    const playerLeft = player.x;
+    const playerRight = player.x + player.width;
+    for (const platform of platforms) {
+      const platX = platform.x / 100 * screenWidth;
+      const platY = platform.y / 100 * screenHeight;
+      const platW = platform.width / 100 * screenWidth;
+      const platH = platform.height / 100 * screenHeight;
+      const platLeft = platX;
+      const platRight = platX + platW;
+      const platTop = platY;
+      const platBottom = platY + platH;
+      const verticallyAligned =
+        playerBottom > platTop + 2 &&
+        playerTop < platBottom - 2;
+      if (!verticallyAligned) continue;
+
+      if (
+        (direction === 'left' && playerLeft <= platRight && playerRight > platRight) ||
+        (direction === 'right' && playerRight >= platLeft && playerLeft < platLeft)
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 }

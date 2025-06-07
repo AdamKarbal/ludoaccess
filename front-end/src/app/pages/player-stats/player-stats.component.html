@@ -6,18 +6,27 @@
   <stats-menu [titre]="'Informations du Joueur'">
     <div class="player-stats">
       <div class="info">
+
         <p><strong>Nom :</strong> {{child.lastName+" "+child.firstName}}</p>
         <p><strong>Âge :</strong> {{child.age}}</p>
-        <p><strong>Durée Totale de Jeu :</strong>{{child.playDuration}} minutes</p>
-        <p><strong>Fréquence de Jeu :</strong> {{child.frequency}} sessions cette semaine</p>
+        <p><strong> Level : </strong> {{child.level}} </p>
       </div>
     </div>
   </stats-menu>
 
   <stats-menu [titre]="'Statistiques détaillées'">
-    <button id="letterError"(click)="setId(1)">Erreurs par lettre</button>
-    <button id="positionError"(click)="setId(2)">Erreurs par position dans le mot</button>
-    <app-user-stats-chart></app-user-stats-chart>
+    <button id="letterError" (click)="setId(1)">Erreurs par lettre</button>
+    <button id="positionError" (click)="setId(2)">Erreurs par position dans le mot</button>
+    <div class="length-selection" *ngIf="id=== 2 && lengths.length > 0">
+      <app-word-length-button
+        *ngFor="let len of lengths"
+        [length]="len"
+        [isSelected]="len === selectedLength"
+        (lengthSelected)="handleLengthSelected(len)">
+      </app-word-length-button>
+    </div>
+
+    <app-user-stats-chart [selectedLength]="selectedLength"></app-user-stats-chart>
   </stats-menu>
 
   <stats-menu [titre]="'Progression dans le Jeu'">
@@ -26,7 +35,7 @@
         <thead>
         <tr>
           <th>Mot</th>
-          <th>Objectif Atteint</th>
+          <th>Mot Terminé</th>
           <th>Erreurs</th>
           <th>Temps Pris</th>
         </tr>
@@ -52,7 +61,6 @@
           <th>Interaction</th>
           <th>Succès</th>
           <th>Échecs</th>
-          <th>Temps entre deux lettres</th>
         </tr>
         </thead>
         <tbody>
@@ -60,10 +68,10 @@
           <td>{{ interaction.action }}</td>
           <td>{{ interaction.success }}</td>
           <td>{{ interaction.failures }}</td>
-          <td>{{ interaction.timeSpent }} sec</td>
         </tr>
         </tbody>
       </table>
     </div>
   </stats-menu>
+
 </div>

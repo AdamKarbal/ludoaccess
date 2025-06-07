@@ -4,16 +4,7 @@
   <div class="arriere-plan"></div>
   <div class="contenu">
     <h1 class="titre">Page Ergothérapeute</h1>
-    <button class="btn-ajouterMot" (click)="toggleFormMot()">Ajouter un mot</button>
-    <div class="form-ajout" *ngIf="formVisibleMot">
-      <input [(ngModel)]="newWord.value" placeholder="Mot" />
-      <select [(ngModel)]="newWord.level">
-        <option value="1">Facile</option>
-        <option value="2">Moyen</option>
-        <option value="3">Difficile</option>
-      </select>
-      <button class="btn-valider" (click)="onAddWord()">Valider</button>
-    </div>
+
     <button class="btn-ajouter" (click)="toggleForm()">Ajouter un enfant</button>
     <div class="form-ajout" *ngIf="formVisible">
       <input [(ngModel)]="newChild.firstName" placeholder="Prénom" />
