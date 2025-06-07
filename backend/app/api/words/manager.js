@@ -6,7 +6,7 @@ const getAllWords = (req, res) => {
   try {
     console.log('getAllWords try');
     const words = Word.get();
-    console.log('words', words);
+    //console.log('words', words);
     res.status(200).json(words);
   } catch (err) {
     manageAllErrors(res, err);

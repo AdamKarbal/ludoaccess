@@ -31,7 +31,8 @@ router.get('/:childId/stats', (req, res) => {
       return res.status(404).json({ error: 'Child not found' })
     }
 
-    const userStat = UserStats.get().find((stat) => stat.child.id === childId)
+    const id = parseInt(childId, 10)
+    const userStat = UserStats.get().find((stat) => stat.child.id === id)
 
     if (!userStat) {
       return res.status(404).json({ error: 'UserStats not found for this child' })
@@ -71,11 +72,10 @@ router.post('/', (req, res) => {
       id: child.id,
       firstName: child.firstName,
       lastName: child.lastName,
-      role: child.role,
+      age: child.age
     }
     const defaultUserStats = {
       child: newChild,
-      nbError: 0,
       listLetterErrors: {},
       errorOcurrencesByPosition: {},
       progression: [],
