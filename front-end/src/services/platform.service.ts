@@ -78,13 +78,14 @@ export class PlatformService {
       }
     }
 
+    const healthPlatform = this._platforms[Math.floor(Math.random() * this.platforms.length)];
+    healthPlatform.addHealthGainer();
+
+    let xpPlatform = this._platforms.filter(p => !p.HealthGainer)[0];
+    xpPlatform.addXpBooster();
+
     // Afficher les plateformes après affectation des lettres
-    console.log('Plateformes après affectation des lettres :', this._platforms);
-    /*this.platforms.push(new Platform(10,60,10));
-    this.platforms.push(new Platform(25,72,10));
-    this.platforms.push(new Platform(40,60,18));
-    this.platforms.push(new Platform(58.5,50,10));
-    this.platforms.push(new Platform(68.5,40,5));*/
+    console.log('Plateformes après affectation des lettres et des bonus :', this._platforms);
 
     return this._platforms;
   }

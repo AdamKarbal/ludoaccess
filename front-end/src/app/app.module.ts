@@ -43,6 +43,9 @@ import { GameoverComponent } from './components/gameover/gameover.component';
 import { FinalScreenComponent } from './components/finalScreen/finalScreen.component';
 import { WordLengthButtonComponent} from "./components/word-length-button/word-length-button.component";
 import {WordLengthListComponent} from "./components/word-length-button-list/word-length-list.component";
+import { XpBooster } from './components/xp-booster/xpbooster.component';
+import { HealthGainer } from './components/healthgainer/healthgainer.component';
+import {WordsComponent} from "./components/words/words.component";
 
 @NgModule({
   declarations: [
@@ -81,6 +84,10 @@ import {WordLengthListComponent} from "./components/word-length-button-list/word
     ListOfPeopleComponent,
     PeopleComponent,
     GameComponent,
+    FinalScreenComponent,
+    XpBooster,
+    HealthGainer,
+    WordsComponent,
     FinalScreenComponent,
     WordLengthButtonComponent,
     WordLengthListComponent,

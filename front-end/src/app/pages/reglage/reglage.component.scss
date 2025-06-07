@@ -1,8 +1,8 @@
 .page-ergotherapeute {
     position: absolute;
-    width: 100%; 
+    width: 100%;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .contenu {
@@ -13,7 +13,7 @@
     padding-top: 20px;
     height: calc(100% - 80px);
     overflow-y: auto;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     width: 100%; }
 
 .liste-enfants {
@@ -33,7 +33,7 @@
     flex-direction: column;
     justify-content: flex-start;
 }
-  
+
 .titre {
     font-family: 'Nintendo', sans-serif;
     color: #fff;
@@ -41,7 +41,7 @@
     font-size: 2.5rem;
     margin-top : 5rem;
   }
-  
+
 .arriere-plan {
     position: absolute;
     top: 0;
@@ -53,8 +53,7 @@
     background-position: center;
     z-index: -1;
   }
-  
-  
+
 .btn-ajouter {
   background-color: #4a79cf;
   color: white;
@@ -67,25 +66,6 @@
   transition: background-color 0.3s, transform 0.2s;
   font-family: 'Luckiest Guy', cursive;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-}
-
-.btn-ajouterMot {
-  background-color: #fa1e9b;
-  color: white;
-  font-size: 1.2rem;
-  padding: 12px 24px;
-  margin: 20px 0;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  font-family: 'Luckiest Guy', cursive;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-}
-
-.btn-ajouterMot:hover {
-  background-color: #ff0994;
-  transform: scale(1.05);
 }
 
 .btn-ajouter:hover {

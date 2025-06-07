@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Child } from 'src/models/child.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-child',
@@ -15,7 +16,7 @@ export class ChildComponent {
   @Output() deleteChild: EventEmitter<Child> = new EventEmitter<Child>();
   @Output() childClicked = new EventEmitter<number>();
 
-  constructor() {}
+  constructor(private router : Router) {}
 
   onClick(): void {
     this.childClicked.emit(this.child.id);
@@ -29,5 +30,8 @@ export class ChildComponent {
     }
   }
 
+  goToWords() : void {
+    this.router.navigate(['/mots']);
+  }
 
 }

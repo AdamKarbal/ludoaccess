@@ -1,5 +1,6 @@
 import { Collidable } from './collidable.model';
 import { Coin } from './coin.model';
+import { HealthGainer } from 'src/app/components/healthgainer/healthgainer.component';
 
 export class Platform implements Collidable {
   private _x: number;
@@ -8,6 +9,8 @@ export class Platform implements Collidable {
   private _height: number;
   private coinFirst?: Coin;
   private coinSecond?: Coin;
+  private xpBooster: boolean;
+  private healthGainer: boolean;
 
   constructor(
     x: number,
@@ -15,7 +18,9 @@ export class Platform implements Collidable {
     width: number,
     height: number = 5,
     coinFirst?: Coin,
-    coinSecond?: Coin
+    coinSecond?: Coin,
+    xpBooster: boolean = false,
+    healthGainer: boolean = false
   ) {
     this._x = x;
     this._y = y;
@@ -23,6 +28,8 @@ export class Platform implements Collidable {
     this._height = height;
     this.coinFirst = coinFirst;
     this.coinSecond = coinSecond;
+    this.xpBooster = xpBooster;
+    this.healthGainer = healthGainer; 
   }
 
 
@@ -41,6 +48,14 @@ export class Platform implements Collidable {
 
   get height(): number {
     return this._height;
+  }
+
+  get XpBooster(): boolean {
+    return this.xpBooster;
+  }
+
+  get HealthGainer(): boolean {
+    return this.healthGainer;
   }
 
   getCoinFirst(): Coin | undefined {
@@ -74,6 +89,14 @@ export class Platform implements Collidable {
       return true;
     }
     return false;
+  }
+
+  addXpBooster (): void {
+    this.xpBooster = true;
+  }
+
+  addHealthGainer(): void {
+    this.healthGainer = true;
   }
 
   getLetterCount(): number {
