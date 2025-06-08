@@ -3,10 +3,12 @@
     <div class="child-info">
         <h2>{{child.firstName}} {{child.lastName}}</h2>
     </div>
-    <button type="button" class="nav-btn" routerLink="/stats">
-      📊 Stats
-    </button>
-    <button class="delete-btn" (click)="delete($event)">
+  <button type="button" class="nav-btn" (click)="goToStats($event)">
+    📊 Stats
+  </button>
+
+
+  <button class="delete-btn" (click)="delete($event)">
         <i class="fas fa-trash"></i> Supprimer
     </button>
 

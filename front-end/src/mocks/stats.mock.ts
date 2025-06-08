@@ -2,7 +2,6 @@ import { UserStats} from "../models/stats.model";
 
 export const mockUserStats :UserStats= {
   child: { id:1,firstName: "Olivier",lastName:"Boulet",level:500,frequency:5,age:8,role:"child" },
-  nbError: 15,
   listLetterErrors:{
     "a":1,
     "b":2,
@@ -54,7 +53,6 @@ export const mockUserStats :UserStats= {
       "5":9
     }
   },
-  nbFailed: [2, 1, 3],
   progression: [
     { word:"Taxi", completed: true, nbError:0,timeSpent: 300 },
     { word:"Arbre", completed: false, nbError:3,timeSpent: 400 },

@@ -17,6 +17,8 @@ import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
 import { Subject} from "rxjs";
 import { takeUntil } from 'rxjs/operators';
+import {Progression} from "../models/progression.model";
+import {Interaction} from "../models/interaction.model";
 
 import { Injector } from '@angular/core';
 
@@ -33,7 +35,17 @@ export class GameService {
     private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
     private isCrossed: boolean = false;
+    listLetterErrors: { [letter: string]: number } = {};
 
+    errorOcurrencesByPosition: {
+      [wordLength: string]: {
+        [position: string]: number;
+      };
+    } = {};
+
+    progression: Progression[] = [];
+
+    interaction: Interaction[] = [];
 
 
 
@@ -61,6 +73,7 @@ export class GameService {
 
   private currentWordLength=new BehaviorSubject<number>(0);
   public currentWordLength$=this.currentWordLength.asObservable();
+
 
 
 
@@ -213,7 +226,7 @@ export class GameService {
         if (this._isProcessing) return;
         this._isProcessing = true;
         this.destroyStep$ = new Subject<void>();
-
+        
 
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
@@ -454,6 +467,27 @@ export class GameService {
   getCurrentWordIndex(): number {
     return this.currentWordIndex.getValue();
   }
+
+  getListLetterErrors(): { [letter: string]: number } {
+    return this.listLetterErrors;
+  }
+
+  getErrorOcurrencesByPosition(): {
+    [wordLength: string]: {
+      [position: string]: number;
+    };
+  } {
+    return this.errorOcurrencesByPosition;
+  }
+
+  getProgression(): Progression[] {
+    return this.progression;
+  }
+
+  getInteraction(): Interaction[] {
+    return this.interaction;
+  }
+
 
   continue(){
     this.isStep1CompletedSubject.next(false);
