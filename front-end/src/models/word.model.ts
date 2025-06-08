@@ -1,4 +1,5 @@
 export interface Word{
     value : string;
-    level : number; 
+    level : number;
+    childId : number | null;
 }

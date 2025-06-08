@@ -11,14 +11,20 @@ import { Child } from 'src/models/child.model';
 })
 
 export class WordsComponent {
+  selectedChild : Child | null = null;
 
   constructor(private childService: ChildService, private wordService: MotService) {
     this.wordService.words$.subscribe(words => {
       this.allWords = words;});
+
+
+    this.childService.childSelected$.subscribe(child => {
+      console.log('child selected:', child);
+      this.selectedChild = child;
+    })
   }
 
   allWords: Word[] = this.wordService.wordsList;
-  formVisibleDel = false;
   formVisibleMot = false;
   filtrerClicked = true;
 
@@ -30,18 +36,19 @@ export class WordsComponent {
 
   newWord: Word = {
     value: '',
-    level: 0
+    level: 0,
+    childId: null,
   };
 
   toDelWord: Word ={
     value: '',
-    level: 1
+    level: 1,
+    childId: null,
   }
 
   toggleFormMot(): void {
     this.formVisibleMot = !this.formVisibleMot;
   }
-
 
   onAddWord(): void {
     if (!this.newWord.value || !this.newWord.level) {
@@ -51,12 +58,12 @@ export class WordsComponent {
     const word: Word = {
       value: this.newWord.value,
       level: Number(this.newWord.level),
+      childId: this.selectedChild ? this.selectedChild.id : null
     };
-
     this.wordService.addWord(word as Word);
     console.log('Mot ajouté à la base de données :', word);
     this.formVisibleMot = false;
-    this.newWord = { value: '', level: 1};
+    this.newWord = { value: '', level: 1, childId: null };
   }
 
   onFiltrer(): void {
@@ -69,15 +76,15 @@ export class WordsComponent {
   }
 
   get easyWords() {
-    return this.allWords.filter(w => Number(w.level) === 1);
+    return this.allWords.filter(w => Number(w.level) === 1 && (w.childId == null || w.childId === this.selectedChild?.id));
   }
 
   get mediumWords() {
-    return this.allWords.filter(w => Number(w.level) === 2);
+    return this.allWords.filter(w => Number(w.level) === 2 && (w.childId == null || w.childId === this.selectedChild?.id));
   }
 
   get hardWords() {
-    return this.allWords.filter(w => Number(w.level) === 3);
+    return this.allWords.filter(w => Number(w.level) === 3 && (w.childId == null || w.childId === this.selectedChild?.id));
   }
 
 }
