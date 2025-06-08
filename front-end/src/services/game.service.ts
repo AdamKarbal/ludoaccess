@@ -35,13 +35,9 @@ export class GameService {
     private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
     private isCrossed: boolean = false;
-    listLetterErrors: { [letter: string]: number } = {};
+    listLetterErrors: Map<string,number> = new Map();
 
-    errorOcurrencesByPosition: {
-      [wordLength: string]: {
-        [position: string]: number;
-      };
-    } = {};
+    errorOcurrencesByPosition:  Map<string, Map<string, number>> = new Map();
 
     progression: Progression[] = [];
 
@@ -226,18 +222,17 @@ export class GameService {
         if (this._isProcessing) return;
         this._isProcessing = true;
         this.destroyStep$ = new Subject<void>();
-        
+
 
         if (this._wordSample.length === 0) {
             console.log('Tous les mots ont été joués.');
-            console.log("Taille target: " + this._wordTarget.length);
             if(this._wordTarget.length === 0){
                 console.log("Pas encore fini.");
                 this._isProcessing = false;
                 this.fillSample();
                 this.currentWordIndex.next(0);
             }
-            else{
+            else{ // là on finit l'étape 1
                 this._isProcessing=false;
                 console.log("On passe à l'étape 2.");
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
@@ -248,29 +243,29 @@ export class GameService {
                 }
                 setTimeout(() => {
                     this.isStep1CompletedSubject.next(true);});
-                return;
+                return; // dcp on exit la fonction playStep1
             }
-          }
+        }
         console.log("Taille sample: " + this._wordSample.length);
-          const word = this._wordSample.pop();
-          if (word) {
-            this.w2gService.initializeWord(word);
-            console.log(`Mot "${word}" après initialisation.`);
+        const word = this._wordSample.pop();
+        if (word) {
+          this.w2gService.initializeWord(word);
+          console.log(`Mot "${word}" après initialisation.`);
 
-            this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
+          this.w2gService.isWordComplete$.pipe(tap(val => console.log('Valeur émise par isWordComplete$:', val)),filter(isComplete => isComplete),
             rxjsTake(1),takeUntil(this.destroyStep$)).subscribe(() => {
-                this._isProcessing = false;
+              this._isProcessing = false;
 
-                const audio = new Audio('assets/sons/correctAnswer.mp3');
-                audio.play();
-                console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
+              const audio = new Audio('assets/sons/correctAnswer.mp3');
+              audio.play();
+              console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
               const current = this.currentWordIndex.getValue();
-                this.currentWordIndex.next(current+1);
-                if (this.w2gService.badLetter == true) {
-                  this._wordTarget.push(word);
-                  console.log("Taille sample: " + this._wordSample.length);
-                  console.log("Ajout dans wordTarget");
-                  console.log(this._wordTarget);
+              this.currentWordIndex.next(current+1);
+              if (this.w2gService.badLetter == true) {
+                this._wordTarget.push(word);
+                console.log("Taille sample: " + this._wordSample.length);
+                console.log("Ajout dans wordTarget");
+                console.log(this._wordTarget);
                 }
                 this.w2gService.resetWord();
                     this.playStep1();
@@ -468,15 +463,11 @@ export class GameService {
     return this.currentWordIndex.getValue();
   }
 
-  getListLetterErrors(): { [letter: string]: number } {
+  getListLetterErrors(): Map<string,number> {
     return this.listLetterErrors;
   }
 
-  getErrorOcurrencesByPosition(): {
-    [wordLength: string]: {
-      [position: string]: number;
-    };
-  } {
+  getErrorOcurrencesByPosition(): Map<string,Map<string,number>> {
     return this.errorOcurrencesByPosition;
   }
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { mockUserStats } from '../mocks/stats.mock';
 import {GameService} from "./game.service";
 import {httpOptionsBase, serverUrl} from "../configs/server.config";
 import {HttpClient} from "@angular/common/http";
@@ -26,8 +25,8 @@ export class UserStatsService {
       lastName: string;
       age: number;
     };
-    listLetterErrors: { [letter: string]: number };
-    errorOcurrencesByPosition: { [length: string]: { [position: string]: number } };
+    listLetterErrors: Map<string, number>;
+    errorOcurrencesByPosition: Map<string,Map<string,number>>;
     progression: Progression[];
     interaction: Interaction[];
   } = {
@@ -37,8 +36,8 @@ export class UserStatsService {
       lastName: '',
       age: 0
     },
-    listLetterErrors: {},
-    errorOcurrencesByPosition: {},
+    listLetterErrors: new Map(),
+    errorOcurrencesByPosition: new Map(),
     progression: [],
     interaction: []
   };
@@ -104,8 +103,8 @@ export class UserStatsService {
   private processData(id: number): void {
     switch (id) {
       case 1: {
-        const data = Object.entries(mockUserStats.listLetterErrors).map(
-          ([letter, count]) => ({name: letter, errors: count as number})
+        const data = Object.entries(this.dataToSend.listLetterErrors).map(
+          ([letter, count]) => ({ name: letter, errors: count })
         );
         this.statsSubject.next(data);
         break;
@@ -114,11 +113,11 @@ export class UserStatsService {
       case 2: {
         const data: { name: string; errors: number }[] = [];
 
-        for (const [length, positions] of Object.entries(mockUserStats.errorOcurrencesByPosition)) {
+        for (const [length, positions] of Object.entries(this.dataToSend.errorOcurrencesByPosition)) {
           const posMap = positions as Record<string, number>;
           this.lengths.push(Number(length));
           for (const [position, count] of Object.entries(posMap)) {
-            data.push({name: `L${length}-P${position}`, errors: count});
+            data.push({ name: `L${length}-P${position}`, errors: count });
           }
         }
 
