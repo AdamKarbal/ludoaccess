@@ -37,7 +37,7 @@ export class GameService {
     private isCrossed: boolean = false;
     listLetterErrors: Map<string,number> = new Map();
 
-    errorOcurrencesByPosition:  Map<string, Map<string, number>> = new Map();
+    errorOcurrencesByPosition:  Map<number, Map<string, number>> = new Map();
 
     progression: Progression[] = [];
 
@@ -235,6 +235,9 @@ export class GameService {
             else{ // là on finit l'étape 1
                 this._isProcessing=false;
                 console.log("On passe à l'étape 2.");
+                /*this.handleErrorsByPosition(3,[0,0,2]);
+                this.handleErrorsByPosition(4,[9,8,7]);*/
+                console.log("Important : ",this.errorOcurrencesByPosition);
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
                     this.settingService.lowerDifficulty(this._settings!);
                 }
@@ -247,7 +250,7 @@ export class GameService {
             }
         }
         console.log("Taille sample: " + this._wordSample.length);
-        const word = this._wordSample.pop();
+        const word = this._wordSample.pop(); // il reste encore des mots
         if (word) {
           this.w2gService.initializeWord(word);
           console.log(`Mot "${word}" après initialisation.`);
@@ -261,6 +264,7 @@ export class GameService {
               console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
               const current = this.currentWordIndex.getValue();
               this.currentWordIndex.next(current+1);
+              this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
               if (this.w2gService.badLetter == true) {
                 this._wordTarget.push(word);
                 console.log("Taille sample: " + this._wordSample.length);
@@ -371,6 +375,23 @@ export class GameService {
     this.destroyStep$ = new Subject<void>(); // Recréé un nouveau Subject prêt à être utilisé
     }
 
+    handleErrorsByPosition(length:number,incorrectIndexes:number[]):void{
+      if (!this.errorOcurrencesByPosition.has(length)) {
+        this.errorOcurrencesByPosition.set(length, new Map<string, number>());
+      }
+      const positionMap = this.errorOcurrencesByPosition.get(length)!;
+
+      // Incrémente le compteur pour chaque index erroné
+      for (const index of incorrectIndexes) {
+        const positionKey = index.toString();
+        if (positionMap.has(positionKey)) {
+          positionMap.set(positionKey, positionMap.get(positionKey)! + 1);
+        } else {
+          positionMap.set(positionKey, 1);
+        }
+      }
+    }
+
     // Getters
     get w2g(): string {
         return this._wordTarget[this._wordTarget.length - 1] || '';
@@ -467,7 +488,7 @@ export class GameService {
     return this.listLetterErrors;
   }
 
-  getErrorOcurrencesByPosition(): Map<string,Map<string,number>> {
+  getErrorOcurrencesByPosition(): Map<number,Map<string,number>> {
     return this.errorOcurrencesByPosition;
   }
 

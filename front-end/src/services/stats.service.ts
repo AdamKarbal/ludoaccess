@@ -26,7 +26,7 @@ export class UserStatsService {
       age: number;
     };
     listLetterErrors: Map<string, number>;
-    errorOcurrencesByPosition: Map<string,Map<string,number>>;
+    errorOcurrencesByPosition: Map<number,Map<string,number>>;
     progression: Progression[];
     interaction: Interaction[];
   } = {
@@ -62,24 +62,37 @@ export class UserStatsService {
   fetchStatsForChild(childId: number): void {
     this.http.get(`${this.userUrl}/child/${childId}`, this.httpOptions).subscribe({
       next: (data: any) => {
-        const statData = data as typeof this.dataToSend;
-
-        // Emit letter error stats
-        const stats = Object.entries(statData.listLetterErrors).map(
-          ([letter, count]) => ({ name: letter, errors: count as number })
+        // Convert listLetterErrors (object) to Map
+        const lle = new Map<string, number>(
+          Object.entries(data.listLetterErrors)
         );
-        this.statsSubject.next(stats);
 
-        // Emit lengths
-        const lengths: number[] = Object.keys(statData.errorOcurrencesByPosition).map(Number);
-        this.lengthsSubject.next(lengths);
+        // Convert errorOcurrencesByPosition
+        const eobp = new Map<number, Map<string, number>>();
+        for (const [lengthStr, rawPositions] of Object.entries(data.errorOcurrencesByPosition)) {
+          const positions = rawPositions as Record<string, number>;
 
-        // Cache all data
-        this.dataToSend = statData;
-      },
-      error: (err) => {
-        console.error('Failed to load stats for child:', err);
+          if (positions && typeof positions === 'object') {
+            const posMap = new Map<string, number>(Object.entries(positions));
+            eobp.set(Number(lengthStr), posMap);
+          }
+        }
+
+
+        this.dataToSend = {
+          ...data,
+          listLetterErrors: lle,
+          errorOcurrencesByPosition: eobp
+        };
+
+        // Emit transformed values
+        this.statsSubject.next(
+          Array.from(lle.entries()).map(([letter, count]) => ({ name: letter, errors: count }))
+        );
+
+        this.lengthsSubject.next(Array.from(eobp.keys()));
       }
+
     });
   }
 
@@ -103,7 +116,7 @@ export class UserStatsService {
   private processData(id: number): void {
     switch (id) {
       case 1: {
-        const data = Object.entries(this.dataToSend.listLetterErrors).map(
+        const data = Array.from(this.dataToSend.listLetterErrors.entries()).map(
           ([letter, count]) => ({ name: letter, errors: count })
         );
         this.statsSubject.next(data);
@@ -112,14 +125,15 @@ export class UserStatsService {
 
       case 2: {
         const data: { name: string; errors: number }[] = [];
+        this.lengths = [];
 
-        for (const [length, positions] of Object.entries(this.dataToSend.errorOcurrencesByPosition)) {
-          const posMap = positions as Record<string, number>;
-          this.lengths.push(Number(length));
-          for (const [position, count] of Object.entries(posMap)) {
+        for (const [length, posMap] of this.dataToSend.errorOcurrencesByPosition.entries()) {
+          this.lengths.push(length);
+          for (const [position, count] of posMap.entries()) {
             data.push({ name: `L${length}-P${position}`, errors: count });
           }
         }
+
 
         this.statsSubject.next(data);
         this.lengthsSubject.next(this.lengths);
