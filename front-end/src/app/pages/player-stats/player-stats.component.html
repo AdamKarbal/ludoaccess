@@ -1,23 +1,25 @@
-<div class="container">
+<div class="container" *ngIf="child">
   <header>
     <h1>Statistiques du Joueur</h1>
   </header>
 
+  <!-- Bloc d'informations générales -->
   <stats-menu [titre]="'Informations du Joueur'">
     <div class="player-stats">
       <div class="info">
-
-        <p><strong>Nom :</strong> {{child.lastName+" "+child.firstName}}</p>
-        <p><strong>Âge :</strong> {{child.age}}</p>
-        <p><strong> Level : </strong> {{child.level}} </p>
+        <p><strong>Nom :</strong> {{ child.lastName }} {{ child.firstName }}</p>
+        <p><strong>Âge :</strong> {{ child.age || 'Non spécifié' }}</p>
       </div>
     </div>
   </stats-menu>
 
+  <!-- Statistiques détaillées -->
   <stats-menu [titre]="'Statistiques détaillées'">
     <button id="letterError" (click)="setId(1)">Erreurs par lettre</button>
     <button id="positionError" (click)="setId(2)">Erreurs par position dans le mot</button>
-    <div class="length-selection" *ngIf="id=== 2 && lengths.length > 0">
+
+    <!-- Longueurs des mots dynamiques -->
+    <div class="length-selection" *ngIf="id === 2 && lengths.length > 0">
       <app-word-length-button
         *ngFor="let len of lengths"
         [length]="len"
@@ -26,39 +28,44 @@
       </app-word-length-button>
     </div>
 
+    <!-- Graphique de stats -->
     <app-user-stats-chart [selectedLength]="selectedLength"></app-user-stats-chart>
   </stats-menu>
 
+  <!-- Bloc de progression -->
   <stats-menu [titre]="'Progression dans le Jeu'">
-    <div class="progress-stats">
+    <div class="progress-stats" *ngIf="progression.length > 0; else noProgression">
       <table>
         <thead>
         <tr>
           <th>Mot</th>
-          <th>Mot Terminé</th>
+          <th>Statut</th>
           <th>Erreurs</th>
-          <th>Temps Pris</th>
+          <th>Temps (sec)</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let level of progression">
           <td>{{ level.word }}</td>
-          <td>{{ level.completed ? 'Complété' : 'Non Complété' }}</td>
+          <td>{{ level.completed ? '✅ Terminé' : '❌ Non terminé' }}</td>
           <td>{{ level.nbError }}</td>
-          <td>{{ level.timeSpent }} sec</td>
+          <td>{{ level.timeSpent }}</td>
         </tr>
         </tbody>
       </table>
     </div>
+    <ng-template #noProgression>
+      <p>Aucune progression enregistrée pour l'instant.</p>
+    </ng-template>
   </stats-menu>
 
-
+  <!-- Bloc des interactions -->
   <stats-menu [titre]="'Statistiques d\'Interaction'">
-    <div class="interaction-stats">
+    <div class="interaction-stats" *ngIf="interactions.length > 0; else noInteractions">
       <table>
         <thead>
         <tr>
-          <th>Interaction</th>
+          <th>Action</th>
           <th>Succès</th>
           <th>Échecs</th>
         </tr>
@@ -72,6 +79,13 @@
         </tbody>
       </table>
     </div>
+    <ng-template #noInteractions>
+      <p>Aucune interaction enregistrée.</p>
+    </ng-template>
   </stats-menu>
+</div>
 
+<!-- Si les données du joueur ne sont pas encore disponibles -->
+<div *ngIf="!child">
+  <p>Chargement des statistiques du joueur...</p>
 </div>

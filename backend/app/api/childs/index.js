@@ -22,27 +22,7 @@ router.get('/:childId', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-router.get('/:childId/stats', (req, res) => {
-  try {
-    const { childId } = req.params
-    const child = Child.getById(childId)
 
-    if (!child) {
-      return res.status(404).json({ error: 'Child not found' })
-    }
-
-    const id = parseInt(childId, 10)
-    const userStat = UserStats.get().find((stat) => stat.child.id === id)
-
-    if (!userStat) {
-      return res.status(404).json({ error: 'UserStats not found for this child' })
-    }
-
-    res.status(200).json(userStat)
-  } catch (err) {
-    manageAllErrors(res, err)
-  }
-})
 
 router.post('/', (req, res) => {
   try {
@@ -72,7 +52,8 @@ router.post('/', (req, res) => {
       id: child.id,
       firstName: child.firstName,
       lastName: child.lastName,
-      age: child.age
+      age: child.age,
+      role: 'child'
     }
     const defaultUserStats = {
       child: newChild,

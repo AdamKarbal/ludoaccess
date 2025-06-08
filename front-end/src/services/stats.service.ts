@@ -24,7 +24,7 @@ export class UserStatsService {
       id: number;
       firstName: string;
       lastName: string;
-      role: 'child';
+      age: number;
     };
     listLetterErrors: { [letter: string]: number };
     errorOcurrencesByPosition: { [length: string]: { [position: string]: number } };
@@ -35,7 +35,7 @@ export class UserStatsService {
       id: 0,
       firstName: '',
       lastName: '',
-      role: 'child'
+      age: 0
     },
     listLetterErrors: {},
     errorOcurrencesByPosition: {},
@@ -60,17 +60,40 @@ export class UserStatsService {
               private http: HttpClient) {
     this.id = 1;
   }
+  fetchStatsForChild(childId: number): void {
+    this.http.get(`${this.userUrl}/child/${childId}`, this.httpOptions).subscribe({
+      next: (data: any) => {
+        const statData = data as typeof this.dataToSend;
+
+        // Emit letter error stats
+        const stats = Object.entries(statData.listLetterErrors).map(
+          ([letter, count]) => ({ name: letter, errors: count as number })
+        );
+        this.statsSubject.next(stats);
+
+        // Emit lengths
+        const lengths: number[] = Object.keys(statData.errorOcurrencesByPosition).map(Number);
+        this.lengthsSubject.next(lengths);
+
+        // Cache all data
+        this.dataToSend = statData;
+      },
+      error: (err) => {
+        console.error('Failed to load stats for child:', err);
+      }
+    });
+  }
 
 
   setId(id: number): void {
     this.id = id;
-    this.processMockData(this.id);
+    this.processData(this.id);
   }
   updateStatsFromGameState(childId: number) {
     this.dataToSend.child.id = childId;
     this.dataToSend.child.firstName = 'Jean'; // or get it from session
     this.dataToSend.child.lastName = 'Matinet';
-    this.dataToSend.child.role = 'child';
+    this.dataToSend.child.age= 8;
     this.dataToSend.listLetterErrors = this.gameService.getListLetterErrors();
     this.dataToSend.errorOcurrencesByPosition = this.gameService.getErrorOcurrencesByPosition();
     this.dataToSend.progression = this.gameService.getProgression();
@@ -78,7 +101,7 @@ export class UserStatsService {
     this.sendStatsToServer();
   }
 
-  private processMockData(id: number): void {
+  private processData(id: number): void {
     switch (id) {
       case 1: {
         const data = Object.entries(mockUserStats.listLetterErrors).map(
