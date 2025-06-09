@@ -18,9 +18,9 @@ import { FreezeGameService } from "./freeze-game.services";
 import { AuthService } from "./auth.service";
 import { Subject} from "rxjs";
 import { takeUntil } from 'rxjs/operators';
-import {Progression} from "../models/progression.model";
 import {Interaction} from "../models/interaction.model";
 import {UserStatsService} from "./stats.service";
+import {ProgressionImpl} from "../models/progressionImpl.model";
 
 
 
@@ -37,14 +37,16 @@ export class GameService {
     private _wordTarget: string[] = [];
     private _settings?: ChildSettings | null;
     private isCrossed: boolean = false;
+    // partie à transmettre aux stats
     listLetterErrors: Map<string,number> = new Map();
 
     errorOcurrencesByPosition:  Map<number, Map<string, number>> = new Map();
 
-    progression: Progression[] = [];
+    progression: ProgressionImpl[] = [];
 
     interaction: Interaction[] = [];
-
+    //fin
+    private errorsByWord: Map<string,ProgressionImpl> = new Map();
 
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
@@ -238,7 +240,7 @@ export class GameService {
             else{ // là on finit l'étape 1
                 this._isProcessing=false;
                 console.log("On passe à l'étape 2.");
-                console.log("Important : ",this.listLetterErrors);
+                console.log("Important : ",this.errorsByWord);
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
                     this.settingService.lowerDifficulty(this._settings!);
                 }
@@ -265,9 +267,11 @@ export class GameService {
               console.log(`Mot "${word}" complété. badLetter: ${this.w2gService.badLetter}`);
               const current = this.currentWordIndex.getValue();
               this.currentWordIndex.next(current+1);
-              this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
-              this.updateIncorrectLetters(this.w2gService.getIncorrectLetters());
               if (this.w2gService.badLetter == true) {
+                const incorrectLetters=this.w2gService.getIncorrectLetters();
+                this.errorsByWord.set(word,new ProgressionImpl(word,incorrectLetters.length));
+                this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
+                this.updateIncorrectLetters(incorrectLetters);
                 this._wordTarget.push(word);
                 console.log("Taille sample: " + this._wordSample.length);
                 console.log("Ajout dans wordTarget");
@@ -343,7 +347,7 @@ export class GameService {
                 this.isStep3CompletedSubject.next(true);
 
             }),takeUntil(this.destroyStep$)
-        ).subscribe(() => {
+        ).subscribe(() => { // là on a joué sur tous les mots de l'étape 3
              if(this._wordTarget.length===0) {
 
                     console.log("Mot courant réinitialisé.");
@@ -359,25 +363,24 @@ export class GameService {
                         this.wantToExit.next(true);
                    });
                    const statsService = this.injector.get(UserStatsService);
-                   console.log("Important ",this.authService.getCurrentUser());
+                   this.updateProgressionMap(this._currentWord,this.w2gService.getIncorrectLetters().length,0);
+                   this.updateProgression();
                    statsService.updateStatsFromGameState(this.authService.getCurrentUser()!);
                    statsService.sendStatsToServer(this.authService.getCurrentUser()!);
-
-            console.log('Mot complété dans étape 3');
-            this.w2gService.resetWord();
-            this.w2gService.onWordCompleted();
-                }
+                   console.log('Mot complété dans étape 3');
+                   this.w2gService.resetWord();
+                   this.w2gService.onWordCompleted();
+             }
 
         });
     }
 
     stopStep(): void{
-
-    console.log('Interruption d\'une step à cause de newEvent');
-     this.destroyStep$.next(); // Annule tous les abonnements en cours
-    this._isProcessing = false; // IMPORTANT : libère le flag pour relancer playStepX
-    this.destroyStep$.complete(); // Termine le subject actuel pour éviter fuite mémoire
-    this.destroyStep$ = new Subject<void>(); // Recréé un nouveau Subject prêt à être utilisé
+      console.log('Interruption d\'une step à cause de newEvent');
+      this.destroyStep$.next(); // Annule tous les abonnements en cours
+      this._isProcessing = false; // IMPORTANT : libère le flag pour relancer playStepX
+      this.destroyStep$.complete(); // Termine le subject actuel pour éviter fuite mémoire
+      this.destroyStep$ = new Subject<void>(); // Recréé un nouveau Subject prêt à être utilisé
     }
 
     handleErrorsByPosition(length:number,incorrectIndexes:number[]):void{
@@ -406,6 +409,16 @@ export class GameService {
           this.listLetterErrors.set(letter,1);
         }
       }
+    }
+
+    updateProgression(){
+      this.progression=Array.from(this.errorsByWord.values());
+    }
+
+    updateProgressionMap(word:string,nbError:number,time:number){
+      this.errorsByWord.get(word)!.addError(nbError);
+      this.errorsByWord.get(word)!.setTime(time);
+      this.errorsByWord.get(word)!.setCompleted(time<30);
     }
 
     // Getters
@@ -468,6 +481,7 @@ export class GameService {
         // this.w2gService.resetWord();
         this.coinCollectionService.reset();
         this.chronoService.resetTimer();
+        this.errorsByWord.clear();
         // this.fillSample();
         // this.playStep1();
 
@@ -510,7 +524,7 @@ export class GameService {
     return this.errorOcurrencesByPosition;
   }
 
-  getProgression(): Progression[] {
+  getProgression(): ProgressionImpl[] {
     return this.progression;
   }
 

@@ -106,7 +106,6 @@ export class UserStatsService {
     this.dataToSend.child.firstName = child.firstName;
     this.dataToSend.child.lastName = child.lastName;
     this.dataToSend.child.age= child.age!;
-    console.log("Important ",this.gameService.getListLetterErrors());
     this.dataToSend.listLetterErrors = this.gameService.getListLetterErrors();
     this.dataToSend.errorOcurrencesByPosition = this.gameService.getErrorOcurrencesByPosition();
     this.dataToSend.progression = this.gameService.getProgression();
