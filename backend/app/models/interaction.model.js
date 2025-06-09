@@ -5,7 +5,6 @@ const interactionSchema = {
   action: Joi.string().required(),
   success: Joi.number().required(),
   failures: Joi.number().required(),
-  timeSpent: Joi.number().required()
 };
 
 module.exports = {

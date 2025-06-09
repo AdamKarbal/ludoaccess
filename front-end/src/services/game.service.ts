@@ -21,8 +21,8 @@ import { takeUntil } from 'rxjs/operators';
 import {Interaction} from "../models/interaction.model";
 import {UserStatsService} from "./stats.service";
 import {ProgressionImpl} from "../models/progressionImpl.model";
-
-
+import {InteractionImpl} from "../models/interactionImpl.model";
+import {PlayerService} from "./player.service";
 
 
 
@@ -44,10 +44,10 @@ export class GameService {
 
     progression: ProgressionImpl[] = [];
 
-    interaction: Interaction[] = [];
+    interaction: InteractionImpl[] = [];
     //fin
-    private errorsByWord: Map<string,ProgressionImpl> = new Map();
-
+    private progressionMap: Map<string,ProgressionImpl> = new Map();
+    private interactionMap: Map<string,InteractionImpl> = new Map();
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
     public isStep1Completed$ = this.isStep1CompletedSubject.asObservable();
@@ -240,7 +240,7 @@ export class GameService {
             else{ // là on finit l'étape 1
                 this._isProcessing=false;
                 console.log("On passe à l'étape 2.");
-                console.log("Important : ",this.errorsByWord);
+                console.log("Important : ",this.progressionMap);
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
                     this.settingService.lowerDifficulty(this._settings!);
                 }
@@ -269,7 +269,7 @@ export class GameService {
               this.currentWordIndex.next(current+1);
               if (this.w2gService.badLetter == true) {
                 const incorrectLetters=this.w2gService.getIncorrectLetters();
-                this.errorsByWord.set(word,new ProgressionImpl(word,incorrectLetters.length));
+                this.progressionMap.set(word,new ProgressionImpl(word,incorrectLetters.length));
                 this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
                 this.updateIncorrectLetters(incorrectLetters);
                 this._wordTarget.push(word);
@@ -313,6 +313,10 @@ export class GameService {
             rxjsTake(1),
             finalize(() => {
                 this._isProcessing = false;
+                const gameService= this.injector.get(PlayerService);
+                console.log('Important ratés',gameService.getFailedJumps());
+                console.log('Important réussis',gameService.getSuccessfulJumps());
+                this.updateInteractionMap('Sauts',gameService.getFailedJumps(),gameService.getSuccessfulJumps());
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
                 this.resetStep2();
                 this.isStep2CompletedSubject.next(true);
@@ -365,6 +369,7 @@ export class GameService {
                    const statsService = this.injector.get(UserStatsService);
                    this.updateProgressionMap(this._currentWord,this.w2gService.getIncorrectLetters().length,0);
                    this.updateProgression();
+                   this.updateInteraction();
                    statsService.updateStatsFromGameState(this.authService.getCurrentUser()!);
                    statsService.sendStatsToServer(this.authService.getCurrentUser()!);
                    console.log('Mot complété dans étape 3');
@@ -410,15 +415,26 @@ export class GameService {
         }
       }
     }
-
+    updateInteractionMap(action:string,success:number,failed:number){
+      if(!this.interactionMap.has(action)){
+        this.interactionMap.set(action,new InteractionImpl(action,success,failed));
+      }
+      else{
+        this.interactionMap.get(action)!.addSuccess(success);
+        this.interactionMap.get(action)!.addFailure(failed);
+      }
+    }
+    updateInteraction(){
+      this.interaction=Array.from(this.interactionMap.values());
+    }
     updateProgression(){
-      this.progression=Array.from(this.errorsByWord.values());
+      this.progression=Array.from(this.progressionMap.values());
     }
 
     updateProgressionMap(word:string,nbError:number,time:number){
-      this.errorsByWord.get(word)!.addError(nbError);
-      this.errorsByWord.get(word)!.setTime(time);
-      this.errorsByWord.get(word)!.setCompleted(time<30);
+      this.progressionMap.get(word)!.addError(nbError);
+      this.progressionMap.get(word)!.setTime(time);
+      this.progressionMap.get(word)!.setCompleted(time<30);
     }
 
     // Getters
@@ -481,7 +497,7 @@ export class GameService {
         // this.w2gService.resetWord();
         this.coinCollectionService.reset();
         this.chronoService.resetTimer();
-        this.errorsByWord.clear();
+        this.progressionMap.clear();
         // this.fillSample();
         // this.playStep1();
 
