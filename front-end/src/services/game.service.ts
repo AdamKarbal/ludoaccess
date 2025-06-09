@@ -314,8 +314,6 @@ export class GameService {
             finalize(() => {
                 this._isProcessing = false;
                 const gameService= this.injector.get(PlayerService);
-                console.log('Important ratés',gameService.getFailedJumps());
-                console.log('Important réussis',gameService.getSuccessfulJumps());
                 this.updateInteractionMap('Sauts',gameService.getFailedJumps(),gameService.getSuccessfulJumps());
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
                 this.resetStep2();
@@ -347,11 +345,14 @@ export class GameService {
             finalize(() => {
                 this._isProcessing = false;
                 this.resetStep3();
+                /*this.interaction.push(new InteractionImpl('dernière lettre',0,this.getGlobalEdgeLetterErrorStats().last));
+                this.interaction.push(new InteractionImpl('première lettre',0,this.getGlobalEdgeLetterErrorStats().first));
+                console.log("Important",this.interaction);*/
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
                 this.isStep3CompletedSubject.next(true);
 
             }),takeUntil(this.destroyStep$)
-        ).subscribe(() => { // là on a joué sur tous les mots de l'étape 3
+        ).subscribe(() => {
              if(this._wordTarget.length===0) {
 
                     console.log("Mot courant réinitialisé.");
@@ -366,10 +367,15 @@ export class GameService {
                         console.log("Je veux quitter!");
                         this.wantToExit.next(true);
                    });
+                   this.handleErrorsByPosition(this._currentWord.length,this.w2gService.getIncorrectIndex());
                    const statsService = this.injector.get(UserStatsService);
                    this.updateProgressionMap(this._currentWord,this.w2gService.getIncorrectLetters().length,0);
                    this.updateProgression();
                    this.updateInteraction();
+                   console.log("Important ab",this.getGlobalEdgeLetterErrorStats());
+                   this.interaction.push(new InteractionImpl('dernière lettre',0,this.getGlobalEdgeLetterErrorStats().last));
+                   this.interaction.push(new InteractionImpl('première lettre',0,this.getGlobalEdgeLetterErrorStats().first));
+                   console.log("Important ",this.interaction);
                    statsService.updateStatsFromGameState(this.authService.getCurrentUser()!);
                    statsService.sendStatsToServer(this.authService.getCurrentUser()!);
                    console.log('Mot complété dans étape 3');
@@ -547,6 +553,19 @@ export class GameService {
   getInteraction(): Interaction[] {
     return this.interaction;
   }
+
+  getGlobalEdgeLetterErrorStats(): { first: number; last: number } {
+    let first = 0;
+    let last = 0;
+
+    for (const [length, map] of this.errorOcurrencesByPosition.entries()) {
+      first += map.get('1') ?? 0;
+      last += map.get((length).toString()) ?? 0;
+    }
+
+    return { first, last };
+  }
+
 
 
   continue(){

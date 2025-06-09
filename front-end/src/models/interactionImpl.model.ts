@@ -15,4 +15,8 @@ export class InteractionImpl implements Interaction {
   addFailure(number:number){
     this.failures += number;
   }
+  getAction():string{
+    return this.action;
+  }
+
 }
