@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import {Injector} from "@angular/core";
 import { MotService } from "src/services/mot.service";
 import { PlatformService } from "./platform.service";
 import { Platform } from "src/models/platform.model";
@@ -19,8 +20,9 @@ import { Subject} from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import {Progression} from "../models/progression.model";
 import {Interaction} from "../models/interaction.model";
+import {UserStatsService} from "./stats.service";
 
-import { Injector } from '@angular/core';
+
 
 
 
@@ -85,6 +87,7 @@ export class GameService {
         private finalMessageService: FinalMessageService,
         private authService : AuthService,
         private freezeGameService: FreezeGameService,
+        private injector:Injector
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -235,9 +238,7 @@ export class GameService {
             else{ // là on finit l'étape 1
                 this._isProcessing=false;
                 console.log("On passe à l'étape 2.");
-                /*this.handleErrorsByPosition(3,[0,0,2]);
-                this.handleErrorsByPosition(4,[9,8,7]);*/
-                console.log("Important : ",this.errorOcurrencesByPosition);
+                console.log("Important : ",this.listLetterErrors);
                 if(this._settings?.adaptDifficulty===true && this._wordTarget.length > 5){
                     this.settingService.lowerDifficulty(this._settings!);
                 }
@@ -265,6 +266,7 @@ export class GameService {
               const current = this.currentWordIndex.getValue();
               this.currentWordIndex.next(current+1);
               this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
+              this.updateIncorrectLetters(this.w2gService.getIncorrectLetters());
               if (this.w2gService.badLetter == true) {
                 this._wordTarget.push(word);
                 console.log("Taille sample: " + this._wordSample.length);
@@ -355,8 +357,11 @@ export class GameService {
                    this.finalMessageService.wantToExit$.pipe(filter(wantsToExit => wantsToExit),rxjsTake(1)).subscribe(wantsToExit => {
                         console.log("Je veux quitter!");
                         this.wantToExit.next(true);
-                    }
-                    );
+                   });
+                   const statsService = this.injector.get(UserStatsService);
+                   console.log("Important ",this.authService.getCurrentUser());
+                   statsService.updateStatsFromGameState(this.authService.getCurrentUser()!);
+                   statsService.sendStatsToServer(this.authService.getCurrentUser()!);
 
             console.log('Mot complété dans étape 3');
             this.w2gService.resetWord();
@@ -388,6 +393,17 @@ export class GameService {
           positionMap.set(positionKey, positionMap.get(positionKey)! + 1);
         } else {
           positionMap.set(positionKey, 1);
+        }
+      }
+    }
+
+    updateIncorrectLetters(incorrectLetters:string[]):void{
+      for(const letter of incorrectLetters){
+        if(this.listLetterErrors.has(letter)){
+          this.listLetterErrors.set(letter,this.listLetterErrors.get(letter)!+1);
+        }
+        else{
+          this.listLetterErrors.set(letter,1);
         }
       }
     }
@@ -436,6 +452,8 @@ export class GameService {
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
         this.freezeGameService.isNewEventSubject.next(false);
+        this.errorOcurrencesByPosition=new Map<number,Map<string,number>>;
+        this.listLetterErrors.clear();
         this.w2gService.resetWord();
         this.isCrossed = false;
         this.finalMessageService.reset();

@@ -5,6 +5,8 @@ import {httpOptionsBase, serverUrl} from "../configs/server.config";
 import {HttpClient} from "@angular/common/http";
 import {Progression} from "../models/progression.model";
 import {Interaction} from "../models/interaction.model";
+import {User} from "../models/user.model";
+import {Child} from "../models/child.model";
 
 @Injectable({
   providedIn: 'root'
@@ -45,14 +47,8 @@ export class UserStatsService {
     return this.dataToSend;
   }
 
-  sendStatsToServer(): void {
-    const url = `${this.userUrl}/${this.id}`;
-    this.http.put(url, this.dataToSend, this.httpOptions)
-      .subscribe({
-        next: () => console.log('Stats updated successfully'),
-        error: err => console.error('Error updating stats:', err)
-      });
-  }
+
+
 
 
   constructor(private gameService: GameService,
@@ -91,6 +87,9 @@ export class UserStatsService {
         );
 
         this.lengthsSubject.next(Array.from(eobp.keys()));
+      },
+      error: err => {
+        console.warn("❌ fetchStatsForChild failed, child may have no stats yet.");
       }
 
     });
@@ -101,16 +100,38 @@ export class UserStatsService {
     this.id = id;
     this.processData(this.id);
   }
-  updateStatsFromGameState(childId: number) {
-    this.dataToSend.child.id = childId;
-    this.dataToSend.child.firstName = 'Jean'; // or get it from session
-    this.dataToSend.child.lastName = 'Matinet';
-    this.dataToSend.child.age= 8;
+  updateStatsFromGameState(user:User): void {
+    const child=user as Child;
+    this.dataToSend.child.id = child.id;
+    this.dataToSend.child.firstName = child.firstName;
+    this.dataToSend.child.lastName = child.lastName;
+    this.dataToSend.child.age= child.age!;
+    console.log("Important ",this.gameService.getListLetterErrors());
     this.dataToSend.listLetterErrors = this.gameService.getListLetterErrors();
     this.dataToSend.errorOcurrencesByPosition = this.gameService.getErrorOcurrencesByPosition();
     this.dataToSend.progression = this.gameService.getProgression();
     this.dataToSend.interaction = this.gameService.getInteraction();
-    this.sendStatsToServer();
+  }
+
+  sendStatsToServer(user:User): void {
+    const url = `${this.userUrl}/child/${user.id}`;
+
+    // 🔁 Convertir les Map en objets simples pour l'envoi
+    const payloadToSend = {
+      ...this.dataToSend,
+      listLetterErrors: Object.fromEntries(this.dataToSend.listLetterErrors),
+      errorOcurrencesByPosition: Object.fromEntries(
+        Array.from(this.dataToSend.errorOcurrencesByPosition.entries()).map(
+          ([length, map]) => [length, Object.fromEntries(map)]
+        )
+      )
+    };
+
+    this.http.put(url, payloadToSend, this.httpOptions)
+      .subscribe({
+        next: () => console.log('Stats updated successfully'),
+        error: err => console.error('Error updating stats:', err)
+      });
   }
 
   private processData(id: number): void {

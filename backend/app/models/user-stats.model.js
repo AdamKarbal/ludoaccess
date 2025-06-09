@@ -8,6 +8,7 @@ const childSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   age: Joi.number().required(),
+  role: Joi.string().optional(),
   level: Joi.number().default(0),
   lastPlayed: Joi.date().default(() => new Date(), 'time now'),
   playDuration: Joi.number().default(0),

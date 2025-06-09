@@ -18,7 +18,7 @@ export class Word2GuessService implements OnDestroy {
   public isCrossed: boolean = false;
   public isI: boolean = false;
   private _badLetter: boolean = false;
-  private incorrectLetters: Set<string> = new Set<string>;
+  private incorrectLetters: string[]=[];
   private incorrectIndexesToKeep : number[]=[];
   private incorrectIndexes: Set<number> = new Set<number>();
 
@@ -123,8 +123,8 @@ export class Word2GuessService implements OnDestroy {
     console.log("Lettre incorrecte !"); //Lettre reconnu mais pas la bonne lettre à entrer
     const audio = new Audio('assets/sons/wrongLetter.mp3');
     audio.play();
-    this.incorrectLetters.add(this.word[this.currentIndex].toLowerCase());
-    this.incorrectIndexesToKeep.push(this.currentIndex);
+    this.incorrectLetters.push(this.word[this.currentIndex].toLowerCase());
+    this.incorrectIndexesToKeep.push(this.currentIndex+1);
     this.incorrectIndexes.add(this.guessedIndexes.length);
 
     setTimeout(() => {
@@ -164,7 +164,7 @@ export class Word2GuessService implements OnDestroy {
     this.word = "";
     this.display = "";
     this.guessedIndexes = [];
-    this.incorrectLetters.clear();
+    this.incorrectLetters=[];
     this.incorrectIndexesToKeep=[];
     this.currentIndex = 0;
     this.incorrectIndexes.clear();
@@ -195,7 +195,7 @@ export class Word2GuessService implements OnDestroy {
     return this.incorrectIndexesToKeep;
   }
 
-  getIncorrectLetters(): Set<string>{
+  getIncorrectLetters(): string[]{
     return this.incorrectLetters;
   }
 }
