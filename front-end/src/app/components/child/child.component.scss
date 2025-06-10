@@ -49,9 +49,6 @@
 }
 
 .delete-btn {
-    position: absolute;
-    right: 1.2%;
-    top: 50%;
     transform: translateY(-50%);
     background-color: #ff4d4d;
     color: white;
@@ -67,9 +64,6 @@
 }
 
 .words-btn {
-  position: absolute;
-  right: 6.5%;
-  top: 50%;
   transform: translateY(-50%);
   background-color: #4c69f8;
   color: white;
@@ -129,9 +123,6 @@
 }
 
 .nav-btn{
-  position: absolute;
-  right: 10%;
-  top: 50%;
   font-family: 'Luckiest Guy', cursive;
   font-size: 0.8rem;
   transform: translateY(-50%);
@@ -144,4 +135,15 @@
   background-color: #d1d1d1;
   transform: translateY(-50%) scale(1.2);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.buttons{
+  position: absolute;
+  margin-top: 5.5vh;
+  right: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.6vw;
+  transform: translateY(-50%);
 }

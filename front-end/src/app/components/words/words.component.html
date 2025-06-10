@@ -25,7 +25,7 @@
         </select>
 
           <div *ngIf="toDelWord.level == 1">
-            <h3 class="title-diff">Mots faciles :</h3>
+            <h3 class="title-diff">Difficulté des mots :</h3>
             <div class="scrollable-words">
                 <div class="word-container" *ngFor="let word of easyWords">
                   <div class="word-text">{{ word.value }}</div>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div *ngIf="toDelWord.level == 2">
-            <h3 class="title-diff">Mots moyens :</h3>
+            <h3 class="title-diff">Difficulté des mots :</h3>
             <div class="scrollable-words">
                 <div class="word-container" *ngFor="let word of mediumWords">
                   <div class="word-text">{{ word.value }}</div>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div *ngIf="toDelWord.level == 3">
-            <h3 class="title-diff">Mots difficiles :</h3>
+            <h3 class="title-diff">Difficulté des mots :</h3>
             <div class="scrollable-words">
                 <div class="word-container" *ngFor="let word of hardWords">
                   <div class="word-text">{{ word.value }}</div>
