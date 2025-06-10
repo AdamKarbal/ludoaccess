@@ -40,6 +40,7 @@ export class AuthService {
   }
 
   startDifficultyTimer(settings: ChildSettings): void {
+    if(this.getCurrentUserRole()=="child") {
     if (settings.simplifyGameAfter) {
       const simplifyAfterMs = settings.simplifyGameAfter * 60 * 1000;
       console.log(`Changement de difficulté prévu dans ${settings.simplifyGameAfter} minutes.`);
@@ -50,6 +51,6 @@ export class AuthService {
           this.settingsService.lowerDifficulty(settings);
         });
     }
-  }
+  }}
 
 }

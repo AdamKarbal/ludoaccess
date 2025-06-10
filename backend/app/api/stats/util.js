@@ -32,7 +32,7 @@ function mergeProgressions(listA,listB){
             const existing = map.get(item.word);
             existing.completed = existing.completed || item.completed;
             existing.nbError += (item.nbError);
-            existing.timeSpent += (item.timeSpent);
+            existing.timeSpent = Math.min(item.timeSpent,existing.timeSpent);
         }
     }
 
