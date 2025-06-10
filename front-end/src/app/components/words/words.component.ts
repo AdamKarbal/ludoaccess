@@ -26,13 +26,6 @@ export class WordsComponent {
 
   allWords: Word[] = this.wordService.wordsList;
   formVisibleMot = false;
-  filtrerClicked = true;
-
-  newChild: Partial<Child> = {
-    firstName: '',
-    lastName: '',
-    age: undefined
-  };
 
   newWord: Word = {
     value: '',
@@ -42,7 +35,7 @@ export class WordsComponent {
 
   toDelWord: Word ={
     value: '',
-    level: 1,
+    level: 0,
     childId: null,
   }
 
@@ -64,10 +57,6 @@ export class WordsComponent {
     console.log('Mot ajouté à la base de données :', word);
     this.formVisibleMot = false;
     this.newWord = { value: '', level: 1, childId: null };
-  }
-
-  onFiltrer(): void {
-    this.filtrerClicked = true;
   }
 
   onDeleteWord(word: Word): void {

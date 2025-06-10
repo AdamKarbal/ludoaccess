@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   padding-top: 20px;
   height: calc(100% - 80px);
   overflow-y: auto;
@@ -123,13 +122,15 @@
 }
 
 .scrollable-words {
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   width: 50%;
-  flex-wrap: wrap;            /* Permet le retour à la ligne */
-  gap: 12px;                  /* Espacement entre les éléments */
-  max-height: 40vh;           /* Hauteur max avec scroll si trop d’éléments */
-  overflow-y: auto;           /* Scroll vertical uniquement si nécessaire */
-  overflow-x: hidden;         /* Pas de scroll horizontal */
+  flex-wrap: wrap;
+  gap: 12px;
+  max-height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: #fff;
   border: 2px solid #90e0ef;
   border-radius: 20px;
@@ -158,13 +159,12 @@ li:hover {
 }
 
 .form-words {
-  position: absolute;
+  display : flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: 20px;
   padding: 10px;
-  margin-top: 12vh;
   width: fit-content;
-  top: 30%;
-  left: 33%;
   gap: 10px;
 }
 
@@ -216,8 +216,6 @@ li:hover {
 }
 
 .selector{
-  position: absolute;
-  left:22%;
   font-size: 1.2rem;
 }
 
@@ -228,4 +226,34 @@ li:hover {
   background: white;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
+}
+
+.ligne-difficulte{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1vw;
+}
+
+
+.ligne-titre {
+  margin-top: 110px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-bottom: 1rem;
+}
+
+.ligne-titre app-retour {
+  margin-left: 1.5vw;
+  flex-shrink: 0;
+}
+
+.ligne-titre .titre {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
 }
