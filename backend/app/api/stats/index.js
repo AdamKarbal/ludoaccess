@@ -1,8 +1,10 @@
 const { Router } = require('express');
 const { UserStats } = require('../../models');
 const manageAllErrors = require('../../utils/routes/error-management');
+const {mergeInteractions,mergeProgressions} = require('./util.js');
 
 const router = new Router();
+
 
 
 // ✅ GET user stats by child ID (specific route - must come first)
@@ -56,9 +58,10 @@ router.put('/child/:childId', (req, res) => {
     }
 
     // 🧠 Ajouter les nouvelles progressions/interactions
-    const mergedProgression = [...existingStats.progression, ...newStats.progression];
-    const mergedInteraction = [...existingStats.interaction, ...newStats.interaction];
-
+    //const mergedProgression = [...existingStats.progression, ...newStats.progression];
+    //const mergedInteraction = [...existingStats.interaction, ...newStats.interaction];
+    const mergedProgression=mergeProgressions(existingStats.progression,newStats.progression);
+    const mergedInteraction=mergeInteractions(existingStats.interaction,newStats.interaction);
     // 📦 Fusion finale
     const mergedStats = {
       ...existingStats,
@@ -109,3 +112,10 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
