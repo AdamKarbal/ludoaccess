@@ -27,9 +27,9 @@
     overflow-x: hidden;
     max-height: 70vh;
     box-sizing: border-box;
-    min-height: 250px; 
-    flex-shrink: 0;    
-    display: flex;   
+    min-height: 250px;
+    flex-shrink: 0;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
@@ -128,7 +128,7 @@
 }
 
 .scrollable-words {
-  max-height: 200px; /* ajuste la hauteur selon ton besoin */
+  max-height: 200px; /* ajuste la hauteur selon le besoin */
   overflow-y: auto;
   border: 1px solid #ccc;
   padding: 8px;
