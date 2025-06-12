@@ -3,7 +3,11 @@
 <div class="page-ergotherapeute">
   <div class="arriere-plan"></div>
   <div class="contenu">
-    <h1 class="titre">Page Ergothérapeute</h1>
+
+    <div class="ligne-titre">
+      <app-retour></app-retour>
+      <h1 class="titre">Page Ergothérapeute</h1>
+    </div>
 
     <button class="btn-ajouter" (click)="toggleForm()">Ajouter un enfant</button>
     <div class="form-ajout" *ngIf="formVisible">

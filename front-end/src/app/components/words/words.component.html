@@ -3,7 +3,10 @@
 <div class="page-ergotherapeute">
   <div class="arriere-plan"></div>
   <div class="contenu">
-    <h1 class="titre">Page Ergothérapeute</h1>
+    <div class="ligne-titre">
+      <app-retour></app-retour>
+      <h1 class="titre">Page Ergothérapeute</h1>
+    </div>
     <button class="btn-ajouterMot" (click)="toggleFormMot()">Ajouter un mot</button>
     <div class="form-ajout" *ngIf="formVisibleMot">
       <input [(ngModel)]="newWord.value" placeholder="Mot" />
@@ -18,14 +21,16 @@
 
     <ng-container>
       <div class="form-words">
-        <select class="selector" [(ngModel)]="toDelWord.level">
-          <option value="1">Facile</option>
-          <option value="2">Moyen</option>
-          <option value="3">Difficile</option>
-        </select>
+        <div class="ligne-difficulte">
+          <h3 class="title-diff">Difficulté des mots :</h3>
+          <select class="selector" [(ngModel)]="toDelWord.level">
+            <option value="1">Facile</option>
+            <option value="2">Moyen</option>
+            <option value="3">Difficile</option>
+          </select>
+        </div>
 
           <div *ngIf="toDelWord.level == 1">
-            <h3 class="title-diff">Mots faciles :</h3>
             <div class="scrollable-words">
                 <div class="word-container" *ngFor="let word of easyWords">
                   <div class="word-text">{{ word.value }}</div>
@@ -34,7 +39,6 @@
             </div>
           </div>
           <div *ngIf="toDelWord.level == 2">
-            <h3 class="title-diff">Mots moyens :</h3>
             <div class="scrollable-words">
                 <div class="word-container" *ngFor="let word of mediumWords">
                   <div class="word-text">{{ word.value }}</div>
@@ -43,7 +47,6 @@
             </div>
           </div>
           <div *ngIf="toDelWord.level == 3">
-            <h3 class="title-diff">Mots difficiles :</h3>
             <div class="scrollable-words">
                 <div class="word-container" *ngFor="let word of hardWords">
                   <div class="word-text">{{ word.value }}</div>
