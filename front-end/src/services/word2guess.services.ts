@@ -148,7 +148,7 @@ export class Word2GuessService implements OnDestroy {
     if (this.isWordComplete()) {
       console.log('Mot trouvé avec le coin !');
       this.wordCompleteSubject.next(true);
-    }
+        }
   }
 
   isWordComplete(): boolean {

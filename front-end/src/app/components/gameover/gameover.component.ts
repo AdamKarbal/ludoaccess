@@ -30,19 +30,21 @@ export class GameoverComponent {
         this.freezeGame.isCrossed$.subscribe(crossed => {
             console.log(`Crossed: ${crossed}`);
         });
-        this.gameService.isGameFinished$.pipe(filter(finished=>finished),take(1)).subscribe(finished => {
+        this.gameService.isGameFinished$.subscribe(finished => {
             this.isGameFinished = finished;
             console.log(`Game Finished: ${this.isGameFinished}`);
         });
     }
 
     OnContinueClick() {
+        console.log("Continue clicked, want to continue set to true.");
         this.finalMessageService.setWantToContinue();
-        this.setGameFinished(false);
+        // this.setGameFinished(false);
     }
     OnStopClick() {
+        console.log("Stop clicked, want to exit set to true.");
         this.finalMessageService.setWantToExit();
-        this.setGameFinished(false);
+        // this.setGameFinished(false);
     }
 
     setGameFinished(bool : boolean){

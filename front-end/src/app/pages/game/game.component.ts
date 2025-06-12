@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
-import { filter, take as rxjsTake } from "rxjs/operators";
+import { filter, take as rxjsTake, tap } from "rxjs/operators";
 import { combineLatest } from "rxjs";
 import { GameService } from "src/services/game.service";
 import { Router } from "@angular/router";
 import { FreezeGameService } from "src/services/freeze-game.services";
 import { PlayerService } from "src/services/player.service";
 import { NgZone } from '@angular/core';
+import { MiniGameService } from "src/services/minigame.service";
 
 @Component({
   selector: "app-game",
@@ -19,7 +20,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private _isEtape3: boolean = false;
     private _stepSubscriptions: Subscription[] = [];
 
-    constructor(private gameService: GameService, private cdr: ChangeDetectorRef,private router: Router,private freezeGameService: FreezeGameService,private playerService: PlayerService, private ngZone: NgZone) {
+    constructor(private gameService: GameService, private cdr: ChangeDetectorRef,private router: Router,private freezeGameService: FreezeGameService,private playerService: PlayerService, private ngZone: NgZone, private miniGameService: MiniGameService) {
+        console.warn("GameComponent initialized");
         this._isEtape1 = true;
         this._isEtape2 = false;
         this._isEtape3 = false;
@@ -54,7 +56,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.freezeGameService.isNewEvent$.pipe(filter(newEvent => newEvent), rxjsTake(1))
             .subscribe(() => {
                 console.log("User exited the game.");
-                this.gameService.resetGame();
+                this.gameService.stopStep(); //peut être stopstep
                 this.setStep(1);
                 this.playerService.resetPlayer();
             })
@@ -98,9 +100,9 @@ export class GameComponent implements OnInit, OnDestroy {
       this._stepSubscriptions.push(combineLatest([
 
             this.gameService.isGameFinished$,
-            this.gameService.wantToContinue$
+            this.gameService.wantToContinue$,
         ])
-        .pipe(filter(([isFinished, wantToContinue]) => isFinished && wantToContinue), rxjsTake(1))
+        .pipe(filter(([isFinished, wantToContinue]) => (isFinished && wantToContinue)), rxjsTake(1))
         .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut continuer !");
 
@@ -122,9 +124,9 @@ export class GameComponent implements OnInit, OnDestroy {
           }));
           this._stepSubscriptions.push(combineLatest([
             this.gameService.isGameFinished$,
-            this.gameService.wantToExit$
+            this.gameService.wantToExit$,
         ])
-        .pipe(filter(([isFinished, wantToExit]) => isFinished && wantToExit), rxjsTake(1))
+        .pipe(filter(([isFinished, wantToExit]) => (isFinished && wantToExit)), rxjsTake(1))
         .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);
