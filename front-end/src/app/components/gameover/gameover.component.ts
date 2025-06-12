@@ -50,4 +50,7 @@ export class GameoverComponent {
     setGameFinished(bool : boolean){
         this.isGameFinished=bool;
     }
+    get isGameFinishedValue() : boolean {
+        return this.isGameFinished;
+    }
 }
