@@ -20,9 +20,9 @@ export class StatWordComponent implements OnInit {
       this.updateFormattedWords();
     });
 
-    this.w2gService.badLetter$.subscribe(badLetter => {
-      this.nbMissedL++;
-    })
+    this.w2gService.missedLetterCount$.subscribe(count => {
+      this.nbMissedL = count;
+    });
   }
 
   updateFormattedWords() {

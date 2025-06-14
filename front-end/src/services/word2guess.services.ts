@@ -22,8 +22,8 @@ export class Word2GuessService implements OnDestroy {
 
   private incorrectIndexes: Set<number> = new Set<number>();
 
-  private badLetterSubject = new Subject<void>();
-  public badLetter$ = this.badLetterSubject.asObservable();
+  private missedLetterCountSubject = new BehaviorSubject<number>(0);
+  public missedLetterCount$ = this.missedLetterCountSubject.asObservable();
 
   private wordCompleteSubject = new BehaviorSubject<boolean>(false);
   public isWordComplete$ = this.wordCompleteSubject.asObservable();
@@ -133,6 +133,8 @@ export class Word2GuessService implements OnDestroy {
 
     console.log("Lettre incorrecte !"); //Lettre reconnu mais pas la bonne lettre à entrer
     const audio = new Audio('assets/sons/wrongLetter.mp3');
+    this.nbBadLetters++;
+    this.missedLetterCountSubject.next(this.nbBadLetters);
     audio.play();
 
     this.incorrectIndexes.add(this.guessedIndexes.length);
@@ -143,7 +145,6 @@ export class Word2GuessService implements OnDestroy {
     this.letterGuessedSubject.next(false);
     this.incorrectLetterSubject.next(this.guessedIndexes.length);
     this._badLetter = true;
-    this.badLetterSubject.next();
     return false;
   }
 
