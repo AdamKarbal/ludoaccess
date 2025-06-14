@@ -45,6 +45,7 @@ import { XpBooster } from './components/xp-booster/xpbooster.component';
 import { HealthGainer } from './components/healthgainer/healthgainer.component';
 import {WordsComponent} from "./components/words/words.component";
 import {PeriodSelectorComponent} from "./components/periodSelector/periodSelector.component";
+import {RetourComponent} from "./components/retour/retour.component";
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import {PeriodSelectorComponent} from "./components/periodSelector/periodSelecto
     WordsComponent,
     WordLengthButtonComponent,
     WordLengthListComponent,
-    PeriodSelectorComponent
+    PeriodSelectorComponent,
+    RetourComponent
   ],
   imports: [
     BrowserModule,

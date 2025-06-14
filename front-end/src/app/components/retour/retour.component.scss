@@ -1,0 +1,15 @@
+.goBack {
+  padding: 10px;
+  border-radius: 10px;
+  border: 3.5px solid #023e8a;
+  font-family: "Luckiest Guy", cursive;
+  font-size: 1.2rem;
+  background-color: white;
+  color: #0077b6;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.goBack:hover {
+  background-color: #023e8a;
+  color: white;
+}
