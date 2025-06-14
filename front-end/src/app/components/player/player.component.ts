@@ -7,14 +7,8 @@ import { CollisionService } from 'src/services/collision.service';
 import { CoinCollectionService } from 'src/services/coincollection.service';
 import { Subscription } from 'rxjs';
 import { Animationconfig } from 'src/models/animation.model';
+import { AnimationStates } from 'src/models/animationStates.model';
 
-interface AnimationStates {
-  stand: Animationconfig;
-  run: Animationconfig;
-  runReversed: Animationconfig;
-  jump: Animationconfig;
-  jumpReversed: Animationconfig;
-}
 
 @Component({
   selector: 'app-player',

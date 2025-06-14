@@ -25,8 +25,10 @@ router.get('/:childId', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+  console.log(123);
   try {
     const child = Child.create({ ...req.body })
+     console.log(456);
     const defaultSettings = {
       id: child.id,
       showTimer: true,
@@ -44,20 +46,24 @@ router.post('/', (req, res) => {
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
     }
-    const defaultUserStats = {
-      child: child,
-      nbError: 0,
-      listLetterErrors: {},
-      errorOcurrencesByPosition: {},
-      nbFailed: [],
-      progression: [],
-      interaction: []
-    }
-    UserStats.create(defaultUserStats)
+    // const defaultUserStats = {
+    //   child: newChild,
+    //   nbError: 0,
+    //   listLetterErrors: {},
+    //   errorOcurrencesByPosition: {},
+    //   nbFailed: [],
+    //   progression: [],
+    //   interaction: []
+    // }
+    //  console.log(1111111111111);
+    // // UserStats.create(defaultUserStats)
+    //  console.log(789);
     const settings = Settings.create(defaultSettings)
+    console.log(10);
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
+    console.log('erreur dans le back', err);
     manageAllErrors(res, err)
   }
 })

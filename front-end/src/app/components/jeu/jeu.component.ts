@@ -45,7 +45,7 @@ export class JeuComponent {
     this.coeurService.isGameOver$.subscribe(isGameOver => {
       this.isGameOver = isGameOver;
     });
- this.audio = new Audio('assets/sons/Step2Audio.mp3');
+    this.audio = new Audio('assets/sons/Step2Audio.mp3');
     this.audio.loop = true;
     this.audio.volume = this.audioService.getVolume(); 
     this.audio.play();

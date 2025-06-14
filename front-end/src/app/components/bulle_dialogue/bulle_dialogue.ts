@@ -37,31 +37,29 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
           }
         });
     this.letterGuessedSub = this.word2GuessService.letterGuessed$.subscribe(isCorrect => {
-      if (isCorrect === null) return;  // Ignorer si pas encore de lettre devinée
+      if (isCorrect === null) return;  
       this.letterGuessed = isCorrect;
-      this.chooseMessage(isCorrect ? 1 : 2);  // Message en fonction de la lettre devinée
+      this.chooseMessage(isCorrect ? 1 : 2);  
       this.message = this.getMessage();
     });
 
     this.wordCompletedSub = this.word2GuessService.isWordComplete$.subscribe(isComplete => {
       this.reussite = isComplete;
       if (isComplete) {
-        this.chooseMessage(4);  // Mot complet, message de succès
+        this.chooseMessage(4);  
         this.message = this.getMessage();
       }
     });
 }
     currentFont: string = 'initial';
-    currentStep: number = 3; // Étape du Niveau 3
+    currentStep: number = 3; 
 
     hasStarted : boolean = false ;
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['letterGuessed']) {
         console.log("CHANGEMENT letterGuessed: ", changes['letterGuessed']);
-
-        // Ignore les premiers changements tant que le joueur n'a pas commencé
-        if (!this.hasStarted && changes['letterGuessed'].currentValue !== undefined) {
+       if (!this.hasStarted && changes['letterGuessed'].currentValue !== undefined) {
           this.hasStarted = true;
         }
 

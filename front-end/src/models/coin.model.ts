@@ -7,7 +7,7 @@ export class Coin implements Collidable{
   private _width: number = 36;
   private _height: number = 36;
   private _letter: string = '';
-  private collected: boolean = false;
+  collected: boolean = false;
 
     constructor(x: number, y: number, letter: string) {
       this._x = x;
