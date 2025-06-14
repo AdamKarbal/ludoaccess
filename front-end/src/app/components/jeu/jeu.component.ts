@@ -6,6 +6,7 @@ import { MobService } from 'src/services/mob.service';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
 import { AudioService } from 'src/services/audio.service';
+import { filter, take } from 'rxjs';
 
 
 @Component({
@@ -42,9 +43,9 @@ export class JeuComponent {
   }
 
   ngOnInit() {
-    this.coeurService.isGameOver$.subscribe(isGameOver => {
+    this.coeurService.isGameOver$.pipe(filter(isOver=>isOver)).subscribe(isGameOver => {
       this.isGameOver = isGameOver;
-    });
+    }); 
     this.audio = new Audio('assets/sons/Step2Audio.mp3');
     this.audio.loop = true;
     this.audio.volume = this.audioService.getVolume(); 
@@ -74,13 +75,14 @@ resetStep2() {
     this.isStep2Active = true;
   });
 }
-  ngOnDestroy(): void {
+
+ngOnDestroy(): void {
     if (this.audio) { 
       this.audio.pause();
       this.audio.currentTime = 0;
       this.audio = null;
       this.audioService.setAudio(null as any);
     }
-  }
+}
 
 }

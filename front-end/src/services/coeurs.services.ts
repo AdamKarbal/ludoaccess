@@ -19,15 +19,17 @@ export class CoeurService {
     this.settingsService.settings$.subscribe(settings => {
       this.settings = settings;
     });
-  }
+}
 
   loseLife() {
+    console.warn(this.livesSubject.getValue());
     if (this.settings && this.settings.enableLifeLoss === false) {
       console.log('Perte de vie false');
       return; 
     }
     const currentLives = this.livesSubject.getValue();
     if (currentLives > 0) {
+      console.log('Perte de vie');
       this.livesSubject.next(currentLives - 1);
       if (currentLives - 1 === 0) {
         console.log('Plus de vie');

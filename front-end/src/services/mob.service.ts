@@ -4,6 +4,7 @@ import { FreezeGameService } from './freeze-game.services';
 import { Collidable } from '../models/collidable.model';
 import { PlayerService } from './player.service';
 import { MiniGameService } from './minigame.service';
+import { GameService } from './game.service';
 
 
 @Injectable({
@@ -22,8 +23,9 @@ export class MobService implements Collidable {
   private mobPosition = new BehaviorSubject(this.position);
   position$ = this.mobPosition.asObservable();
   isAlive = new BehaviorSubject<boolean>(true);
+  private hasTriggeredMiniGame = false;
 
-  constructor(private freezeGameService: FreezeGameService,  private playerService: PlayerService, private miniGameService: MiniGameService) {
+  constructor(private freezeGameService: FreezeGameService,  private playerService: PlayerService, private miniGameService: MiniGameService, private gameService: GameService) {
     this.startMoving();
     this.miniGameService.onMiniGameEnd$.subscribe((isEnded) => {
       if (isEnded) {
@@ -33,6 +35,13 @@ export class MobService implements Collidable {
         this.reset();
       }
     });
+        this.gameService.currentStep$.subscribe(currentStep => {
+          if (currentStep === 2) {
+            console.log('Step 2 détectée, reset du mob.');
+            this.reset();
+          }
+    });
+
   }
   action!: (cible: Collidable) => void;
 
@@ -66,9 +75,10 @@ export class MobService implements Collidable {
       this.freezeGameService.isPaused$,
       this.freezeGameService.isCrossed$,
       this.freezeGameService.isInfo$,
-      this.miniGameService.isActive$ 
-    ]).subscribe(([_, isPaused, isCrossed, isInfo, isMiniGameActive]) => {
-      if (isPaused || isCrossed || isInfo || isMiniGameActive) return; 
+      this.miniGameService.isActive$,
+      this.gameService.currentStep$, 
+    ]).subscribe(([_, isPaused, isCrossed, isInfo, isMiniGameActive,currentStep]) => {
+      if (isPaused || isCrossed || isInfo || isMiniGameActive|| currentStep!=2) return;
       this.position.x += this.speedX;
       if (this.position.x + 150 > window.innerWidth || this.position.x < 0) {
         this.speedX *= -1;
@@ -81,9 +91,14 @@ export class MobService implements Collidable {
       }
       const player = this.playerService.getPlayer();
       if (player && this.checkCollision(player)) {
+      if (!this.hasTriggeredMiniGame) {
         console.log('Collision entre mob et joueur');
-        this.miniGameService.start();      
+        this.miniGameService.start();
+        this.hasTriggeredMiniGame = true;
       }
+    } else {
+      this.hasTriggeredMiniGame = false; // Reset le flag quand il n'y a plus collision
+    }
 
       this.mobPosition.next({ ...this.position });
     });
