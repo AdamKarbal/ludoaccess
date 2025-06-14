@@ -3,7 +3,8 @@ import {UserStatsService} from "../../../services/stats.service";
 import {ActivatedRoute} from "@angular/router";
 import {Progression} from "../../../models/progression.model";
 import {Interaction} from "../../../models/interaction.model";
-import {compactInteractions, filterByDateRange} from "../../../services/util";
+import {compactInteractions, filterByDateRange, compactProgressions} from "../../../services/util";
+
 
 @Component({
   selector: 'app-player-stats',
@@ -16,6 +17,7 @@ export class PlayerStatsComponent implements OnInit {
   lengths: number[] = [];
   selectedLength: number | null = null;
   filteredInteractions: Interaction[] = [];
+  filteredProgressions: Progression[] = [];
   constructor(private userStatsService: UserStatsService,
               private route: ActivatedRoute,) {}
 
@@ -77,7 +79,8 @@ export class PlayerStatsComponent implements OnInit {
           console.log("mauvais input");
           break;
     }
-    this.filteredInteractions = compactInteractions(filterByDateRange(this.interactions, fromDate!.toISOString(), toDate.toISOString()));
+    this.filteredInteractions = compactInteractions(filterByDateRange(this.interactions,fromDate!.toISOString(),toDate.toISOString()));
+    this.filteredProgressions = compactProgressions(filterByDateRange(this.progression,fromDate!.toISOString(),toDate.toISOString()));
   }
   get child() {
     return this.userStatsService.getUserStatsPayload().child;

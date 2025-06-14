@@ -95,10 +95,8 @@ export class UserStatsService {
             eobp.set(Number(lengthStr), posMap);
           }
         }
-        //console.log("Avant compact:",data.interaction);
-        // on compacte les interactions, une interaction = une action
-        const compactedInteractions = compactInteractions(data.interaction || []);
-        //console.log("Après compact:",compactedInteractions);
+        console.log("Depuis stats services",data.interaction);
+        console.log("Depuis stats services",data.progression);
         this.dataToSend = {
           ...data,
           listLetterErrors: lle,

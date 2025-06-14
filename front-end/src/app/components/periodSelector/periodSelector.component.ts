@@ -10,12 +10,12 @@ export class PeriodSelectorComponent {
   @Output() periodChange = new EventEmitter<string>();
 
   periods = [
-    { label: 'Aujourd’hui', value: 'today'},
-    { label: 'Dernière semaine', value: 'lastWeek'},
-    { label: 'Dernier mois', value: 'lastMonth'}
+    { label: 'Aujourd’hui', value: 'today' as string },
+    { label: 'Dernière semaine', value: 'lastWeek' as string },
+    { label: 'Dernier mois', value: 'lastMonth' as string }
   ];
 
-  @Input() selectedPeriod: string = "today";
+  @Input() selectedPeriod: string = 'today';
 
   selectPeriod(period: string, event?: Event) {
     if (event) {
