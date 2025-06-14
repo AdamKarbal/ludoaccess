@@ -1,22 +1,30 @@
 function mergeInteractions(listA, listB) {
-    const map = new Map();
-
-    for (const item of listA) {
-        map.set(item.action, item);
-    }
+    const result = [...listA];
 
     for (const item of listB) {
-        if (!map.has(item.action)) {
-            map.set(item.action, item);
+        // Si l'interaction n’a pas de date, on lui en donne une
+        if (!item.date) {
+            item.date = new Date().toISOString();
+        }
+
+        // Vérifie s’il existe déjà une interaction exactement identique
+        const existing = result.find(
+            i => i.action === item.action && i.date === item.date
+        );
+
+        if (existing) {
+            // Cumul des scores si interaction identique à la même date
+            existing.success += item.success;
+            existing.failures += item.failures;
         } else {
-            const existing = map.get(item.action);
-            existing.success += (item.success);
-            existing.failures += (item.failures);
+            // Sinon on l’ajoute telle quelle
+            result.push(item);
         }
     }
 
-    return Array.from(map.values());
+    return result;
 }
+
 
 function mergeProgressions(listA,listB){
     const map = new Map();
@@ -38,6 +46,10 @@ function mergeProgressions(listA,listB){
 
     return Array.from(map.values());
 }
+
+
+
+
 
 module.exports = {
     mergeProgressions,
