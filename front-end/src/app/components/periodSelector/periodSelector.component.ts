@@ -15,14 +15,15 @@ export class PeriodSelectorComponent {
     { label: 'Dernier mois', value: 'lastMonth'}
   ];
 
-  @Input() selectedPeriod: string = 'today';
+  @Input() selectedPeriod: string = "today";
 
   selectPeriod(period: string, event?: Event) {
     if (event) {
-      console.log(event);
       event.preventDefault();
+      event.stopPropagation();
+      console.log(event);
     }
-
+    console.log("Depuis le composant",period);
     this.selectedPeriod = period;
     this.periodChange.emit(period);
   }

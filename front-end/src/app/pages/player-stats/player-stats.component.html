@@ -3,11 +3,6 @@
     <h1>Statistiques du Joueur</h1>
   </header>
 
-  <app-period-selector
-    [selectedPeriod]="selectedPeriod"
-    (periodChange)="onPeriodChange($event)">
-  </app-period-selector>
-
   <!-- Bloc d'informations générales -->
   <stats-menu [titre]="'Informations du Joueur'">
     <div class="player-stats">
@@ -66,6 +61,10 @@
 
   <!-- Bloc des interactions -->
   <stats-menu [titre]="'Statistiques d\'Interaction'">
+    <app-period-selector
+      [selectedPeriod]="selectedPeriod"
+      (periodChange)="onPeriodChange($event)">
+    </app-period-selector>
     <div class="interaction-stats" *ngIf="interactions.length > 0; else noInteractions">
       <table>
         <thead>

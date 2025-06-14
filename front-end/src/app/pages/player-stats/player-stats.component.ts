@@ -15,7 +15,6 @@ export class PlayerStatsComponent implements OnInit {
   selectedPeriod: string ='today';
   lengths: number[] = [];
   selectedLength: number | null = null;
-  rawInteractions: Interaction[] = [];
   filteredInteractions: Interaction[] = [];
   constructor(private userStatsService: UserStatsService,
               private route: ActivatedRoute,) {}
