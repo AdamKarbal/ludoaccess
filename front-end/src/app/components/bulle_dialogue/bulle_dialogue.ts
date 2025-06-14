@@ -24,9 +24,10 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
 
     constructor(private settingsService: SettingsService,private word2GuessService: Word2GuessService 
     ){
-
     }
     ngOnInit(): void {
+        console.log('BulleDialogueComponent initialisé');
+        this.reset(); // Réinitialiser la bulle de dialogue à l'initialisation
         this.currentStep = 3; 
         this.message=this.getMessage();
         this.settingsSub = this.settingsService.settings$.subscribe(settings => {
@@ -103,10 +104,19 @@ export class BulleDialogueComponent implements OnInit,OnChanges{
     }
 
     ngOnDestroy(): void {
+      this.reset();
       if (this.settingsSub) {
         this.settingsSub.unsubscribe(); 
       }
       this.letterGuessedSub?.unsubscribe();
     this.wordCompletedSub?.unsubscribe();
+    }
+
+    reset() {
+      this.currentStep = 3; // Réinitialiser à l'étape initiale
+      this.message = this.getMessage();
+      this.hasStarted = false; // Réinitialiser le statut de démarrage
+      this.letterGuessed = null; // Réinitialiser la lettre devinée
+      this.reussite = false; // Réinitialiser le statut de réussite
     }
 }

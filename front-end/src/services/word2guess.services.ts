@@ -162,6 +162,8 @@ export class Word2GuessService implements OnDestroy {
     this.currentIndex = 0;
     this.incorrectIndexes.clear();
     this.wordCompleteSubject.next(false);
+    this.letterGuessedSubject.next(null);     // ← efface la valeur mémorisée
+    this.incorrectLetterSubject.next(null);   // (optionnel mais logique)
     console.log('🔄 Mot complètement réinitialisé');
   }
 
