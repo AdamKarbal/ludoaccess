@@ -1,4 +1,5 @@
 import { Interaction } from '../models/interaction.model';
+import {Progression} from "../models/progression.model";
 
 export function compactInteractions(interactions: Interaction[]): Interaction[] {
   const map = new Map<string, Interaction>();
@@ -13,6 +14,22 @@ export function compactInteractions(interactions: Interaction[]): Interaction[] 
     }
   }
 
+  return Array.from(map.values());
+}
+
+export function compactProgressions(progressions: Progression[]): Progression[] {
+  const map = new Map<string, Progression>();
+  for(const progression of progressions) {
+    if(!map.has(progression.word)){
+      map.set(progression.word, { ...progression});
+    }
+    else{
+      const existing = map.get(progression.word)!;
+      existing.nbError+= progression.nbError;
+      existing.completed = progression.completed;
+      existing.timeSpent = Math.max(progression.timeSpent, existing.timeSpent);
+    }
+  }
   return Array.from(map.values());
 }
 

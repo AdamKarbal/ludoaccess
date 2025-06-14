@@ -58,9 +58,8 @@ router.put('/child/:childId', (req, res) => {
     }
 
     // 🧠 Ajouter les nouvelles progressions/interactions
-    //const mergedProgression = [...existingStats.progression, ...newStats.progression];
-    //const mergedInteraction = [...existingStats.interaction, ...newStats.interaction];
     const mergedProgression=mergeProgressions(existingStats.progression,newStats.progression);
+    console.log("Depuis le back",mergedProgression);
     const mergedInteraction=mergeInteractions(existingStats.interaction,newStats.interaction);
     // 📦 Fusion finale
     const mergedStats = {
