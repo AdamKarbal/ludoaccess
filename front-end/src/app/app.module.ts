@@ -44,6 +44,7 @@ import {WordLengthListComponent} from "./components/word-length-button-list/word
 import { XpBooster } from './components/xp-booster/xpbooster.component';
 import { HealthGainer } from './components/healthgainer/healthgainer.component';
 import {WordsComponent} from "./components/words/words.component";
+import {RetourComponent} from "./components/retour/retour.component";
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import {WordsComponent} from "./components/words/words.component";
     WordsComponent,
     WordLengthButtonComponent,
     WordLengthListComponent,
+    RetourComponent
   ],
   imports: [
     BrowserModule,
