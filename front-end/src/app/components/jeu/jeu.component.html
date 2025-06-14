@@ -1,6 +1,6 @@
 
 <ng-container *ngIf="isStep2Active">
-<div class="game-ui">
+  <div class="game-ui">
     <app-levelbar></app-levelbar>
      <app-word2guess>
       [mode]="'coin'"
@@ -12,7 +12,7 @@
     <app-coeurs></app-coeurs>
     </div>
   </div>
-  
+
   <div class="game-zone">
     <div *ngIf="isAlive$ | async">
   <app-mob class="mob"></app-mob>

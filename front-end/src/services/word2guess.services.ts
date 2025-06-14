@@ -4,7 +4,7 @@ import { FreezeGameService } from './freeze-game.services';
 import { CoinCollectionService } from './coincollection.service';
 import { Coin } from 'src/models/coin.model';
 import { LevelService } from "./levels.service";
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,12 @@ export class Word2GuessService implements OnDestroy {
   public isCrossed: boolean = false;
   public isI: boolean = false;
   private _badLetter: boolean = false;
+  nbBadLetters : number = 0;
 
   private incorrectIndexes: Set<number> = new Set<number>();
+
+  private badLetterSubject = new Subject<void>();
+  public badLetter$ = this.badLetterSubject.asObservable();
 
   private wordCompleteSubject = new BehaviorSubject<boolean>(false);
   public isWordComplete$ = this.wordCompleteSubject.asObservable();
@@ -91,8 +95,16 @@ export class Word2GuessService implements OnDestroy {
     return this.incorrectIndexes;
   }
 
+  getNbMissedLetters(): number {
+    return this.nbBadLetters;
+  }
+
   getGuessedIndexes(): number[] {
     return this.guessedIndexes;
+  }
+
+  resetNbBadLetters(): void {
+    this.nbBadLetters = 0;
   }
 
   guessLetter(letter: string): boolean {
@@ -131,6 +143,7 @@ export class Word2GuessService implements OnDestroy {
     this.letterGuessedSubject.next(false);
     this.incorrectLetterSubject.next(this.guessedIndexes.length);
     this._badLetter = true;
+    this.badLetterSubject.next();
     return false;
   }
 
