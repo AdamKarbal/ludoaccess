@@ -314,7 +314,7 @@ export class GameService {
             finalize(() => {
                 this._isProcessing = false;
                 const gameService= this.injector.get(PlayerService);
-                this.updateInteractionMap('Sauts',gameService.getFailedJumps(),gameService.getSuccessfulJumps());
+                this.updateInteractionMap('Sauts',gameService.getSuccessfulJumps(),gameService.getFailedJumps());
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
                 this.resetStep2();
                 this.isStep2CompletedSubject.next(true);
