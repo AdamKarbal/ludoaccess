@@ -5,7 +5,8 @@ const progressionSchema = {
   word: Joi.string().required(),
   completed: Joi.boolean().required(),
   nbError: Joi.number().required(),
-  timeSpent: Joi.number().required()
+  timeSpent: Joi.number().required(),
+  date:Joi.date().required(),
 };
 
 module.exports = {
