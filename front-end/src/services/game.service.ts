@@ -269,7 +269,7 @@ export class GameService {
               this.currentWordIndex.next(current+1);
               if (this.w2gService.badLetter == true) {
                 const incorrectLetters=this.w2gService.getIncorrectLetters();
-                this.progressionMap.set(word,new ProgressionImpl(word,incorrectLetters.length));
+                this.progressionMap.set(word,new ProgressionImpl(word,incorrectLetters.length,0));
                 this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
                 this.updateIncorrectLetters(incorrectLetters);
                 this._wordTarget.push(word);
@@ -438,9 +438,14 @@ export class GameService {
     }
 
     updateProgressionMap(word:string,nbError:number,time:number){
-      this.progressionMap.get(word)!.addError(nbError);
-      this.progressionMap.get(word)!.setTime(time);
-      this.progressionMap.get(word)!.setCompleted(time<30);
+      if(!this.progressionMap.has(word)){
+        this.progressionMap.set(word, new ProgressionImpl(word,nbError,time));
+      }
+      else{
+        this.progressionMap.get(word)!.addError(nbError);
+        this.progressionMap.get(word)!.setTime(time);
+        this.progressionMap.get(word)!.setCompleted(time<30);
+      }
     }
 
     // Getters

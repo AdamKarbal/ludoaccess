@@ -6,11 +6,11 @@ export class ProgressionImpl implements Progression{
   public nbError:number;
   public timeSpent:number;
   public date:Date;
-  constructor(word:string,nbError:number) {
+  constructor(word:string,nbError:number,timeSpent:number) {
     this.word = word;
     this.completed = false;
     this.nbError = nbError;
-    this.timeSpent = 0;
+    this.timeSpent = timeSpent;
     this.date = new Date();
   }
 
