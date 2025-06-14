@@ -3,6 +3,11 @@
     <h1>Statistiques du Joueur</h1>
   </header>
 
+  <app-period-selector
+    [selectedPeriod]="selectedPeriod"
+    (periodChange)="onPeriodChange($event)">
+  </app-period-selector>
+
   <!-- Bloc d'informations générales -->
   <stats-menu [titre]="'Informations du Joueur'">
     <div class="player-stats">
@@ -71,7 +76,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let interaction of interactions">
+        <tr *ngFor="let interaction of filteredInteractions">
           <td>{{ interaction.action }}</td>
           <td>{{ interaction.success }}</td>
           <td>{{ interaction.failures }}</td>

@@ -7,6 +7,7 @@ import {Progression} from "../models/progression.model";
 import {Interaction} from "../models/interaction.model";
 import {User} from "../models/user.model";
 import {Child} from "../models/child.model";
+import {compactInteractions} from './util'
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,28 @@ export class UserStatsService {
   getUserStatsPayload() {
     return this.dataToSend;
   }
+  getCompactedInteractions(): { action: string, success: number, failures: number }[] {
+    const allInteractions = this.dataToSend.interaction;
+
+    const map = new Map<string, { action: string, success: number, failures: number }>();
+
+    for (const inter of allInteractions) {
+      if (!map.has(inter.action)) {
+        map.set(inter.action, {
+          action: inter.action,
+          success: inter.success,
+          failures: inter.failures
+        });
+      } else {
+        const existing = map.get(inter.action)!;
+        existing.success += inter.success;
+        existing.failures += inter.failures;
+      }
+    }
+
+    return Array.from(map.values());
+  }
+
 
 
 
@@ -58,12 +81,11 @@ export class UserStatsService {
   fetchStatsForChild(childId: number): void {
     this.http.get(`${this.userUrl}/child/${childId}`, this.httpOptions).subscribe({
       next: (data: any) => {
-        // Convert listLetterErrors (object) to Map
+        // Convertir un listLetterErrors brut sous format JSON en Map
         const lle = new Map<string, number>(
           Object.entries(data.listLetterErrors)
         );
-
-        // Convert errorOcurrencesByPosition
+        // pareil pr les erreurs par position
         const eobp = new Map<number, Map<string, number>>();
         for (const [lengthStr, rawPositions] of Object.entries(data.errorOcurrencesByPosition)) {
           const positions = rawPositions as Record<string, number>;
@@ -73,15 +95,17 @@ export class UserStatsService {
             eobp.set(Number(lengthStr), posMap);
           }
         }
-
-
+        //console.log("Avant compact:",data.interaction);
+        // on compacte les interactions, une interaction = une action
+        const compactedInteractions = compactInteractions(data.interaction || []);
+        //console.log("Après compact:",compactedInteractions);
         this.dataToSend = {
           ...data,
           listLetterErrors: lle,
           errorOcurrencesByPosition: eobp
         };
 
-        // Emit transformed values
+
         this.statsSubject.next(
           Array.from(lle.entries()).map(([letter, count]) => ({ name: letter, errors: count }))
         );
@@ -89,7 +113,7 @@ export class UserStatsService {
         this.lengthsSubject.next(Array.from(eobp.keys()));
       },
       error: err => {
-        console.warn("❌ fetchStatsForChild failed, child may have no stats yet.");
+        console.warn("fetchStatsForChild failed, child may have no stats yet.");
       }
 
     });
@@ -115,7 +139,6 @@ export class UserStatsService {
   sendStatsToServer(user:User): void {
     const url = `${this.userUrl}/child/${user.id}`;
 
-    // 🔁 Convertir les Map en objets simples pour l'envoi
     const payloadToSend = {
       ...this.dataToSend,
       listLetterErrors: Object.fromEntries(this.dataToSend.listLetterErrors),

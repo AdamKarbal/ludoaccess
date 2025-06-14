@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserStatsService} from "../../../services/stats.service";
 import {ActivatedRoute} from "@angular/router";
 import {Progression} from "../../../models/progression.model";
 import {Interaction} from "../../../models/interaction.model";
+import {compactInteractions, filterByDateRange} from "../../../services/util";
 
 @Component({
   selector: 'app-player-stats',
@@ -11,9 +12,11 @@ import {Interaction} from "../../../models/interaction.model";
 })
 
 export class PlayerStatsComponent implements OnInit {
-
+  selectedPeriod: string ='today';
   lengths: number[] = [];
   selectedLength: number | null = null;
+  rawInteractions: Interaction[] = [];
+  filteredInteractions: Interaction[] = [];
   constructor(private userStatsService: UserStatsService,
               private route: ActivatedRoute,) {}
 
@@ -46,6 +49,36 @@ export class PlayerStatsComponent implements OnInit {
 
   handleLengthSelected(length: number): void {
     this.selectedLength = length;
+  }
+  onPeriodChange(period: string) {
+    this.selectedPeriod = period;
+    this.filterStatsByPeriod(period);
+    console.log("Important",this.selectedPeriod);
+  }
+  filterStatsByPeriod(period: string) {
+    let fromDate: Date;
+    const toDate = new Date();
+
+    switch (period) {
+      case 'today':
+        fromDate = new Date();
+        fromDate.setHours(0, 0, 0, 0);
+        break;
+      case 'lastWeek':
+        fromDate = new Date();
+        fromDate.setDate(toDate.getDate() - 7);
+        fromDate.setHours(0, 0, 0, 0);
+        break;
+      case 'lastMonth':
+        fromDate = new Date();
+        fromDate.setMonth(toDate.getMonth() - 1);
+        fromDate.setHours(0, 0, 0, 0);
+        break;
+        default:
+          console.log("mauvais input");
+          break;
+    }
+    this.filteredInteractions = compactInteractions(filterByDateRange(this.interactions, fromDate!.toISOString(), toDate.toISOString()));
   }
   get child() {
     return this.userStatsService.getUserStatsPayload().child;
