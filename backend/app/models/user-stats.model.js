@@ -12,14 +12,13 @@ const childSchema = Joi.object({
   lastPlayed: Joi.date().optional(),
   playDuration: Joi.number().optional(),
   frequency: Joi.number().optional(),
-  age: Joi.number().optional(),
+  age: Joi.number().required(),
   role: 'child',
 })
 
 module.exports = new BaseModel('UserStats', {
   child: childSchema.required(),
 
-  nbError: Joi.number().required(),
 
   listLetterErrors: Joi.object().pattern(
     Joi.string(), Joi.number().required(),
