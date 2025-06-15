@@ -1,14 +1,14 @@
 const { Router } = require('express')
 
-const number = require('joi/lib/types/number')
+
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
-const {UserStats}= require('../../models')
+const { UserStats } = require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
 const {Level}= require('../../models')
 
-const router = new Router()
 
+const router = new Router()
 router.get('/', (req, res) => {
   try {
     res.status(200).json(Child.get())
@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.get('/:childId', (req, res) => {
   try {
     res.status(200).json(Child.getById(req.params.childId))
@@ -25,11 +24,12 @@ router.get('/:childId', (req, res) => {
   }
 })
 
+
 router.post('/', (req, res) => {
+  console.log(123);
   try {
     
     const child = Child.create({ ...req.body })
-    
     const defaultSettings = {
       id: child.id,
       showTimer: true,
@@ -47,23 +47,27 @@ router.post('/', (req, res) => {
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
     }
-    const newChild={
-      id:child.id,
+
+
+    const settings = Settings.create(defaultSettings)
+    const newChild = {
+      id: child.id,
       firstName: child.firstName,
       lastName: child.lastName,
       age: child.age,
-      role:'child'
+      role: 'child'
     }
-  
     const defaultUserStats = {
       child: newChild,
-    
       listLetterErrors: {},
       errorOcurrencesByPosition: {},
-  
+
       progression: [],
-      interaction: []
+      interaction: [],
     }
+
+    UserStats.create(defaultUserStats)
+=======
     const level = {
       childId: child.id,
       niveau:0,
@@ -79,10 +83,10 @@ router.post('/', (req, res) => {
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
+    console.log('erreur dans le back', err);
     manageAllErrors(res, err)
   }
 })
-
 router.put('/:childId', (req, res) => {
   try {
     res.status(200).json(Child.update(req.params.childId, req.body))
@@ -90,14 +94,20 @@ router.put('/:childId', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.delete('/:childId', (req, res) => {
   try {
-    Child.delete(req.params.childId)
-    const { childId } = req.params;        
+    const childId = parseInt(req.params.childId, 10)
     const levels   = Level.get();   // à modifier pr supprimer ttes les occurences (TODO le faire dans baseModel)         
     const childLvl = levels.find(l => l.childId == childId);
     Level.delete(childLvl.id)
+    Child.delete(childId)
+    Settings.delete(childId)
+    const userStatsList = UserStats.get()
+    const stat = userStatsList.find((stat) => stat.child.id === childId)
+    if (stat) {
+      UserStats.delete(stat.id)
+    }
+
     res.status(204).end()
     
 
@@ -105,5 +115,4 @@ router.delete('/:childId', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 module.exports = router

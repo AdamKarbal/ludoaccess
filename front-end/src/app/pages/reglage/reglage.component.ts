@@ -41,14 +41,14 @@ export class ReglagePageComponent {
             alert('Veuillez remplir tous les champs.');
             return;
         }
-        
-            
+        const randomIndex = Math.floor(Math.random() * 4) + 1;
+        const imageUrl = `assets/ressources/e${randomIndex}.jpg`;
         const child: Partial<Child> = {
             firstName: this.newChild.firstName,
             lastName: this.newChild.lastName,
             age: this.newChild.age,
-            imageUrl: "assets/ressources/e1.jpg",
-            level: 0,
+            imageUrl: imageUrl,
+            level: 1,
             lastPlayed: new Date(),
             playDuration: 0,
             frequency: 0,

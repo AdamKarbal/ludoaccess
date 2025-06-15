@@ -6,6 +6,7 @@ const getAllWords = (req, res) => {
   try {
     console.log('getAllWords try');
     const words = Word.get();
+
     const { childId } = req.query;
 
     let filteredWords = words;

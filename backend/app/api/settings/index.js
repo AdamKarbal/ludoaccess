@@ -1,17 +1,14 @@
 const { Router } = require('express');
 const { Settings } = require('../../models');
 const manageAllErrors = require('../../utils/routes/error-management');
-
 const router = new Router();
-
 router.get('/', (req, res) => {
     try {
         res.status(200).json(Settings.get());
     } catch (err) {
-        manageAllErrors(res, err);
+        manageAllErrors(res, err)
     }
 });
-
 router.get('/:settingId', (req, res) => {
     try {
         res.status(200).json(Settings.getById(req.params.settingId));
@@ -19,7 +16,6 @@ router.get('/:settingId', (req, res) => {
         manageAllErrors(res, err);
     }
 });
-
 router.post('/', (req, res) => {
     try {
         const settings = Settings.create({ ...req.body });
@@ -29,7 +25,6 @@ router.post('/', (req, res) => {
         manageAllErrors(res, err);
     }
 });
-
 router.put('/:settingId', (req, res) => {
     try {
         res.status(200).json(Settings.update(req.params.settingId, req.body));
@@ -37,7 +32,6 @@ router.put('/:settingId', (req, res) => {
         manageAllErrors(res, err);
     }
 });
-
 router.delete('/:settingId', (req, res) => {
     try {
         Settings.delete(req.params.settingId);
@@ -46,5 +40,4 @@ router.delete('/:settingId', (req, res) => {
         manageAllErrors(res, err);
     }
 });
-
 module.exports = router;

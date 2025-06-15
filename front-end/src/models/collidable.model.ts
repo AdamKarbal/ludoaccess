@@ -3,5 +3,5 @@ export interface Collidable {
   y:number;
   width:number;
   height:number;
-  action:(cible:Collidable) => void;
+  action?:(cible:Collidable) => void;
 }

@@ -13,9 +13,10 @@ import { GameComponent } from './pages/game/game.component';
 import { WordsComponent } from './components/words/words.component';
 
 
+
 const routes: Routes = [
   {path : 'reglage', component : ReglagePageComponent},
-  {path: 'stats', component: PlayerStatsComponent},
+  {path: 'stats/:childId', component: PlayerStatsComponent},
   {path : 'jeu_etape1', component : JeuEtape1Component},
   {path : 'jeu_etape2', component : JeuEtape2Component},
   {path : 'jeu_etape3', component : JeuEtape3Component},

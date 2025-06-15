@@ -3,7 +3,6 @@ import {Interaction} from "./interaction.model";
 import {Child} from "./child.model";
 export interface UserStats{
   child: Child;
-  nbError: number;
   listLetterErrors: {
     [letter: string]: number;
   };
@@ -13,7 +12,6 @@ export interface UserStats{
       [position: string]: number;
     };
   };
-  nbFailed: number[];
   progression: Progression[];
   interaction: Interaction[];
 }
