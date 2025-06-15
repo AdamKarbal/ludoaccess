@@ -1,13 +1,13 @@
 const { Router } = require('express')
 
-const number = require('joi/lib/types/number')
+
 const { Child } = require('../../models')
 const { Settings } = require('../../models')
-const {UserStats}= require('../../models')
+const { UserStats } = require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
 
-const router = new Router()
 
+const router = new Router()
 router.get('/', (req, res) => {
   try {
     res.status(200).json(Child.get())
@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.get('/:childId', (req, res) => {
   try {
     res.status(200).json(Child.getById(req.params.childId))
@@ -24,11 +23,13 @@ router.get('/:childId', (req, res) => {
   }
 })
 
+
 router.post('/', (req, res) => {
   console.log(123);
   try {
     const child = Child.create({ ...req.body })
-     console.log(456);
+
+
     const defaultSettings = {
       id: child.id,
       showTimer: true,
@@ -46,20 +47,23 @@ router.post('/', (req, res) => {
       chooseBackGround: 'Aléatoire',
       numberOfWords: 15,
     }
-    // const defaultUserStats = {
-    //   child: newChild,
-    //   nbError: 0,
-    //   listLetterErrors: {},
-    //   errorOcurrencesByPosition: {},
-    //   nbFailed: [],
-    //   progression: [],
-    //   interaction: []
-    // }
-    //  console.log(1111111111111);
-    // // UserStats.create(defaultUserStats)
-    //  console.log(789);
+
     const settings = Settings.create(defaultSettings)
-    console.log(10);
+    const newChild = {
+      id: child.id,
+      firstName: child.firstName,
+      lastName: child.lastName,
+      age: child.age,
+      role: 'child'
+    }
+    const defaultUserStats = {
+      child: newChild,
+      listLetterErrors: {},
+      errorOcurrencesByPosition: {},
+      progression: [],
+      interaction: [],
+    }
+    UserStats.create(defaultUserStats)
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
@@ -67,7 +71,6 @@ router.post('/', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.put('/:childId', (req, res) => {
   try {
     res.status(200).json(Child.update(req.params.childId, req.body))
@@ -75,14 +78,19 @@ router.put('/:childId', (req, res) => {
     manageAllErrors(res, err)
   }
 })
-
 router.delete('/:childId', (req, res) => {
   try {
-    Child.delete(req.params.childId)
+    const childId = parseInt(req.params.childId, 10)
+    Child.delete(childId)
+    Settings.delete(childId)
+    const userStatsList = UserStats.get()
+    const stat = userStatsList.find((stat) => stat.child.id === childId)
+    if (stat) {
+      UserStats.delete(stat.id)
+    }
     res.status(204).end()
   } catch (err) {
     manageAllErrors(res, err)
   }
 })
-
 module.exports = router

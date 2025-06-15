@@ -48,7 +48,10 @@ create(obj = {}) {
   if (!item.id) item.id = Date.now();
   
   const { error } = Joi.validate(item, this.schema);
-  if (error) throw new ValidationError(`Create Error : Object ${JSON.stringify(obj)} does not match schema of model ${this.name}`, error);
+  if (error){ 
+    console.log('Validation failed:', error.details);
+    throw new ValidationError(`Create Error : Object ${JSON.stringify(obj)} does not match schema of model ${this.name}`, error);
+  }
   
   this.items.push(item);
   this.save();

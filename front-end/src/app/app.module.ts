@@ -34,8 +34,6 @@ import { BulleDialogueComponent } from './components/bulle_dialogue/bulle_dialog
 import { LoginComponent } from './pages/login/login.component';
 import { ListOfPeopleComponent } from './components/listofpeople/listofpeople.component';
 import { PeopleComponent } from './components/people/people.component';
-import { literal } from '@angular/compiler';
-import { AuthService } from 'src/services/auth.service';
 import { PlayerComponent } from './components/player/player.component';
 import { GameComponent } from './pages/game/game.component';
 import { ChronoComponent } from './components/chrono/chrono.component';
@@ -46,7 +44,14 @@ import {WordLengthListComponent} from "./components/word-length-button-list/word
 import { XpBooster } from './components/xp-booster/xpbooster.component';
 import { HealthGainer } from './components/healthgainer/healthgainer.component';
 import {WordsComponent} from "./components/words/words.component";
+
+import {PeriodSelectorComponent} from "./components/periodSelector/periodSelector.component";
+
+
+
 import {RetourComponent} from "./components/retour/retour.component";
+import {StatWordComponent} from "./components/stat-word/stat-word.component";
+
 
 @NgModule({
   declarations: [
@@ -72,7 +77,6 @@ import {RetourComponent} from "./components/retour/retour.component";
     JeuEtape3Component,
     InfosComponent,
     CoeursComponent,
-    StatsMenuModule,
     finishComponent,
     JeuComponent,
     MobComponent,
@@ -89,17 +93,21 @@ import {RetourComponent} from "./components/retour/retour.component";
     XpBooster,
     HealthGainer,
     WordsComponent,
-    FinalScreenComponent,
     WordLengthButtonComponent,
     WordLengthListComponent,
+
+    PeriodSelectorComponent,
+
     RetourComponent,
+    StatWordComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-    // StatsMenuModule
+    HttpClientModule,
+    StatsMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

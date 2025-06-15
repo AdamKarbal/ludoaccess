@@ -61,8 +61,6 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
 
-
-
   ngOnDestroy() {
     this.subscription.unsubscribe(); 
   }

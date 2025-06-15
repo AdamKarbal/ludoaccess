@@ -24,14 +24,20 @@ export class PlayerService {
   private speed = 0.4;
   private velocityY = 0;
   private gravity = 1.2;
-  private jumpForce = -18;  
+  private jumpForce = -18;
   onGround = true;
   private player?: PlayerComponent;
   private _settings: ChildSettings | null = null;
-  private isMiniGameActive = false; 
+  private isMiniGameActive = false;
 
+  // Jump tracking
+  private wasJumpPressedLastFrame = false;
+  private hasJumped = false;
+  private hasTouchedPlatform = false;
+  private failedJumps = 0;
+  private successfulJumps = 0;
 
-constructor(
+  constructor(
     private collisionService: CollisionService,
     private platformService: PlatformService,
     private gameService: GameService,
@@ -52,18 +58,22 @@ constructor(
 
     this.settingsService.settings$.subscribe((settings) => {
       this._settings = settings;
-        if(this._settings?.jumpDifficulty==true){
-          this.jumpForce = -20; 
-        }
-        else {
-          this.jumpForce = -18; // Valeur par défaut
-        }
+      this.jumpForce = this._settings?.jumpDifficulty ? -20 : -18;
     });
+  }
+
+  getFailedJumps(): number {
+    return this.failedJumps;
+  }
+
+  getSuccessfulJumps(): number {
+    return this.successfulJumps;
   }
 
   getPressedKeys(): Set<string> {
     return this._pressedKeys;
   }
+
   setPlayer(player: PlayerComponent): void {
     this.player = player;
   }
@@ -84,7 +94,6 @@ constructor(
       case 'space':
         if (this.onGround) {
           this.velocityY = this.jumpForce;
-          //this.onGround = false;
         }
         break;
 
@@ -102,7 +111,6 @@ constructor(
     this.positionSubject.next({ x, y });
   }
 
-
   private updateMovement(): void {
     let { x, y } = this.positionSubject.getValue();
 
@@ -110,26 +118,25 @@ constructor(
     const rightPressed = this._pressedKeys.has('arrowright') || this._pressedKeys.has('d');
     const jumpPressed = this._pressedKeys.has('arrowup') || this._pressedKeys.has('z') || this._pressedKeys.has(' ') || this._pressedKeys.has('space');
 
-    if (leftPressed) {
-      if (!this.collisionService.isTouchingPlatformSide(this.player!, this.platformService.platforms, 'left')) {
-        x = Math.max(0, x - this.speed);
+    if (leftPressed && !this.collisionService.isTouchingPlatformSide(this.player!, this.platformService.platforms, 'left')) {
+      x = Math.max(0, x - this.speed);
+    }
+
+    if (rightPressed && !this.collisionService.isTouchingPlatformSide(this.player!, this.platformService.platforms, 'right')) {
+      x = Math.min(100, x + this.speed);
+    }
+
+    if (jumpPressed && !this.wasJumpPressedLastFrame) {
+      if (this.onGround) {
+        this.velocityY = this.jumpForce;
+        this.hasJumped = true;
+        this.hasTouchedPlatform = false;
       }
     }
 
-    if (rightPressed) {
-      if (!this.collisionService.isTouchingPlatformSide(this.player!, this.platformService.platforms, 'right')) {
-        x = Math.min(100, x + this.speed);
-      }
-    }
-
-    if (jumpPressed && this.onGround) {
-      this.velocityY = this.jumpForce;
-      //this.onGround = false;
-    }
-
+    this.wasJumpPressedLastFrame = jumpPressed;
     this.positionSubject.next({ x, y });
   }
-
 
   applyGravity(): void {
     if (!this.player) return;
@@ -144,11 +151,7 @@ constructor(
     const playerBottom = yPx + this.player.height;
     const playerLeft = (x / 100) * window.innerWidth;
     const playerRight = playerLeft + this.player.width;
-    const platform = this.collisionService.getGroundPlatform(
-      this.player,
-      this.platformService.platforms,
-      this.velocityY
-    );
+    const platform = this.collisionService.getGroundPlatform(this.player, this.platformService.platforms, this.velocityY);
 
     if (platform) {
       const platformTop = platform.y / 100 * screenHeight;
@@ -158,14 +161,23 @@ constructor(
         yPx = platformTop - playerHeight;
         this.velocityY = 0;
         this.onGround = true;
+        if (this.hasJumped) {
+          this.successfulJumps++;
+        }
+        this.hasJumped = false;
       }
     } else if (yPx >= this.groundY / 100 * screenHeight) {
+      if (this.hasJumped && !this.hasTouchedPlatform) {
+        this.failedJumps++;
+      }
       yPx = this.groundY / 100 * screenHeight;
       this.velocityY = 0;
       this.onGround = true;
+      this.hasJumped = false;
     } else {
       this.onGround = false;
     }
+
     for (const plat of this.platformService.platforms) {
       const platPx = {
         x: plat.x / 100 * window.innerWidth,
@@ -177,9 +189,9 @@ constructor(
       const platRight = platPx.x + platPx.width;
       const platTop = platPx.y;
       const platBottom = platPx.y + platPx.height;
-      const horizontallyAligned =
-        playerRight > platLeft + 2 &&
-        playerLeft < platRight - 2;
+
+      const horizontallyAligned = playerRight > platLeft + 2 && playerLeft < platRight - 2;
+
       if (
         horizontallyAligned &&
         this.velocityY < 0 &&
@@ -188,9 +200,12 @@ constructor(
       ) {
         yPx = platBottom;
         this.velocityY = 0;
+        this.hasTouchedPlatform = true;
+        this.failedJumps++;
         break;
       }
     }
+
     y = (yPx / screenHeight) * 100;
     this.positionSubject.next({ x, y });
   }
@@ -208,5 +223,10 @@ constructor(
     this.velocityY = 0;
     this.onGround = true;
     this._pressedKeys.clear();
+    this.wasJumpPressedLastFrame = false;
+    this.hasJumped = false;
+    this.hasTouchedPlatform = false;
+    this.failedJumps = 0;
+    this.successfulJumps = 0;
   }
 }

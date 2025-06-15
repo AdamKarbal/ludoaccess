@@ -1,5 +1,16 @@
-<div *ngIf="isGameFinished" class="final-message" >
-    <p>⏸ On continue ...</p>
-    <button id="button_pause" (click)="OnContinueClick()">CONTINUER</button>
-    <button id="button_pause" (click)="OnStopClick()">QUITTER</button>
+<div *ngIf="isGameFinished" class="final-message">
+  <img id="megaman" src="assets/ressources/gif-megaman.gif" alt="Rock Light" />
+  <h1>TU AS GAGNÉ !</h1>
+  <div class="buttons">
+    <button id="button_keep" (click)="OnContinueClick()">NOUVELLE PARTIE</button>
+    <button id="button_leave" (click)="OnStopClick()">MENU PRINCIPAL</button>
+  </div>
+  <h2>Ton niveau actuel</h2>
+  <div class="niveau">5</div>
+  <h2>Tes performances</h2>
+  <div class="stats">
+    <app-stat-word></app-stat-word>
+  </div> <!-- Pour les stats qui seront affichées -->
 </div>
+
+

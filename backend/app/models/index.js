@@ -5,6 +5,7 @@ const Settings = require('./setting.model.js')
 const Word = require('./word.model.js')
 const UserStats = require('./user-stats.model.js')
 
+
 module.exports = {
   Settings,
   Child,
