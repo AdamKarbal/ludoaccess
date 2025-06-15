@@ -94,6 +94,15 @@
     z-index: 20;
     margin-bottom: calc(var(--sol-height) - 0.5vh);
 }
+
+.chrono{
+  position: fixed;
+  top: 10%;
+  left: 55%;
+  z-index: 20 ;
+}
+
+
 #mob{
     position: fixed;
     bottom: 0;
