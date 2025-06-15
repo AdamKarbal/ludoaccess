@@ -1,5 +1,5 @@
 <div class="finish-screen"
-*ngIf="chooseMessage"
+*ngIf="currentStep==3 && !isFinished"
   [class.fade-out]="fadeOut"
   [style.font-family]="currentFont">
     <h1>{{ message.title }}</h1>

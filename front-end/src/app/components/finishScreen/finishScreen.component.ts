@@ -1,8 +1,9 @@
 import {Component, OnInit,Input,OnChanges, SimpleChanges} from '@angular/core';
-import { SettingsService } from 'src/services/setting.service'; 
+import { SettingsService } from 'src/services/setting.service';
 import { Subscription } from "rxjs";
 import { Word2GuessComponent } from '../word2guess/word2guess.component';
 import { Word2GuessService } from 'src/services/word2guess.services';
+import {GameService} from "../../../services/game.service";
 
 
 @Component({
@@ -13,18 +14,21 @@ import { Word2GuessService } from 'src/services/word2guess.services';
 
 export class finishComponent implements OnInit,OnChanges{
   message = { title: '', subtitle: '', instruction: '' };
-
+  isFinished : boolean  = false;
   currentFont: string = 'initial';
   private settingsSub!: Subscription;
   private wordCompletedSub!: Subscription;
 
-    constructor(private settingsService : SettingsService, private w2gService:Word2GuessService){}
+    constructor(private settingsService : SettingsService, private w2gService:Word2GuessService, private gameService: GameService) {}
     ngOnInit(): void {
       this.settingsSub = this.settingsService.settings$.subscribe(settings => {
         if (settings) {
           this.currentFont = settings.choosefont;
           console.log('Font mise à jour :', this.currentFont);
         }
+      });
+      this.gameService.isGameFinished$.subscribe(isFinished => {
+        this.isFinished = isFinished;
       });
       this.wordCompletedSub = this.w2gService.isWordComplete$.subscribe(isComplete => {
         if(!this.hasInitializedMessage){
@@ -55,7 +59,7 @@ export class finishComponent implements OnInit,OnChanges{
 
     ngOnChanges(changes: SimpleChanges): void {
     }
-    
+
 
     chooseMessage(etape : number){
       this.currentStep=etape;
@@ -77,7 +81,7 @@ export class finishComponent implements OnInit,OnChanges{
 
   ngOnDestroy(): void {
     if (this.settingsSub) {
-      this.settingsSub.unsubscribe(); 
+      this.settingsSub.unsubscribe();
     }
   }
 }

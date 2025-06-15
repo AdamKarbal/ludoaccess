@@ -17,19 +17,20 @@
     width: 100%; }
 
 .liste-enfants {
+    margin-top: 1vh;
     width: 90%;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 16px;
     padding: 20px;
-    height: 90%;
+    height: fit-content;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 70vh;
     box-sizing: border-box;
-    min-height: 250px; 
-    flex-shrink: 0;    
-    display: flex;   
+    min-height: 250px;
+    flex-shrink: 0;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
@@ -39,7 +40,6 @@
     color: #fff;
     text-shadow: 4px 4px 0 #000;
     font-size: 2.5rem;
-    margin-top : 5rem;
   }
 
 .arriere-plan {
@@ -128,7 +128,7 @@
 }
 
 .scrollable-words {
-  max-height: 200px; /* ajuste la hauteur selon ton besoin */
+  max-height: 200px; /* ajuste la hauteur selon le besoin */
   overflow-y: auto;
   border: 1px solid #ccc;
   padding: 8px;
@@ -143,3 +143,25 @@ li {
 li:hover {
   background: #ffeaea;
 }
+
+.ligne-titre {
+  margin-top: 110px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-bottom: 1rem;
+}
+
+.ligne-titre app-retour {
+  margin-left: 1.5vw;
+  flex-shrink: 0;
+}
+
+.ligne-titre .titre {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+

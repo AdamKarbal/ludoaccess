@@ -6,8 +6,16 @@ const getAllWords = (req, res) => {
   try {
     console.log('getAllWords try');
     const words = Word.get();
-    //console.log('words', words);
-    res.status(200).json(words);
+
+    const { childId } = req.query;
+
+    let filteredWords = words;
+    if(childId){
+      filteredWords = words.filter(w => !w.childId || w.childId == childId);
+    }
+
+    console.log('words', words);
+    res.status(200).json(filteredWords);
   } catch (err) {
     manageAllErrors(res, err);
   }
@@ -16,15 +24,16 @@ const getAllWords = (req, res) => {
 const createWord = (req, res) => {
   try {
     const allWords = Word.get();
-    const exists = allWords.find(w => w.value.toLowerCase() === req.body.value.toLowerCase());
-
+    const exists = allWords.find(w => w.value.toLowerCase() === req.body.value.toLowerCase() &&
+        (w.childId === req.body.childId || !w.childId));
     if (exists) {
       return res.status(400).json({ error: 'Le mot existe déjà.' });
     }
 
     const newWord = {
       value: req.body.value.trim(),
-      level: req.body.level
+      level: req.body.level,
+      childId: req.body.childId || null
     };
 
     const created = Word.create(newWord);
@@ -46,11 +55,12 @@ const createWords = (req, res) => {
     const allWords = Word.get(); // Récupère les mots existants
 
     const newWords = words.filter(word => {
-      const exists = allWords.find(w => w.value.toLowerCase() === word.value.toLowerCase());
-      return !exists; // On garde uniquement les mots qui n'existent pas déjà
-    }).map(word => ({
+      const exists = allWords.find(w => w.value.toLowerCase() === word.value.toLowerCase() &&
+          (w.childId === word.childId || !w.childId));
+      return !exists; }).map(word => ({
       value: word.value.trim(),
-      level: word.level
+      level: word.level,
+      childId: word.childId || null,
     }));
 
     if (newWords.length === 0) {

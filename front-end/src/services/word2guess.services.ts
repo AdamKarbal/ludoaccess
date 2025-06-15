@@ -4,7 +4,7 @@ import { FreezeGameService } from './freeze-game.services';
 import { CoinCollectionService } from './coincollection.service';
 import { Coin } from 'src/models/coin.model';
 import { LevelService } from "./levels.service";
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,15 @@ export class Word2GuessService implements OnDestroy {
   public isCrossed: boolean = false;
   public isI: boolean = false;
   private _badLetter: boolean = false;
+
   private incorrectLetters: string[]=[];
   private incorrectIndexesToKeep : number[]=[];
+
+  nbBadLetters : number = 0;
   private incorrectIndexes: Set<number> = new Set<number>();
+
+  private missedLetterCountSubject = new BehaviorSubject<number>(0);
+  public missedLetterCount$ = this.missedLetterCountSubject.asObservable();
 
   private wordCompleteSubject = new BehaviorSubject<boolean>(false);
   public isWordComplete$ = this.wordCompleteSubject.asObservable();
@@ -92,8 +98,16 @@ export class Word2GuessService implements OnDestroy {
     return this.incorrectIndexes;
   }
 
+  getNbMissedLetters(): number {
+    return this.nbBadLetters;
+  }
+
   getGuessedIndexes(): number[] {
     return this.guessedIndexes;
+  }
+
+  resetNbBadLetters(): void {
+    this.nbBadLetters = 0;
   }
 
   guessLetter(letter: string): boolean {
@@ -122,6 +136,8 @@ export class Word2GuessService implements OnDestroy {
 
     console.log("Lettre incorrecte !"); //Lettre reconnu mais pas la bonne lettre à entrer
     const audio = new Audio('assets/sons/wrongLetter.mp3');
+    this.nbBadLetters++;
+    this.missedLetterCountSubject.next(this.nbBadLetters);
     audio.play();
     this.incorrectLetters.push(this.word[this.currentIndex].toLowerCase());
     this.incorrectIndexesToKeep.push(this.currentIndex+1);
@@ -150,7 +166,7 @@ export class Word2GuessService implements OnDestroy {
     if (this.isWordComplete()) {
       console.log('Mot trouvé avec le coin !');
       this.wordCompleteSubject.next(true);
-    }
+        }
   }
 
   isWordComplete(): boolean {
@@ -169,6 +185,8 @@ export class Word2GuessService implements OnDestroy {
     this.currentIndex = 0;
     this.incorrectIndexes.clear();
     this.wordCompleteSubject.next(false);
+    this.letterGuessedSubject.next(null);     // ← efface la valeur mémorisée
+    this.incorrectLetterSubject.next(null);   // (optionnel mais logique)
     console.log('🔄 Mot complètement réinitialisé');
   }
 

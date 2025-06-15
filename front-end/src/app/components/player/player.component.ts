@@ -41,12 +41,12 @@ export class PlayerComponent implements OnInit, OnDestroy, Collidable {
     },
     jump: {
       frameCount: 7,
-      frameSpeed: 18,
+      frameSpeed: 15,
       framePrefix: 'assets/ressources/megamanjump/megamanjump'
     },
     jumpReversed: {
       frameCount: 7,
-      frameSpeed: 20,
+      frameSpeed: 15,
       framePrefix: 'assets/ressources/megamanjumpreversed/megamanjumpreversed'
     }
   };

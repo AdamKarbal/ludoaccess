@@ -1,5 +1,5 @@
 <div class="map">
-    <app-toolbar-game></app-toolbar-game>
+    <app-toolbar-game *ngIf ="isGameOver==false && isGameFinished==false"></app-toolbar-game>
     <app-background></app-background>
     <app-ground></app-ground>
     <!-- <app-player></app-player> si besoin -->

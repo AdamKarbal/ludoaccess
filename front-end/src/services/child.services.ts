@@ -16,7 +16,7 @@ export class ChildService {
   public childs$: BehaviorSubject<Child[]>
     = new BehaviorSubject<Child[]>([]);
 
-  public childSelected$: Subject<Child> = new Subject();
+  public childSelected$: BehaviorSubject<Child | null> = new BehaviorSubject<Child | null>(null);
 
   private childUrl = serverUrl + '/childs';
   private settingsUrl = serverUrl + '/settings';
@@ -32,14 +32,16 @@ export class ChildService {
        this.childs = childList;
        this.childs$.next(this.childs);
      });
+
+
   }
 
-addChilds(child: Child): void {
-  this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe((newChild) => {
-    console.log('Enfant ajouté dans le service :', newChild);
-    this.retrieveChilds();
-  });
-}
+  addChilds(child: Child): void {
+    this.http.post<Child>(this.childUrl, child, this.httpOptions).subscribe((newChild) => {
+      console.log('Enfant ajouté dans le service :', newChild);
+      this.retrieveChilds();
+    });
+  }
 
 
   setSelectedChild(childId: number): void {
@@ -58,6 +60,6 @@ addChilds(child: Child): void {
   //   this.childs = this.childs.filter(c => c.id !== child.id);
   //   this.childs$.next([...this.childs]);
   // }
-  
+
 
 }

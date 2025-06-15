@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 import { ChildSettings } from "src/models/setting.model";
 import { Word2GuessService } from "./word2guess.services";
 import { filter, take as rxjsTake, take, tap, finalize } from "rxjs/operators";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, combineLatest } from "rxjs";
 import{ChronoService} from "./chrono.service";
 import { FinalMessageService } from "./final-message.service";
 import { FreezeGameService } from "./freeze-game.services";
@@ -23,6 +23,8 @@ import {UserStatsService} from "./stats.service";
 import {ProgressionImpl} from "../models/progressionImpl.model";
 import {InteractionImpl} from "../models/interactionImpl.model";
 import {PlayerService} from "./player.service";
+import { MiniGameService } from "./minigame.service";
+
 
 
 
@@ -40,6 +42,7 @@ export class GameService {
     // partie à transmettre aux stats
     listLetterErrors: Map<string,number> = new Map();
 
+
     errorOcurrencesByPosition:  Map<number, Map<string, number>> = new Map();
 
     progression: ProgressionImpl[] = [];
@@ -50,6 +53,15 @@ export class GameService {
     private interactionMap: Map<string,InteractionImpl> = new Map();
 
     private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
+
+    private currentStep=new BehaviorSubject<number>(1);
+    public currentStep$ = this.currentStep.asObservable();
+
+    private wordForStat = new BehaviorSubject<string[]>([]);
+    public wordForStat$ = this.wordForStat.asObservable();
+
+  private isStep1CompletedSubject = new BehaviorSubject<boolean>(false);
+
     public isStep1Completed$ = this.isStep1CompletedSubject.asObservable();
 
     private isStep2CompletedSubject = new BehaviorSubject<boolean>(false);
@@ -64,7 +76,6 @@ export class GameService {
     private wantToContinue = new BehaviorSubject<boolean>(false);
     public wantToContinue$ = this.wantToContinue.asObservable();
 
-
     private wantToExit = new BehaviorSubject<boolean>(false);
     public wantToExit$ = this.wantToExit.asObservable();
 
@@ -73,6 +84,8 @@ export class GameService {
 
   private currentWordLength=new BehaviorSubject<number>(0);
   public currentWordLength$=this.currentWordLength.asObservable();
+
+  private isResetting = false;
 
 
 
@@ -89,7 +102,10 @@ export class GameService {
         private finalMessageService: FinalMessageService,
         private authService : AuthService,
         private freezeGameService: FreezeGameService,
-        private injector:Injector
+        private injector:Injector,
+
+        private miniGameService: MiniGameService
+
     ) {
         this.settingService.settings$.subscribe(settings => {
             this._settings = settings;
@@ -224,6 +240,8 @@ export class GameService {
 
 
     playStep1(): void {
+        console.log("Entrée dans playStep1");
+        this.currentStep.next(1);
         if (this._isProcessing) return;
         this._isProcessing = true;
         this.destroyStep$ = new Subject<void>();
@@ -268,6 +286,8 @@ export class GameService {
               const current = this.currentWordIndex.getValue();
               this.currentWordIndex.next(current+1);
               if (this.w2gService.badLetter == true) {
+                const current = this.wordForStat.getValue();
+                 this.wordForStat.next([...current, word]);
                 const incorrectLetters=this.w2gService.getIncorrectLetters();
                 this.progressionMap.set(word,new ProgressionImpl(word,incorrectLetters.length,0));
                 this.handleErrorsByPosition(word.length,this.w2gService.getIncorrectIndex());
@@ -276,6 +296,7 @@ export class GameService {
                 console.log("Taille sample: " + this._wordSample.length);
                 console.log("Ajout dans wordTarget");
                 console.log(this._wordTarget);
+
                 }
                 this.w2gService.resetWord();
                     this.playStep1();
@@ -289,16 +310,21 @@ export class GameService {
     private _isProcessing: boolean = false;
 
     playStep2(): void {
-
+        this.currentStep.next(2);
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
+        this.miniGameService.reset();
+        this.gameOver();
         console.log('Début étape 2 - WordTarget:', this._wordTarget);
 
-        if (this._wordTarget.length === 0) {
+
+        if (this._wordTarget.length === 0 &&this._isProcessing) {
+
             console.log("Aucun mot dans wordTarget, passage à l'étape 3");
             this._isProcessing = false;
             this.isStep2CompletedSubject.next(true);
+            console.warn("Step 2 done :"+this.isStep2CompletedSubject.getValue());
             return;
         }
 
@@ -312,12 +338,17 @@ export class GameService {
             filter(isComplete => isComplete),
             rxjsTake(1),
             finalize(() => {
+                if (this.isResetting) {
+                    console.warn('finalize ignoré car reset en cours');
+                    return;
+                }
                 this._isProcessing = false;
                 const gameService= this.injector.get(PlayerService);
                 this.updateInteractionMap('Sauts',gameService.getSuccessfulJumps(),gameService.getFailedJumps());
                 console.log(`Fin étape 2 - Mot "${this._currentWord}" complété`);
                 this.resetStep2();
                 this.isStep2CompletedSubject.next(true);
+                console.warn("Step 2 done :" + this.isStep2CompletedSubject.getValue());
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
             console.log('Mot complété dans étape 2 [subscribe]');
@@ -328,11 +359,10 @@ export class GameService {
 
     playStep3(): void {
 
-
+        this.currentStep.next(3);
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
-
         console.log('Début étape 3 - Mot courant:', this._currentWord);
 
         this.w2gService.resetWord();
@@ -343,6 +373,10 @@ export class GameService {
             filter(isComplete => isComplete),
             rxjsTake(1),
             finalize(() => {
+                if (this.isResetting) {
+                    console.warn('finalize ignoré car reset en cours');
+                    return;
+                }
                 this._isProcessing = false;
                 this.resetStep3();
                 /*this.interaction.push(new InteractionImpl('dernière lettre',0,this.getGlobalEdgeLetterErrorStats().last));
@@ -350,6 +384,7 @@ export class GameService {
                 console.log("Important",this.interaction);*/
                 console.log(`Fin étape 3 - Mot "${this._currentWord}" complété`);
                 this.isStep3CompletedSubject.next(true);
+                console.warn("Step 3 done :"+this.isStep3CompletedSubject.getValue());
 
             }),takeUntil(this.destroyStep$)
         ).subscribe(() => {
@@ -381,6 +416,7 @@ export class GameService {
                    console.log('Mot complété dans étape 3');
                    this.w2gService.resetWord();
                    this.w2gService.onWordCompleted();
+                    this.w2gService.resetNbBadLetters();
              }
 
         });
@@ -446,6 +482,56 @@ export class GameService {
         this.progressionMap.get(word)!.setTime(time);
         this.progressionMap.get(word)!.setCompleted(time<30);
       }
+
+
+    stopStep(): void {
+    console.warn('>>> stopStep() called');
+    this.isResetting = true;
+    try {
+        console.warn('avant destroyStep$.next()');
+        this.destroyStep$.next();
+        console.warn('avant destroyStep$.complete()');
+        this.destroyStep$.complete();
+        console.warn('avant new Subject');
+        this.destroyStep$ = new Subject<void>();
+        console.warn('avant resetGame()');
+        this.resetGame();
+        console.warn('après resetGame()');
+    } catch (e) {
+        console.error('Erreur dans stopStep:', e);
+    }
+    // Optionnel : tu peux remettre à false ici ou dans resetGame()
+}
+    gameOver(): void {
+        console.warn("Attention au Game Over");
+    this.miniGameService.GameOver$
+        .pipe(filter(gameOver => gameOver), take(1),takeUntil(this.destroyStep$))
+        .subscribe(gameOver => {
+            this.isGameFinished.next(true);
+
+            console.warn("Is finished :"+gameOver);
+            console.log("Game Over détecté, traitement en cours...");
+            this.finalMessageService.wantToContinue$.pipe(
+                filter(wantsToContinue => wantsToContinue),
+                rxjsTake(1),takeUntil(this.destroyStep$)
+            ).subscribe(wantsToContinue => {
+            if (wantsToContinue) {
+                console.log("L'utilisateur veut continuer le jeu.");
+                this.wantToContinue.next(true);
+                this.stopStep();// On arrête la step en cours
+            }
+            });
+            this.finalMessageService.wantToExit$.pipe(
+                filter(wantToExit => wantToExit),
+                rxjsTake(1),takeUntil(this.destroyStep$)
+            ).subscribe(wantToExit => {
+            if (wantToExit) {
+                console.log("L'utilisateur veut quitter le jeu.");
+                this.wantToExit.next(true);
+                this.stopStep();// On arrête la step en cours
+            }});
+            this.resetStep2();
+        });
     }
 
     // Getters
@@ -487,7 +573,11 @@ export class GameService {
 
 
     resetGame(): void {
-        console.warn("Hé ho");
+        console.warn("ResetGame appelé");
+            // 👉 TRES IMPORTANT : bien annuler les playStep en cours
+        this.destroyStep$.next();
+        this.destroyStep$.complete();
+        this.destroyStep$ = new Subject<void>();
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
@@ -508,7 +598,14 @@ export class GameService {
         // this.w2gService.resetWord();
         this.coinCollectionService.reset();
         this.chronoService.resetTimer();
+
         this.progressionMap.clear();
+
+        this.miniGameService.reset();
+        this._isProcessing = false;
+        this.isResetting = false;
+        this.currentStep.next(1);
+
         // this.fillSample();
         // this.playStep1();
 
@@ -590,6 +687,7 @@ export class GameService {
     this._currentWord = '';
     this.platformService.resetPlatforms();
     this.chronoService.resetTimer();
+    this.currentStep.next(1);
 
 }
 
