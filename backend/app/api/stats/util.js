@@ -54,6 +54,10 @@ function mergeProgressions(listA,listB){
     return result;
 }
 
+function getAll(childId){
+    
+}
+
 
 
 

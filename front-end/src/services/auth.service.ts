@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { ChildSettings } from '../models/setting.model';
 import { SettingsService } from './setting.service';
-import { LevelService} from "./levels.service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,11 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
   private settings: ChildSettings | null = null;
 
-  constructor(private settingsService: SettingsService,
-              private levelService: LevelService) {
+  constructor(private settingsService: SettingsService) {
     this.settingsService.settings$.subscribe(settings => {
       this.settings = settings;
     });
-    this.levelService.level$.subscribe(level   => {
-      console.log("Level du joueur"+level); // là je récupère le level du joueur pour le transmettre aux stats
-    });
+
   }
   setUser(user: User): void {
     this.currentUserSubject.next(user);

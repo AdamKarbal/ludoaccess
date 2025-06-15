@@ -5,6 +5,7 @@ const { Child } = require('../../models')
 const { Settings } = require('../../models')
 const { UserStats } = require('../../models')
 const manageAllErrors = require('../../utils/routes/error-management')
+const {Level}= require('../../models')
 
 
 const router = new Router()
@@ -27,9 +28,8 @@ router.get('/:childId', (req, res) => {
 router.post('/', (req, res) => {
   console.log(123);
   try {
+    
     const child = Child.create({ ...req.body })
-
-
     const defaultSettings = {
       id: child.id,
       showTimer: true,
@@ -48,6 +48,7 @@ router.post('/', (req, res) => {
       numberOfWords: 15,
     }
 
+
     const settings = Settings.create(defaultSettings)
     const newChild = {
       id: child.id,
@@ -60,10 +61,22 @@ router.post('/', (req, res) => {
       child: newChild,
       listLetterErrors: {},
       errorOcurrencesByPosition: {},
+
       progression: [],
       interaction: [],
     }
+
     UserStats.create(defaultUserStats)
+    const level = {
+      childId: child.id,
+      niveau:0,
+      date:new Date()
+
+    }
+    console.log(level);
+    //UserStats.create(defaultUserStats)
+    console.log(123)
+    Level.create(level);
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
@@ -81,6 +94,11 @@ router.put('/:childId', (req, res) => {
 router.delete('/:childId', (req, res) => {
   try {
     const childId = parseInt(req.params.childId, 10)
+    const level = Level.getAllByChildId(childId);
+    console.log(level);
+    for(const lvl of level) {
+      Level.delete(lvl.id)
+    }
     Child.delete(childId)
     Settings.delete(childId)
     const userStatsList = UserStats.get()
@@ -88,7 +106,10 @@ router.delete('/:childId', (req, res) => {
     if (stat) {
       UserStats.delete(stat.id)
     }
+
     res.status(204).end()
+    
+
   } catch (err) {
     manageAllErrors(res, err)
   }

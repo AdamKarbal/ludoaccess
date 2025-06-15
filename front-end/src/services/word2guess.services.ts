@@ -194,7 +194,7 @@ export class Word2GuessService implements OnDestroy {
   onWordCompleted(): void {
     if (this.isWordComplete()) {
       console.warn('Mot trouvé !');
-      this.LevelService.increaseProgress(3*this.word.length);
+      this.LevelService.increaseProgress(10*this.word.length);
     }
   }
 
