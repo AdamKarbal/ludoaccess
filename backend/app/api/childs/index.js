@@ -67,7 +67,6 @@ router.post('/', (req, res) => {
     }
 
     UserStats.create(defaultUserStats)
-=======
     const level = {
       childId: child.id,
       niveau:0,
@@ -78,8 +77,6 @@ router.post('/', (req, res) => {
     //UserStats.create(defaultUserStats)
     console.log(123)
     Level.create(level);
-    console.log(123)
-    const settings = Settings.create(defaultSettings)
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
@@ -97,9 +94,11 @@ router.put('/:childId', (req, res) => {
 router.delete('/:childId', (req, res) => {
   try {
     const childId = parseInt(req.params.childId, 10)
-    const levels   = Level.get();   // à modifier pr supprimer ttes les occurences (TODO le faire dans baseModel)         
-    const childLvl = levels.find(l => l.childId == childId);
-    Level.delete(childLvl.id)
+    const level = Level.getAllByChildId(childId);
+    console.log(level);
+    for(const lvl of level) {
+      Level.delete(lvl.id)
+    }
     Child.delete(childId)
     Settings.delete(childId)
     const userStatsList = UserStats.get()

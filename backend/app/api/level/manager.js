@@ -57,8 +57,7 @@ const updateLevelByChildId = (req, res) => {
 
 const deleteLevelByChildId = (req, res) => {
      try {
-    const { childId } = req.params;
-    const existing = Level.get().find(l => l.childId == childId);
+    const existing = Level.getById(req.params);  // Recherche le niveau par childId
     if (!existing) return res.status(404).json({ error: 'Child not found' });
 
     const deleted = Level.delete(existing.id);  // Suppression par id, pas besoin de 'niveau' ici
