@@ -35,5 +35,11 @@ export class ChildComponent {
     this.childService.setSelectedChild(this.child.id);
     this.router.navigate(['/mots']);
   }
+  goToStats(event: MouseEvent): void {
+    console.log("id du gosse",this.child.id);
+    event.stopPropagation();
+    this.router.navigate(['/stats', this.child.id]);
+  }
+
 
 }

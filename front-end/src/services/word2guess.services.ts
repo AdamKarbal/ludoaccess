@@ -18,8 +18,11 @@ export class Word2GuessService implements OnDestroy {
   public isCrossed: boolean = false;
   public isI: boolean = false;
   private _badLetter: boolean = false;
-  nbBadLetters : number = 0;
 
+  private incorrectLetters: string[]=[];
+  private incorrectIndexesToKeep : number[]=[];
+
+  nbBadLetters : number = 0;
   private incorrectIndexes: Set<number> = new Set<number>();
 
   private missedLetterCountSubject = new BehaviorSubject<number>(0);
@@ -136,7 +139,8 @@ export class Word2GuessService implements OnDestroy {
     this.nbBadLetters++;
     this.missedLetterCountSubject.next(this.nbBadLetters);
     audio.play();
-
+    this.incorrectLetters.push(this.word[this.currentIndex].toLowerCase());
+    this.incorrectIndexesToKeep.push(this.currentIndex+1);
     this.incorrectIndexes.add(this.guessedIndexes.length);
 
     setTimeout(() => {
@@ -170,9 +174,14 @@ export class Word2GuessService implements OnDestroy {
   }
 
   resetWord(): void {
+    console.log("dans word 2 guess :");
+    console.log("index incorrects :",this.incorrectIndexesToKeep);
+    console.log("lettres incorrectes :",this.incorrectLetters);
     this.word = "";
     this.display = "";
     this.guessedIndexes = [];
+    this.incorrectLetters=[];
+    this.incorrectIndexesToKeep=[];
     this.currentIndex = 0;
     this.incorrectIndexes.clear();
     this.wordCompleteSubject.next(false);
@@ -198,5 +207,13 @@ export class Word2GuessService implements OnDestroy {
       }
     }
     return display.trim();
+  }
+
+  getIncorrectIndex(): number[]{
+    return this.incorrectIndexesToKeep;
+  }
+
+  getIncorrectLetters(): string[]{
+    return this.incorrectLetters;
   }
 }

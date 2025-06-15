@@ -1,4 +1,5 @@
 <div class="child" [class.active]="isSelected" (click)="onClick()">
+
   <img [src]="child.imageUrl || '../../assets/ressources/e1.jpg'" alt="Photo de {{child.firstName}}" class="child-avatar">
   <div class="child-info">
     <h2>{{child.firstName}} {{child.lastName}}</h2>
@@ -12,6 +13,7 @@
     </button>
     <button class="delete-btn" (click)="delete($event)">
       <i class="fas fa-trash"></i> Supprimer
+
     </button>
   </div>
 
