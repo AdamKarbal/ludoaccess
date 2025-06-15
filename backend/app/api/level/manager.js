@@ -4,14 +4,14 @@ const {Level} = require('../../models');
 const getLevelByChildId = (req, res) => {
   try {
     const { childId } = req.params;        
-    const levels   = Level.get();  //getAll plutôt          
-    const childLvl = levels.find(l => l.childId == childId);
+    const levels   = Level.getAllByChildId(childId);  //getAll plutôt          
+    
 
-    if (!childLvl) {
+    if (!levels) {
       return res.status(404).json({ error: `No level for child ${childId}` });
     }
 
-    res.status(200).json(childLvl);          
+    res.status(200).json(levels);          
   } catch (err) {
     manageAllErrors(res, err);
   }
