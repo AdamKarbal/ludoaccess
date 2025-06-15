@@ -5,24 +5,10 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-stats-chart',
-  template: `
-    <div class="chart-container">
-      <canvas id="userStatsChart"></canvas>
-    </div>
-
-    <!--<div class="error-list">
-      <h3>Liste des erreurs</h3>
-      <ul>
-        <li *ngFor="let stat of stats">
-          Lettre : {{ stat.name }} - Nb d'erreurs : {{ stat.errors }}
-        </li>
-      </ul>
-    </div>-->
-  `,
-  styles: [
-    `.chart-container { width: 100%; height: 400px; }`
-  ]
+  templateUrl: './stats-chart.component.html',
+  styleUrls: ['./stats-chart.component.scss']
 })
+
 export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() selectedLength: number | null = null;
 
@@ -31,7 +17,7 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
   private subscription: Subscription = new Subscription();
 
   constructor(private userStatsService: UserStatsService) {
-    Chart.register(...registerables); // ✅ Register necessary components
+    Chart.register(...registerables); 
   }
   ngOnChanges(changes: SimpleChanges) {
     console.log("selectedLength changé :", this.selectedLength);
@@ -76,6 +62,6 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe(); // Prevent memory leaks
+    this.subscription.unsubscribe(); 
   }
 }

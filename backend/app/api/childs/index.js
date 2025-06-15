@@ -25,6 +25,7 @@ router.get('/:childId', (req, res) => {
 
 
 router.post('/', (req, res) => {
+  console.log(123);
   try {
     const child = Child.create({ ...req.body })
 
@@ -66,6 +67,7 @@ router.post('/', (req, res) => {
     res.status(201).json(child)
     console.log('child dans le back', child)
   } catch (err) {
+    console.log('erreur dans le back', err);
     manageAllErrors(res, err)
   }
 })

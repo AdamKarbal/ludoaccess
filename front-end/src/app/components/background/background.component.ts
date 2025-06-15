@@ -16,7 +16,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.settingsSub = this.settingsService.settings$.subscribe(settings => {
       if (settings) {
-        console.log("entre dans settings");
+        console.log("entre dans settings (background.component.ts)");
         this.currentBackground = this.settingsService.getCurrentBackground();  
         console.log('Background mis à jour :', this.currentBackground);
       }

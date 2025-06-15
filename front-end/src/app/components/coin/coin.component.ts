@@ -33,7 +33,7 @@ export class CoinComponent implements OnInit {
   }
 
   onClickCollect(event : MouseEvent): void {
-    if (!this.coin.isCollected) { // On veut cliquer seulement si PAS encore collecté
+    if (!this.coin.isCollected) { 
       console.log('Coin clicked !');
       this.coin.collecting = true;
    
