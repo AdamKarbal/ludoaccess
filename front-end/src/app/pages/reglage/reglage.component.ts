@@ -3,6 +3,7 @@ import { ChildService } from 'src/services/child.services';
 import { MotService } from 'src/services/mot.service';
 import { Word } from 'src/models/word.model';
 import { Child } from 'src/models/child.model';
+import { Level } from 'src/models/level.model';
 
 @Component({
     selector: 'app-reglage',
@@ -17,6 +18,11 @@ export class ReglagePageComponent {
         firstName: '',
         lastName: '',
         age: undefined
+    };
+
+    newLevel: Partial<Level> = {
+        childId: this.newChild.id,
+        level: 0,
     };
 
 
@@ -48,7 +54,6 @@ export class ReglagePageComponent {
             frequency: 0,
             role: 'child'
         };
-
         this.childService.addChilds(child as Child);
         console.log('Enfant ajouté dans Reglage (sans ID) :', child);
         this.formVisible = false;
