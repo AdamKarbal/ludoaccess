@@ -33,6 +33,9 @@ export class PlayerStatsComponent implements OnInit {
       this.selectedLength = lengths[0] ?? null;
     });
     this.setId(1);
+    setTimeout(() => {
+      this.onPeriodChange('today')
+    },80);
   }
 
 
@@ -56,6 +59,7 @@ export class PlayerStatsComponent implements OnInit {
     this.filterStatsByPeriod(period);
     console.log("Important",this.selectedPeriod);
   }
+
   filterStatsByPeriod(period: string) {
     let fromDate: Date;
     const toDate = new Date();

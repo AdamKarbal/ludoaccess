@@ -2,13 +2,17 @@
   <header>
     <h1>Statistiques du Joueur</h1>
   </header>
+
+
   <div id="btn-retour">
     <app-retour></app-retour>
   </div>
+
   <app-period-selector
     [selectedPeriod]="selectedPeriod"
     (periodChange)="onPeriodChange($event)">
   </app-period-selector>
+
   <!-- Bloc d'informations générales -->
   <stats-menu [titre]="'Informations du Joueur'">
     <div class="player-stats">
@@ -21,8 +25,17 @@
 
   <!-- Statistiques détaillées -->
   <stats-menu [titre]="'Statistiques détaillées'">
-    <button id="letterError" (click)="setId(1)">Erreurs par lettre</button>
-    <button id="positionError" (click)="setId(2)">Erreurs par position dans le mot</button>
+    <div class="boutondetails">
+      <button id="letterError" (click)="setId(1)">Erreurs par lettre</button>
+      <span class="help-icon">?
+        <span class="tooltip">Nombre d'erreurs pour une lettre donnée</span>
+      </span>
+
+      <button id="positionError" (click)="setId(2)">Erreurs par position dans le mot</button>
+      <span class="help-icon">?
+        <span class="tooltip">Pour une longueur donnée (à choisir), la position erronée et le nombre d'occurences de l'erreur à cette position</span>
+      </span>
+    </div>
 
     <!-- Longueurs des mots dynamiques -->
     <div class="length-selection" *ngIf="id === 2 && lengths.length > 0">
@@ -43,12 +56,35 @@
     <div class="progress-stats" *ngIf="progression.length > 0; else noProgression">
       <table>
         <thead>
+
         <tr>
           <th>Mot</th>
-          <th>Statut</th>
-          <th>Erreurs</th>
-          <th>Temps (sec)</th>
+          <th>
+            <div class="th-title">
+              <span>Statut</span>
+              <span class="help-icon">?
+              <span class="tooltip">Mot finis dans le jeu</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div class="th-title">
+              <span>Erreurs</span>
+              <span class="help-icon">?
+              <span class="tooltip">Nombre d'erreurs sur le mot</span>
+              </span>
+            </div>
+          </th>
+          <th>
+          <div class="th-title">
+            <span>Temps (en s)</span>
+            <span class="help-icon">?
+              <span class="tooltip">Temps pris à la dernière étape pour taper le mot</span>
+              </span>
+          </div>
+        </th>
         </tr>
+
         </thead>
         <tbody>
         <tr *ngFor="let level of filteredProgressions">
@@ -71,9 +107,27 @@
       <table>
         <thead>
         <tr>
-          <th>Action</th>
-          <th>Succès</th>
-          <th>Échecs</th>
+          <th>
+            <div class="th-title">
+              <span>Actions</span>
+            </div>
+          </th>
+          <th>
+            <div class="th-title">
+              <span>Succès</span>
+              <span class="help-icon">?
+              <span class="tooltip">Nombre de fois que l'action a été effectuée avec succès. Exemple: atterissage sur une plateforme après un saut.</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div class="th-title">
+              <span>Échecs</span>
+              <span class="help-icon">?
+              <span class="tooltip">Nombre de fois que l'action n'a pas abouti. Exemple: Dernière lettre du mot erronée.</span>
+              </span>
+            </div>
+          </th>
         </tr>
         </thead>
         <tbody>

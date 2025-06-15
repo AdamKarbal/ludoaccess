@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
   styleUrls: ["menu.scss"],
   standalone: true
 })
+
 export class StatsMenuModule {
   @Input() titre: String = "Stats";
   type:String = "Users";

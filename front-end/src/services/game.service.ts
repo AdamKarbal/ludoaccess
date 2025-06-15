@@ -679,6 +679,7 @@ export class GameService {
     this.platformService.resetPlatforms();
     this.chronoService.resetTimer();
     this.currentStep.next(1);
+    this.levelService.resetProgress();
 
 }
 

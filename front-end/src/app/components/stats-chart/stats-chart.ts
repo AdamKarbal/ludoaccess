@@ -17,7 +17,7 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
   private subscription: Subscription = new Subscription();
 
   constructor(private userStatsService: UserStatsService) {
-    Chart.register(...registerables); 
+    Chart.register(...registerables);
   }
   ngOnChanges(changes: SimpleChanges) {
     console.log("selectedLength changé :", this.selectedLength);
@@ -30,7 +30,7 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
     this.subscription = this.userStatsService.stats$.subscribe(data => {
       console.log('Données reçues dans UserStatsChartComponent :', data);
       this.stats = data;
-      this.renderChart();
+        this.renderChart();
     });
   }
 
@@ -62,6 +62,6 @@ export class UserStatsChartComponent implements OnInit, OnDestroy, OnChanges {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe(); 
+    this.subscription.unsubscribe();
   }
 }

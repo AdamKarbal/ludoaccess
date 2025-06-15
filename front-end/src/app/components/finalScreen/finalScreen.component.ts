@@ -10,6 +10,7 @@ import { filter, take } from "rxjs";
   templateUrl: "./finalScreen.component.html",
   styleUrls: ["./finalScreen.component.scss"],
 })
+
 export class FinalScreenComponent implements OnInit {
 
     public isGameFinished: boolean = false;

@@ -26,6 +26,7 @@ export class LevelService{
 
     increaseProgress(progress: number) {
         this.level += progress;
+        this._progress+=progress;
         this.addLevel({ childId: this.authService!.getCurrentUser()!.id, level: this.level });
     }
 
@@ -66,6 +67,10 @@ export class LevelService{
   saveLevelToBackend(childId: number) {
     // On envoie le niveau actuel au backend
     return this.http.put(`${this.levelUrl}/${childId}`, { level: this.level });
+  }
+
+  resetProgress() {
+      this._progress=0;
   }
 
 
