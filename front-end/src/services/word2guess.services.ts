@@ -149,6 +149,7 @@ export class Word2GuessService implements OnDestroy {
     this.letterGuessedSubject.next(false);
     this.incorrectLetterSubject.next(this.guessedIndexes.length);
     this._badLetter = true;
+    //this.badLetterSubject.next();
     return false;
   }
 
