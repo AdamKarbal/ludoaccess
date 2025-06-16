@@ -20,4 +20,8 @@ export class AppFixture extends E2EComponentFixture {
   getSuccessMessage() {
     return this.page.getByText('Wow!');
   }
+
+  getBoutonConnexion() {
+    return this.page.getByRole('button', { name: /se connecter/i });
+  }
 }
