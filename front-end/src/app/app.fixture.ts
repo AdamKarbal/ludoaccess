@@ -20,4 +20,23 @@ export class AppFixture extends E2EComponentFixture {
   getSuccessMessage() {
     return this.page.getByText('Wow!');
   }
+
+  getBoutonConnexion() {
+    return this.page.getByRole('button', { name: /se connecter/i });
+  }
+
+  getBoutonErgotherapeute() {
+    return this.page.getByRole('heading', { name: /Ergothérapeute/i }).locator('..');
+  }
+
+  loginErgotherapeute() {
+    return this.getBoutonErgotherapeute().click()
+      .then(() => this.getBoutonConnexion().click());
+  }
+  loginPlayer(name: string) {
+    return this.page.getByRole('heading', { name: name }).locator('..').click()
+      .then(() => this.getBoutonConnexion().click());
+  }
+
+  
 }
