@@ -38,5 +38,25 @@ export class AppFixture extends E2EComponentFixture {
       .then(() => this.getBoutonConnexion().click());
   }
 
-  
+  regalageEnfantaModifier(name: string) {
+    return this.page
+  .locator('app-child', { hasText: name })   // limite à la bonne carte
+  .locator('div.child')        
+  .click();;
+  }
+
+  getButtonRetourReglages() {
+    return this.loginErgotherapeute()
+      .then(() => this.page.getByRole('button', { name: 'Retour' }));
+  }
+
+  getButtonJouer() {
+    return this.page.getByRole('button', { name: 'Jouer' });
+  }
+  jouer(name: string) {
+    return this.loginPlayer(name)
+      .then(() => this.getButtonJouer().click());
+  }
+
+
 }
