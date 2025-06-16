@@ -5,7 +5,7 @@ test.describe('Settings feature', ()=> {
 
     test('Ajouter un enfant', async({page}) =>{
         await page.goto(testUrl);
-        await expect(page).toHaveURL("http://localhost:4200/");
+        await expect(page).toHaveURL("http://localhost:4200");
         await test.step('Se connecter', async () => {
             await page.getByRole('heading', { name: /Ergothérapeute/i }).locator('..').click();
             await page.getByRole('button', { name: /se connecter/i }).click();
