@@ -29,13 +29,17 @@ export class AppFixture extends E2EComponentFixture {
     return this.page.getByRole('heading', { name: /Ergothérapeute/i }).locator('..');
   }
 
-  loginErgotherapeute() {
-    return this.getBoutonErgotherapeute().click()
-      .then(() => this.getBoutonConnexion().click());
+  getBoutonEnfant(name: string) {
+    return this.page.getByRole('heading', { name: name }).locator('..');
   }
-  loginPlayer(name: string) {
-    return this.page.getByRole('heading', { name: name }).locator('..').click()
-      .then(() => this.getBoutonConnexion().click());
+
+  async loginErgotherapeute() {
+    await this.getBoutonErgotherapeute().click();
+    await this.getBoutonConnexion().click();
+  }
+  async loginPlayer(name: string) {
+    await this.getBoutonEnfant(name).click();
+    await this.getBoutonConnexion().click();
   }
 
   regalageEnfantaModifier(name: string) {
@@ -46,17 +50,16 @@ export class AppFixture extends E2EComponentFixture {
   }
 
   getButtonRetourReglages() {
-    return this.loginErgotherapeute()
-      .then(() => this.page.getByRole('button', { name: 'Retour' }));
+    return this.page.getByRole('button', { name: '◀ Retour' });
   }
 
   getButtonJouer() {
     return this.page.getByRole('button', { name: 'Jouer' });
   }
-  jouer(name: string) {
-    return this.loginPlayer(name)
-      .then(() => this.getButtonJouer().click());
-  }
+  // jouer(name: string) {
+  //   return this.loginPlayer(name)
+  //     .then(() => this.getButtonJouer().click());
+  // }
 
 
 }

@@ -18,15 +18,25 @@ test.describe('Settings feature', () => {
             await expect(select).toBeVisible();
             await select.selectOption({ value: 'Forest' });
             const inputNumberOfWords = page.locator('input[name="numberOfWords"]');
-
-            // Option 1 : Remplacer la valeur directement
-            await inputNumberOfWords.fill('2');  // met la valeur 10 par exemple
+            await inputNumberOfWords.fill('2');  
 
         });
         await test.step('Aller dans l\'étape 1 et check', async () => {
-            const boutonRetour = await app.getButtonRetourReglages(); // ici on attend le Locator
+            const boutonRetour = await app.getButtonRetourReglages(); 
             await boutonRetour.click();
-            await expect(app.jouer('Nicolas mm')).toBeTruthy();
+            await expect(page).toHaveURL("http://localhost:4200");
+            await app.getBoutonEnfant('Nicolas mm').click();
+            await app.getBoutonConnexion().click();
+            await expect(page).toHaveURL("http://localhost:4200/acceuil");
+            await app.getButtonJouer().click();
+            await expect(page).toHaveURL("http://localhost:4200/jeu");
+            const imageaComparer = page.locator('div.BG');
+            const numberOfWordsLocator = page.locator('div.word-counter');
+            const numberOfWordsText = await numberOfWordsLocator.textContent();
+            const parts = numberOfWordsText?.split('/');
+            const numberOfWords = Number(parts?.[1]?.trim());
+            expect(numberOfWords).toBe(2);
+            await expect(imageaComparer).toBeVisible();
 
         });
 
