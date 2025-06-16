@@ -1,1 +1,12 @@
 /.idea.env
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# E2E folder
+/playwright-report
+/test-results

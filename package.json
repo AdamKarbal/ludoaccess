@@ -7,6 +7,9 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@types/chart.js": "^2.9.41"
-  }
+    "@playwright/test": "^1.53.0",
+    "@types/chart.js": "^2.9.41",
+    "@types/node": "^24.0.1"
+  },
+  "scripts": {}
 }
