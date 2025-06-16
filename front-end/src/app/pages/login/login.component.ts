@@ -22,7 +22,7 @@ onUserSelected(user: User | null) {
   if (user) {
     this.authService.setUser(user);
     if (user.role === 'child') {
-      this.setting.loadSettings(user.id); 
+      this.setting.loadSettings(user.id);
     }
   }
 }
@@ -34,7 +34,7 @@ onUserSelected(user: User | null) {
       this.router.navigate(['/acceuil']);
     }
     this.authService.currentUser$.subscribe(user => {
-      console.log('Current user from AuthService in pageSuivante:', user);
+      //console.log('Current user from AuthService in pageSuivante:', user);
     });
   }
 }

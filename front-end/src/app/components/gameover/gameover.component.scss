@@ -4,19 +4,33 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
+    background: radial-gradient(circle, rgba(0, 0, 0, 1), rgba(30, 0, 0, 0.95));
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    animation: flickerBackground 3s infinite;
 }
 
 .gameover-box {
-    background: transparent;
+    background: rgba(255, 0, 0, 0.1);
     padding: 40px;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.7), 0 0 10px rgba(255, 255, 255, 0.4);
+    animation: pulseGlow 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), 0 0 5px rgba(255, 255, 255, 0.2);
+    }
 }
 
 .gameover-box h1 {
@@ -24,13 +38,23 @@
     font-size: 4em;
     color: white;
     margin-bottom: 30px;
-    text-shadow: 3px 3px 0 #ff0000, -3px -3px 0 #ff0000, 3px -3px 0 #ff0000, -3px 3px 0 #ff0000;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+    animation: flickerText 2s infinite;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+@keyframes flickerText {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 22%, 24%, 55% {
+        opacity: 0.4;
+    }
 }
 
 button,
@@ -44,11 +68,13 @@ button,
     cursor: pointer;
     font-family: 'Nintendo', sans-serif;
     text-decoration: none;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 0 10px #ff0000;
 }
 
 button:hover,
 .home-button:hover {
     background-color: #cc0000;
     transform: scale(1.05);
+    box-shadow: 0 0 20px #ff0000;
 }

@@ -1,8 +1,8 @@
 <div class="page-connexion">
     <div class="arriere-plan"></div>
-    <div class="contenu">
+  <div class="contenu">
         <h1 class="titre">Connexion</h1>
-        <div class="liste-personnes">
+      <div class="liste-personnes">
             <app-listofpeople (userSelected)="onUserSelected($event)"></app-listofpeople>
         </div>
         <button class="btn-principal mt-6" (click)="pageSuivante()" [disabled]="!selectedUser">

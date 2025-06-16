@@ -4,6 +4,7 @@ import { FreezeGameService } from "./freeze-game.services";
 import { Word2GuessService } from "./word2guess.services";  
 import { SettingsService } from "./setting.service";
 import { ChildSettings } from '../models/setting.model';
+import { CoeurService } from "./coeurs.services";
 
 @Injectable({
     providedIn: "root",
@@ -16,15 +17,16 @@ export class ChronoService {
     private chronoSubject = new BehaviorSubject(this.time);
     time$ = this.chronoSubject.asObservable();
 
+    private notenoughTime= new BehaviorSubject(false);// Indique si le temps est suffisant
+    notenoughTime$ = this.notenoughTime.asObservable();
 
-    constructor(private freezeGameService: FreezeGameService, private word2GuessService: Word2GuessService, private settingsService: SettingsService) { 
+
+    constructor(private freezeGameService: FreezeGameService, private word2GuessService: Word2GuessService, private settingsService: SettingsService, private coeurService: CoeurService) { 
         this.word2GuessService.isWordComplete$.subscribe(isCompleted => {
             if (isCompleted) {
                 this.stopTimer();
                 console.log("Timer stopped because the word is complete.");
-            } else {
-                this.startTimer();
-            }
+            } 
         });  
         this.settingsService.settings$.subscribe(settings => {
         this.settings = settings;
@@ -76,6 +78,8 @@ export class ChronoService {
                     if (this.time <= 0) {
                         this.stopTimer();  // Arrête le timer si le temps est écoulé
                         this.time = 0;  // Réinitialise le temps à 0
+                        this.notenoughTime.next(true);  // Indique que le temps n'est pas suffisant
+                        this.coeurService.loseLife();  // Appelle la méthode pour perdre une vie
                     }
                     this.chronoSubject.next(this.time);  // Mets à jour l'observable avec le temps
                 }

@@ -49,9 +49,6 @@
 }
 
 .delete-btn {
-    position: absolute;
-    right: 1vw;
-    top: 50%;
     transform: translateY(-50%);
     background-color: #ff4d4d;
     color: white;
@@ -59,7 +56,7 @@
     padding: 6px 12px;
     border-radius: 20px;
     font-family: 'Luckiest Guy', cursive;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s;
     flex-shrink: 0;
@@ -67,9 +64,6 @@
 }
 
 .words-btn {
-  position: absolute;
-  right: 5.5vw;
-  top: 50%;
   transform: translateY(-50%);
   background-color: #4c69f8;
   color: white;
@@ -77,7 +71,7 @@
   padding: 6px 12px;
   border-radius: 20px;
   font-family: 'Luckiest Guy', cursive;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: background-color 0.3s;
   flex-shrink: 0;
@@ -129,11 +123,8 @@
 }
 
 .nav-btn{
-  position: absolute;
-  right: 8.5vw;
-  top: 50%;
   font-family: 'Luckiest Guy', cursive;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   transform: translateY(-50%);
   background: none;
   border-radius: 20px;
@@ -144,4 +135,14 @@
   background-color: #d1d1d1;
   transform: translateY(-50%) scale(1.2);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.buttons{
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.6vw;
 }

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Child } from 'src/models/child.model';
 import { Router } from '@angular/router';
+import {ChildService} from "../../../services/child.services";
 
 @Component({
   selector: 'app-child',
@@ -16,7 +17,7 @@ export class ChildComponent {
   @Output() deleteChild: EventEmitter<Child> = new EventEmitter<Child>();
   @Output() childClicked = new EventEmitter<number>();
 
-  constructor(private router : Router) {}
+  constructor(private router : Router, private childService: ChildService) { }
 
   onClick(): void {
     this.childClicked.emit(this.child.id);
@@ -31,7 +32,14 @@ export class ChildComponent {
   }
 
   goToWords() : void {
+    this.childService.setSelectedChild(this.child.id);
     this.router.navigate(['/mots']);
   }
+  goToStats(event: MouseEvent): void {
+    console.log("id du gosse",this.child.id);
+    event.stopPropagation();
+    this.router.navigate(['/stats', this.child.id]);
+  }
+
 
 }

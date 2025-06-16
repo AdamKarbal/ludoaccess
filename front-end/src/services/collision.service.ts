@@ -90,54 +90,47 @@ export class CollisionService {
   }
 
   startCollisionCheck(player: PlayerComponent): void {
-    console.log("Liste des coins", this.coinCollectionService.existentCoins$);
-    // Nettoie les anciens abonnements/intervals
     this.stopCollisionCheck();
-
-    // S'abonne à la liste observable des coins
     this.coinsSub = this.coinCollectionService.existentCoins$.subscribe(coins => {
-      // On arrête l'ancien intervalle s'il existe
       if (this.collisionCheckInterval) {
         clearInterval(this.collisionCheckInterval);
       }
-      // On relance l'intervalle avec la nouvelle liste de coins
       this.collisionCheckInterval = setInterval(() => {
         this.isCheckingCollision = true;
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
-
-        const playerBottom = player.y + player.height;
-        const playerRight = player.x + player.width;
+        const playerPx = {
+          x: player.x,
+          y: player.y,
+          width: player.width,
+          height: player.height,
+          action: undefined
+        };
 
         for (const coin of coins) {
-          // Convert percentage-based platform values into pixels
+          const tolerance = 3; 
+          const offsetRight = 20; 
           const coinPx = {
-            x: coin.x / 100 * screenWidth,
-            y: coin.y / 100 * screenHeight,
-            width: coin.width / 100 * screenWidth,
-            height: coin.height / 100 * screenHeight
+            x: coin.x / 100 * screenWidth - tolerance / 2 + offsetRight,
+            y: coin.y / 100 * screenHeight - tolerance / 2,
+            width: coin.width + tolerance,
+            height: coin.height + tolerance,
+            action: undefined
           };
-
-          const coinRight = coinPx.x + coinPx.width;
-          const coinTop = coinPx.y;
-
-          const horizontallyAligned = player.x < coinRight && playerRight > coinPx.x;
-          const verticallyTouching = (playerBottom - coinTop <= 1);
-
-          if (horizontallyAligned && verticallyTouching) {
+          if (this.areColliding(playerPx, coinPx)) {
             if (!coin.isCollected) {
+              coin.collecting = true; 
               console.log("Collision with: ", coin.letter);
-              coin.collecting = true;
               const audio = new Audio('assets/sons/coin_received.mp3');
               audio.play();
               setTimeout(() => {
                 coin.collect();
                 this.coinCollectionService.addCollected(coin);
-              }, 300);
+              }, 100);
             }
           }
         }
-      }, 500);
+      }, 150);
     });
   }
 

@@ -43,12 +43,26 @@ module.exports = class BaseModel {
     return item
   }
 
+  getAllByChildId(id) {
+  if (typeof id === 'string') id = parseInt(id, 10);
+
+  const matches = this.items.filter((i) => i.childId === id);
+
+  if (matches.length === 0) {
+    throw new NotFoundError(`Cannot get ${this.name} childId=${id} : not found`);
+  }
+  return matches;
+}
+
 create(obj = {}) {
   const item = { ...obj };
   if (!item.id) item.id = Date.now();
   
   const { error } = Joi.validate(item, this.schema);
-  if (error) throw new ValidationError(`Create Error : Object ${JSON.stringify(obj)} does not match schema of model ${this.name}`, error);
+  if (error){ 
+    console.log('Validation failed:', error.details);
+    throw new ValidationError(`Create Error : Object ${JSON.stringify(obj)} does not match schema of model ${this.name}`, error);
+  }
   
   this.items.push(item);
   this.save();

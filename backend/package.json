@@ -47,5 +47,6 @@
     "ignore": [
       "database/*"
     ]
-  }
+  },
+  "start:e2e": "rimraf ./database/e2e && copyfiles -f ./database/e2e-starter/* ./database/e2e ./database/e2e && cross-env DB_FOLDER=e2e/ node app/index.js"
 }

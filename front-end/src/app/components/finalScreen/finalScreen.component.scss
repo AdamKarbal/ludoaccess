@@ -1,47 +1,110 @@
-
 .final-message {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Nintendo', sans-serif;  
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      color: black;
-      padding: 1rem;
-      border-radius: 10px;
-      text-align: center;
-      font-size: 1em;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      border: 2px solid black;
-      z-index: 102;
-      opacity: 1;
-    }
+  margin-left: 50%;
+  margin-top: 50%;
+  height: fit-content;
+  padding: 2vh 2.5vw;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Nintendo', sans-serif;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.6em;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 102;
+}
 
-#button_pause {
-    display: flex;
-    justify-content: center; /* Centre le texte horizontalement */
-    align-items: center; /* Centre le texte verticalement */
-    font-family: 'Nintendo';
-    width: 13vw;
-    background-color: blue;
-    color: white;
-    border: 4px solid black;
-    padding: 0.75rem 2rem;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 4px 0 #222;
-    transition: all 0.2s ease;
-    margin-top: 2vh;
-  }
-  #button_pause:hover {
-    background-color: #cc0000;
-    transform: scale(1.05);
-    box-shadow: 0 2px 0 #000;
-  }
+#button_leave {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Nintendo';
+  width: fit-content;
+  background-color: blue;
+  color: white;
+  border: 4px solid black;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 0 #222;
+  transition: all 0.2s ease;
+  margin-top: 2vh;
+}
+
+#button_leave:hover {
+  background-color: #cc0000;
+  transform: scale(1.05);
+  box-shadow: 0 2px 0 #000;
+}
+
+#button_keep {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Nintendo';
+  width: fit-content;
+  background-color: blue;
+  color: white;
+  border: 4px solid black;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 0 #222;
+  transition: all 0.2s ease;
+  margin-top: 2vh;
+}
+
+#button_keep:hover {
+  background-color: #00cc5c;
+  transform: scale(1.05);
+  box-shadow: 0 2px 0 #000;
+}
+
+h2 {
+  font-family: 'Nintendo';
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h2 span {
+  display: inline-block;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+}
+
+.niveau {
+  color: limegreen;
+  font-size: 2.25rem;
+  font-weight: bold;
+  font-family: 'Nintendo';
+  margin: 0.5rem;
+}
+
+h1 {
+  font-family: 'Nintendo';
+  font-size: 2.4rem;
+}
+
+#megaman {
+  width: 5vw;
+  height: auto;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

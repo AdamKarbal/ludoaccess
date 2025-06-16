@@ -5,7 +5,9 @@ import { Router } from "@angular/router";
   selector: "stats-menu",
   templateUrl: "menu.html",
   styleUrls: ["menu.scss"],
+  standalone: true
 })
+
 export class StatsMenuModule {
   @Input() titre: String = "Stats";
   type:String = "Users";
