@@ -7,6 +7,3 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-# E2E folder
-/playwright-report
-/test-results
