@@ -5,7 +5,7 @@
       <div class="liste-personnes">
             <app-listofpeople (userSelected)="onUserSelected($event)"></app-listofpeople>
         </div>
-        <button class="btn-principal mt-6" (click)="pageSuivante()" [disabled]="!selectedUser">
+        <button class="btn-principal" (click)="pageSuivante()" [disabled]="!selectedUser">
             Se connecter
         </button>
     </div>
