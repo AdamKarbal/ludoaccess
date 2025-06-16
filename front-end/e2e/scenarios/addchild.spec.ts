@@ -23,8 +23,11 @@ test.describe('Settings feature', ()=> {
             await page.getByRole('button', { name: 'Valider' }).click();
         });
         await test.step('Vérifier que l\'enfant a été ajouté', async () => {
-            await expect(page.getByText('Ali Madandar')).toBeVisible();
+            await expect(page.getByText('Ali Madandar').first()).toBeVisible();
         });
-
+        await test.step('Quitter la page', async () => {
+            await page.getByRole('button', { name: 'Déconnexion' }).click();
+            await expect(page).toHaveURL("http://localhost:4200");
+        });
 });
 });
