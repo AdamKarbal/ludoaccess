@@ -8,14 +8,19 @@ export class Reglage extends E2EComponentFixture {
 
   regalageEnfantaModifier(name: string) {
     return this.page
-      .locator('app-child', { hasText: name })   // limite à la bonne carte
+      .locator('app-child', { hasText: name })
       .locator('div.child')
       .click();
   }
-  
-getFirstPlayerInReglage() {
+
+  getFirstPlayerInReglage() {
     return this.page.locator('app-child-list .child-info').first();
   }
-  
+
+  goToWords = async() => {
+    const bouton = await this.page.getByRole('button', { name: 'Mots' });
+    return bouton.click();
+  }
+
 }
 
