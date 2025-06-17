@@ -1,6 +1,7 @@
 import { E2EComponentFixture } from "e2e/e2e-component.fixture";
 
 export class AppFixture extends E2EComponentFixture {
+
   getTitle() {
     return this.page.getByRole('heading', { name: 'Hello World!' });
   }
@@ -41,10 +42,6 @@ export class AppFixture extends E2EComponentFixture {
     await this.getBoutonEnfant(name).click();
     await this.getBoutonConnexion().click();
   }
-
-  getFirstPlayerInReglage() {
-    return this.page.locator('app-child-list .child-info').first();
-  }
   loginFirstPlayer() {
     return this.page.locator('app-listofpeople .person-info').first().click()
       .then(() => this.getBoutonConnexion().click());
@@ -52,6 +49,9 @@ export class AppFixture extends E2EComponentFixture {
 
   getBoutonJouer(){
     return this.page.getByRole('button', { name: 'Jouer' });
+  }
+  getFirstPlayerInReglage() {
+    return this.page.locator('app-child-list .child-info').first();
   }
 
   getButtonRetourReglages() {

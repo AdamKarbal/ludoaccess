@@ -10,7 +10,7 @@
     <button class="btn-ajouterMot" (click)="toggleFormMot()">Ajouter un mot</button>
     <div class="form-ajout" *ngIf="formVisibleMot">
       <input [(ngModel)]="newWord.value" placeholder="Mot" />
-      <select class="selector2" [(ngModel)]="newWord.level">
+      <select data-testid="selector" class="selector2" [(ngModel)]="newWord.level">
         <option value="1">Facile</option>
         <option value="2">Moyen</option>
         <option value="3">Difficile</option>
