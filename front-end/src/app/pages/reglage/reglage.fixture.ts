@@ -12,6 +12,10 @@ export class Reglage extends E2EComponentFixture {
       .locator('div.child')
       .click();
   }
-
+  
+getFirstPlayerInReglage() {
+    return this.page.locator('app-child-list .child-info').first();
+  }
+  
 }
 
