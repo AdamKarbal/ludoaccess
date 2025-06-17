@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { Level } from "../models/level.model";
 import {Injector} from "@angular/core";
 import { AuthService } from "./auth.service";
+import { ChildActivationEnd } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,38 +16,46 @@ export class LevelService{
     authService: AuthService|null = null;
     private _progress : number=20;
     private httpOptions = httpOptionsBase;
-    level:number = 0;
+    public level$ = new BehaviorSubject<number>(0);
     public levels$ : BehaviorSubject<Level[]> = new BehaviorSubject<Level[]>([]);
-    private currentLevel: Level = { childId: null, level: 0 };
+    private currentLevel: Level = { childId: null, niveau: 0, date: new Date() };
 
     constructor(private http: HttpClient, private Injector: Injector) {
       this.authService = this.Injector.get(AuthService);
-      this.level = 20;
+      this.retrieveLevels(this.authService?.getCurrentUserId() || 0);
+      // this.level = this.getLevelById(this.authService!.getCurrentUser()!.id)?.level || 0;
     }
 
     increaseProgress(progress: number) {
-        this.level += progress;
-        this._progress+=progress;
-        this.addLevel({ childId: this.authService!.getCurrentUser()!.id, level: this.level });
+      const halfLife = 10;
+      const floorXp  = 5;
+
+      const reward = Math.max(
+      Math.ceil(progress * Math.pow(0.5, this.currentLevel.niveau / halfLife)),
+      floorXp
+      );
+      console.log('In progress');
+        this.currentLevel.niveau += reward;
+        this.level$.next(this.currentLevel.niveau);
+        this.addLevel(this.currentLevel);
     }
 
-    // levelUp() {
-    //     this.level++;
-    //     this._progress = 0; // Réinitialise la progression pour le nouveau niveau
-    //     this.levels$.next(this.currentLevel);
-    //   }
 
     get progress() : number{
         return this._progress;
     }
-  get level$() {
-    return this.levels$.asObservable();
-  }
+
   retrieveLevels(childId:number): void {
     this.http.get<Level[]>(this.levelUrl+'/'+childId).subscribe((levelList) => {
       console.log('Niveaux récupérés dans le service :', levelList);
       this.levels$.next(levelList);
-      this.currentLevel = levelList.find(level => level.childId === childId) || { childId: null, level: 0 };
+      this.currentLevel = levelList.filter(level => level.childId === childId).sort((a, b) =>                            // tri décroissant sur la date
+                 new Date(b.date).getTime() -
+                 new Date(a.date).getTime()
+          )[0]                                       // premier = plus récent
+          ?? { childId: null, niveau: 0, date: new Date().toISOString() }; // si pas de niveau, on initialise
+      console.log('Niveau current:', this.currentLevel);
+      this.level$.next(this.currentLevel.niveau);
     });
   }
 
@@ -57,20 +66,27 @@ export class LevelService{
   addLevel(level: Level): void {
     const body={
       childId: level.childId,
-      niveau : level.level
-    }
+      niveau : level.niveau,
+      date: level.date
+    };
     this.http.post<Level>(this.levelUrl, body, this.httpOptions).subscribe((newLevel) => {
       console.log('Niveau ajouté dans le service :', newLevel);
     });
   }
 
-  saveLevelToBackend(childId: number) {
-    // On envoie le niveau actuel au backend
-    return this.http.put(`${this.levelUrl}/${childId}`, { level: this.level });
+
+
+  initBar() {
+    console.log("init :"+this.currentLevel);
+    this.level$.next(this.currentLevel.niveau);
   }
 
   resetProgress() {
       this._progress=0;
+  }
+
+  getCurrentLevel(): number {
+    return this.currentLevel.niveau || 0;
   }
 
 

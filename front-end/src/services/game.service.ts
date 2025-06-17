@@ -24,6 +24,7 @@ import {ProgressionImpl} from "../models/progressionImpl.model";
 import {InteractionImpl} from "../models/interactionImpl.model";
 import {PlayerService} from "./player.service";
 import { MiniGameService } from "./minigame.service";
+import { CoeurService } from "./coeurs.services";
 
 
 
@@ -84,6 +85,9 @@ export class GameService {
   private currentWordLength=new BehaviorSubject<number>(0);
   public currentWordLength$=this.currentWordLength.asObservable();
 
+  private gameOver$ = new BehaviorSubject<boolean>(false);
+  public gameOverObs$ = this.gameOver$.asObservable();
+
   private isResetting = false;
 
 
@@ -102,8 +106,8 @@ export class GameService {
         private authService : AuthService,
         private freezeGameService: FreezeGameService,
         private injector:Injector,
-
-        private miniGameService: MiniGameService
+        private miniGameService: MiniGameService,
+        private coeurService: CoeurService,
 
     ) {
         this.settingService.settings$.subscribe(settings => {
@@ -362,6 +366,7 @@ export class GameService {
         this.destroyStep$ = new Subject<void>();
         if (this._isProcessing) return;
         this._isProcessing = true;
+        this.gameOver();
         console.log('Début étape 3 - Mot courant:', this._currentWord);
 
         this.w2gService.resetWord();
@@ -412,7 +417,6 @@ export class GameService {
                    statsService.sendStatsToServer(this.authService.getCurrentUser()!);
                    console.log('Mot complété dans étape 3');
                    this.w2gService.resetWord();
-                   this.w2gService.onWordCompleted();
                     this.w2gService.resetNbBadLetters();
              }
 
@@ -494,10 +498,11 @@ export class GameService {
 }
     gameOver(): void {
         console.warn("Attention au Game Over");
-        this.miniGameService.GameOver$
-        .pipe(filter(gameOver => gameOver), take(1),takeUntil(this.destroyStep$))
+        combineLatest([this.miniGameService.GameOver$,this.coeurService.isGameOver$])
+        .pipe(filter(([mini, coeur]) => mini || coeur), take(1),takeUntil(this.destroyStep$))
         .subscribe(gameOver => {
-            this.isGameFinished.next(true);
+            // this.isGameFinished.next(true);
+            this.gameOver$.next(true);
 
             console.warn("Is finished :"+gameOver);
             console.log("Game Over détecté, traitement en cours...");
@@ -542,9 +547,9 @@ export class GameService {
         return this.coinCollectionService.collectedCoins;
     }
 
-    get level(): number {
-        return this.levelService.level;
-    }
+    // get level(): number {
+    //     return this.levelService.level;
+    // }
     get wordTarget(): string[] {
         return this._wordTarget;
     }
@@ -572,6 +577,7 @@ export class GameService {
         this.isStep1CompletedSubject.next(false);
         this.isStep2CompletedSubject.next(false);
         this.isStep3CompletedSubject.next(false);
+        this.gameOver$.next(false);
         this.freezeGameService.isNewEventSubject.next(false);
         this.errorOcurrencesByPosition=new Map<number,Map<string,number>>;
         this.listLetterErrors.clear();

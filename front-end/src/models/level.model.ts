@@ -1,4 +1,5 @@
 export interface Level{
-    childId : number | null;
-    level : number;
+    childId: number | null;
+    niveau: number;
+    date: Date;
 }

@@ -20,12 +20,6 @@ export class ReglagePageComponent {
         age: undefined
     };
 
-    newLevel: Partial<Level> = {
-        childId: this.newChild.id,
-        level: 0,
-    };
-
-
     constructor(private childService: ChildService, private wordService: MotService) {
         this.wordService.words$.subscribe(words => {
         this.allWords = words;});

@@ -1,7 +1,7 @@
 import { E2EComponentFixture } from "e2e/e2e-component.fixture";
 import {Locator} from "@playwright/test";
 
-export class Reglage extends E2EComponentFixture {
+export class ReglageFixture extends E2EComponentFixture {
 
   getButtonRetourReglages() {
     return this.page.getByRole('button', { name: '◀ Retour' });
