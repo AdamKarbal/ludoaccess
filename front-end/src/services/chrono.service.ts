@@ -80,6 +80,8 @@ export class ChronoService {
                         this.time = 0;  // Réinitialise le temps à 0
                         this.notenoughTime.next(true);  // Indique que le temps n'est pas suffisant
                         this.coeurService.loseLife();  // Appelle la méthode pour perdre une vie
+                        this.resetTimer();  // Réinitialise le timer
+                        this.startTimer();  // Redémarre le timer
                     }
                     this.chronoSubject.next(this.time);  // Mets à jour l'observable avec le temps
                 }

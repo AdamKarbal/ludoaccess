@@ -16,6 +16,7 @@ export class JeuEtape3Component implements OnInit{
   public settings: ChildSettings | null = null;
   showW2g: boolean = true;
   isGameFinished : boolean = false;
+  isGameOver: boolean = false;
 
   constructor(private keyboardInputService: KeyboardInputService, private settingsService: SettingsService,
               private gameService: GameService) {
@@ -24,6 +25,10 @@ export class JeuEtape3Component implements OnInit{
   ngOnInit(): void {
     this.audio = new Audio('assets/sons/Step3Audio.mp3');
     this.audio.loop = true;
+
+    this.gameService.gameOverObs$.subscribe((isOver) => {
+      this.isGameOver=isOver;
+    });
 
     this.gameService.isGameFinished$.subscribe(isFinished => {
       this.isGameFinished = isFinished;

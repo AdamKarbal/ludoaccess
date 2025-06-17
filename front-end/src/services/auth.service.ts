@@ -28,6 +28,12 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  getCurrentUserId(): number | null {
+    const id = this.currentUserSubject.value?.id;
+    console.log("id :", id);
+    return id || null;
+  }
+
   getCurrentUserRole(): 'child' | 'ergo' | null {
     return this.currentUserSubject.value?.role || null;
   }

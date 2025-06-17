@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges,OnChanges } from "@angular/core";
 import { LevelService } from "src/services/levels.service";
 import { ChildService } from "src/services/child.services";
+import { AuthService } from "src/services/auth.service";
 
 @Component({
   selector: "app-levelbar",
@@ -10,23 +11,23 @@ import { ChildService } from "src/services/child.services";
 export class LevelBarComponent implements OnInit {
   @Input() wordCompleted: boolean = false;
 
+  level: number = 0;
+
   constructor(public levelBarService : LevelService,private childService: ChildService) {
+    this.levelBarService.level$.subscribe((level) => {
+      this.level = level;
+      console.log('Niveau actuel:', this.level);
+    });
 
   }
 
   ngOnInit(): void {
-    console.log(this.levelBarService.level);
-    console.log(this.levelBarService.progress);
-    const selectedChild = this.childService.childSelected$.value;
-    if (selectedChild && typeof selectedChild.id === 'number') {
-      this.levelBarService.saveLevelToBackend(selectedChild.id).subscribe({
-        next: () => console.log('Niveau sauvegardé !'),
-        error: err => console.error('Erreur lors de la sauvegarde du niveau', err)
-      });
-    } else {
-      console.error('Aucun enfant sélectionné ou ID invalide');
-    }
+    console.log('Initialisation du composant LevelBar');
   }
+
+  get displayLevel(): number {
+  return this.level === 1000 ? 1 : Math.floor(this.level / 1000);
+}
 
   // ngOnChanges(changes:SimpleChanges){
   //   if(changes['wordCompleted'] && this.wordCompleted) this.levelBarService.increaseProgress(20);

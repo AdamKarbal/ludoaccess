@@ -1,6 +1,6 @@
 import { E2EComponentFixture } from "e2e/e2e-component.fixture";
 
-export class Reglage extends E2EComponentFixture {
+export class ReglageFixture extends E2EComponentFixture {
 
   getButtonRetourReglages() {
     return this.page.getByRole('button', { name: '◀ Retour' });
@@ -16,6 +16,6 @@ export class Reglage extends E2EComponentFixture {
 getFirstPlayerInReglage() {
     return this.page.locator('app-child-list .child-info').first();
   }
-  
+
 }
 

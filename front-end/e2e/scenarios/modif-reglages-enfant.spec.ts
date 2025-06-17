@@ -1,19 +1,25 @@
 import { test, expect } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
-import { AppFixture } from 'src/app/app.fixture';
+import { AcFixture } from 'src/app/pages/ac/ac.fixture';
+import { LoginFixture } from 'src/app/pages/login/login.fixture';
+import { ReglageFixture } from 'src/app/pages/reglage/reglage.fixture';
+
 
 test.describe('Settings feature', () => {
 
-    let app: AppFixture;
+    let app: LoginFixture;
+    let reglages: ReglageFixture;
+    let ac:AcFixture;
 
     test('Modifier les réglages de l\'enfant', async ({ page }) => {
-        app = new AppFixture(page);
+        app = new LoginFixture(page);
         await page.goto(testUrl);
         await expect(page).toHaveURL("http://localhost:4200");
         await expect(app.loginErgotherapeute()).toBeTruthy();
         await expect(page).toHaveURL("http://localhost:4200/reglage");
         await test.step('Cliquer sur l\'enfant à modifier', async () => {
-            await app.getFirstPlayerInReglage().click();
+            reglages = new ReglageFixture(page);
+            await reglages.getFirstPlayerInReglage().click();
             const select = page.locator('select[name="chooseBackGround"]');
             await expect(select).toBeVisible();
             await select.selectOption({ value: 'Forest' });
@@ -22,12 +28,13 @@ test.describe('Settings feature', () => {
 
         });
         await test.step('Aller dans l\'étape 1 et check', async () => {
-            const boutonRetour = await app.getButtonRetourReglages();
+            ac = new AcFixture(page);
+            const boutonRetour = await reglages.getButtonRetourReglages();
             await boutonRetour.click();
             await expect(page).toHaveURL("http://localhost:4200");
             await app.loginFirstPlayer();
             await expect(page).toHaveURL("http://localhost:4200/acceuil");
-            await app.getBoutonJouer().click();
+            await ac.getBoutonJouer().click();
             await expect(page).toHaveURL("http://localhost:4200/jeu");
             const imageaComparer = page.locator('div.BG');
             const numberOfWordsLocator = page.locator('div.word-counter');
