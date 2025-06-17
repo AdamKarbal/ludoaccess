@@ -29,9 +29,17 @@ export class AppFixture extends E2EComponentFixture {
     return this.page.getByRole('heading', { name: /Ergothérapeute/i }).locator('..');
   }
 
-  loginErgotherapeute() {
-    return this.getBoutonErgotherapeute().click()
-      .then(() => this.getBoutonConnexion().click());
+  getBoutonEnfant(name: string) {
+    return this.page.getByRole('heading', { name: name }).locator('..');
+  }
+
+  async loginErgotherapeute() {
+    await this.getBoutonErgotherapeute().click();
+    await this.getBoutonConnexion().click();
+  }
+  async loginPlayer(name: string) {
+    await this.getBoutonEnfant(name).click();
+    await this.getBoutonConnexion().click();
   }
   loginFirstPlayer() {
     return this.page.locator('app-listofpeople .person-info').first().click()
@@ -42,5 +50,15 @@ export class AppFixture extends E2EComponentFixture {
     return this.page.getByRole('button', { name: 'Jouer' });
   }
 
+  getButtonRetourReglages() {
+    return this.page.getByRole('button', { name: '◀ Retour' });
+  }
+
+  regalageEnfantaModifier(name: string) {
+    return this.page
+      .locator('app-child', { hasText: name })   // limite à la bonne carte
+      .locator('div.child')
+      .click();;
+  }
 
 }
