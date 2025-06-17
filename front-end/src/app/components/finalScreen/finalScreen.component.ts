@@ -3,6 +3,7 @@ import { FreezeGameService } from "src/services/freeze-game.services";
 import { Router } from "@angular/router";
 import { GameService } from "src/services/game.service";
 import { FinalMessageService } from "src/services/final-message.service";
+import { LevelService } from "src/services/levels.service";
 import { filter, take } from "rxjs";
 
 @Component({
@@ -41,7 +42,8 @@ export class FinalScreenComponent implements OnInit {
     constructor(private freezeGame: FreezeGameService,
                 private gameService : GameService,
                 public finalMessageService: FinalMessageService,
-                private router: Router) {
+                private router: Router,
+              public levelService :LevelService) {
 
         this.freezeGame.isPaused$.subscribe(paused => {
             console.log(`Paused: ${paused}`);

@@ -14,7 +14,7 @@ import { ChildActivationEnd } from "@angular/router";
 export class LevelService{
     private levelUrl = serverUrl + '/level';
     authService: AuthService|null = null;
-    private _progress : number=20;
+    private _progress : number=0;
     private httpOptions = httpOptionsBase;
     public level$ = new BehaviorSubject<number>(0);
     public levels$ : BehaviorSubject<Level[]> = new BehaviorSubject<Level[]>([]);
@@ -22,13 +22,11 @@ export class LevelService{
 
     constructor(private http: HttpClient, private Injector: Injector) {
       this.authService = this.Injector.get(AuthService);
-      this.retrieveLevels(this.authService?.getCurrentUserId() || 0);
-      // this.level = this.getLevelById(this.authService!.getCurrentUser()!.id)?.level || 0;
     }
 
     increaseProgress(progress: number) {
-      const halfLife = 10;
-      const floorXp  = 5;
+      const halfLife = 100;
+      const floorXp  = 50;
 
       const reward = Math.max(
       Math.ceil(progress * Math.pow(0.5, this.currentLevel.niveau / halfLife)),
@@ -36,6 +34,7 @@ export class LevelService{
       );
       console.log('In progress');
         this.currentLevel.niveau += reward;
+        this._progress+=reward;
         this.level$.next(this.currentLevel.niveau);
         this.addLevel(this.currentLevel);
     }
@@ -87,6 +86,10 @@ export class LevelService{
 
   getCurrentLevel(): number {
     return this.currentLevel.niveau || 0;
+  }
+
+  getRealLevel():number{
+    return this.currentLevel.niveau === 1000 ? 1 : Math.floor(this.currentLevel.niveau / 1000);
   }
 
 

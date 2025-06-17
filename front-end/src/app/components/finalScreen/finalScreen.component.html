@@ -6,7 +6,7 @@
     <button id="button_leave" (click)="OnStopClick()">MENU PRINCIPAL</button>
   </div>
   <h2>Ton niveau actuel</h2>
-  <div class="niveau">5</div>
+  <div class="niveau">{{levelService.getRealLevel()}}</div>
   <h2>Tes performances</h2>
   <div class="stats">
     <app-stat-word></app-stat-word>

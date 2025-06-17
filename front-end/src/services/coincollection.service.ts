@@ -22,7 +22,7 @@ export class CoinCollectionService {
         this._collectedCoins.push(coin);
         this.collectedCoinsSubject.next([...this._collectedCoins]);
         this.collectedCoinSubject.next(coin); 
-        this.levelService.increaseProgress(20);
+        this.levelService.increaseProgress(80);
     }
 
     addExistent(coin: Coin): void {

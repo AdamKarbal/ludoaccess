@@ -29,6 +29,19 @@ export class LevelBarComponent implements OnInit {
   return this.level === 1000 ? 1 : Math.floor(this.level / 1000);
 }
 
+get displayXP() : number{
+  let xp =this.level;
+  let coeff = Math.floor(xp/1000);
+  if (xp%1000==0){
+    xp=0;
+    return xp;
+  }
+  if (xp>1000){
+    xp-=1000*coeff;
+  }
+  return xp/10;
+}
+
   // ngOnChanges(changes:SimpleChanges){
   //   if(changes['wordCompleted'] && this.wordCompleted) this.levelBarService.increaseProgress(20);
   // }

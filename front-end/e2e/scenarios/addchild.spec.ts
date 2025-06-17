@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
 import {WordsFixture} from "../../src/app/components/words/words.fixture";
 import {LoginFixture} from "../../src/app/pages/login/login.fixture";
-import {Reglage} from "../../src/app/pages/reglage/reglage.fixture";
+import {ReglageFixture} from "../../src/app/pages/reglage/reglage.fixture";
 
 
 test.describe('Settings feature', ()=> {
     let login: LoginFixture;
-    let reglage: Reglage;
+    let reglage: ReglageFixture;
     test('Ajouter un enfant', async({page}) =>{
         await page.goto(testUrl);
         await expect(page).toHaveURL("http://localhost:4200");
@@ -17,7 +17,7 @@ test.describe('Settings feature', ()=> {
             await expect(page).toHaveURL("http://localhost:4200/reglage");
         });
         await test.step('Cliquer sur le bouton "Ajouter un enfant"', async () => {
-            reglage = new Reglage(page);
+            reglage = new ReglageFixture(page);
             await reglage.getButtonAjouterEnfant().click();
         });
         await test.step('Remplir le formulaire d\'ajout d\'enfant', async () => {

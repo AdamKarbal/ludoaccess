@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
 import { User } from 'src/models/user.model';
 import { SettingsService } from '../../../services/setting.service';
+import { LevelService } from 'src/services/levels.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { SettingsService } from '../../../services/setting.service';
 export class LoginComponent {
   selectedRole: string = '';
   selectedUser: User | null = null;
-  constructor(private router: Router, private authService: AuthService,private setting: SettingsService
+  constructor(private router: Router, private authService: AuthService,private setting: SettingsService,private levelService :LevelService
   ) {}
 
 onUserSelected(user: User | null) {
@@ -23,6 +24,7 @@ onUserSelected(user: User | null) {
     this.authService.setUser(user);
     if (user.role === 'child') {
       this.setting.loadSettings(user.id);
+      this.levelService.retrieveLevels(user.id);
     }
   }
 }

@@ -597,7 +597,7 @@ export class GameService {
         this.coinCollectionService.reset();
         this.chronoService.resetTimer();
         this.progressionMap.clear();
-
+        this.levelService.resetProgress();
         this.miniGameService.reset();
         this._isProcessing = false;
         this.isResetting = false;
