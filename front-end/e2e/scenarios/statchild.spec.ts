@@ -1,40 +1,48 @@
 import { test, expect } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
+import { LoginFixture } from 'src/app/pages/login/login.fixture';
+import { Reglage } from 'src/app/pages/reglage/reglage.fixture';
+import { StatsFixture } from 'src/app/pages/player-stats/player-stats.fixture';
 
 test.describe('Stats feature', ()=> {
-
+    let login: LoginFixture;
+    let reglage: Reglage;
+    let stats: StatsFixture;
     test('Consulter les statistiques d1 enfant', async({page}) =>{
         await page.goto(testUrl);
         await expect(page).toHaveURL("http://localhost:4200");
         await test.step('Se connecter', async () => {
-            await page.getByRole('heading', { name: /Ergothérapeute/i }).locator('..').click();
-            await page.getByRole('button', { name: /se connecter/i }).click();
+            login = new LoginFixture(page);
+            await login.loginErgotherapeute();
             await expect(page).toHaveURL("http://localhost:4200/reglage");
+            
         });
         await test.step('Cliquer sur le bouton statisique d1 enfant', async () => {
-            await page.getByRole('button', {name: /📊 Stats/i}).first().click();
+            reglage = new Reglage(page);
+            await reglage.clickEnfantFirstChild().click();
             await expect(page).toHaveURL(/^http:\/\/localhost:4200\/stats/);
         });
         await test.step('Regarder les statistiques dajd (tous les boutons)', async () => {
-            await page.getByRole('button', { name: 'Aujourd’hui' }).click();
-            await page.getByRole('button', { name: 'Erreurs par lettre' }).click();
-            await page.getByRole('button', { name: 'Erreurs par position dans le mot' }).click();
+            stats = new StatsFixture(page);
+            await stats.getButtonStatsToday().click();
+            await stats.getButtonErreurParLettre().click();
+            await stats.getButtonErreurParPosition().click();
 
         });
         await test.step('Regarder les statistiques de la semaine dernière (tous les boutons)', async () => {
-            await page.getByRole('button', { name: 'Dernière semaine' }).click();
-            await page.getByRole('button', { name: 'Erreurs par lettre' }).click();
-            await page.getByRole('button', { name: 'Erreurs par position dans le mot' }).click();
+            await stats.getButtonStatsLastWeek().click();
+            await stats.getButtonErreurParLettre().click();
+            await stats.getButtonErreurParPosition().click();
         });
         await test.step('Regarder les statistiques du mois dernier (tous les boutons)', async () => {
-            await page.getByRole('button', { name: 'Dernier mois' }).click();
-            await page.getByRole('button', { name: 'Erreurs par lettre' }).click();
-            await page.getByRole('button', { name: 'Erreurs par position dans le mot' }).click();
+            await stats.getButtonStatsLastMonth().click();
+            await stats.getButtonErreurParLettre().click();
+            await stats.getButtonErreurParPosition().click();
         });
         await test.step('Quitter la page', async () => {
-            await page.getByRole('button', { name: 'Retour' }).click();
+            await stats.getButtonRetourStats().click();
             await expect(page).toHaveURL("http://localhost:4200/reglage");
-            await page.getByRole('button', { name: 'Retour' }).click();
+            await reglage.getButtonRetourReglages().click();
             await expect(page).toHaveURL("http://localhost:4200");
         });
 });

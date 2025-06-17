@@ -34,6 +34,9 @@ export class Reglage extends E2EComponentFixture {
   getButtonAjouterEnfant() {
     return this.page.getByRole('button', { name: 'Ajouter un enfant' });
   }
+  clickEnfantFirstChild() {
+    return this.page.getByRole('button', { name: '📊 Stats' }).first();
+  }
 
 }
 
