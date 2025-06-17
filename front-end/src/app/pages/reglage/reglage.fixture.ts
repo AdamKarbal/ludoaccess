@@ -1,4 +1,5 @@
 import { E2EComponentFixture } from "e2e/e2e-component.fixture";
+import {Locator} from "@playwright/test";
 
 export class Reglage extends E2EComponentFixture {
 
@@ -20,6 +21,12 @@ export class Reglage extends E2EComponentFixture {
   goToWords = async() => {
     const bouton = await this.page.getByRole('button', { name: 'Mots' });
     return bouton.click();
+  }
+  getSupprimer(path:Locator){
+    return path.getByRole('button', { name: 'Supprimer' });
+  }
+  getAllChilds(){
+    return this.page.locator('app-child');
   }
 
 }
