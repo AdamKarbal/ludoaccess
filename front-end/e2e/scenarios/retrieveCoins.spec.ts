@@ -17,7 +17,7 @@ test.describe('Collision raté avec le mob', () => {
         const letters = await page.$$eval('#mot .letter', spans =>
           spans.map(span => span.textContent?.trim() || '')
         );
-        await page.keyboard.press('a'); 
+        await page.keyboard.press('a');
         for (const letter of letters) {
           await page.keyboard.type(letter);
         }
@@ -25,7 +25,6 @@ test.describe('Collision raté avec le mob', () => {
     await test.step("Récuperer les coins", async () =>{
         gameFixture = new GameFixture(page);
         gameFixture.initPlatforms();
-        await page.keyboard.down('d');
         let index = 0;
         const resultplatform = await page.$eval('.platform:nth-child(1)', el =>{
         const r = el.getBoundingClientRect();
@@ -40,6 +39,8 @@ test.describe('Collision raté avec le mob', () => {
             height: r.height
           };
         });
+      await page.keyboard.down('d');
+      await page.keyboard.up('d');
         while(true){
           const result = await page.$eval('.player', el =>{
             const r = el.getBoundingClientRect();
@@ -57,8 +58,8 @@ test.describe('Collision raté avec le mob', () => {
           //if (result.left <= resultplatform.left-35 && result.left >= resultplatform.left-5) {
             console.log("Il doit sauter");
             await page.keyboard.down('z');
-            await page.keyboard.up('z');       
-            await page.waitForTimeout(10);     
+            await page.keyboard.up('z');
+            await page.waitForTimeout(10);
          // }
         }
     });
