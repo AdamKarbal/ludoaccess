@@ -13,7 +13,7 @@ test.describe('Settings feature', () => {
         await expect(app.loginErgotherapeute()).toBeTruthy();
         await expect(page).toHaveURL("http://localhost:4200/reglage");
         await test.step('Cliquer sur l\'enfant à modifier', async () => {
-            await expect(app.regalageEnfantaModifier('Nicolas mm')).toBeTruthy();
+            await app.getFirstPlayerInReglage().click();
             const select = page.locator('select[name="chooseBackGround"]');
             await expect(select).toBeVisible();
             await select.selectOption({ value: 'Forest' });
@@ -25,10 +25,9 @@ test.describe('Settings feature', () => {
             const boutonRetour = await app.getButtonRetourReglages();
             await boutonRetour.click();
             await expect(page).toHaveURL("http://localhost:4200");
-            await app.getBoutonEnfant('Nicolas mm').click();
-            await app.getBoutonConnexion().click();
+            await app.loginFirstPlayer();
             await expect(page).toHaveURL("http://localhost:4200/acceuil");
-            await app.getButtonJouer().click();
+            await app.getBoutonJouer().click();
             await expect(page).toHaveURL("http://localhost:4200/jeu");
             const imageaComparer = page.locator('div.BG');
             const numberOfWordsLocator = page.locator('div.word-counter');
@@ -39,7 +38,6 @@ test.describe('Settings feature', () => {
             await expect(imageaComparer).toBeVisible();
 
         });
-
 
 
     });
