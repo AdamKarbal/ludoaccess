@@ -9,7 +9,7 @@ test.describe('Scenario 6 display', () => {
     await page.click(".words-btn");
     await page.getByRole('button', { name: 'Ajouter un mot' }).click();
     await page.getByPlaceholder("Mot").fill("Avion");
-    await page.selectOption('.selector2.ng-pristine.ng-valid.ng-touched', 'Facile');
+    await page.getByTestId('selector').selectOption('Facile');
     await page.getByRole('button', { name : 'Valider'});
   });
 });
