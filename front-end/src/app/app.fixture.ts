@@ -33,10 +33,14 @@ export class AppFixture extends E2EComponentFixture {
     return this.getBoutonErgotherapeute().click()
       .then(() => this.getBoutonConnexion().click());
   }
-  loginPlayer(name: string) {
-    return this.page.getByRole('heading', { name: name }).locator('..').click()
+  loginFirstPlayer() {
+    return this.page.locator('app-listofpeople .person-info').first().click()
       .then(() => this.getBoutonConnexion().click());
   }
 
-  
+  getBoutonJouer(){
+    return this.page.getByRole('button', { name: 'Jouer' });
+  }
+
+
 }

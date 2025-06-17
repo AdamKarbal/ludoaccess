@@ -79,8 +79,6 @@ export class CollisionService {
   }
 
   areColliding(a: Collidable, b: Collidable): boolean {
-    console.log(a.x, a.y);
-    console.log(b.x, b.y);
     return (
       a.x < b.x + b.width &&
       a.x + a.width > b.x &&
@@ -108,8 +106,8 @@ export class CollisionService {
         };
 
         for (const coin of coins) {
-          const tolerance = 3; 
-          const offsetRight = 20; 
+          const tolerance = 3;
+          const offsetRight = 20;
           const coinPx = {
             x: coin.x / 100 * screenWidth - tolerance / 2 + offsetRight,
             y: coin.y / 100 * screenHeight - tolerance / 2,
@@ -119,7 +117,7 @@ export class CollisionService {
           };
           if (this.areColliding(playerPx, coinPx)) {
             if (!coin.isCollected) {
-              coin.collecting = true; 
+              coin.collecting = true;
               console.log("Collision with: ", coin.letter);
               const audio = new Audio('assets/sons/coin_received.mp3');
               audio.play();
