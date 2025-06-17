@@ -14,7 +14,7 @@ export class ClassementService {
     this.childService.childs$.subscribe(childs => {
       this._childs = childs;
       for (let child of this._childs) {
-        this.levelService.retrieveLevels(child.id);
+        this.levelService.retrieveLevelsForClassement(child.id);
       }
       setTimeout(() => {
         for (let child of this._childs) {

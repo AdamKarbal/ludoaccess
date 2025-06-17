@@ -22,8 +22,6 @@ export class LevelService{
 
     constructor(private http: HttpClient, private Injector: Injector) {
       this.authService = this.Injector.get(AuthService);
-      this.retrieveLevels(this.authService?.getCurrentUserId() || 0);
-      // this.level = this.getLevelById(this.authService!.getCurrentUser()!.id)?.level || 0;
     }
 
     increaseProgress(progress: number) {
@@ -47,6 +45,7 @@ export class LevelService{
   }
 
   retrieveLevels(childId: number): void {
+    console.warn("retrieveLevels");
     this.http.get<Level[]>(this.levelUrl + '/' + childId).subscribe((levelList) => {
       this.levelsByChild.set(childId, levelList);
       this.levels$.next(levelList);
@@ -54,6 +53,19 @@ export class LevelService{
         new Date(b.date).getTime() - new Date(a.date).getTime()
       )[0] ?? { childId: null, niveau: 0, date: new Date() };
       this.level$.next(this.currentLevel.niveau);
+      console.log(this.currentLevel);
+    });
+  }
+
+  retrieveLevelsForClassement(childId : number) : void {
+    console.warn("retrieveLevelsforClassement");
+    this.http.get<Level[]>(this.levelUrl + '/' + childId).subscribe((levelList) => {
+      this.levelsByChild.set(childId, levelList);
+      this.levels$.next(levelList);
+      const currentLevel = levelList.filter(level => level.childId === childId).sort((a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+      )[0] ?? { childId: null, niveau: 0, date: new Date() };
+      console.log(currentLevel);
     });
   }
 
