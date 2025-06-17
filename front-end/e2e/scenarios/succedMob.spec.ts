@@ -1,13 +1,18 @@
 import { test } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
+import { LoginFixture } from '../../src/app/pages/login/login.fixture';
+import { AcFixture } from '../../src/app/pages/ac/ac.fixture';
 
 test.describe('Collision raté avec le mob', () => {
+  let login: LoginFixture;
+  let ac: AcFixture;
   test('W2G test', async ({ page }) => {
     await page.goto(testUrl);
     await test.step("Accéder à la page de jeu", async () => {
-        await page.getByRole('heading', { name: 'Enfant Test' }).click();
-        await page.getByRole('button', {name: 'Se connecter'}).click();
-        await page.getByRole('button', { name: 'Jouer' }).click();
+        login = new LoginFixture(page);
+        await login.loginFirstPlayer();
+        ac = new AcFixture(page);
+        await ac.getBoutonJouer().click();
     });
     await test.step("Taper le bon mot (avec une erreur)", async () => {
         await page.waitForSelector('#mot', { state: 'visible' });

@@ -28,6 +28,12 @@ export class Reglage extends E2EComponentFixture {
   getAllChilds(){
     return this.page.locator('app-child');
   }
+  getFirstSupprimer(){
+    return this.page.getByRole('button', { name: 'Supprimer' }).first();
+  }
+  getButtonAjouterEnfant() {
+    return this.page.getByRole('button', { name: 'Ajouter un enfant' });
+  }
 
 }
 

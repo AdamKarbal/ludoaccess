@@ -27,19 +27,6 @@ test.describe('Collision raté avec le mob', () => {
         gameFixture.initPlatforms();
         await page.keyboard.down('d');
         let index = 0;
-        const resultplatform = await page.$eval('.platform:nth-child(1)', el =>{
-        const r = el.getBoundingClientRect();
-          return{
-            x: r.x,
-            y : r.y,
-            left : r.left,
-            top : r.top,
-            right: r.right,
-            bottom: r.bottom,
-            width: r.width,
-            height: r.height
-          };
-        });
         while(true){
           const result = await page.$eval('.player', el =>{
             const r = el.getBoundingClientRect();
@@ -54,13 +41,39 @@ test.describe('Collision raté avec le mob', () => {
               height: r.height
             };
           });
-          //if (result.left <= resultplatform.left-35 && result.left >= resultplatform.left-5) {
+            const resultplatform = await page.$eval('.platform:nth-child(1)', el =>{
+            const r = el.getBoundingClientRect();
+            return{
+              x: r.x,
+              y : r.y,
+              left : r.left,
+              top : r.top,
+              right: r.right,
+              bottom: r.bottom,
+              width: r.width,
+              height: r.height
+            };
+          });
+         console.log("player",result);
+          console.log("platform",resultplatform);
+          // await page.pause();
+          const platform = await gameFixture.platform(index);
+          // await page.pause();
+         // console.log(platform);
+          const playerPosition = await gameFixture.playerPosition();
+          // const playerPositionGet = await gameFixture.playerGetPosition();
+          //console.log("without",playerPosition);
+          // console.log("with getBoundindclient ",playerPositionGet);
+          if (resultplatform && result.left <= resultplatform.left-25 && result.left >= resultplatform.left-15) {
             console.log("Il doit sauter");
             await page.keyboard.down('z');
-            await page.keyboard.up('z');       
-            await page.waitForTimeout(10);     
-         // }
+            await page.waitForTimeout(1000);
+            await page.keyboard.up('z');            
+            index++;
+          }
+          await page.pause();
         }
+        
     });
 });
 });
