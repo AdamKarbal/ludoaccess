@@ -1,0 +1,24 @@
+<div class="classement-container">
+  <h2 class="classement-titre">🏆 Classement</h2>
+  <div class="classement-boutons-filtre">
+    <button 
+      *ngFor="let f of filtreOptions" 
+      (click)="changerFiltre(f)" 
+      class="classement-btn-principal" 
+      [class.active]="filtre === f">
+      {{ f | titlecase }}
+    </button>
+  </div>
+
+  <div class="classement-liste-joueurs">
+    <div 
+      class="classement-ligne-joueur" 
+      *ngFor="let entry of classementEntries; let i = index">
+      <div class="classement-rang">#{{ i + 1 }}</div>
+      <div class="classement-nom">{{ entry[0].firstName }} {{ entry[0].lastName }}</div>
+      <div class="classement-score">{{ entry[1][
+        { jour: 0, semaine: 1, mois: 2, general: 3 }[filtre]
+      ] ?? 0 }}</div>
+    </div>
+  </div>
+</div>

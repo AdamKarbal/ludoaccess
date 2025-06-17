@@ -1,0 +1,79 @@
+.classement-container {
+  position: fixed;
+  right: 30px;
+  top: 20vh;
+  height: 60vh;
+  margin: 0;
+  border-radius: 20px;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 4px solid #fff;
+  text-align: center;
+  color: #fff;
+  font-family: 'Nintendo', sans-serif;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.classement-titre {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.classement-boutons-filtre {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+
+  .classement-btn-principal {
+    background-color: #727272;
+    border: 4px solid #000;
+    color: #fff;
+    font-family: 'Nintendo', sans-serif;
+    padding: 10px;
+    cursor: pointer;
+    text-shadow: 2px 2px 0 #000;
+    box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.1s;
+    min-width: 100px;
+    margin: 5px;
+
+    &.active, &:hover {
+      background-color: #8a8a8a;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: inset 4px 4px 0 rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.classement-liste-joueurs {
+  .classement-ligne-joueur {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  .classement-rang {
+    font-weight: bold;
+  }
+
+  .classement-nom {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .classement-score {
+    font-weight: bold;
+  }
+}

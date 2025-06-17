@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
 import { LoginFixture } from 'src/app/pages/login/login.fixture';
-import { Reglage } from 'src/app/pages/reglage/reglage.fixture';
+import { ReglageFixture } from 'src/app/pages/reglage/reglage.fixture';
 import { StatsFixture } from 'src/app/pages/player-stats/player-stats.fixture';
 
 test.describe('Stats feature', ()=> {
     let login: LoginFixture;
-    let reglage: Reglage;
+    let reglage: ReglageFixture;
     let stats: StatsFixture;
     test('Consulter les statistiques d1 enfant', async({page}) =>{
         await page.goto(testUrl);
@@ -18,7 +18,7 @@ test.describe('Stats feature', ()=> {
             
         });
         await test.step('Cliquer sur le bouton statisique d1 enfant', async () => {
-            reglage = new Reglage(page);
+            reglage = new ReglageFixture(page);
             await reglage.clickEnfantFirstChild().click();
             await expect(page).toHaveURL(/^http:\/\/localhost:4200\/stats/);
         });

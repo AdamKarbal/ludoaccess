@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
 import { LoginFixture} from "../../src/app/pages/login/login.fixture";
-import {Reglage} from "../../src/app/pages/reglage/reglage.fixture";
+import {ReglageFixture} from "../../src/app/pages/reglage/reglage.fixture";
 
 test.describe('Settings feature', () => {
   let login:LoginFixture;
-  let reglage:Reglage;
+  let reglage:ReglageFixture;
   test('Supprimer tous les enfants', async ({page}) => {
     login = new LoginFixture(page);
 
@@ -17,7 +17,7 @@ test.describe('Settings feature', () => {
     });
 
     await test.step('Supprimer tous les enfants', async () => {
-      reglage = new Reglage(page);
+      reglage = new ReglageFixture(page);
       let enfants = reglage.getAllChilds();
 
       while (await enfants.count() > 0) {

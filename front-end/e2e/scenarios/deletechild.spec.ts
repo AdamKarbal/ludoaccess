@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test';
 import { testUrl } from 'e2e/e2e.config';
 import {WordsFixture} from "../../src/app/components/words/words.fixture";
 import {LoginFixture} from "../../src/app/pages/login/login.fixture";
-import {Reglage} from "../../src/app/pages/reglage/reglage.fixture";
+import {ReglageFixture} from "../../src/app/pages/reglage/reglage.fixture";
 
 
 test.describe('Delete child', ()=> {
     let login: LoginFixture;
-    let reglages: Reglage;
+    let reglages: ReglageFixture;
     test('Supprimer un enfant', async({page}) =>{
         await page.goto(testUrl);
         await expect(page).toHaveURL("http://localhost:4200");
@@ -17,7 +17,7 @@ test.describe('Delete child', ()=> {
             await expect(page).toHaveURL("http://localhost:4200/reglage");
         });
         await test.step('Cliquer sur le bouton "Supprimer un enfant"', async () => {
-            reglages = new Reglage(page);
+            reglages = new ReglageFixture(page);
             page.once('dialog', dialog => dialog.accept());
             await reglages.getFirstSupprimer().click();
         });
