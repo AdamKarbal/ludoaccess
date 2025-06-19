@@ -33,7 +33,7 @@ export class CoinComponent implements OnInit {
   }
 
   onClickCollect(event : MouseEvent): void {
-    if (!this.coin.isCollected) { 
+    /*if (!this.coin.isCollected) { 
       console.log('Coin clicked !');
       this.coin.collecting = true;
    
@@ -44,7 +44,7 @@ export class CoinComponent implements OnInit {
         this.coin.collect();
         this.coinCollectionService.addCollected(this.coin);
       }, 300)
-    }
+    }*/
   }
 
 
