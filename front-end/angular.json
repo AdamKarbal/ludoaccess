@@ -57,6 +57,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "docker" : {
+              "fileReplacements": [
+                {
+                  "replace": "src/environnements/environment.ts",
+                  "with": "src/environnements/environment.docker.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

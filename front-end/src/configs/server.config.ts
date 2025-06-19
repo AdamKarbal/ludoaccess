@@ -6,4 +6,3 @@ export const httpOptionsBase = {
   })
 };
 
-export const serverUrl = 'http://localhost:4201/api';
