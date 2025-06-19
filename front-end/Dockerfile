@@ -1,4 +1,3 @@
-FROM ubuntu:latest
-LABEL authors="youne"
+FROM ubuntu:20-alpine
 
-ENTRYPOINT ["top", "-b"]
+
