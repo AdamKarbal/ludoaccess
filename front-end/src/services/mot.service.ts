@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 
 export class MotService {
-  private wordUrl = environment + '/words';
+  private wordUrl = environment.serverUrl + '/words';
   //private readonly _w2g: string = this.getMotParNiveau(Math.floor(Math.random() * 3) + 1 as 1 | 2 | 3);
   private httpOptions = httpOptionsBase;
   private words: Word[] = [];
