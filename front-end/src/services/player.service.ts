@@ -58,7 +58,7 @@ export class PlayerService {
 
     this.settingsService.settings$.subscribe((settings) => {
       this._settings = settings;
-      this.jumpForce = this._settings?.jumpDifficulty ? -20 : -18;
+      this.jumpForce = this._settings?.jumpDifficulty ? -18 : -20;
     });
   }
 

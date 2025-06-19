@@ -26,5 +26,12 @@ export class GameFixture extends E2EComponentFixture {
             return null;
     });}
 
+    getDisconnect(){
+        return this.page.locator('#cross');
+;
+    }
+
+    getConfirmDisconnect() {
+        return this.page.getByRole('button', { name: 'OUI' });}
 
 }

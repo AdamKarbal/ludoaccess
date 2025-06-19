@@ -8,19 +8,18 @@ test.describe('Scenario 6 display', () => {
   let words : WordsFixture;
   let login : LoginFixture;
   let reglage : ReglageFixture;
-
   test('addWord test', async ({ page }) => {
-    reglage = new ReglageFixture(page);
-    words = new WordsFixture(page);
-    login = new LoginFixture(page);
     await page.goto(testUrl);
-    test.step('Login as Ergotherapeute', async () => {
+    await test.step('Login as Ergotherapeute', async () => {
+        login = new LoginFixture(page);
         await login.loginErgotherapeute();
     });
-    test.step('Go to words page', async () => {
+    await test.step('Go to words page', async () => {
+        reglage = new ReglageFixture(page);
         await reglage.goToWords();
     });
-    test.step('Add a word', async () => {
+    await test.step('Add a word', async () => {
+          words = new WordsFixture(page);
         await words.addWord("Avion");
     });
   });
