@@ -14,7 +14,7 @@ export class SettingsService {
   currentBackground: string = 'Aléatoire';
   private letterSizePx: number = 20;
 
-  private settingsUrl = environnement.serverUrl + '/settings';
+  private settingsUrl = environnement.apiUrl + '/settings';
 
   constructor(private http: HttpClient) { }
 

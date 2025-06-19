@@ -19,7 +19,7 @@ export class UserStatsService {
   lengths$ = this.lengthsSubject.asObservable();
   private id: number;
   private lengths: number[] = [];
-  private userUrl = environnement.serverUrl + "/stats";
+  private userUrl = environnement.apiUrl + "/stats";
   private httpOptions = httpOptionsBase;
   private dataToSend: {
     child: {

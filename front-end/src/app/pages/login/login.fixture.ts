@@ -7,7 +7,7 @@ export class LoginFixture extends E2EComponentFixture {
   }
 
   getBoutonErgotherapeute() {
-    return this.page.getByRole('heading', { name: /Ergothérapeute/i }).locator('..');
+    return this.page.getByRole('heading', { name: /Ergothérapeute/i });
   }
 
   getBoutonEnfant(name: string) {

@@ -11,7 +11,7 @@ import { AuthService } from "./auth.service";
 })
 
 export class LevelService{
-    private levelUrl = environnement.serverUrl + '/level';
+    private levelUrl = environnement.apiUrl + '/level';
     authService: AuthService|null = null;
     private _progress : number=0;
     private httpOptions = httpOptionsBase;

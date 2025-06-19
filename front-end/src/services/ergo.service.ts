@@ -19,7 +19,7 @@ export class ErgoService {
 
   public ergotherapistSelected$: BehaviorSubject<Ergo | null> = new BehaviorSubject<Ergo | null>(null);
 
-  private ergoUrl = environnement.serverUrl + '/ergos';
+  private ergoUrl = environnement.apiUrl + '/ergos';
   private httpOptions = httpOptionsBase;
 
   constructor(private http: HttpClient) {
