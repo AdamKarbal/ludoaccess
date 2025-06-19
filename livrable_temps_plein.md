@@ -11,7 +11,7 @@ Ce plan de tests a pour but de garantir la qualité fonctionnelle et l’adéqua
 
 # 3. Matrice de priorisation
 
-Les scores fournis ont été additionnés (somme max = 40). Le rang reflète la priorité (1 = plus haute) à traiter en premier.
+Les scores fournis ont été additionnés (somme max = 20). Le rang reflète la priorité (1 = plus haute) à traiter en premier.
 
 | Rang | Scénario | Somme des scores |
 | ---- | -------- | ---------------- |
@@ -25,7 +25,7 @@ Les scores fournis ont été additionnés (somme max = 40). Le rang reflète la 
 | 8 | Supprimer un enfant | 9 |
 | 9 | Consulter la liste des mots par difficulté | 12 |
 
-**NB :** Les scénarios 5 et 6 présentent la même somme. Leur ordre a été tranché en faveur de la suppression (risque d’erreur thérapeutique plus élevé).
+**NB :** Les scénarios 5 et 6 présentent la même somme. Leur ordre a été tranché en faveur de la suppression.
 
 # 4. Scénarios de test détaillés
 
