@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ChildSettings } from '../models/setting.model';
-import { serverUrl } from '../configs/server.config';
+import { environnement } from '../configs/server.config';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class SettingsService {
   currentBackground: string = 'Aléatoire';
   private letterSizePx: number = 20;
 
-  private settingsUrl = serverUrl + '/settings';
+  private settingsUrl = environnement.serverUrl + '/settings';
 
   constructor(private http: HttpClient) { }
 

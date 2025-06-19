@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Child } from 'src/models/child.model';
-import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
+import { environnement, httpOptionsBase } from 'src/configs/server.config';
 import { SettingsService } from './setting.service';
 import { ChildSettings } from 'src/models/setting.model';
 
@@ -18,8 +18,8 @@ export class ChildService {
 
   public childSelected$: BehaviorSubject<Child | null> = new BehaviorSubject<Child | null>(null);
 
-  private childUrl = serverUrl + '/childs';
-  private settingsUrl = serverUrl + '/settings';
+  private childUrl = environnement.serverUrl + '/childs';
+  private settingsUrl = environnement.serverUrl + '/settings';
 
   private httpOptions = httpOptionsBase;
 

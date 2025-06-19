@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
+import { environnement, httpOptionsBase } from 'src/configs/server.config';
 import { HttpClient } from "@angular/common/http";
 import { Level } from "../models/level.model";
 import { Injector } from "@angular/core";
@@ -11,7 +11,7 @@ import { AuthService } from "./auth.service";
 })
 
 export class LevelService{
-    private levelUrl = serverUrl + '/level';
+    private levelUrl = environnement.serverUrl + '/level';
     authService: AuthService|null = null;
     private _progress : number=0;
     private httpOptions = httpOptionsBase;

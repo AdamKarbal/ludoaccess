@@ -57,6 +57,16 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "docker":{
+              "budgets": [],
+              "fileReplacements": [
+                {
+                  "replace": "src/configs/server.config.ts",
+                  "with": "src/configs/server-docker.config.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"

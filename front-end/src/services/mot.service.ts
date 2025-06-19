@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 //import { BANQUE_MOTS } from '../app/data/banque';
 import { Word } from '../models/word.model';
 import { HttpClient } from '@angular/common/http';
-import { serverUrl, httpOptionsBase } from 'src/configs/server.config';
+import { environnement, httpOptionsBase } from 'src/configs/server.config';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 
 export class MotService {
-  private wordUrl = serverUrl + '/words';
+  private wordUrl = environnement.serverUrl + '/words';
   //private readonly _w2g: string = this.getMotParNiveau(Math.floor(Math.random() * 3) + 1 as 1 | 2 | 3);
   private httpOptions = httpOptionsBase;
   private words: Word[] = [];
