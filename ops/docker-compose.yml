@@ -2,9 +2,11 @@ version: '3.8'
 
 services:
   back:
-    build: ../backend          
+    container_name: backend
+    build:
+      context: ../backend
     ports:
-      - "8081:9428"          # localhost:8081 → conteneur:9428
+      - "8081:4201"          # localhost:8081 → conteneur:9428
     volumes:
       - my_volume:/var/lib/xyz
     restart: unless-stopped
@@ -12,15 +14,25 @@ services:
       test : ["CMD","curl","-f","http://localhost:9428/health"]
       interval : 10s
       retries: 5
+    networks:
+      - app-net
 
   front:
-    build: ../front-end           
+    container_name: frontend
+    build:
+      context: ../front-end
     ports:
       - "8080:80"            # localhost:8080 → conteneur:80
     depends_on:
-      - back:
-          condition: service-healthy                
+      back:
+        condition: service_healthy
     restart: unless-stopped
+    networks:
+      - app-net
 
-  volumes:
-    my_volume: 
+volumes:
+  my_volume:
+
+networks:
+  app-net:
+

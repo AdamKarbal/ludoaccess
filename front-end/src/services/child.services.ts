@@ -20,7 +20,7 @@ export class ChildService {
   public childSelected$: BehaviorSubject<Child | null> = new BehaviorSubject<Child | null>(null);
 
   private childUrl = environment.serverUrl + '/childs';
-  private settingsUrl = environment + '/settings';
+  private settingsUrl = environment.serverUrl + '/settings';
 
   private httpOptions = httpOptionsBase;
 

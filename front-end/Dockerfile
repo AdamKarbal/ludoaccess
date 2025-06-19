@@ -1,3 +1,12 @@
+#Étape de test
+FROM node:20-alpine AS test
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run test:e2e
+
+#Étape de build
 FROM node:20-alpine AS build
 
 WORKDIR /app

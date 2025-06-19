@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "build:docker": "ng build --configuration docker",
     "test": "ng test",
-    "test:e2e": "npx playwright test"
+    "test:e2e": "npx playwright test --output=test-results"
   },
   "private": true,
   "dependencies": {
