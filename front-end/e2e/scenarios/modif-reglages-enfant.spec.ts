@@ -29,7 +29,7 @@ test.describe('Settings feature', () => {
         });
         await test.step('Aller dans l\'étape 1 et check', async () => {
             ac = new AcFixture(page);
-            const boutonRetour = await reglages.getButtonRetourReglages();
+            const boutonRetour = reglages.getButtonDeconnexion();
             await boutonRetour.click();
             await expect(page).toHaveURL("http://localhost:4200");
             await app.loginFirstPlayer();

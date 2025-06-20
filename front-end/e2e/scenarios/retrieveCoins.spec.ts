@@ -41,7 +41,6 @@ test.describe('Collision raté avec le mob', () => {
         });
       await page.keyboard.down('d');
       await page.keyboard.up('d');
-        while(true){
           const result = await page.$eval('.player', el =>{
             const r = el.getBoundingClientRect();
             return{
@@ -61,7 +60,10 @@ test.describe('Collision raté avec le mob', () => {
             await page.keyboard.up('z');
             await page.waitForTimeout(10);
          // }
-        }
+        
+        await gameFixture.getDisconnect().click();
+        await gameFixture.getConfirmDisconnect().click();
+
     });
 });
 });

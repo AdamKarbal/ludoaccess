@@ -58,15 +58,13 @@
               "sourceMap": true,
               "namedChunks": true
             },
-            "docker":{
-              "budgets": [],
+            "docker" : {
               "fileReplacements": [
                 {
-                  "replace": "src/configs/server.config.ts",
-                  "with": "src/configs/server-docker.config.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.ts"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             }
           },
           "defaultConfiguration": "production"

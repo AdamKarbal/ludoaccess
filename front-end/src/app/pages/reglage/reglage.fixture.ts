@@ -3,8 +3,8 @@ import {Locator} from "@playwright/test";
 
 export class ReglageFixture extends E2EComponentFixture {
 
-  getButtonRetourReglages() {
-    return this.page.getByRole('button', { name: '◀ Retour' });
+    getButtonRetourReglages() {
+    return this.page.locator('.goBack');
   }
 
   regalageEnfantaModifier(name: string) {
@@ -19,7 +19,7 @@ export class ReglageFixture extends E2EComponentFixture {
   }
 
   goToWords = async() => {
-    const bouton = await this.page.getByRole('button', { name: 'Mots' });
+    const bouton = await this.page.getByRole('button', { name: 'Mots' }).first();
     return bouton.click();
   }
   getSupprimer(path:Locator){
@@ -38,5 +38,10 @@ export class ReglageFixture extends E2EComponentFixture {
     return this.page.getByRole('button', { name: '📊 Stats' }).first();
   }
 
+
+  getButtonDeconnexion() {
+    return this.page.getByRole('button', { name: 'Déconnexion' });
+  }
 }
 
+  

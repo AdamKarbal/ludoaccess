@@ -1,8 +1,15 @@
-FROM node:22.16
+FROM node:20-alpine
+
 WORKDIR /app
-COPY package*.json .
-RUN ls
+
+COPY package*.json ./
+
+#On installe toutes les dépendances du projet
 RUN npm install
+
+#On copie le code source du backend dans le conteneur
 COPY . .
+
 EXPOSE 8081
-CMD ["npm","run","dev"]
+
+CMD ["npm", "start"]

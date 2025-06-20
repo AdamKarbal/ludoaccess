@@ -14,13 +14,13 @@ test.describe('Delete word test', () => {
     words = new WordsFixture(page);
     login = new LoginFixture(page);
     await page.goto(testUrl);
-        test.step('Login as Ergotherapeute', async () => {
+        await test.step('Login as Ergotherapeute', async () => {
         await login.loginErgotherapeute();
     });
-    test.step('Go to words page', async () => {
+    await test.step('Go to words page', async () => {
         await reglage.goToWords();
     });
-    test.step('delete a word', async () => {
+    await test.step('delete a word', async () => {
         await words.deleteWord();
     });
   });

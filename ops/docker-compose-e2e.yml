@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  back:
+    container_name: backend
+    build:
+      context: ../backend
+    ports:
+      - "8081:4201"
+    volumes:
+      - my_volume:/var/lib/xyz
+    restart: unless-stopped
+    healthcheck:
+      test : ["CMD","curl","-f","http://localhost:4201/api/status"]
+      interval : 10s
+      retries: 5
+    networks:
+      - app-net
+
+  front:
+    container_name: frontend
+    build:
+      context: ../front-end
+    ports:
+      - "8080:80"            # localhost:8080 → conteneur:80
+    depends_on:
+      back:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-net
+
+  e2e:
+    build:
+      context: ../front-end
+      dockerfile: DockerfileTest
+      target: test
+    depends_on:
+      back:
+        condition: service_healthy
+    volumes:
+      - ./e2e-results:/app/test-results
+    networks:
+      - app-net
+
+volumes:
+  my_volume:
+
+networks:
+  app-net:
+

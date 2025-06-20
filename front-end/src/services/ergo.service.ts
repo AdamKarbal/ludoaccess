@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Ergo } from 'src/models/ergo.model';
 import { ERGOTHERAPIST_LIST } from 'src/mocks/ergo.mock';
-import { environnement, httpOptionsBase } from 'src/configs/server.config';
+import {httpOptionsBase} from "../configs/server.config";
+import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -19,7 +20,7 @@ export class ErgoService {
 
   public ergotherapistSelected$: BehaviorSubject<Ergo | null> = new BehaviorSubject<Ergo | null>(null);
 
-  private ergoUrl = environnement.apiUrl + '/ergos';
+  private ergoUrl = environment.serverUrl + '/ergos';
   private httpOptions = httpOptionsBase;
 
   constructor(private http: HttpClient) {

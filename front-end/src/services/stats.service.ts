@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {GameService} from "./game.service";
-import {httpOptionsBase, environnement} from "../configs/server.config";
+import {httpOptionsBase} from "../configs/server.config";
+import { environment } from '../environments/environment';
 import {HttpClient} from "@angular/common/http";
 import {Progression} from "../models/progression.model";
 import {Interaction} from "../models/interaction.model";
@@ -19,7 +20,7 @@ export class UserStatsService {
   lengths$ = this.lengthsSubject.asObservable();
   private id: number;
   private lengths: number[] = [];
-  private userUrl = environnement.apiUrl + "/stats";
+  private userUrl = environment + "/stats";
   private httpOptions = httpOptionsBase;
   private dataToSend: {
     child: {
