@@ -164,16 +164,47 @@ Si on devait refaire la partie des tests, on aurait utilisé les fixtures dès l
 
 **Partie 1:** Done
 
-**Partie 2:** Done
+**Partie 2:** Done (erreurs dans la console lors de la commande mais affiche le site sur le port 8080)
 
-**Partie 3:** Commencé pas fini
+**Partie 3:** Done
 
-# 2. Fonctionnement
+# 2. Fonctionnement Frontend et Backend
 
 - Services :
-    - Un service nommé back-end acccessible sur le port 8081 de l'hôte qui tourne sur le network "app-net" du conteneur.
-    - Un service nommé front-end accessible sur le port 8080 de l'hôte qui dépend du back-end pour se lancer et qui lui aussi tourne sur le network "app-net".
+    - Un service nommé back acccessible sur le port 8081 de l'hôte qui tourne sur le network "app-net" du conteneur.
+    - Un service nommé front accessible sur le port 8080 de l'hôte qui dépend du back-end pour se lancer et qui lui aussi tourne sur le network "app-net".
 
-- On utilise un docker-compose constitué des deux services déclarés au-dessus avec des healthchecks. Le service front-end utilise 'curl' pour vérifier la santé de l'autre service sur le port http://localhost:4201 du conteneur, pour qu'il ne run qu'une fois que le service back-end est opérationnel.
+- On utilise un docker-compose constitué des deux services déclarés au-dessus avec des healthchecks. Le service front-end utilise 'curl' pour vérifier la santé de l'autre service avec l'URL http://localhost:8081/api/status du conteneur, pour qu'il ne run qu'une fois que le service back-end est opérationnel.
 
-- 
+# 3. Fonctionnement des tests end-to-end
+
+Pour garantir la qualité de l’application dans son ensemble, nous avons mis en place une chaîne de tests end-to-end automatisés avec Playwright, orchestrée via Docker Compose.
+
+- On a deux healthcheck pour nos services front et backe2e.
+    - Pour backe2e : Docker exécute la commande décrite par test sur l'URl "http://localhost:8081/api/status" toutes les 10 secondes, si le test échoue 5 fois de suite le service est marqué comme "unhealthy".
+    - Pour front : La commande est exécuté sur l'URL "http://localhost" toutes les 1mn30 et le service est marqueé "healthy" si le test réussit 3 fois de suite.
+
+Voici le fonctionnement détaillé :
+
+- **Trois services sont utilisés pour les tests E2E** :
+    - **back** : le back-end, lancé sur un port dédié (8081) pour éviter les conflits avec l’environnement de développement.
+    - **front** : le front-end, construit pour l’environnement de test et exposé sur le port 8080.
+    - **e2e** : un conteneur Playwright qui exécute les scénarios de tests automatisés contre le front-end et le back-end.
+
+- **Orchestration** :
+    - Le script `run-e2e.sh` nettoie les anciens résultats, lance la stack de test, attend la fin des tests, puis extrait les rapports Playwright générés.
+    - Les résultats des tests sont accessibles dans le dossier `e2e-results/playwright-report`.
+
+# 4. Difficultés rencontrées lors de la conteneurisation
+
+- **Synchronisation des services** : Il a fallu ajuster les healthchecks pour garantir que le front ne démarre qu’une fois le back prêt, et que les tests ne commencent qu’une fois le front opérationnel.
+- **Gestion des ports** : Pour éviter les conflits avec les environnements locaux, les ports des services de test sont différents de ceux de la stack de développement.
+- **Extraction des rapports** : Il a fallu automatiser la récupération des rapports Playwright depuis le conteneur de test vers l’hôte pour faciliter l’analyse des résultats.
+- **Problèmes de configuration** : Difficultés à lier les services front et back (backe2e notamment).
+
+# 6. Conclusion
+
+La démarche de tests et de conteneurisation adoptée garantit une application robuste, facilement déployable et testable dans n’importe quel environnement.  
+Grâce à Docker Compose, il est possible de lancer l’ensemble de les back, front et tests en une seule commande, ce qui facilite la maintenance, la montée en version et la reproductibilité des environnements.  
+Les tests end-to-end automatisés assurent la conformité fonctionnelle et thérapeutique du jeu, tout en permettant une évolution sereine du code.
+
