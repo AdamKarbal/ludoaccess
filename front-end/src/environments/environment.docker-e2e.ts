@@ -1,3 +1,4 @@
 export const environment = {
-  serverUrl: 'http://localhost:4201/api',
+  apiUrl: 'http://front',
+  serverUrl : 'http://backe2e:8081/api'
 }

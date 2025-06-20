@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1749568143513,
+    "showTimer": true,
+    "showRanking": false,
+    "enableLifeLoss": true,
+    "jumpDifficulty": false,
+    "clearWordAfterRecovery": false,
+    "adaptDifficulty": false,
+    "displaymotsec": 3,
+    "simplifyGameAfter": 30,
+    "wordWritingTime": 30,
+    "wordDifficulty": "Difficile",
+    "lettersize": "Moyen",
+    "choosefont": "cursif ecriture A",
+    "chooseBackGround": "Aléatoire",
+    "numberOfWords": 1
+  }
+]

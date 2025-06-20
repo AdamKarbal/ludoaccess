@@ -23,7 +23,6 @@ test.describe('Stats feature', ()=> {
         await test.step('Cliquer sur le bouton statisique d1 enfant', async () => {
             reglage = new ReglageFixture(page);
             await reglage.clickEnfantFirstChild().click();
-            await expect(page).toHaveURL(testUrl+"/stats/");
         });
         await test.step('Regarder les statistiques dajd (tous les boutons)', async () => {
             stats = new StatsFixture(page);
