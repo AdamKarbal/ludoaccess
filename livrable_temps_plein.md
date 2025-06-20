@@ -1,3 +1,4 @@
+# I) Tests
 # 1. Contexte et objectif
 
 Ce plan de tests a pour but de garantir la qualité fonctionnelle et l’adéquation thérapeutique du jeu de plateforme destiné à la rééducation en ergothérapie. Les scénarios couvrent l’ensemble du parcours utilisateur : gestion des profils, configuration, jeu, statistiques et banque de mots. Chaque scénario est évalué selon deux critères (intérêt thérapeutique, adaptabilité) afin d’établir une priorité réaliste et orientée patient.
@@ -156,3 +157,23 @@ Lors de la mise en œuvre des différents scénarios, on a rencontré une grosse
 Vis‑à‑vis de nos scénarios actuels, une amélioration possible aurait été de regrouper plusieurs scénarios pour faire plusieurs plus gros scénarios permettant de voir si une interaction plus complète s’effectue sans problème.
 
 Si on devait refaire la partie des tests, on aurait utilisé les fixtures dès le début, afin d’éviter de faire du refactor. Mais aussi fait des tests moins segmentés. De plus, pour le prochain projet, on saura déjà faire des tests Playwright, donc on pourra les faire dès le début à l’image du PS5.
+
+# II) Conteneurisation
+
+# 1. Statut lors de la livraison
+
+**Partie 1:** Done
+
+**Partie 2:** Done
+
+**Partie 3:** Commencé pas fini
+
+# 2. Fonctionnement
+
+- Services :
+    - Un service nommé back-end acccessible sur le port 8081 de l'hôte qui tourne sur le network "app-net" du conteneur.
+    - Un service nommé front-end accessible sur le port 8080 de l'hôte qui dépend du back-end pour se lancer et qui lui aussi tourne sur le network "app-net".
+
+- On utilise un docker-compose constitué des deux services déclarés au-dessus avec des healthchecks. Le service front-end utilise 'curl' pour vérifier la santé de l'autre service sur le port http://localhost:4201 du conteneur, pour qu'il ne run qu'une fois que le service back-end est opérationnel.
+
+- 
