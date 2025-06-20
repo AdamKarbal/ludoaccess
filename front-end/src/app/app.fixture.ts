@@ -1,6 +1,7 @@
 import { E2EComponentFixture } from "e2e/e2e-component.fixture";
 
 export class AppFixture extends E2EComponentFixture {
+
   getTitle() {
     return this.page.getByRole('heading', { name: 'Hello World!' });
   }
@@ -21,7 +22,4 @@ export class AppFixture extends E2EComponentFixture {
     return this.page.getByText('Wow!');
   }
 
-  getBoutonConnexion() {
-    return this.page.getByRole('button', { name: /se connecter/i });
-  }
 }

@@ -33,6 +33,7 @@ export class GameoverComponent {
         });
         this.coeurService.isGameOver$.subscribe(isGameOver => {
                 this.isGameOver = isGameOver;
+                console.log(`isGameOver: ${this.isGameOver}`);
 
         });
     }

@@ -2,5 +2,6 @@
 # E2E folder
 
 /playwright-report
-
+/node_modules
 /test-results
+/ops/e2e-results/

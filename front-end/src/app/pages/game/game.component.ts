@@ -101,8 +101,13 @@ export class GameComponent implements OnInit, OnDestroy {
 
             this.gameService.isGameFinished$,
             this.gameService.wantToContinue$,
+            this.gameService.gameOverObs$,
         ])
-        .pipe(filter(([isFinished, wantToContinue]) => (isFinished && wantToContinue)), rxjsTake(1))
+        .pipe(filter(([isFinished, wantToContinue,gameOver]) => (isFinished && wantToContinue)||(gameOver&&wantToContinue)),tap(([isFinished, wantToContinue, gameOver]) => {
+    console.log('isFinished:', isFinished);
+    console.log('wantToContinue:', wantToContinue);
+    console.log('gameOver:', gameOver);
+  }), rxjsTake(1))
         .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut continuer !");
 
@@ -125,8 +130,9 @@ export class GameComponent implements OnInit, OnDestroy {
           this._stepSubscriptions.push(combineLatest([
             this.gameService.isGameFinished$,
             this.gameService.wantToExit$,
+            this.gameService.gameOverObs$,
         ])
-        .pipe(filter(([isFinished, wantToExit]) => (isFinished && wantToExit)), rxjsTake(1))
+        .pipe(filter(([isFinished, wantToExit,gameOver]) => (isFinished && wantToExit)||(gameOver&&wantToExit)), rxjsTake(1))
         .subscribe(() => {
             console.log("Jeu terminé et utilisateur veut quitter !");
             this.setStep(1);

@@ -4,5 +4,6 @@
 <div><app-chrono class="chrono" *ngIf="showTimer && !isGameFinished"></app-chrono></div>
 <div><app-finishScreen></app-finishScreen></div>
 <div><app-levelbar></app-levelbar></div>
+<app-gameover *ngIf="isGameOver"></app-gameover>
 <div><app-plateformes></app-plateformes></div>
 

@@ -1,0 +1,8 @@
+#Étape de test
+FROM mcr.microsoft.com/playwright:v1.53.0-noble AS test
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+#ENTRYPOINT ["npm", "run", "test:e2e"]
+

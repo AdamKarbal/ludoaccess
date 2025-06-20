@@ -1,5 +1,5 @@
 <div class="level">
-    <div class="level-title">LVL 5</div>
-<div class="level-progress" [ngStyle]="{'width': (levelBarService.level == 1000 ? 0 : levelBarService.level) + '%'}"></div></div>
+    <div class="level-title">LVL {{displayLevel}}</div>
+<div class="level-progress" [ngStyle]="{'width': displayXP + '%'}"></div></div>
 
 <!-- {{levelBarService.level / 1000 | number:'1.0-0'}} -->

@@ -44,7 +44,7 @@ import {WordLengthListComponent} from "./components/word-length-button-list/word
 import { XpBooster } from './components/xp-booster/xpbooster.component';
 import { HealthGainer } from './components/healthgainer/healthgainer.component';
 import {WordsComponent} from "./components/words/words.component";
-
+import { ClassementComponent } from './components/classement/classement.component';
 import {PeriodSelectorComponent} from "./components/periodSelector/periodSelector.component";
 
 
@@ -55,6 +55,7 @@ import {StatWordComponent} from "./components/stat-word/stat-word.component";
 
 @NgModule({
   declarations: [
+    ClassementComponent,
     GameoverComponent,
     PlayerComponent,
     ChronoComponent,

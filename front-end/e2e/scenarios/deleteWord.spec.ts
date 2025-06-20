@@ -1,0 +1,31 @@
+import { test } from '@playwright/test';
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
+import {LoginFixture} from "../../src/app/pages/login/login.fixture";
+import {ReglageFixture} from "../../src/app/pages/reglage/reglage.fixture";
+
+const testUrl = testConfig.frontUrl;
+import {WordsFixture} from "../../src/app/components/words/words.fixture";
+
+
+test.describe('Delete word test', () => {
+  let words : WordsFixture;
+  let login : LoginFixture;
+  let reglage : ReglageFixture;
+
+  test('deleteWord test', async ({ page }) => {
+    reglage = new ReglageFixture(page);
+    words = new WordsFixture(page);
+    login = new LoginFixture(page);
+    await page.goto(testUrl);
+        await test.step('Login as Ergotherapeute', async () => {
+        await login.loginErgotherapeute();
+    });
+    await test.step('Go to words page', async () => {
+        await reglage.goToWords();
+    });
+    await test.step('delete a word', async () => {
+        await words.deleteWord();
+    });
+  });
+});

@@ -6,4 +6,7 @@ export const httpOptionsBase = {
   })
 };
 
-export const serverUrl = 'http://localhost:4201/api';
+export const environnement = {
+  serverUrl : 'http://localhost:4200',
+  apiUrl:'http://localhost:4201/api'
+}

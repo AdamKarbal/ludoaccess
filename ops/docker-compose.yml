@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  back:
+    environment:
+      - PORT=8081
+    container_name: backend
+    build:
+      context: ../backend
+    ports:
+      - "8081:8081"
+    volumes:
+      - my_volume:/var/lib/xyz
+    restart: unless-stopped
+    healthcheck:
+      test : ["CMD","curl","-f","http://localhost:8081/api/status"]
+      interval : 10s
+      retries: 5
+    networks:
+      - app-net
+
+  front:
+    container_name: frontend
+    build:
+      context: ../front-end
+    ports:
+      - "8080:80"            # localhost:8080 → conteneur:80
+    depends_on:
+      - back
+    restart: unless-stopped
+    networks:
+      - app-net
+    healthcheck:
+      test : ["CMD","curl","-f","http://localhost"]
+      interval : 1m30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  my_volume:
+
+networks:
+  app-net:
+
