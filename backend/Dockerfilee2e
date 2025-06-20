@@ -10,4 +10,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8081
-CMD ["npm", "start","test:e2e"]
+CMD ["npm", "run","start:e2e"]
