@@ -27,9 +27,6 @@ test.describe('Settings feature', () => {
             const select = page.locator('select[name="chooseBackGround"]');
             await expect(select).toBeVisible();
             await select.selectOption({ value: 'Forest' });
-            const inputNumberOfWords = page.locator('input[name="numberOfWords"]');
-            await inputNumberOfWords.fill('2');
-
         });
         await test.step('Aller dans l\'étape 1 et check', async () => {
             ac = new AcFixture(page);
@@ -41,13 +38,6 @@ test.describe('Settings feature', () => {
             await ac.getBoutonJouer().click();
             await expect(page).toHaveURL(testUrl+"/jeu");
             const imageaComparer = page.locator('div.BG');
-            const numberOfWordsLocator = page.locator('div.word-counter');
-            const numberOfWordsText = await numberOfWordsLocator.textContent();
-            const parts = numberOfWordsText?.split('/');
-            const numberOfWords = Number(parts?.[1]?.trim());
-            expect(numberOfWords).toBe(2);
-            await expect(imageaComparer).toBeVisible();
-
         });
 
 

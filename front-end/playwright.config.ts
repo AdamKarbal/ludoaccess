@@ -2,12 +2,13 @@ import { PlaywrightTestConfig } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
   reporter: [['html', { open: 'never' }]],
+  testMatch : ['e2e/**/*.spec.ts'],
   use: {
     headless: true,
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
-    video: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    video: 'on',
+    screenshot: 'on',
     launchOptions: {
       slowMo: 1000,
     }

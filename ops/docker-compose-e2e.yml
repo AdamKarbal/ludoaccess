@@ -1,17 +1,20 @@
 version: '3.8'
 
 services:
-  back:
+  backe2e:
+    environment:
+      - PORT=8081
     container_name: backend
     build:
       context: ../backend
+      dockerfile: Dockerfilee2e
     ports:
-      - "8081:4201"
+      - "8081:8081"
     volumes:
       - my_volume:/var/lib/xyz
     restart: unless-stopped
     healthcheck:
-      test : ["CMD","curl","-f","http://localhost:4201/api/status"]
+      test : ["CMD","curl","-f","http://localhost:8081/api/status"]
       interval : 10s
       retries: 5
     networks:
@@ -21,17 +24,20 @@ services:
     container_name: frontend
     build:
       context: ../front-end
-      dockerfile: Dockerfile
       args:
         ENVIRONMENT : docker-e2e
     ports:
       - "8080:80"            # localhost:8080 → conteneur:80
     depends_on:
-      back:
-        condition: service_healthy
+      - backe2e
     restart: unless-stopped
     networks:
       - app-net
+    healthcheck:
+      test : ["CMD","curl","-f","http://localhost"]
+      interval : 1m30s
+      timeout: 10s
+      retries: 3
 
   e2e:
     environment:
@@ -41,13 +47,12 @@ services:
       dockerfile: DockerfileTest
       target: test
     depends_on:
-      front:
-        condition: service_healthy
+      - front
     volumes:
       - ./e2e-results:/app/test-results
     networks:
       - app-net
-    command: npm run test:e2e
+    command: npm run test:e2edocker
 
 volumes:
   my_volume:
