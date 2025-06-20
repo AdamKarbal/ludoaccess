@@ -1,8 +1,12 @@
 import { test } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
-import {WordsFixture} from "../../src/app/components/words/words.fixture";
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
 import {LoginFixture} from "../../src/app/pages/login/login.fixture";
 import {ReglageFixture} from "../../src/app/pages/reglage/reglage.fixture";
+
+const testUrl = testConfig.frontUrl;
+import {WordsFixture} from "../../src/app/components/words/words.fixture";
+
 
 test.describe('Delete word test', () => {
   let words : WordsFixture;

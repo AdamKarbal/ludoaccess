@@ -1,8 +1,11 @@
 import { test } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
 import { LoginFixture } from "../../src/app/pages/login/login.fixture";
 import {AcFixture} from "../../src/app/pages/ac/ac.fixture";
 import {Step1Fixture} from "../../src/app/pages/jeu_etape1/jeu_etape1.fixture";
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
+
+const testUrl = testConfig.frontUrl;
 
 test.describe('Scenario 4 display', () => {
   let login: LoginFixture;

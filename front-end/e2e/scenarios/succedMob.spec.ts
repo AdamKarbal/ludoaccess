@@ -1,7 +1,10 @@
 import { test } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
 import { LoginFixture } from '../../src/app/pages/login/login.fixture';
 import { AcFixture } from '../../src/app/pages/ac/ac.fixture';
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
+
+const testUrl = testConfig.frontUrl;
 
 test.describe('Collision raté avec le mob', () => {
   let login: LoginFixture;
@@ -20,7 +23,7 @@ test.describe('Collision raté avec le mob', () => {
         const letters = await page.$$eval('#mot .letter', spans =>
           spans.map(span => span.textContent?.trim() || '')
         );
-        await page.keyboard.press('a'); 
+        await page.keyboard.press('a');
         for (const letter of letters) {
           await page.keyboard.type(letter);
         }
@@ -35,7 +38,7 @@ test.describe('Collision raté avec le mob', () => {
         const letter = (await page.locator('.letter-box').textContent())?.trim();
         await page.keyboard.press(letter || 'd');
         if (!await page.locator('.letter-box').isVisible()) break;
-      }       
+      }
     });
     await test.step("Quitter la partie", async () => {
       await page.locator('#cross').click();

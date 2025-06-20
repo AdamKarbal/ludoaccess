@@ -1,20 +1,22 @@
 import { test, expect } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
 import {WordsFixture} from "../../src/app/components/words/words.fixture";
 import {LoginFixture} from "../../src/app/pages/login/login.fixture";
 import {ReglageFixture} from "../../src/app/pages/reglage/reglage.fixture";
+import {testConfig} from "e2e/e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
 
+const testUrl = testConfig.frontUrl;
 
 test.describe('Settings feature', ()=> {
     let login: LoginFixture;
     let reglage: ReglageFixture;
     test('Ajouter un enfant', async({page}) =>{
         await page.goto(testUrl);
-        await expect(page).toHaveURL("http://localhost:4200");
+        await expect(page).toHaveURL(testUrl);
         await test.step('Se connecter', async () => {
             login = new LoginFixture(page);
             await login.loginErgotherapeute();
-            await expect(page).toHaveURL("http://localhost:4200/reglage");
+            await expect(page).toHaveURL(testUrl+"/reglage");
         });
         await test.step('Cliquer sur le bouton "Ajouter un enfant"', async () => {
             reglage = new ReglageFixture(page);
@@ -33,7 +35,7 @@ test.describe('Settings feature', ()=> {
         });
         await test.step('Quitter la page', async () => {
             await reglage.getButtonRetourReglages().click();
-            await expect(page).toHaveURL("http://localhost:4200");
+            await expect(page).toHaveURL(testUrl);
         });
 });
 });

@@ -21,6 +21,9 @@ services:
     container_name: frontend
     build:
       context: ../front-end
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT : docker-e2e
     ports:
       - "8080:80"            # localhost:8080 → conteneur:80
     depends_on:
@@ -31,17 +34,20 @@ services:
       - app-net
 
   e2e:
+    environment:
+      - FRONT_URL=http://front:80
     build:
       context: ../front-end
       dockerfile: DockerfileTest
       target: test
     depends_on:
-      back:
+      front:
         condition: service_healthy
     volumes:
       - ./e2e-results:/app/test-results
     networks:
       - app-net
+    command: npm run test:e2e
 
 volumes:
   my_volume:

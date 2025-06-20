@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
+
+const testUrl = testConfig.frontUrl;
 
 // This file is here to test the playwright integration.
 test.describe('Initial test display', () => {

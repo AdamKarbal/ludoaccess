@@ -1,6 +1,9 @@
 import { test } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
 import { GameFixture } from 'src/app/pages/game/game.fixture';
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
+
+const testUrl = testConfig.frontUrl;
 
 test.describe('Collision raté avec le mob', () => {
   let gameFixture: GameFixture;
@@ -60,7 +63,7 @@ test.describe('Collision raté avec le mob', () => {
             await page.keyboard.up('z');
             await page.waitForTimeout(10);
          // }
-        
+
         await gameFixture.getDisconnect().click();
         await gameFixture.getConfirmDisconnect().click();
 

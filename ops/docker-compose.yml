@@ -11,7 +11,7 @@ services:
       - my_volume:/var/lib/xyz
     restart: unless-stopped
     healthcheck:
-      test : ["CMD","curl","-f","http://localhost:4201/health"]
+      test : ["CMD","curl","-f","http://localhost:4201/api/status"]
       interval : 10s
       retries: 5
     networks:

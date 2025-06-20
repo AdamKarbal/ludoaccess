@@ -1,8 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { testUrl } from 'e2e/e2e.config';
 import {AppFixture} from "../../src/app/app.fixture";
 import {LoginFixture} from "../../src/app/pages/login/login.fixture";
 import {AcFixture} from "../../src/app/pages/ac/ac.fixture";
+
+import {testConfig} from "../e2e.config";
+//import { testUrl } from 'e2e/e2e.config';
+
+const testUrl = testConfig.frontUrl;
 
 test.describe('Game feature', ()=> {
     let login: LoginFixture;
